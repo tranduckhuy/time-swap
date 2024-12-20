@@ -1,0 +1,17 @@
+@TimeSwap.Auth_HostAddress = http://localhost:9001
+@access_token = access_token
+
+POST {{TimeSwap.Auth_HostAddress}}/api/auth/register
+Accept: application/json
+Content-Type: application/json
+{
+  "firstName": "Huy",
+  "lastName": "Tran",
+  "email": "abc@gmail.com",
+  "phoneNumber": "string",
+  "password": "string123@A",
+  "confirmPassword": "string123@A",
+  "clientUri": "https://localhost:4200/api/auth/confirm-email"
+}
+
+###
