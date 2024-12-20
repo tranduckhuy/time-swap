@@ -1,0 +1,32 @@
+name: Build Backend Project
+
+on:
+  push:
+    paths:
+      - backend/**
+  pull_request:
+    paths:
+      - backend/**
+    branches:
+      - master
+      - dev
+      - feature/*
+
+jobs:
+  build:
+    name: Build with ${{ matrix.configuration }} on ubuntu-latest
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration:
+          - Debug
+          - Release
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Build source code
+        run: dotnet build backend/backend.sln -c ${{ matrix.configuration }}
