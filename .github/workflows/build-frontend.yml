@@ -36,4 +36,4 @@ jobs:
 
       - name: Build
         working-directory: ./frontend
-        run: npm run build
+        run: ng build --configuration production
