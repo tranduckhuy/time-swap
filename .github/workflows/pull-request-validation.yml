@@ -19,7 +19,7 @@ jobs:
 
     steps:
       - name: Add comment if PR is targeting master
-        if: ${{ github.event.pull_request.base.ref == 'master' }}
+        if: ${{ github.event.pull_request.base.ref == 'master' && github.event.pull_request.head.ref != 'dev' }}
         uses: peter-evans/create-or-update-comment@v4.0.0
         with:
           issue-number: ${{ github.event.number }}
@@ -31,7 +31,7 @@ jobs:
 
       - name: Comment and fail if PR is targeting master
         run: |
-          if [[ "${{ github.event.pull_request.base.ref }}" == "master" ]]; then
+          if [[ "${{ github.event.pull_request.base.ref }}" == "master" && "${{ github.event.pull_request.head.ref }}" != "dev" ]]; then
             echo "This PR is targeting the master branch."
             exit 1
           fi
