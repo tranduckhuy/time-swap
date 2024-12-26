@@ -1,1 +1,63 @@
-<p>register works!</p>
+<div class="user-form-area">
+    <div class="container-fluid p-0">
+        <div class="row m-0 align-items-center">
+            <div class="col-lg-6 p-0">
+                <div class="user-img">
+                    <img src="assets/imgs/resgister-bg.jpg" alt="User">
+                </div>
+            </div>
+            <div class="col-lg-6 p-0">
+                <div class="user-content">
+                    <div class="top">
+                        <h2>Register</h2>
+                        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="First Name" formControlName="firstName">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Last Name" formControlName="lastName">
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="Email" formControlName="email">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Phone" formControlName="phoneNumber">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Password" formControlName="password">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Confirm Password" formControlName="confirmPassword">
+                            </div>
+                            <button type="submit" class="btn">Register</button>
+                        </form>
+                    </div>
+                    <div class="end">
+                        <ul>
+                            <li>
+                                <a href="#" target="_blank">
+                                    <i class='bx bxl-facebook'></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">
+                                    <i class='bx bxl-twitter'></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">
+                                    <i class='bx bxl-linkedin'></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">
+                                    <i class='bx bxl-pinterest-alt'></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

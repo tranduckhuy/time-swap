@@ -32,6 +32,11 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.form.invalid) {
+      console.log('Form Invalid!');
+      return;
+    }
+    
     const subscription = this.authService.signin(this.form.value).subscribe({
       next: (res) => {
         this.authService.saveToken(res.accessToken, res.refreshToken);
