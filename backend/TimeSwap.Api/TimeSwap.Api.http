@@ -4,3 +4,5 @@ GET {{TimeSwap.Api_HostAddress}}/api/v1/jobs
 Accept: application/json
 
 ###
+GET {{TimeSwap.Api_HostAddress}}/api/v1/jobs
+Accept: application/json
