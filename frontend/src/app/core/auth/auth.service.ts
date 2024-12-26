@@ -28,7 +28,7 @@ export class AuthService {
   }
 
   isLoggedIn() {
-    return this.getToken() != null ? true : false;
+    return this.getToken() ? true : false;
   }
 
   saveToken(token: string, refreshToken: string) {
