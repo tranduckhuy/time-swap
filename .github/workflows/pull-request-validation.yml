@@ -11,6 +11,7 @@ on:
 jobs:
   validate_pr:
     name: PR validation
+    if: ${{ github.head_ref != 'dev' && !startsWith(github.head_ref, 'imgbot/') && !startsWith(github.head_ref, 'hotfix/') }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -18,8 +19,7 @@ jobs:
       pull-requests: write
 
     steps:
-      - name: Add comment if PR is targeting master
-        if: ${{ github.event.pull_request.base.ref == 'master' && github.event.pull_request.head.ref != 'dev' }}
+      - name: Add comment PR is targeting master
         uses: peter-evans/create-or-update-comment@v4.0.0
         with:
           issue-number: ${{ github.event.number }}
@@ -29,9 +29,7 @@ jobs:
             Cảm ơn em! @${{ github.actor }}
           reactions: eyes
 
-      - name: Comment and fail if PR is targeting master
+      - name: Fail the workflow
         run: |
-          if [[ "${{ github.event.pull_request.base.ref }}" == "master" && "${{ github.event.pull_request.head.ref }}" != "dev" ]]; then
-            echo "This PR is targeting the master branch."
-            exit 1
-          fi
+          echo "This PR is targeting the master branch."
+          exit 1
