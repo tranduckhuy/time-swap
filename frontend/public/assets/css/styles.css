@@ -1590,7 +1590,6 @@ button:focus {
 }
 .app-area .app-content ul li a {
     display: block;
-    border: 1px solid transparent;
     border-radius: 10px;
     border: 1px solid #fff;
 }
@@ -1707,7 +1706,6 @@ button:focus {
     border: 1px dashed #fe4a55;
 }
 .footer-item .footer-newsletter form .btn {
-    padding: 0;
     border-radius: 0 5px 5px 0;
     color: #fff;
     background-color: #fe4a55;
@@ -2240,7 +2238,6 @@ button:focus {
     height: 35px;
     bottom: 0;
     right: 0;
-    border-radius: 5px;
     background-color: #dffedb;
     border-radius: 50% 50% 0 50%;
     transition: 0.5s all ease;
@@ -4226,7 +4223,6 @@ button:focus {
 .video-wrap a:after {
     content: "";
     position: absolute;
-    z-index: 1;
     left: 50%;
     top: 50%;
     transform: translateX(-50%) translateY(-50%);
@@ -6092,7 +6088,6 @@ button:focus {
 .dashboard-area .nav-pills a {
     color: #221668;
     font-size: 17px;
-    margin-bottom: 10px;
     border-bottom: 1px solid #e9e9e9;
     border-radius: 5px;
     display: inline-block;
@@ -6166,7 +6161,6 @@ button:focus {
 }
 .dashboard-area .profile-content .form-group .form-control {
     height: 50px;
-    border: 0;
     border-radius: 5px;
     padding-left: 20px;
     font-size: 14px;
