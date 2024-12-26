@@ -1,0 +1,133 @@
+src
+└── app
+    ├── core (Non-business Logic)
+    |    ├── layout
+    |    |
+    |    ├── auth
+    |    |    ├── auth.service.ts
+    |    |    ├── auth.guard.ts
+    |    |    ├── auth.routes.ts
+    |    |    └── pages
+    |    |        ├── login
+    |    |        |    ├── login.component.ts
+    |    |        |    ├── login.component.html
+    |    |        |    └── login.component.css
+    |    |        ├── register
+    |    |        |    ├── register.component.ts
+    |    |        |    ├── register.component.html
+    |    |        |    └── register.component.css
+    |    |        └── password-recovery
+    |    |             ├── password-recovery.component.ts
+    |    |             ├── password-recovery.component.html
+    |    |             └── password-recovery.component.css
+    |    └── interceptors
+    |         └── api.interceptor.ts
+    |
+    |
+    ├── modules (Business Logic)
+    |    ├── admin
+    |    |    ├── admin.component.ts
+    |    |    ├── admin.component.html
+    |    |    ├── admin.component.css
+    |    |    ├── admin.routes.ts
+    |    |    └── pages
+    |    |         ├── dashboard
+    |    |         |    ├── dashboard.component.ts
+    |    |         |    ├── dashboard.component.html
+    |    |         |    ├── dashboard.component.css
+    |    |         |    └── dashboard.service.ts
+    |    |         ├── user-list
+    |    |         |    ├── user-list.component.ts
+    |    |         |    ├── user-list.component.html
+    |    |         |    ├── user-list.component.css
+    |    |         |    └── user-list.service.ts
+    |    |         └── job-list
+    |    |              ├── job-list.component.ts
+    |    |              ├── job-list.component.html
+    |    |              ├── job-list.component.css
+    |    |              └── job-list.service.ts
+    |    |         
+    |    |  
+    |    |
+    |    └── user
+    |         ├── user.component.ts
+    |         ├── user.component.html
+    |         ├── user.component.css
+    |         ├── user.routes.ts
+    |         └── pages
+    |              ├── job
+    |              |    ├── job-list
+    |              |    |    ├── job-list.component.ts
+    |              |    |    ├── job-list.component.html
+    |              |    |    ├── job-list.component.css
+    |              |    |    └── job-list.service.ts
+    |              |    ├── job-detail
+    |              |    |    ├── job-detail.component.ts
+    |              |    |    ├── job-detail.component.html
+    |              |    |    ├── job-detail.component.css
+    |              |    |    └── job-detail.service.ts
+    |              |    ├── post-job
+    |              |    |    ├── post-job.component.ts
+    |              |    |    ├── post-job.component.html
+    |              |    |    ├── post-job.component.css
+    |              |    |    └── post-job.service.ts
+    |              |    ├── job.component.ts
+    |              |    ├── job.component.html
+    |              |    └── job.component.css
+    |              ├── assignee
+    |              |    ├── assignees
+    |              |    |    ├── assignees.component.ts
+    |              |    |    ├── assignees.component.html
+    |              |    |    ├── assignees.component.css
+    |              |    |    └── assignees.service.ts
+    |              |    ├── assignee-detail
+    |              |    |    ├── assignee-detail.component.ts
+    |              |    |    ├── assignee-detail.component.html
+    |              |    |    ├── assignee-detail.component.css
+    |              |    |    └── assignee-detail.service.ts
+    |              |    ├── assignee.component.ts
+    |              |    ├── assignee.component.html
+    |              |    └── assignee.component.css
+    |              ├── profile
+    |              |    ├── profile.component.ts
+    |              |    ├── profile.component.html
+    |              |    └── profile.component.css
+    |              ├── contact
+    |              |    ├── contact.component.ts
+    |              |    ├── contact.component.html
+    |              |    └── contact.component.css
+    |              └── about
+    |                   ├── about.component.ts
+    |                   ├── about.component.html
+    |                   └── about.component.css
+    |
+    |
+    └── shared
+        ├── components
+        |    ├── button
+        |    |    ├── button.component.ts
+        |    |    ├── button.component.html
+        |    |    └── button.component.css
+        |    └── card
+        |        ├── card.component.ts
+        |        ├── card.component.html
+        |        └── card.component.css
+        ├── constants
+        |    ├── constants.ts
+        |    ├── notification-constants.ts
+        |    ├── success-constants.ts
+        |    └── error-constants.ts
+        ├── models
+        |    ├── api
+        |    |   ├── ...
+        |    |   └── base-api-response.model.ts
+        |    ├── request
+        |    |   └── ...
+        |    └── response
+        |        └── ...
+        ├── pipes
+        |    ├── ...
+        |    └── date.pipe.ts
+        └── utils
+            ├── ...
+            └── http-request.utils.ts
