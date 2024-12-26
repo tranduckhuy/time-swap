@@ -1,0 +1,51 @@
+services:
+  reverse-proxy:
+    image: nginx:1.27.3-alpine
+    networks:
+      - timeswap-network
+
+  timeswap-auth:
+    image: ghcr.io/tranduckhuy/timeswap-auth:latest
+    build:
+      context: ./backend/TimeSwap.Auth
+      dockerfile: Dockerfile
+    networks:
+      - timeswap-network
+
+  timeswap-api:
+    image: ghcr.io/tranduckhuy/timeswap-api:latest
+    build:
+      context: ./backend/TimeSwap.Api
+      dockerfile: Dockerfile
+    networks:
+      - timeswap-network
+
+  redis:
+    image: redis:alpine3.20
+    networks:
+      - timeswap-network
+
+  authdb:
+    image: postgres:14.15-alpine3.21
+    networks:
+      - timeswap-network
+
+  timeswapdb:
+    image: postgres:14.15-alpine3.21
+    networks:
+      - timeswap-network
+
+  portainer:
+    image: portainer/portainer-ce:2.25.1-alpine
+    networks:
+      - timeswap-network
+
+volumes:
+  redis_data:
+  authdb_data:
+  timeswapdb_data:
+  portainer_data:
+
+networks:
+  timeswap-network:
+    driver: bridge

@@ -1,0 +1,43 @@
+name: Deploy Timeswap
+
+on:
+  workflow_run:
+    workflows:
+      - "Publish Timeswap Auth Image"
+      - "Publish Timeswap API Image"
+    types:
+      - completed
+
+jobs:
+  deploy:
+    name:
+    runs-on: Linux
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Compose environment
+        run: |
+          echo "AUTH_DB_USER=${{ secrets.AUTH_DB_USER }}" >> .env
+          echo "AUTH_DB_PASSWORD=${{ secrets.AUTH_DB_PASSWORD }}" >> .env
+          echo "CORE_DB_USER=${{ secrets.CORE_DB_USER }}" >> .env
+          echo "CORE_DB_PASSWORD=${{ secrets.CORE_DB_PASSWORD }}" >> .env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
+          echo "JWT_ISSUER=${{ secrets.JWT_ISSUER }}" >> .env
+          echo "JWT_AUDIENCE=${{ secrets.JWT_AUDIENCE }}" >> .env
+          echo "JWT_EXPIRY=${{ secrets.JWT_EXPIRY }}" >> .env
+          echo "FRONTEND_URL=${{ secrets.FRONTEND_URL }}" >> .env
+          echo "EMAIL_FROM=${{ secrets.EMAIL_FROM }}" >> .env
+          echo "EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}" >> .env
+          echo "REDIS_CONNECTION=${{ secrets.REDIS_CONNECTION }}" >> .env
+
+      - name: Deploy with Docker Compose
+        run: |
+          docker-compose pull
+          docker-compose -f docker-compose.yml -f docker-compose.override.yml up --force-recreate --build -d
+          docker image prune -f
