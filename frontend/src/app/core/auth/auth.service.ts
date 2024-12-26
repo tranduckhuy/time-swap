@@ -7,8 +7,9 @@ import { environment } from '../../../environments/environment';
 
 import { REFRESH_TOKEN_KEY, TOKEN_KEY } from '../../shared/constants/auth-constants';
 
-import { AuthRequestModel } from '../../shared/models/request/auth-request.model';
-import { AuthResponseModel } from '../../shared/models/response/auth-response.model';
+import { LoginRequestModel } from '../../shared/models/request/login-request.model';
+import { LoginResponseModel } from '../../shared/models/response/login-response.model';
+import { RegisterRequestModel } from '../../shared/models/request/register-request.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +18,22 @@ export class AuthService {
   private httpClient = inject(HttpClient);
 
   LOGIN_API_URL = 'accounts/login';
+  REGISTER_API_URL = 'accounts/register';
 
-  signin(authReq: AuthRequestModel): Observable<AuthResponseModel> {
-    const body = JSON.stringify(authReq);
-    return this.httpClient.post<AuthResponseModel>(`${environment.apiBaseUrl}/${this.LOGIN_API_URL}`, body, {
+  signin(loginReq: LoginRequestModel): Observable<LoginResponseModel> {
+    const body = JSON.stringify(loginReq);
+    return this.httpClient.post<LoginResponseModel>(`${environment.apiBaseUrl}/${this.LOGIN_API_URL}`, body, {
       headers: {
         'Content-Type' : 'application/json'
+      }
+    });
+  }
+
+  register(registerReq: RegisterRequestModel) {
+    const body = JSON.stringify(registerReq);
+    return this.httpClient.post(`${environment.apiBaseUrl}/${this.REGISTER_API_URL}`, body, {
+      headers: {
+        'Content-Type': 'application/json'
       }
     });
   }
