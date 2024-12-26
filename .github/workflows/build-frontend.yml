@@ -7,10 +7,6 @@ on:
   pull_request:
     paths:
       - frontend/**
-    branches:
-      - master
-      - dev
-      - feature/*
 
 jobs:
   build:
