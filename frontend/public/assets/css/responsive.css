@@ -1,0 +1,2151 @@
+@media only screen and (max-width: 767px) {
+  /*----- Default CSS -----*/
+  body {
+    font-size: 14px;
+  }
+  .ptb-100 {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+  .pt-100 {
+    padding-top: 50px;
+  }
+  .pb-70 {
+    padding-bottom: 20px;
+  }
+  .pb-100 {
+    padding-bottom: 50px;
+  }
+  /*----- End Default CSS -----*/
+  /*----- Home Demo One CSS -----*/
+  /*-- Navbar --*/
+  .side-nav {
+    text-align: center;
+    padding-top: 7px;
+    padding-bottom: 8px;
+    background-color: #fff;
+    box-shadow: 0px 8px 15px 0px rgba(221, 221, 221, 0.368627451);
+    border-top: 1px solid #DBEEFD;
+  }
+  .side-nav .login-left {
+    margin-right: 15px;
+  }
+  .side-nav .login-left i {
+    font-size: 17px;
+    top: 2px;
+  }
+  .side-nav .job-right {
+    height: 45px;
+    padding-left: 15px;
+    padding-right: 15px;
+    line-height: 45px;
+  }
+  .side-nav .job-right i {
+    display: none;
+  }
+  /*-- End Navbar --*/
+  /*-- Banner --*/
+  .container-fluid {
+    max-width: 540px !important;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+  .banner-area {
+    text-align: center;
+    padding-top: 180px;
+    padding-bottom: 140px;
+  }
+  .banner-area:before {
+    display: none;
+  }
+  .banner-area .banner-shape img {
+    height: 50px;
+  }
+  .banner-content {
+    height: 100%;
+  }
+  .banner-content h1 {
+    font-size: 28px;
+    margin-bottom: 15px;
+  }
+  .banner-content p {
+    margin-bottom: 27px;
+    font-size: 16px;
+  }
+  .banner-content .banner-form-area {
+    padding-right: 0;
+    margin-bottom: 35px;
+  }
+  .banner-content .banner-form-area .form-group .form-control {
+    border-right: 0;
+    border-bottom: 1px solid #8d8d8d;
+    font-size: 14px;
+  }
+  .banner-content .banner-form-area .form-group .nice-select {
+    border-right: 0;
+    border-bottom: 1px solid #8d8d8d;
+    font-size: 14px;
+  }
+  .banner-content .banner-form-area .form-group.two .form-control {
+    border-bottom: 0;
+  }
+  .banner-content .banner-form-area .btn {
+    height: 45px;
+    position: relative;
+    top: 0;
+    right: 0;
+    font-size: 14px;
+    padding-left: 15px;
+  }
+  .banner-content .banner-form-area .btn i {
+    height: 45px;
+    font-size: 17px;
+  }
+  .banner-content .banner-key ul li {
+    margin-bottom: 5px;
+  }
+  .banner-content .banner-key ul li span {
+    display: block;
+    color: #221668;
+    background-color: #e2d3dc;
+    padding: 6px 8px;
+    border-radius: 5px;
+    margin-right: 2px;
+  }
+  .banner-img img:nth-child(1) {
+    display: none;
+  }
+  .banner-img img:nth-child(2) {
+    display: none;
+  }
+  .banner-img img:nth-child(3) {
+    display: none;
+  }
+  .banner-img img:nth-child(4) {
+    display: none;
+  }
+  .banner-img img:nth-child(5) {
+    display: none;
+  }
+  .banner-img img:nth-child(6) {
+    display: none;
+  }
+  .banner-img img:nth-child(7) {
+    display: none;
+  }
+  .banner-img img:nth-child(8) {
+    display: none;
+  }
+  .banner-img img:nth-child(9) {
+    display: none;
+  }
+  .banner-img img:nth-child(10) {
+    margin-top: 30px;
+    position: relative;
+    top: 0;
+    right: 0;
+    max-width: 100%;
+    animation: border-transform-default 10s linear infinite alternate forwards;
+  }
+  .banner-img img:nth-child(11) {
+    display: none;
+  }
+  .banner-img img:nth-child(12) {
+    display: none;
+  }
+  .banner-img img:nth-child(13) {
+    display: none;
+  }
+  .banner-img .inner {
+    display: none;
+  }
+  /*-- End Banner --*/
+  /*-- Work --*/
+  .section-title {
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  .section-title .sub-title {
+    margin-bottom: 5px;
+  }
+  .section-title h2 {
+    font-size: 25px;
+  }
+  .work-item {
+    padding: 30px 15px 28px;
+    text-align: center;
+  }
+  .work-item i {
+    font-size: 35px;
+    top: 15px;
+    right: 15px;
+  }
+  /*-- End Work --*/
+  /*-- Jobs --*/
+  .sorting-menu {
+    text-align: center;
+  }
+  .sorting-menu ul {
+    margin-bottom: 20px;
+  }
+  .sorting-menu ul li {
+    font-size: 15px;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+  }
+  .sorting-menu ul li:last-child {
+    margin-right: 10px;
+  }
+  .job-area .section-title {
+    margin-bottom: 15px;
+  }
+  .job-browse p {
+    font-size: 15px;
+  }
+  .job-item {
+    padding: 25px 15px 30px;
+    text-align: center;
+  }
+  .job-item .job-left {
+    padding-left: 0;
+  }
+  .job-item .job-left img {
+    position: relative;
+    top: 0;
+    right: 0;
+    left: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .job-item .job-left ul li {
+    margin-right: 0;
+    margin-bottom: 7px;
+  }
+  .job-item .job-right ul li {
+    margin-bottom: 7px;
+  }
+  /*-- End Jobs --*/
+  /*-- Explore --*/
+  .explore-area {
+    text-align: center;
+  }
+  .explore-area .section-title {
+    margin-bottom: 30px;
+  }
+  .explore-area .explore-item {
+    margin-right: auto;
+  }
+  .explore-area .explore-item ul li {
+    display: block;
+  }
+  .explore-area .explore-item ul li .left-btn {
+    height: 45px;
+    margin-right: 0;
+    margin-bottom: 15px;
+  }
+  .explore-area .explore-item ul li .left-btn i {
+    height: 45px;
+    line-height: 45px;
+    font-size: 17px;
+  }
+  .explore-area .explore-item ul li span {
+    position: relative;
+    top: -1px;
+  }
+  /*-- End Explore --*/
+  /*-- Counter --*/
+  .counter-area {
+    padding-bottom: 70px;
+  }
+  .counter-area:before {
+    display: none;
+  }
+  .counter-area .counter-shape img {
+    height: 50px;
+  }
+  /*-- End Counter --*/
+  /*-- Company --*/
+  .company-area .section-title {
+    margin-bottom: 10px;
+  }
+  .company-area .cmn-link {
+    margin-bottom: 30px;
+  }
+  .cmn-link {
+    text-align: center;
+  }
+  .cmn-link a {
+    font-size: 16px;
+  }
+  .cmn-link a .one {
+    top: -3px;
+  }
+  .cmn-link a .two {
+    top: -3px;
+  }
+  /*-- End Company --*/
+  /*-- Location --*/
+  .location-area .cmn-link {
+    margin-bottom: 30px;
+  }
+  .location-area .section-title {
+    margin-bottom: 10px;
+  }
+  .location-area .owl-prev {
+    display: none !important;
+  }
+  .location-area .owl-next {
+    display: none !important;
+  }
+  /*-- End Location --*/
+  /*-- Feedback --*/
+  .feedback-area {
+    padding-bottom: 60px;
+  }
+  .feedback-area:before {
+    display: none;
+  }
+  .feedback-area .feedback-shape img {
+    height: 50px;
+  }
+  .feedback-area .feedback-item {
+    padding: 22px 15px 30px 15px;
+    text-align: center;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .feedback-area .feedback-item:hover img {
+    right: 5px;
+    bottom: 5px;
+  }
+  .feedback-area .feedback-item p {
+    margin-bottom: 12px;
+  }
+  .feedback-area .feedback-item h4 {
+    font-size: 22px;
+    margin-bottom: 30px;
+  }
+  .feedback-area .feedback-item img {
+    position: relative;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .feedback-area .owl-prev {
+    display: none !important;
+  }
+  .feedback-area .owl-next {
+    display: none !important;
+  }
+  /*-- End Feedback --*/
+  /*-- Blog --*/
+  .blog-area .section-title {
+    margin-bottom: 10px;
+  }
+  .blog-area .cmn-link {
+    margin-bottom: 30px;
+  }
+  .blog-item .cmn-link {
+    margin-bottom: 0;
+  }
+  .blog-item .cmn-link a {
+    font-size: 15px;
+  }
+  .blog-item .cmn-link a i.one {
+    top: -4px;
+  }
+  .blog-item .cmn-link a i.two {
+    top: -4px;
+  }
+  /*-- End Blog --*/
+  /*-- App --*/
+  .app-area {
+    text-align: center;
+  }
+  .app-area .app-content .section-title {
+    margin-bottom: 30px;
+  }
+  .app-area .app-content ul li {
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+  .app-area .app-content ul li:last-child {
+    margin-right: 5px;
+  }
+  .app-area .app-content ul li a {
+    max-width: 120px;
+  }
+  .app-area .app-img img:nth-child(1) {
+    margin-top: 30px;
+    max-width: 240px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .app-area .app-img img:nth-child(2) {
+    display: none;
+  }
+  @keyframes app-ani {
+    50% {
+      transform: rotate(5deg);
+    }
+  }
+  /*-- End App --*/
+  /*-- Footer --*/
+  .footer-item h3 {
+    margin-bottom: 20px;
+  }
+  /*-- End Footer --*/
+  /*-- Copyright --*/
+  .copyright-area {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+  }
+  .copyright-area .copyright-item ul {
+    margin-bottom: 10px;
+  }
+  .copyright-area .copyright-item ul li {
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+  .copyright-area .copyright-item p {
+    text-align: center;
+  }
+  /*-- End Copyright --*/
+  /*----- End Home Demo One CSS -----*/
+  /*----- Back to Top -----*/
+  #toTop {
+    bottom: 70px;
+    right: 10px;
+  }
+  .back-to-top-btn i {
+    height: 45px;
+    width: 40px;
+    line-height: 45px;
+    font-size: 20px;
+  }
+  /*----- End Back to Top -----*/
+  /*----- Home Demo Two CSS -----*/
+  /*-- Banner --*/
+  .banner-area.two {
+    padding-bottom: 85px;
+  }
+  .banner-area.two .container-fluid {
+    padding-right: 15px;
+  }
+  .banner-area.two .banner-shape-two img:nth-child(2) {
+    display: none;
+  }
+  .banner-content.two {
+    height: 100%;
+  }
+  .banner-content.two h1 {
+    font-size: 25px;
+  }
+  .banner-img-two img:nth-child(1) {
+    margin-top: 30px;
+  }
+  .banner-img-two img:nth-child(2) {
+    display: none;
+  }
+  .banner-img-two img:nth-child(3) {
+    display: none;
+  }
+  .banner-img-two img:nth-child(4) {
+    display: none;
+  }
+  /*-- End Banner --*/
+  /*-- Support --*/
+  .support-area {
+    padding-top: 50px;
+  }
+  .support-area p {
+    margin-bottom: 30px;
+  }
+  .support-area .support-slider {
+    padding-right: 0;
+  }
+  .support-area .support-slider .owl-prev {
+    display: none !important;
+  }
+  .support-area .support-slider .owl-next {
+    display: none !important;
+  }
+  /*-- End Support --*/
+  /*-- Company --*/
+  .company-area.two .section-title {
+    margin-bottom: 30px;
+  }
+  .company-area.two .owl-prev {
+    display: none !important;
+  }
+  .company-area.two .owl-next {
+    display: none !important;
+  }
+  /*-- End Company --*/
+  /*-- Explore --*/
+  .explore-area.two .explore-item {
+    margin-left: auto;
+  }
+  .explore-area.two .explore-img {
+    position: relative;
+    top: 0;
+    right: 0;
+    max-width: 100%;
+    margin-top: 30px;
+  }
+  /*-- End Explore --*/
+  /*-- Categories --*/
+  .categories-area {
+    padding-top: 35px;
+  }
+  .categories-area .nav-pills a {
+    font-size: 16px;
+    padding: 12px 0;
+  }
+  .categories-area .nav-pills a .two {
+    top: 2px;
+  }
+  /*-- End Categories --*/
+  /*-- Work --*/
+  .work-item.two {
+    border-right: 0;
+  }
+  .work-item.two:after {
+    display: none;
+  }
+  /*-- End Work --*/
+  /*-- Candidate --*/
+  .candidate-area .owl-prev {
+    display: none !important;
+  }
+  .candidate-area .owl-next {
+    display: none !important;
+  }
+  .candidate-area .candidate-browse p {
+    margin-top: -15px;
+  }
+  .candidate-item {
+    padding: 25px 15px 25px;
+  }
+  .candidate-item img {
+    position: relative;
+    margin-top: 30px;
+    max-width: 100%;
+  }
+  /*-- End Candidate --*/
+  /*-- Testimonial --*/
+  .testimonial-area {
+    text-align: center;
+    padding-bottom: 0;
+  }
+  .testimonial-area .owl-prev {
+    display: none !important;
+  }
+  .testimonial-area .owl-next {
+    display: none !important;
+  }
+  .testimonial-area .section-title {
+    margin-right: auto;
+  }
+  .testimonial-area .testimonial-item {
+    padding-left: 0;
+  }
+  .testimonial-area .testimonial-item img {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+  }
+  .testimonial-area .testimonial-item p {
+    font-size: 18px;
+    margin-bottom: 25px;
+  }
+  /*-- End Testimonial --*/
+  /*-- Register --*/
+  .register-area .container .row {
+    padding-right: 0;
+  }
+  .register-area ul {
+    position: relative;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  .register-area ul li {
+    margin-right: 5px;
+  }
+  .register-area ul li a {
+    max-width: 130px;
+  }
+  /*-- End Register --*/
+  /*----- Home Demo Two CSS -----*/
+  /*----- Home Demo Three CSS -----*/
+  /*-- Navbar --*/
+  .side-nav.three .login-left {
+    color: #172f47;
+  }
+  .side-nav.three .login-left i {
+    color: #172f47;
+  }
+  /*-- End Navbar --*/
+  /*-- Banner --*/
+  .banner-area.three {
+    padding-bottom: 65px;
+  }
+  .banner-area.three .banner-shape-three img {
+    position: relative;
+    bottom: 0;
+    right: 0;
+    max-width: 100%;
+    margin-bottom: 30px;
+  }
+  .banner-content.three {
+    height: 100%;
+    padding-top: 0;
+  }
+  .banner-content.three .register-area {
+    margin-top: 30px;
+  }
+  /*-- End Banner --*/
+  /*-- Employer --*/
+  .employer-area {
+    padding-top: 110px;
+  }
+  .employer-item {
+    padding: 25px 15px 25px 85px;
+  }
+  .employer-item img {
+    left: 15px;
+  }
+  .employer-item .span-two {
+    top: 0;
+    right: 0;
+  }
+  /*-- End Employer --*/
+  /*-- System --*/
+  .system-area .system-item .system-video li .left-btn {
+    margin-bottom: 10px;
+  }
+  /*-- End System --*/
+  /*-- Client --*/
+  .client-area .section-title {
+    margin-bottom: 30px;
+  }
+  .client-area .client-item p {
+    font-size: 16px;
+  }
+  .client-area .client-img img:nth-child(1) {
+    display: none;
+  }
+  .client-area .client-img img:nth-child(2) {
+    display: none;
+  }
+  .client-area .client-img img:nth-child(3) {
+    display: none;
+  }
+  .client-area .client-img img:nth-child(4) {
+    display: none;
+  }
+  .client-area .client-img img:nth-child(5) {
+    display: none;
+  }
+  .client-area .client-img img:nth-child(6) {
+    display: none;
+  }
+  .client-area .owl-prev {
+    display: none !important;
+  }
+  .client-area .owl-next {
+    display: none !important;
+  }
+  /*-- End Client --*/
+  /*----- Home Demo Three CSS -----*/
+  /*----- About CSS -----*/
+  .page-title-area {
+    height: 370px;
+  }
+  .page-title-area .title-item {
+    margin-top: 85px;
+  }
+  .page-title-area .title-item h2 {
+    font-size: 35px;
+  }
+  .new-area .new-img img:nth-child(2) {
+    display: none;
+  }
+  .new-area .about-content {
+    text-align: center;
+  }
+  /*----- End About CSS -----*/
+  /*----- Jobs CSS -----*/
+  .pagination-area ul li a {
+    padding: 3px 12px;
+    font-size: 13px;
+  }
+  .form-check-label {
+    font-size: 13px;
+  }
+  .form-check-input {
+    margin-top: 3px;
+  }
+  .job-area-list .pagination-area {
+    margin-bottom: 30px;
+  }
+  .job-area-list .job-list-item li {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .job-area-list .job-list-item li:last-child {
+    flex: 0 0 100%;
+    max-width: 100%;
+    text-align: left;
+    margin-top: 15px;
+  }
+  .job-area-list .job-list-right .job {
+    padding: 22px 10px 25px;
+  }
+  .job-area-list .job-list-right .job-list-all {
+    padding: 22px 10px 25px;
+  }
+  .job-area-list .job-list-right .jecto-contact img {
+    max-width: 190px;
+  }
+  .job-area-list .job-list-right .jecto-contact .bottom h3 {
+    font-size: 30px;
+  }
+  /*----- End Jobs CSS -----*/
+  /*----- Job Details CSS -----*/
+  .page-title-area.two {
+    text-align: center;
+    height: 520px;
+  }
+  .page-title-area.two .d-table-cell {
+    vertical-align: middle;
+  }
+  .page-title-area.two .left {
+    margin-bottom: 10px;
+    margin-top: 120px;
+  }
+  .page-title-area.two .left img {
+    margin-bottom: 5px;
+  }
+  .page-title-area.two .left h2 {
+    margin-bottom: 5px;
+    font-size: 30px;
+  }
+  .page-title-area.two .left ul li {
+    margin-bottom: 5px;
+  }
+  .job-details-area .details-item {
+    text-align: center;
+  }
+  .job-details-area .details-item .details-inner:last-child {
+    margin-bottom: 30px;
+  }
+  .job-details-area .details-item .details-inner h3 {
+    font-size: 20px;
+  }
+  .job-details-area .details-item .details-inner .owl-prev {
+    display: none !important;
+  }
+  .job-details-area .details-item .details-inner .owl-next {
+    display: none !important;
+  }
+  .video-wrap a {
+    width: 85px;
+    height: 85px;
+    line-height: 95px;
+  }
+  .video-wrap a:before {
+    width: 85px;
+    height: 85px;
+  }
+  .video-wrap a:after {
+    width: 85px;
+    height: 85px;
+  }
+  .widget-area .widget-item {
+    padding: 25px 10px 30px;
+  }
+  .job-details-related .section-title {
+    margin-top: -5px;
+  }
+  /*----- End Job Details CSS -----*/
+  /*----- Post A Job CSS -----*/
+  .post-job-area .post-item {
+    padding: 25px 15px 30px;
+  }
+  .post-job-area .post-item .section-title h2 {
+    font-size: 25px;
+  }
+  .post-job-area .post-item .btn {
+    padding: 12px 60px;
+  }
+  /*----- End Post A Job CSS -----*/
+  /*----- Candidates CSS -----*/
+  .job-showing-area .showing .left .form-group .nice-select {
+    margin-bottom: 10px;
+  }
+  .job-showing-area .showing .right ul {
+    text-align: left;
+  }
+  /*----- End Candidates CSS -----*/
+  /*----- Candidate Details CSS -----*/
+  .page-title-area.three {
+    height: 545px;
+  }
+  .page-title-area.three .left {
+    margin-top: 130px;
+  }
+  .page-title-area.two .left.two {
+    padding-left: 0;
+  }
+  .page-title-area.two .left.two img {
+    position: relative;
+    bottom: 0;
+  }
+  .person-details-area .details-item {
+    text-align: center;
+  }
+  .person-details-area .details-item .skills {
+    text-align: left;
+  }
+  .person-details-area .details-item .client {
+    padding: 20px 15px 20px 15px;
+  }
+  .person-details-area .details-item .client img {
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+  .person-details-area .details-item .client ul {
+    position: relative;
+    top: 0;
+    right: 0;
+    margin-top: 15px;
+  }
+  .person-details-area .details-item .review {
+    padding: 28px 15px 35px;
+    text-align: left;
+    margin-bottom: 30px;
+  }
+  /*----- End Candidate Details CSS -----*/
+  /*----- Blog Details CSS -----*/
+  .blog-details-area .details-item .details-img ul {
+    margin-bottom: 15px;
+  }
+  .blog-details-area .details-item .details-img ul li {
+    margin-bottom: 5px;
+  }
+  .blog-details-area .details-item .details-img img {
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .blog-details-area .details-item .details-img h2 {
+    font-size: 25px;
+  }
+  .blog-details-area .details-item .details-img .d-content span {
+    font-size: 60px;
+    line-height: 55px;
+    left: 0;
+  }
+  .blog-details-area .details-item .details-img .d-content p {
+    padding-left: 50px;
+  }
+  .blog-details-area .details-item .details-img blockquote {
+    padding: 22px 15px 25px;
+  }
+  .blog-details-area .details-item .details-img blockquote p {
+    font-size: 17px;
+  }
+  .blog-details-area .details-item .details-img h3 {
+    font-size: 20px;
+  }
+  .blog-details-area .details-item .details-tag .right {
+    text-align: left;
+    margin-top: 15px;
+  }
+  .blog-details-area .details-item .details-date .date-inner {
+    padding: 15px 50px 15px 15px;
+  }
+  .blog-details-area .details-item .details-date .date-inner h4 {
+    font-size: 16px;
+  }
+  .blog-details-area .details-item .details-date .date-inner a {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .blog-details-area .details-item .details-comment ul li {
+    padding-left: 115px;
+  }
+  .blog-details-area .details-item .details-comment ul li:last-child {
+    margin-left: 0;
+  }
+  .blog-details-area .details-item .details-form {
+    padding: 28px 15px 35px;
+    margin-bottom: 30px;
+  }
+  /*----- End Blog Details CSS -----*/
+  /*----- Contact CSS -----*/
+  .contact-form-area .form-item {
+    padding: 30px 15px 30px;
+  }
+  .contact-form-area .form-item .text-danger {
+    font-size: 16px;
+  }
+  .contact-form-area .form-item .text-success {
+    font-size: 16px;
+  }
+  /*----- End Contact CSS -----*/
+  /*----- User Form CSS -----*/
+  .user-form-area {
+    height: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+  .user-form-area .user-img {
+    background-image: unset;
+    height: 100%;
+  }
+  .user-form-area .user-img img {
+    display: block;
+    margin-bottom: 30px;
+  }
+  .user-form-area .user-content {
+    padding-left: 0;
+    text-align: center;
+    margin-left: auto;
+    padding-right: 0;
+  }
+  .user-form-area .user-content .top h2 {
+    font-size: 30px;
+  }
+  /*----- End User Form CSS -----*/
+  /*----- Employer CSS -----*/
+  .employer-area.two .employer-item {
+    padding: 25px 10px 25px 80px;
+  }
+  /*----- End Employer CSS -----*/
+  /*----- Employer Details CSS -----*/
+  .employer-details-area .client {
+    padding: 20px 15px 20px 15px;
+  }
+  .employer-details-area .client img {
+    position: relative;
+    top: 0;
+    left: 0;
+    margin-bottom: 15px;
+  }
+  .employer-details-area .client ul {
+    position: relative;
+    top: 0;
+    right: 0;
+    margin-top: 15px;
+  }
+  .employer-details-area .review {
+    padding: 28px 15px 35px;
+    margin-bottom: 30px;
+  }
+  /*----- End Employer Details CSS -----*/
+  /*----- Feedback CSS -----*/
+  .feedback-area.two {
+    padding-bottom: 5px;
+  }
+  /*----- End Feedback CSS -----*/
+  /*----- FAQ CSS -----*/
+  .faq-area .faq-content .accordion a {
+    padding: 15px 25px 15px 18px;
+    font-size: 16px;
+  }
+  .faq-area .faq-img {
+    background-image: unset;
+    margin-top: 30px;
+  }
+  .faq-area .faq-img img {
+    display: block;
+    border-radius: 5px;
+  }
+  .faq-area .faq-bottom h3 {
+    font-size: 24px;
+  }
+  /*----- End FAQ CSS -----*/
+  /*----- Coming Soon CSS -----*/
+  .coming-soon-area .soon-item h1 {
+    font-size: 40px;
+  }
+  /*----- End Coming Soon CSS -----*/
+  /*----- Error CSS -----*/
+  .error-area .error-content h1 {
+    font-size: 80px;
+  }
+  /*----- End Error CSS -----*/
+  /*----- Dashboard CSS -----*/
+  .dashboard-area .profile-item img {
+    max-width: 200px;
+  }
+  .dashboard-area .nav-pills {
+    margin-bottom: 30px;
+  }
+  .dashboard-area .nav-pills a {
+    font-size: 16px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .dashboard-area .profile-content .profile-content-inner {
+    padding: 35px 5px 10px;
+  }
+  .dashboard-area .profile-content h2 {
+    font-size: 30px;
+  }
+  /*----- End Dashboard CSS -----*/
+  /*----- Resume CSS -----*/
+  .resume-area .resume-profile img {
+    max-width: 200px;
+  }
+  .resume-area .widget-area .widget-item {
+    margin-bottom: 30px;
+  }
+  /*----- End Resume CSS -----*/
+  .explore-area .explore-item ul li .right-btn {
+    top: 0;
+  }
+  .explore-area .explore-item ul li span {
+    top: -4px;
+  }
+  .job-area-list .job-list-right .jecto-contact img {
+    padding-bottom: 20px;
+  }
+  .job-area-list .job-list-right .jecto-contact .bottom {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  .banner-content .banner-form-area .form-group .nice-select:after {
+    right: 0;
+  }
+  .contact-info-area .info-item {
+    padding: 30px 15px 30px;
+  }
+  .blog-item {
+    padding: 15px 15px 25px 15px;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+  /*----- Default CSS -----*/
+  body {
+    font-size: 14px;
+  }
+  .ptb-100 {
+    padding-top: 70px;
+    padding-bottom: 70px;
+  }
+  .pt-100 {
+    padding-top: 70px;
+  }
+  .pb-70 {
+    padding-bottom: 40px;
+  }
+  .pb-100 {
+    padding-bottom: 70px;
+  }
+  /*----- End Default CSS -----*/
+  /*----- Home Demo One CSS -----*/
+  /*-- Navbar --*/
+  .side-nav {
+    position: absolute;
+    top: 0;
+    right: 75px;
+    padding-top: 5px;
+  }
+  .side-nav .login-left {
+    margin-right: 15px;
+    color: #fff;
+  }
+  .side-nav .login-left i {
+    font-size: 17px;
+    top: 2px;
+  }
+  .side-nav .job-right {
+    height: 45px;
+    padding-left: 15px;
+    padding-right: 15px;
+    line-height: 45px;
+    color: #221668;
+    background-color: #fff;
+  }
+  .side-nav .job-right i {
+    display: none;
+  }
+  .side-nav .job-right:hover {
+    color: #fff;
+  }
+  /*-- End Navbar --*/
+  /*-- Banner --*/
+  .container-fluid {
+    max-width: 720px !important;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+  .banner-area {
+    text-align: center;
+    padding-top: 130px;
+    padding-bottom: 140px;
+  }
+  .banner-area:before {
+    display: none;
+  }
+  .banner-area .banner-shape img {
+    height: 70px;
+  }
+  .banner-content {
+    height: 100%;
+  }
+  .banner-content h1 {
+    font-size: 30px;
+    margin-bottom: 15px;
+  }
+  .banner-content p {
+    margin-bottom: 30px;
+    font-size: 16px;
+  }
+  .banner-content .banner-form-area {
+    padding-right: 0;
+    margin-bottom: 35px;
+  }
+  .banner-content .banner-form-area .form-group .form-control {
+    border-right: 0;
+    border-bottom: 1px solid #8d8d8d;
+    font-size: 14px;
+  }
+  .banner-content .banner-form-area .form-group .nice-select {
+    border-right: 0;
+    border-bottom: 1px solid #8d8d8d;
+    font-size: 14px;
+  }
+  .banner-content .banner-form-area .form-group.two .form-control {
+    border-bottom: 0;
+  }
+  .banner-content .banner-form-area .btn {
+    height: 45px;
+    position: relative;
+    top: 0;
+    right: 0;
+    font-size: 14px;
+    padding-left: 15px;
+  }
+  .banner-content .banner-form-area .btn i {
+    height: 45px;
+    font-size: 17px;
+  }
+  .banner-content .banner-key ul li span {
+    display: block;
+    color: #221668;
+    background-color: #e2d3dc;
+    padding: 6px 8px;
+    border-radius: 5px;
+    margin-right: 5px;
+  }
+  .banner-img img:nth-child(1) {
+    display: none;
+  }
+  .banner-img img:nth-child(2) {
+    display: none;
+  }
+  .banner-img img:nth-child(3) {
+    display: none;
+  }
+  .banner-img img:nth-child(4) {
+    display: none;
+  }
+  .banner-img img:nth-child(5) {
+    display: none;
+  }
+  .banner-img img:nth-child(6) {
+    display: none;
+  }
+  .banner-img img:nth-child(7) {
+    display: none;
+  }
+  .banner-img img:nth-child(8) {
+    display: none;
+  }
+  .banner-img img:nth-child(9) {
+    display: none;
+  }
+  .banner-img img:nth-child(10) {
+    margin-top: 30px;
+    position: relative;
+    top: 0;
+    right: 0;
+    max-width: 100%;
+  }
+  .banner-img img:nth-child(11) {
+    display: none;
+  }
+  .banner-img img:nth-child(12) {
+    display: none;
+  }
+  .banner-img img:nth-child(13) {
+    display: none;
+  }
+  .banner-img .inner {
+    display: none;
+  }
+  /*-- End Banner --*/
+  /*-- Work --*/
+  .section-title {
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  .section-title .sub-title {
+    margin-bottom: 5px;
+  }
+  .section-title h2 {
+    font-size: 30px;
+  }
+  /*-- End Work --*/
+  /*-- Jobs --*/
+  .sorting-menu {
+    text-align: center;
+  }
+  .sorting-menu ul {
+    margin-bottom: 20px;
+  }
+  .sorting-menu ul li {
+    font-size: 15px;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+  }
+  .sorting-menu ul li:last-child {
+    margin-right: 10px;
+  }
+  .job-area .section-title {
+    margin-bottom: 15px;
+  }
+  .job-browse p {
+    font-size: 15px;
+  }
+  .job-item {
+    padding: 25px 15px 30px;
+    text-align: center;
+  }
+  .job-item .job-left {
+    padding-left: 0;
+  }
+  .job-item .job-left img {
+    position: relative;
+    top: 0;
+    right: 0;
+    left: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .job-item .job-left ul li {
+    margin-right: 0;
+    margin-bottom: 7px;
+  }
+  .job-item .job-right ul li {
+    margin-bottom: 7px;
+  }
+  /*-- End Jobs --*/
+  /*-- Explore --*/
+  .explore-area {
+    text-align: center;
+  }
+  .explore-area .section-title {
+    margin-bottom: 30px;
+  }
+  .explore-area .explore-item {
+    margin-right: auto;
+  }
+  .explore-area .explore-item ul li .left-btn {
+    height: 45px;
+    margin-right: 10px;
+  }
+  .explore-area .explore-item ul li .left-btn i {
+    height: 45px;
+    line-height: 45px;
+    font-size: 17px;
+  }
+  .explore-area .explore-item ul li span {
+    position: relative;
+    top: -1px;
+  }
+  /*-- End Explore --*/
+  /*-- Counter --*/
+  .counter-area {
+    padding-bottom: 110px;
+  }
+  .counter-area:before {
+    display: none;
+  }
+  .counter-area .counter-shape img {
+    height: 70px;
+  }
+  /*-- End Counter --*/
+  /*-- Company --*/
+  .company-area .section-title {
+    margin-bottom: 10px;
+  }
+  .company-area .cmn-link {
+    margin-bottom: 30px;
+  }
+  .cmn-link {
+    text-align: center;
+  }
+  .cmn-link a {
+    font-size: 16px;
+  }
+  .cmn-link a .one {
+    top: -3px;
+  }
+  .cmn-link a .two {
+    top: -3px;
+  }
+  /*-- End Company --*/
+  /*-- Location --*/
+  .location-area .cmn-link {
+    margin-bottom: 30px;
+  }
+  .location-area .section-title {
+    margin-bottom: 10px;
+  }
+  .location-area .owl-prev {
+    display: none !important;
+  }
+  .location-area .owl-next {
+    display: none !important;
+  }
+  /*-- End Location --*/
+  /*-- Feedback --*/
+  .feedback-area {
+    padding-bottom: 115px;
+  }
+  .feedback-area:before {
+    display: none;
+  }
+  .feedback-area .feedback-shape img {
+    height: 70px;
+  }
+  .feedback-area .owl-prev {
+    display: none !important;
+  }
+  .feedback-area .owl-next {
+    display: none !important;
+  }
+  /*-- End Feedback --*/
+  /*-- Blog --*/
+  .blog-area .section-title {
+    margin-bottom: 10px;
+  }
+  .blog-area .cmn-link {
+    margin-bottom: 30px;
+  }
+  .blog-item .cmn-link {
+    margin-bottom: 0;
+  }
+  .blog-item .cmn-link a {
+    font-size: 15px;
+  }
+  .blog-item .cmn-link a i.one {
+    top: -4px;
+  }
+  .blog-item .cmn-link a i.two {
+    top: -4px;
+  }
+  /*-- End Blog --*/
+  /*-- App --*/
+  .app-area {
+    text-align: center;
+  }
+  .app-area .app-content .section-title {
+    margin-bottom: 30px;
+  }
+  .app-area .app-content ul li {
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+  .app-area .app-content ul li:last-child {
+    margin-right: 5px;
+  }
+  .app-area .app-img img:nth-child(1) {
+    margin-top: 30px;
+  }
+  .app-area .app-img img:nth-child(2) {
+    display: none;
+  }
+  @keyframes app-ani {
+    50% {
+      transform: rotate(5deg);
+    }
+  }
+  /*-- End App --*/
+  /*-- Copyright --*/
+  .copyright-area {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+  }
+  .copyright-area .copyright-item ul {
+    margin-bottom: 10px;
+  }
+  .copyright-area .copyright-item ul li {
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+  .copyright-area .copyright-item p {
+    text-align: center;
+  }
+  /*-- End Copyright --*/
+  /*----- End Home Demo One CSS -----*/
+  /*----- Home Demo Two CSS -----*/
+  /*-- Banner --*/
+  .banner-area.two {
+    padding-bottom: 85px;
+  }
+  .banner-area.two .container-fluid {
+    padding-right: 15px;
+  }
+  .banner-area.two .banner-shape-two img:nth-child(2) {
+    display: none;
+  }
+  .banner-content.two {
+    height: 100%;
+  }
+  .banner-content.two h1 {
+    font-size: 35px;
+    margin-bottom: 20px;
+  }
+  .banner-img-two img:nth-child(1) {
+    margin-top: 30px;
+  }
+  .banner-img-two img:nth-child(2) {
+    display: none;
+  }
+  .banner-img-two img:nth-child(3) {
+    display: none;
+  }
+  .banner-img-two img:nth-child(4) {
+    display: none;
+  }
+  .side-nav.two .job-right {
+    color: #fff;
+  }
+  .side-nav.two .job-right:hover {
+    background-color: #fe4a55;
+  }
+  /*-- End Banner --*/
+  /*-- Support --*/
+  .support-area {
+    padding-top: 70px;
+  }
+  .support-area p {
+    margin-bottom: 30px;
+  }
+  .support-area .support-slider {
+    padding-right: 0;
+  }
+  .support-area .support-slider .owl-prev {
+    display: none !important;
+  }
+  .support-area .support-slider .owl-next {
+    display: none !important;
+  }
+  /*-- End Support --*/
+  /*-- Company --*/
+  .company-area.two .section-title {
+    margin-bottom: 30px;
+  }
+  .company-area.two .owl-prev {
+    display: none !important;
+  }
+  .company-area.two .owl-next {
+    display: none !important;
+  }
+  /*-- End Company --*/
+  /*-- Explore --*/
+  .explore-area.two .explore-item {
+    margin-left: auto;
+  }
+  .explore-area.two .explore-img {
+    position: relative;
+    top: 0;
+    right: 0;
+    max-width: 100%;
+    margin-top: 30px;
+  }
+  /*-- End Explore --*/
+  /*-- Categories --*/
+  .categories-area {
+    padding-top: 55px;
+  }
+  /*-- End Categories --*/
+  /*-- Work --*/
+  .work-item.two {
+    border-right: 0;
+  }
+  .work-item.two:after {
+    display: none;
+  }
+  /*-- End Work --*/
+  /*-- Candidate --*/
+  .candidate-area .owl-prev {
+    display: none !important;
+  }
+  .candidate-area .owl-next {
+    display: none !important;
+  }
+  .candidate-item .left {
+    max-width: 365px;
+  }
+  /*-- End Candidate --*/
+  /*-- Testimonial --*/
+  .testimonial-area {
+    text-align: center;
+    padding-bottom: 70px;
+  }
+  .testimonial-area .owl-prev {
+    display: none !important;
+  }
+  .testimonial-area .owl-next {
+    display: none !important;
+  }
+  .testimonial-area .section-title {
+    margin-right: auto;
+  }
+  .testimonial-area .testimonial-item {
+    padding-left: 0;
+  }
+  .testimonial-area .testimonial-item img {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+  }
+  .testimonial-area .testimonial-item p {
+    font-size: 18px;
+    margin-bottom: 25px;
+  }
+  /*-- End Testimonial --*/
+  /*-- Register --*/
+  .register-area .container .row {
+    padding-right: 0;
+  }
+  .register-area ul {
+    position: relative;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  .register-area ul li {
+    margin-right: 5px;
+  }
+  .register-area ul li a {
+    max-width: 130px;
+  }
+  /*-- End Register --*/
+  /*----- Home Demo Two CSS -----*/
+  /*----- Home Demo Three CSS -----*/
+  /*-- Navbar --*/
+  .side-nav.three .login-left {
+    color: #fff;
+  }
+  .side-nav.three .login-left i {
+    color: #fff;
+  }
+  .side-nav.three .job-right {
+    color: #fff;
+  }
+  /*-- End Navbar --*/
+  /*-- Banner --*/
+  .banner-area.three {
+    padding-bottom: 65px;
+  }
+  .banner-area.three .banner-shape-three img {
+    position: relative;
+    bottom: 0;
+    right: 0;
+    max-width: 100%;
+    margin-bottom: 30px;
+  }
+  .banner-content.three {
+    height: 100%;
+    padding-top: 0;
+  }
+  .banner-content.three h1 {
+    margin-bottom: 25px;
+  }
+  .banner-content.three .register-area {
+    margin-top: 30px;
+  }
+  /*-- End Banner --*/
+  /*-- Employer --*/
+  .employer-area {
+    padding-top: 130px;
+  }
+  /*-- End Employer --*/
+  /*-- Client --*/
+  .client-area .section-title {
+    margin-bottom: 30px;
+  }
+  .client-area .client-item p {
+    font-size: 16px;
+  }
+  .client-area .client-img img:nth-child(1) {
+    display: none;
+  }
+  .client-area .client-img img:nth-child(2) {
+    display: none;
+  }
+  .client-area .client-img img:nth-child(3) {
+    display: none;
+  }
+  .client-area .client-img img:nth-child(4) {
+    display: none;
+  }
+  .client-area .client-img img:nth-child(5) {
+    display: none;
+  }
+  .client-area .client-img img:nth-child(6) {
+    display: none;
+  }
+  .client-area .owl-prev {
+    display: none !important;
+  }
+  .client-area .owl-next {
+    display: none !important;
+  }
+  /*-- End Client --*/
+  /*----- Home Demo Three CSS -----*/
+  /*----- About CSS -----*/
+  .page-title-area {
+    height: 370px;
+  }
+  .page-title-area .title-item {
+    margin-top: 30px;
+  }
+  .page-title-area .title-item h2 {
+    font-size: 35px;
+  }
+  .new-area .new-img img:nth-child(2) {
+    display: none;
+  }
+  .new-area .about-content {
+    text-align: center;
+  }
+  /*----- End About CSS -----*/
+  /*----- Jobs CSS -----*/
+  .job-area-list .pagination-area {
+    margin-bottom: 30px;
+  }
+  .job-area-list .nice-select .list {
+    left: unset;
+    right: 0;
+  }
+  /*----- End Jobs CSS -----*/
+  /*----- Job Details CSS -----*/
+  .page-title-area.two {
+    text-align: center;
+    height: 520px;
+  }
+  .page-title-area.two .d-table-cell {
+    vertical-align: middle;
+  }
+  .page-title-area.two .left {
+    margin-bottom: 10px;
+    margin-top: 90px;
+  }
+  .page-title-area.two .left ul {
+    margin-bottom: 25px;
+  }
+  .job-details-area .details-item {
+    text-align: center;
+  }
+  .job-details-area .details-item .details-inner:last-child {
+    margin-bottom: 30px;
+  }
+  .job-details-area .details-item .details-inner h3 {
+    font-size: 20px;
+  }
+  .job-details-area .details-item .details-inner .owl-prev {
+    display: none !important;
+  }
+  .job-details-area .details-item .details-inner .owl-next {
+    display: none !important;
+  }
+  .video-wrap a {
+    width: 85px;
+    height: 85px;
+    line-height: 95px;
+  }
+  .video-wrap a:before {
+    width: 85px;
+    height: 85px;
+  }
+  .video-wrap a:after {
+    width: 85px;
+    height: 85px;
+  }
+  .job-details-related .section-title {
+    margin-top: -5px;
+  }
+  /*----- End Job Details CSS -----*/
+  /*----- Candidate Details CSS -----*/
+  .page-title-area.three {
+    height: 545px;
+  }
+  .page-title-area.three .left {
+    margin-top: 95px;
+  }
+  .page-title-area.two .left.two {
+    padding-left: 0;
+  }
+  .page-title-area.two .left.two img {
+    position: relative;
+    bottom: 0;
+  }
+  .person-details-area .details-item {
+    text-align: center;
+  }
+  .person-details-area .details-item .skills {
+    text-align: left;
+  }
+  .person-details-area .details-item .client {
+    text-align: left;
+  }
+  .person-details-area .details-item .review {
+    padding: 28px 15px 35px;
+    text-align: left;
+    margin-bottom: 30px;
+  }
+  .person-details-area .candidate-item .left {
+    max-width: 100%;
+  }
+  /*----- End Candidate Details CSS -----*/
+  /*----- User Form CSS -----*/
+  .user-form-area {
+    height: 100%;
+    padding-top: 70px;
+    padding-bottom: 70px;
+  }
+  .user-form-area .user-img {
+    background-image: unset;
+    height: 100%;
+  }
+  .user-form-area .user-img img {
+    display: block;
+    margin-bottom: 30px;
+  }
+  .user-form-area .user-content {
+    padding-left: 0;
+    text-align: center;
+    margin-left: auto;
+    padding-right: 0;
+  }
+  .user-form-area .user-content .top h2 {
+    font-size: 30px;
+  }
+  /*----- End User Form CSS -----*/
+  /*----- Employer Details CSS -----*/
+  .employer-details-area .client {
+    text-align: left;
+  }
+  .employer-details-area .review {
+    margin-bottom: 30px;
+  }
+  /*----- End Employer Details CSS -----*/
+  /*----- Feedback CSS -----*/
+  .feedback-area.two {
+    padding-bottom: 40px;
+  }
+  /*----- End Feedback CSS -----*/
+  /*----- Coming Soon CSS -----*/
+  .coming-soon-area .soon-item h1 {
+    font-size: 65px;
+  }
+  /*----- End Coming Soon CSS -----*/
+  /*----- Dashboard CSS -----*/
+  .dashboard-area .profile-content .profile-content-inner {
+    padding: 30px 30px 10px;
+  }
+  /*----- End Dashboard CSS -----*/
+  /*----- Resume CSS -----*/
+  .resume-area .widget-area .widget-item {
+    margin-bottom: 30px;
+  }
+  /*----- End Resume CSS -----*/
+}
+@media only screen and (min-width: 576px) and (max-width: 776px) {
+  .register-area .register-item p {
+    font-size: 13px;
+  }
+  .blog-item {
+    padding: 15px 10px 25px 10px;
+  }
+  .blog-item span {
+    padding-left: 25px;
+  }
+  .blog-item span:before {
+    width: 18px;
+  }
+  .blog-details-area .details-item .details-date .date-inner span {
+    font-size: 13px;
+    padding-left: 30px;
+  }
+  .blog-details-area .details-item .details-date .date-inner span:before {
+    width: 24px;
+  }
+  .job-area-list .job-list-item li {
+    flex: 0 0 60%;
+    max-width: 60%;
+  }
+  .job-area-list .job-list-item li:last-child {
+    flex: 0 0 40%;
+    max-width: 40%;
+    text-align: right;
+    margin-top: 0;
+  }
+  .job-area-list .nice-select .list {
+    left: unset;
+    right: 0;
+  }
+  .banner-content .banner-form-area .form-group .nice-select:after {
+    right: 0;
+  }
+  .work-item {
+    padding: 30px 30px 28px;
+  }
+  .contact-info-area .info-item {
+    padding: 30px 30px 30px;
+  }
+  .blog-item {
+    padding: 15px 15px 25px 15px;
+  }
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .main-nav nav .navbar-nav .nav-item a {
+    font-size: 15px;
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+  .navbar-light .navbar-brand, .navbar-light .navbar-brand:hover {
+    max-width: 115px;
+  }
+  .side-nav .job-right i {
+    display: none;
+  }
+  .side-nav .job-right {
+    height: 45px;
+    padding-left: 15px;
+    padding-right: 15px;
+    line-height: 45px;
+  }
+  .main-nav .container-fluid {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .side-nav .login-left {
+    margin-right: 6px;
+  }
+  .banner-img .inner {
+    display: none;
+  }
+  .banner-img img:nth-child(6) {
+    display: none;
+  }
+  .banner-img img:nth-child(5) {
+    display: none;
+  }
+  .banner-img img:nth-child(13) {
+    display: none;
+  }
+  .banner-area .container-fluid {
+    padding-left: 15px;
+  }
+  .banner-img img:nth-child(2) {
+    display: none;
+  }
+  .banner-img img:nth-child(4) {
+    display: none;
+  }
+  .banner-content h1 {
+    font-size: 60px;
+  }
+  .banner-content .banner-key ul li span {
+    margin-right: 5px;
+  }
+  .banner-content .banner-key ul li {
+    font-size: 14px;
+  }
+  .sorting-menu ul li {
+    font-size: 16px;
+    margin-right: 15px;
+  }
+  .counter-item {
+    padding-left: 80px;
+  }
+  .counter-item p {
+    font-size: 14px;
+  }
+  .company-item .top p {
+    font-size: 11px;
+  }
+  .company-item .top span {
+    padding: 4px 5px;
+    font-size: 12px;
+  }
+  .company-item .top h3 {
+    font-size: 17px;
+  }
+  .company-item {
+    padding: 25px 10px 25px;
+  }
+  .feedback-area .owl-prev {
+    display: none !important;
+  }
+  .feedback-area .owl-next {
+    display: none !important;
+  }
+  .blog-item h3 {
+    font-size: 18px;
+    margin-bottom: 18px;
+  }
+  .banner-content.two h1 {
+    font-size: 50px;
+  }
+  .banner-area.two .container-fluid {
+    padding-right: 15px;
+  }
+  .banner-img-two img:nth-child(3) {
+    left: 35px;
+  }
+  .explore-area.two .explore-img {
+    top: -42px;
+    max-width: 475px;
+  }
+  .categories-area .nav-pills a {
+    font-size: 18px;
+  }
+  .categories-area .cat-item {
+    padding: 20px 10px 20px 50px;
+  }
+  .categories-area .cat-item h3 {
+    font-size: 14px;
+  }
+  .candidate-item img {
+    max-width: 225px;
+  }
+  .candidate-item .left {
+    max-width: 180px;
+  }
+  .candidate-area .owl-prev {
+    display: none !important;
+  }
+  .candidate-area .owl-next {
+    display: none !important;
+  }
+  .testimonial-area .owl-next {
+    display: none !important;
+  }
+  .testimonial-area .owl-prev {
+    display: none !important;
+  }
+  .register-area .container .row {
+    padding-right: 370px;
+  }
+  #toTop {
+    bottom: 55px;
+    right: 20px;
+  }
+  .banner-area.three .banner-shape-three img {
+    right: 10px;
+    max-width: 435px;
+  }
+  .employer-item {
+    padding: 25px 5px 25px 85px;
+  }
+  .employer-item p {
+    font-size: 14px;
+  }
+  .pricing-item {
+    padding: 25px 10px 30px;
+  }
+  .client-area .client-img img:nth-child(5) {
+    top: 295px;
+    max-width: 95px;
+  }
+  .client-area .client-img img:nth-child(2) {
+    top: 295px;
+    max-width: 95px;
+  }
+  .client-area .owl-prev {
+    display: none !important;
+  }
+  .client-area .owl-next {
+    display: none !important;
+  }
+  .counter-area:before {
+    width: 20px;
+  }
+  .work-item {
+    padding: 30px 15px 28px;
+  }
+  .work-item.two {
+    padding: 0 15px;
+  }
+  .candidate-item {
+    padding: 5px 25px 5px;
+  }
+  .testimonial-area .testimonial-item {
+    padding-left: 235px;
+  }
+  .support-area .support-item img {
+    max-width: 110px;
+  }
+  .banner-content .banner-form-area .form-group .form-control {
+    padding-left: 12px;
+    font-size: 12px;
+  }
+  .banner-content .banner-form-area .form-group label {
+    left: -10px;
+  }
+}
+@media only screen and (min-width: 1199px) and (max-width: 1300px) {
+  .company-item .top p {
+    font-size: 11px;
+  }
+  .company-item .top h3 a {
+    font-size: 14px;
+  }
+}
+@media only screen and (min-width: 1300px) and (max-width: 1350px) {
+  .banner-img img:nth-child(13) {
+    max-width: 105px;
+  }
+  .banner-img img:nth-child(6) {
+    top: 327px;
+    right: 480px;
+    max-width: 40px;
+  }
+}
+@media only screen and (min-width: 1199px) and (max-width: 1300px) {
+  .main-nav nav .navbar-nav .nav-item a {
+    font-size: 15px;
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+  .navbar-light .navbar-brand, .navbar-light .navbar-brand:hover {
+    max-width: 115px;
+  }
+  .side-nav .job-right i {
+    display: none;
+  }
+  .side-nav .job-right {
+    height: 45px;
+    padding-left: 15px;
+    padding-right: 15px;
+    line-height: 45px;
+  }
+  .main-nav .container-fluid {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .side-nav .login-left {
+    margin-right: 10px;
+  }
+  .banner-img .inner {
+    display: none;
+  }
+  .banner-img img:nth-child(6) {
+    display: none;
+  }
+  .banner-img img:nth-child(5) {
+    display: none;
+  }
+  .banner-img img:nth-child(13) {
+    display: none;
+  }
+  .banner-area .container-fluid {
+    padding-left: 15px;
+  }
+  .banner-img img:nth-child(2) {
+    display: none;
+  }
+  .banner-img img:nth-child(4) {
+    display: none;
+  }
+  .banner-content h1 {
+    font-size: 60px;
+  }
+  .banner-content .banner-key ul li span {
+    margin-right: 5px;
+  }
+  .banner-content .banner-key ul li {
+    font-size: 14px;
+  }
+}
+@media only screen and (min-width: 1800px) {
+  .main-nav .container-fluid {
+    padding-left: 120px;
+    padding-right: 120px;
+  }
+  .banner-area .container-fluid {
+    padding-left: 120px;
+  }
+  .banner-area.two .container-fluid {
+    padding-right: 120px;
+  }
+  .banner-area.three .banner-shape-three img {
+    max-width: 915px;
+  }
+  .feature-item .bottom h3 {
+    font-size: 19px;
+  }
+}
+@media only screen and (max-width: 991px) {
+  .mean-container .mean-bar {
+    background-color: #172f47;
+  }
+  .mobile-nav .logo {
+    top: 10px;
+    max-width: 105px;
+  }
+  .mean-container a.meanmenu-reveal span {
+    margin-top: 30px;
+    position: relative;
+    top: -10px;
+  }
+  .mobile-nav.mean-container .mean-nav ul li a.active {
+    color: #fe4a55;
+  }
+  .tooltip-span {
+    display: none;
+  }
+  .navbar-nav {
+    height: 350px;
+    overflow-y: scroll;
+  }
+}
+@media (min-width: 1300px) {
+  .container, .container-lg, .container-md, .container-sm, .container-xl {
+    max-width: 1320px;
+    width: 100%;
+  }
+}/*# sourceMappingURL=responsive.css.map */
