@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using TimeSwap.Domain.Entities;
+using TimeSwap.Infrastructure.Identity;
 
-namespace TimeSwap.Infrastructure.Data
+namespace TimeSwap.Infrastructure.Persistence.DbContexts
 {
-    public class UserIdentityDbContext : IdentityDbContext<User>
+    public class UserIdentityDbContext : IdentityDbContext<ApplicationUser>
     {
         public UserIdentityDbContext(DbContextOptions<UserIdentityDbContext> options) : base(options)
         {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace TimeSwap.Domain.Entities
+namespace TimeSwap.Infrastructure.Identity
 {
-    public class User : IdentityUser
+    public class ApplicationUser : IdentityUser
     {
         public string FirstName { get; set; } = string.Empty;
 
