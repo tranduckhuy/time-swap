@@ -79,7 +79,7 @@ button:focus {
 }
 
 .main-nav {
-    background: #161616;
+    background: transparent;
     transition: 0.5s all ease;
 }
 .main-nav .container-fluid {
@@ -3664,15 +3664,16 @@ button:focus {
     margin-right: 3px;
     margin-left: 3px;
 }
-.pagination-area ul li a {
+.pagination-area ul li button {
     text-align: center;
     padding: 5px 15px;
     border-radius: 5px;
     border: 1px dashed #fe4a55;
     display: inline-block;
     color: #fe4a55;
+    background-color: transparent;
 }
-.pagination-area ul li a:hover {
+.pagination-area ul li button:not(:disabled):hover {
     color: #fff;
     background-color: #fe4a55;
 }
@@ -4677,6 +4678,9 @@ button:focus {
     border-radius: 5px;
     margin-bottom: 50px;
 }
+.job-showing-area .showing .row {
+    align-items: center;
+}
 .job-showing-area .showing .left .form-group {
     margin-bottom: 0;
 }
@@ -4692,6 +4696,11 @@ button:focus {
 .job-showing-area .showing .left .form-group .nice-select .list {
     width: 100%;
     display: block;
+}
+.job-showing-area .showing .right h4 {
+    margin: 0;
+    padding: 0;
+    text-align: right;
 }
 .job-showing-area .showing .right ul {
     margin: 0;
