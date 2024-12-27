@@ -1,16 +1,16 @@
 ﻿using MediatR;
+using TimeSwap.Application.Interfaces.Services;
 using TimeSwap.Application.Responses;
-using TimeSwap.Domain.Repositories;
 
 namespace TimeSwap.Application.Commands.Handlers
 {
     public class UserRegistrationHandler : IRequestHandler<UserRegistrationCommand, AuthenticationResponse>
     {
-        private readonly IAuthRepository _authRepository;
+        private readonly IAuthService _authService;
 
-        public UserRegistrationHandler(IAuthRepository authRepository)
+        public UserRegistrationHandler(IAuthService authService)
         {
-            _authRepository = authRepository;
+            _authService = authService;
         }
 
         public Task<AuthenticationResponse> Handle(UserRegistrationCommand request, CancellationToken cancellationToken)
