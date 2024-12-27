@@ -42,13 +42,13 @@ namespace TimeSwap.Infrastructure.Extensions
                 var adminRole = new IdentityRole(nameof(Role.Admin));
                 var userRole = new IdentityRole(nameof(Role.User));
 
-                if (!context.Roles.Any())
+                if (!await context.Roles.AnyAsync())
                 {
                     await roleManager.CreateAsync(adminRole);
                     await roleManager.CreateAsync(userRole);
                 }
 
-                if (!context.Users.Any())
+                if (!await context.Users.AnyAsync())
                 {
                     var adminUser = new ApplicationUser
                     {
@@ -94,7 +94,7 @@ namespace TimeSwap.Infrastructure.Extensions
 
             if (await context.Database.EnsureCreatedAsync())
             {
-                if (!context.Locations.Any())
+                if (!await context.Locations.AnyAsync())
                 {
                     var locations = new List<Location>
                     {
@@ -120,7 +120,7 @@ namespace TimeSwap.Infrastructure.Extensions
                     await context.Locations.AddRangeAsync(locations);
                 }
 
-                if (!context.UserProfiles.Any())
+                if (!await context.UserProfiles.AnyAsync())
                 {
                     var userProfiles = new List<UserProfile>
                     {
@@ -150,7 +150,7 @@ namespace TimeSwap.Infrastructure.Extensions
                     await context.UserProfiles.AddRangeAsync(userProfiles);
                 }
 
-                if (!context.Categories.Any())
+                if (!await context.Categories.AnyAsync())
                 {
                     var categories = new List<Category>
                     {
@@ -169,7 +169,7 @@ namespace TimeSwap.Infrastructure.Extensions
                     await context.Categories.AddRangeAsync(categories);
                 }
 
-                if (!context.Industries.Any())
+                if (!await context.Industries.AnyAsync())
                 {
                     var industries = new List<Industry>
                     {
@@ -188,7 +188,7 @@ namespace TimeSwap.Infrastructure.Extensions
                     await context.Industries.AddRangeAsync(industries);
                 }
 
-                if (!context.JobPosts.Any())
+                if (!await context.JobPosts.AnyAsync())
                 {
                     var jobPosts = new List<JobPost>
                     {
@@ -222,7 +222,7 @@ namespace TimeSwap.Infrastructure.Extensions
                     await context.JobPosts.AddRangeAsync(jobPosts);
                 }
 
-                if (!context.JobApplicants.Any())
+                if (!await context.JobApplicants.AnyAsync())
                 {
                     var jobApplicants = new List<JobApplicant>
                     {
@@ -238,7 +238,7 @@ namespace TimeSwap.Infrastructure.Extensions
                     await context.JobApplicants.AddRangeAsync(jobApplicants);
                 }
 
-                if (!context.Reviews.Any())
+                if (!await context.Reviews.AnyAsync())
                 {
                     var reviews = new List<Review>
                     {
@@ -263,7 +263,7 @@ namespace TimeSwap.Infrastructure.Extensions
                     await context.Reviews.AddRangeAsync(reviews);
                 }
 
-                if (!context.ReviewsCriteria.Any())
+                if (!await context.ReviewsCriteria.AnyAsync())
                 {
                     var reviewCriterias = new List<ReviewCriteria>
                     {
