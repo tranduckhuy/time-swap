@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TimeSwap.Infrastructure\TimeSwap.Infrastructure.csproj" />
+    <ProjectReference Include="..\TimeSwap.Domain\TimeSwap.Domain.csproj" />
   </ItemGroup>
 
 </Project>
