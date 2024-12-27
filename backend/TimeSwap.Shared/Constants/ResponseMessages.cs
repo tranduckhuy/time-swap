@@ -4,7 +4,7 @@
     /// This section contains success messages for the API response.
     /// </summary>
     #region SuccessMessages
-    public class SuccessMessages
+    public static class SuccessMessages
     {
         private static readonly Dictionary<SuccessCode, string> _messages = new Dictionary<SuccessCode, string>
         {
@@ -21,7 +21,7 @@
     /// This section contains error messages for the API response.
     /// </summary>
     #region ErrorMessages
-    public class ErrorMessages
+    public static class ErrorMessages
     {
         private static readonly Dictionary<ErrorCode, string> _messages = new Dictionary<ErrorCode, string>
         {
