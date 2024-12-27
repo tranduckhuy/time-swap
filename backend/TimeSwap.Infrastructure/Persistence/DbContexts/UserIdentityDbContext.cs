@@ -9,10 +9,5 @@ namespace TimeSwap.Infrastructure.Persistence.DbContexts
         public UserIdentityDbContext(DbContextOptions<UserIdentityDbContext> options) : base(options)
         {
         }
-
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-        }
     }
 }
