@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TimeSwap.Application\TimeSwap.Application.csproj" />
+    <ProjectReference Include="..\TimeSwap.Infrastructure\TimeSwap.Infrastructure.csproj" />
     <ProjectReference Include="..\TimeSwap.Shared\TimeSwap.Shared.csproj" />
   </ItemGroup>
 
