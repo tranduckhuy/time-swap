@@ -16,5 +16,9 @@ export const authLayoutRoutes: Routes = [
         path: 'auth',
         component: AuthLayoutComponent,
         loadChildren: () => import('./core/auth/auth.routes').then(mod => mod.authRoutes)
+    },
+    {
+        path: 'coming-soon',
+        loadComponent: () => import('./shared/components/coming-soon/coming-soon.component').then(mod => mod.ComingSoonComponent)
     }
 ]
