@@ -1,50 +1,5 @@
 <div class="tab-pane" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-    <div class="employer-item">
-        <a href="job-details.html">
-            <img src="assets/img/home-one/job1.png" alt="Employer">
-            <h3>Product Designer</h3>
-            <ul>
-                <li>
-                    <i class="flaticon-send"></i>
-                    Los Angeles, CS, USA
-                </li>
-                <li>5 months ago</li>
-            </ul>
-            <p>We are Looking for a skilled Ul/UX designer amet conscu adiing elitsed do eusmod tempor</p>
-            <span class="span-one">Accounting</span>
-            <span class="span-two">FULL TIME</span>
-        </a>
-    </div>
-    <div class="employer-item">
-        <a href="job-details.html">
-            <img src="assets/img/home-one/job2.png" alt="Employer">
-            <h3>Sr. Shopify Developer</h3>
-            <ul>
-                <li>
-                    <i class="flaticon-send"></i>
-                    Houston, TX, USA
-                </li>
-                <li>4 months ago</li>
-            </ul>
-            <p>Responsible for managing skilled Ul/UX designer amet conscu adiing elitsed do eusmod</p>
-            <span class="span-one">Accounting</span>
-            <span class="span-two two">FULL TIME</span>
-        </a>
-    </div>
-    <div class="employer-item">
-        <a href="job-details.html">
-            <img src="assets/img/home-one/job3.png" alt="Employer">
-            <h3>Tax Manager</h3>
-            <ul>
-                <li>
-                    <i class="flaticon-send"></i>
-                    Ho Chi Minh City, Vietnam
-                </li>
-                <li>6 months ago</li>
-            </ul>
-            <p>International collaborative a skilled Ul/UX designer amet conscu adiing elitsed do eusmod</p>
-            <span class="span-one two">Broardcasting</span>
-            <span class="span-two three">FREELANCER</span>
-        </a>
-    </div>
+    @for (job of postedJobs; track job.title) {
+        <app-job-post [job]="job"/>
+    }
 </div>
