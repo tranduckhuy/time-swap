@@ -1,0 +1,16 @@
+<div class="employer-item">
+  <a [href]="job().link">
+      <img [src]="job().image" [alt]="job().title">
+      <h3>{{ job().title }}</h3>
+      <ul>
+          <li>
+              <i class="flaticon-send"></i>
+              {{ job().location }}
+          </li>
+          <li>{{ job().postedTime }}</li>
+      </ul>
+      <p>{{ job().description }}</p>
+      <span class="span-one">{{ job().category }}</span>
+      <span class="span-two">{{ job().jobType }}</span>
+  </a>
+</div>
