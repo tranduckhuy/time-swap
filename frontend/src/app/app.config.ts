@@ -16,7 +16,7 @@ export const appConfig: ApplicationConfig = {
       [...defaultLayoutRoutes, ...authLayoutRoutes], 
       withComponentInputBinding(), 
       withRouterConfig({
-        paramsInheritanceStrategy: 'always'
+        paramsInheritanceStrategy: 'always',
       }
     ),
   )]
