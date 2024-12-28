@@ -80,6 +80,7 @@ button:focus {
 
 .main-nav {
     background: transparent;
+    background: transparent;
     transition: 0.5s all ease;
 }
 .main-nav .container-fluid {
@@ -3805,27 +3806,30 @@ button:focus {
     border-radius: 5px;
     border: 1px dashed #fe4a55;
 }
-.job-area-list .job-list-right .job-list-all .search {
+/* .job-area-list .job-list-right .job-list-all .search {
     border-bottom: 1px solid #e9e9e9;
-}
-.job-area-list .job-list-right .job-list-all .search form {
+} */
+.job-area-list .job-list-right .job-list-all .search {
     position: relative;
     margin-bottom: 30px;
 }
-.job-area-list .job-list-right .job-list-all .search form .form-control {
+.job-area-list .job-list-right .job-list-all .search .form-control,
+.fee-control {
     height: 45px;
-    border-radius: 5px;
-    border: 1px solid #e1e1e1;
-    font-size: 14px;
     padding-left: 15px;
+    border: 1px solid #e1e1e1;
+    border-radius: 5px;
+    margin-bottom: 30px;
+    font-size: 14px;
 }
-.job-area-list .job-list-right .job-list-all .search form .form-control:focus {
+.job-area-list .job-list-right .job-list-all .search .form-control:focus,
+.fee-control:focus {
     box-shadow: none;
     border: 1px solid #fe4a55;
 }
-.job-area-list .job-list-right .job-list-all .search form .btn {
+.job-area-list .job-list-right .job-list-all .search .btn {
     position: absolute;
-    top: 0;
+    top: 48px;
     right: 0;
     transition: 0.5s all ease;
     color: #fff;
@@ -3836,7 +3840,7 @@ button:focus {
     padding-right: 12px;
     font-size: 20px;
 }
-.job-area-list .job-list-right .job-list-all .search form .btn:hover {
+.job-area-list .job-list-right .job-list-all .search .btn:hover {
     background-color: #221668;
 }
 .job-area-list .job-list-right .job-list-all .search .job-cmn-cat {
@@ -3900,17 +3904,20 @@ button:focus {
     color: #fe4a55;
     font-weight: 500;
 }
-.job-area-list .job-list-right .job-list-all .salary .form-group {
-    margin-bottom: 0;
+.job-area-list .job-list-right .job-list-all .salary .left .fee-control {
+    margin: 20px 10px 0 0;
 }
-.job-area-list .job-list-right .job-list-all .salary .form-group .range {
+.job-area-list .job-list-right .job-list-all .salary .right .fee-control {
+    margin: 20px 0 0 10px;
+}
+/* .job-area-list .job-list-right .job-list-all .salary .form-group .range {
     color: #fe4a55;
     font-weight: 500;
     margin-top: 15px;
-}
-.job-area-list .job-list-right .job-list-all .level {
+} */
+.job-area-list .job-list-right .job-list-all {
     padding-top: 22px;
-    border-top: 1px solid #e9e9e9;
+    /* border-top: 1px solid #e9e9e9; */
 }
 .job-area-list .job-list-right .job-list-all .level .btn {
     margin-top: 20px;
@@ -4260,7 +4267,7 @@ button:focus {
     padding: 25px 30px 30px;
     margin-bottom: 30px;
 }
-.widget-area .widget-item:last-child {
+.widget-area .widget-item:last-child:not(.job.widget-item) {
     margin-bottom: 0;
 }
 .widget-area .widget-item h3 {
@@ -6205,9 +6212,9 @@ button:focus {
 .dashboard-area .profile-content .dashboard-btn:hover {
     background-color: #221668;
 }
-.dashboard-area .employer-item:last-child {
+/* .dashboard-area .employer-item:last-child {
     margin-bottom: 0;
-}
+} */
 
 /*----- End Dashboard CSS -----*/
 /*----- Resume CSS -----*/
@@ -6272,7 +6279,7 @@ button:focus {
 /*----- Back to Top -----*/
 #toTop {
     position: fixed;
-    bottom: 30px;
+    bottom: 15px;
     right: 30px;
     cursor: pointer;
     display: none;
