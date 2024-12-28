@@ -15,10 +15,10 @@ export class LoginComponent implements OnInit {
   form!: FormGroup;
   userId = signal<string>('');
 
-  private fb = inject(FormBuilder);
-  private authService = inject(AuthService);
-  private destroyRef = inject(DestroyRef);
-  private router = inject(Router);
+  private readonly fb = inject(FormBuilder);
+  private readonly authService = inject(AuthService);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly router = inject(Router);
 
   ngOnInit(): void {
     this.initForm();
