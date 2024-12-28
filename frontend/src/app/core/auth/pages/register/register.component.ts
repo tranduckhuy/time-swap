@@ -18,10 +18,10 @@ import { RegisterRequestModel } from '../../../../shared/models/request/register
 export class RegisterComponent implements OnInit {
   form!: FormGroup;
 
-  private authService = inject(AuthService)
-  private destroyRef = inject(DestroyRef);
-  private fb = inject(FormBuilder);
-  private router = inject(Router);
+  private readonly authService = inject(AuthService)
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly fb = inject(FormBuilder);
+  private readonly router = inject(Router);
 
   ngOnInit(): void {
     this.initForm();
