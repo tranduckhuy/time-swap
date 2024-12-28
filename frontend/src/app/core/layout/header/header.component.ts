@@ -13,8 +13,8 @@ import { filter } from 'rxjs';
 export class HeaderComponent {
   isHome = signal<boolean>(false);
   
-  private router = inject(Router);
-  private destroyRef = inject(DestroyRef);
+  private readonly router = inject(Router);
+  private readonly destroyRef = inject(DestroyRef);
 
   constructor() {
     const subscription = this.router.events
