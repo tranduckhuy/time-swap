@@ -6212,9 +6212,9 @@ button:focus {
 .dashboard-area .profile-content .dashboard-btn:hover {
     background-color: #221668;
 }
-.dashboard-area .employer-item:last-child {
+/* .dashboard-area .employer-item:last-child {
     margin-bottom: 0;
-}
+} */
 
 /*----- End Dashboard CSS -----*/
 /*----- Resume CSS -----*/
