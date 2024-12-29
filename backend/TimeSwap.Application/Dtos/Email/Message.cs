@@ -6,8 +6,8 @@ namespace TimeSwap.Application.Dtos.Email
     public class Message
     {
         public List<MailboxAddress> To { get; set; } = [];
-        public string Subject { get; set; } = string.Empty;
-        public string Content { get; set; } = string.Empty;
+        public string Subject { get; set; }
+        public string Content { get; set; }
         public IFormFileCollection? Attachments { get; set; }
 
 
