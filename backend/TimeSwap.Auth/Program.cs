@@ -2,8 +2,10 @@ using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
+using TimeSwap.Auth.Mappings;
 using TimeSwap.Infrastructure.Extensions;
 using TimeSwap.Infrastructure.Identity;
+using TimeSwap.Infrastructure.Middlewares;
 using TimeSwap.Infrastructure.Persistence.DbContexts;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -53,8 +55,9 @@ builder.Services.AddApplicationJwtAuth(builder.Configuration);
 builder.Services.AddAuthorization();
 
 builder.Services.AddDatabase<UserIdentityDbContext>(builder.Configuration);
-
 builder.Services.AddHealthChecks().Services.AddDbContext<UserIdentityDbContext>();
+builder.Services.AddAutoMapper(typeof(AuthMappingProfile));
+builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
@@ -69,6 +72,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors("AllowAll");
+
+app.UseMiddleware<TokenValidationMiddleware>();
 
 app.UseAuthentication();
 
