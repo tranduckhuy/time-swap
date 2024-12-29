@@ -179,3 +179,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+backend/TimeSwap.Api/appsettings.json
+
+backend/TimeSwap.Auth/appsettings.json

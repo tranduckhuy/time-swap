@@ -1,26 +1,30 @@
 ﻿namespace TimeSwap.Shared.Constants
 {
-    /// <summary>
-    /// This class contains all the status codes for the application 1xxx
-    /// </summary>
-    #region SuccessCodes
-    public enum SuccessCode
+    public enum StatusCode
     {
-        Register = 1000,
-        Login = 1001,
-        Update = 1002
-    }
-    #endregion
+        /// <summary>
+        /// Success Codes
+        /// </summary>
+        RequestProcessedSuccessfully = 1000,
+        ConfirmationEmailSent = 1001,
+        LoginSuccessful = 1002,
+        ResetPasswordEmailSent = 1003,
+        PasswordResetSuccessful = 1004,
 
-    /// <summary>
-    /// This class contains all the error codes for the application 2xxx
-    /// </summary>
-    #region ErrorCodes
-    public enum ErrorCode
-    {
-        RegisterFailed = 2000,
-        LoginFailed = 2001,
-        ValidationFailed = 2002
+        /// <summary>
+        /// Error Codes 2xxx
+        /// </summary>
+        ModelInvalid = 2000,
+        EmailAlreadyExists = 2001,
+        RegisterFailed = 2002,
+        UserNotExists = 2003,
+        UserNotConfirmed = 2004,
+        InvalidCredentials = 2005,
+        UserAuthenticationFailed = 2006,
+        ConfirmEmailTokenInvalidOrExpired = 2007,
+        UserAlreadyConfirmed = 2008,
+        InvalidToken = 2009,
+        ProvidedInformationIsInValid = 2010,
+        TokenIsBlacklisted = 2011,
     }
-    #endregion
 }

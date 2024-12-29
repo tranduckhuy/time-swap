@@ -1,36 +1,31 @@
 ﻿namespace TimeSwap.Shared.Constants
 {
-    /// <summary>
-    /// This section contains success messages for the API response.
-    /// </summary>
-    #region SuccessMessages
-    public static class SuccessMessages
+    public static class ResponseMessages
     {
-        private static readonly Dictionary<SuccessCode, string> _messages = new Dictionary<SuccessCode, string>
+        private static readonly Dictionary<StatusCode, string> _messages = new Dictionary<StatusCode, string>
         {
-            { SuccessCode.Register, "Register success." },
-            { SuccessCode.Login, "Login success." },
-            { SuccessCode.Update, "Update success." }
+            // Success messages
+            { StatusCode.RequestProcessedSuccessfully, "Request processed successfully." },
+            { StatusCode.ConfirmationEmailSent, "Confirmation email sent." },
+            { StatusCode.LoginSuccessful, "Login successful." },
+            { StatusCode.ResetPasswordEmailSent, "Reset password email sent." },
+            { StatusCode.PasswordResetSuccessful, "Password reset successful." },
+
+            // Error messages
+            { StatusCode.ModelInvalid, "Model is invalid." },
+            { StatusCode.EmailAlreadyExists, "Email already exists." },
+            { StatusCode.RegisterFailed, "Register failed." },
+            { StatusCode.UserNotExists, "User does not exist in the system." },
+            { StatusCode.UserNotConfirmed, "User is not confirmed." },
+            { StatusCode.InvalidCredentials, "Invalid credentials. Please try again." },
+            { StatusCode.UserAuthenticationFailed, "User authentication failed." },
+            { StatusCode.ConfirmEmailTokenInvalidOrExpired, "Confirm email token is invalid or expired." },
+            { StatusCode.UserAlreadyConfirmed, "User is already confirmed." },
+            { StatusCode.InvalidToken, "Invalid token." },
+            { StatusCode.ProvidedInformationIsInValid, "Provided information is invalid." },
+            { StatusCode.TokenIsBlacklisted, "Token is blacklisted." }
         };
 
-        public static string GetMessage(SuccessCode code) => _messages[code];
+        public static string GetMessage(StatusCode code) => _messages[code];
     }
-    #endregion
-
-    /// <summary>
-    /// This section contains error messages for the API response.
-    /// </summary>
-    #region ErrorMessages
-    public static class ErrorMessages
-    {
-        private static readonly Dictionary<ErrorCode, string> _messages = new Dictionary<ErrorCode, string>
-        {
-            { ErrorCode.RegisterFailed, "Register failed. Please try again." },
-            { ErrorCode.LoginFailed, "Login failed. Invalid credentials." },
-            { ErrorCode.ValidationFailed, "Validation failed. Please check your input." }
-        };
-
-        public static string GetMessage(ErrorCode code) => _messages[code];
-    }
-    #endregion
 }

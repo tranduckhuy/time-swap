@@ -6,6 +6,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using TimeSwap.Application.Interfaces.Services;
 using TimeSwap.Domain.Interfaces.Repositories;
+using TimeSwap.Infrastructure.Authentication;
+using TimeSwap.Infrastructure.Configurations;
+using TimeSwap.Infrastructure.Email;
 using TimeSwap.Infrastructure.Identity;
 using TimeSwap.Infrastructure.Persistence.DbContexts;
 using TimeSwap.Infrastructure.Persistence.Repositories;
@@ -14,10 +17,23 @@ namespace TimeSwap.Infrastructure.Extensions
 {
     public static class InfrastructureExtension
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = configuration["Redis:ConnectionString"];
+                options.InstanceName = configuration["Redis:InstanceName"];
+            });
+
             services.AddScoped<IAuthService, AuthService>();
+
+            var emailConfig = configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
+            services.AddSingleton(emailConfig ?? throw new InvalidDataException("EmailConfiguration is missing in appsettings.json"));
+            services.AddScoped<IEmailService, EmailService>();
             services.AddScoped(typeof(IAsyncRepository<,>), typeof(RepositoryBase<,>));
+            services.AddScoped<ITokenBlackListService, TokenBlackListService>();
+            services.AddSingleton<JwtHandler>();
+
             return services;
         }
 
