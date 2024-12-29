@@ -17,7 +17,7 @@ namespace TimeSwap.Api.Controllers
             _mediator = mediator;
         }
 
-        private BadRequestObjectResult ValidateRequest<TRequest, TResponse>(TRequest request)
+        private BadRequestObjectResult ValidateRequest<TRequest, TResponse>()
             where TRequest : class, IRequest<TResponse>
         {
             if (!ModelState.IsValid)
@@ -42,7 +42,7 @@ namespace TimeSwap.Api.Controllers
         protected async Task<IActionResult> ExecuteAsync<TRequest, TResponse>(TRequest request)
             where TRequest : class, IRequest<TResponse>
         {
-            var validationResult = ValidateRequest<TRequest, TResponse>(request);
+            var validationResult = ValidateRequest<TRequest, TResponse>();
             if (validationResult != null)
             {
                 return validationResult;

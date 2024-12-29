@@ -58,7 +58,7 @@ namespace TimeSwap.Infrastructure.Email
 
             try
             {
-                _logger.LogInformation("Sending email...");
+                _logger.LogInformation("Sending email to {email}", mailMessage.To);
                 await client.ConnectAsync(_emailConfiguration.SmtpServer, _emailConfiguration.Port, true);
                 client.AuthenticationMechanisms.Remove("XOAUTH2");
                 await client.AuthenticateAsync(_emailConfiguration.From, _emailConfiguration.Password);
@@ -67,8 +67,7 @@ namespace TimeSwap.Infrastructure.Email
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while sending the email.");
-                _logger.LogError("Email: {email}", mailMessage.To);
+                _logger.LogError(ex, "An error occurred while sending email to `{email}`", mailMessage.To);
             }
             finally
             {
