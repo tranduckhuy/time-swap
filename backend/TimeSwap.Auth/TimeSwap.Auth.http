@@ -1,5 +1,5 @@
-@TimeSwap.Auth_HostAddress = http://localhost:9001
-@access_token = access_token
+@TimeSwap.Auth_HostAddress = https://localhost:9001
+@access_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiaHV5dGRlLmRldkBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJodXl0ZGUuZGV2QGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMWExYTFhMWEtMWExYS0xYTFhLTFhMWEtMWExYTFhMWExYTFhIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3MzU0NzA4NTcsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjkwMDEiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo0MjAwIn0.cwD7DIdemWJCyuuxTXFVN4IjGJEz0noFCvl-f6XTSYI
 
 POST {{TimeSwap.Auth_HostAddress}}/api/auth/register
 Accept: application/json
@@ -11,7 +11,73 @@ Content-Type: application/json
   "phoneNumber": "string",
   "password": "string123@A",
   "confirmPassword": "string123@A",
-  "clientUri": "https://localhost:4200/api/auth/confirm-email"
+  "clientUri": "https://localhost:9001/api/auth/confirm-email"
 }
 
 ###
+POST {{TimeSwap.Auth_HostAddress}}/api/auth/login
+Accept: application/json
+Content-Type: application/json
+{
+  "email": "abc@gmail.com",
+  "password": "string123@A"
+}
+
+###
+POST {{TimeSwap.Auth_HostAddress}}/api/auth/login
+Accept: application/json
+Content-Type: application/json
+{
+  "email": "huytde.dev@gmail.com",
+  "password": "Admin11@"
+}
+
+###
+POST {{TimeSwap.Auth_HostAddress}}/api/auth/forgot-password
+Accept: application/json
+Content-Type: application/json
+{
+  "email": "destinyjustisalie@gmail.com",
+  "clientUri": "https://localhost:9001/api/auth/reset-password"
+}
+
+###
+POST {{TimeSwap.Auth_HostAddress}}/api/auth/reset-password
+Accept: application/json
+Content-Type: application/json
+{
+  "email": "destinyjustisalie@gmail.com",
+  "token": "CfDJ8Bmcl3eMdB1Opbsq/uHV6MOs5/9rjLueVYMaQJ9/3yc33l0JN2qjC1tSXMKur1IpViI0C8457W2G4q34VPmJVj6ALbu6LfJcrxIp85LsHpdXs66FBxgjS7wejcL1SjERHi2NpLdKMvTrsmJ2HIFm05GTFsplRyn9AU3DxATa7dHkBk6RBX14xFretvWy+iBAIskXaDslXz8lEwWbCEC8T+Pw5qNSHda1yOUFll+RxyC1",
+  "password": "string11@A",
+  "confirmPassword": "string11@A"
+}
+
+###
+POST {{TimeSwap.Auth_HostAddress}}/api/auth/resend-confirmation-email
+Accept: application/json
+Content-Type: application/json
+{
+  "email": "destinyjustisalie@gmail.com",
+  "clientUri": "https://localhost:9001/api/auth/confirm-email"
+}
+
+###
+POST {{TimeSwap.Auth_HostAddress}}/api/auth/refresh-token
+Accept: application/json
+Content-Type: application/json
+{
+  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiaHV5dGRlLmRldkBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJodXl0ZGUuZGV2QGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMWExYTFhMWEtMWExYS0xYTFhLTFhMWEtMWExYTFhMWExYTFhIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3MzU0NzAxMzQsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjkwMDEiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo0MjAwIn0.VHqNErD28CYxlW2NsTNKO18zS-hOXiUjSMgELUdXD4Y",
+  "refreshToken": "htcLb56ImfRXUq8KymZiN/BIBya2o9fSb1/yYkw6An5OHTbSiuVLC7UWkKtkdo820ardIZ5UPfnHnaLAWZgDbA=="
+}
+
+###
+DELETE {{TimeSwap.Auth_HostAddress}}/api/auth/logout
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
+
+###
+DELETE {{TimeSwap.Auth_HostAddress}}/api/auth/logout
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiaHV5dGRlLmRldkBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJodXl0ZGUuZGV2QGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMjAzNTI4ZGUtM2Y2Yi00ZGJjLTgyMmQtODM1NDE3NmY3M2ZjIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJleHAiOjE3MzQ2ODM3NDQsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo3MjQ1In0.X8HqQm87F03F6U5DdUTE1n1pZRm82ccJQ4Y2dJDNank
+
