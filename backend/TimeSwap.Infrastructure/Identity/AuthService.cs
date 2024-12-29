@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using TimeSwap.Application.Dtos.Auth.Requests;
 using TimeSwap.Application.Dtos.Auth.Responses;
@@ -101,10 +100,10 @@ namespace TimeSwap.Infrastructure.Identity
         private async Task<AuthenticationResponse> GenerateToken(ApplicationUser user, IList<string> roles, bool populateExp)
         {
             var signingCredentials = _jwtHandler.GetSigningCredentials();
-            var claims = _jwtHandler.GetClaims(user, roles);
+            var claims = TokenHelper.GetClaims(user, roles);
             var tokenOptions = _jwtHandler.GenerateTokenOptions(signingCredentials, claims);
 
-            var refreshToken = _jwtHandler.GenerateRefreshToken();
+            var refreshToken = TokenHelper.GenerateRefreshToken();
 
             user.RefreshToken = refreshToken;
 
@@ -215,20 +214,12 @@ namespace TimeSwap.Infrastructure.Identity
                 await _userManager.UpdateAsync(user);
             }
 
-            var expiry = GetTokenExpiry(accessToken);
+            var expiry = TokenHelper.GetTokenExpiry(accessToken);
 
             if (expiry > DateTime.UtcNow)
             {
                 await _tokenBlackListService.BlacklistTokenAsync(accessToken, expiry);
             }
         }
-
-        private DateTime GetTokenExpiry(string token)
-        {
-            var handler = new JwtSecurityTokenHandler();
-            var jwtToken = handler.ReadJwtToken(token);
-            return jwtToken.ValidTo;
-        }
-
     }
 }
