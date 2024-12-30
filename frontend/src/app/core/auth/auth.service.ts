@@ -5,11 +5,12 @@ import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
 
-import { REFRESH_TOKEN_KEY, TOKEN_KEY } from '../../shared/constants/auth-constants';
+import { TOKEN_KEY, REFRESH_TOKEN_KEY, EXPIRES_IN_KEY  } from '../../shared/constants/auth-constants';
 
-import { LoginRequestModel } from '../../shared/models/request/login-request.model';
-import { LoginResponseModel } from '../../shared/models/response/login-response.model';
-import { RegisterRequestModel } from '../../shared/models/request/register-request.model';
+import { BaseResponseModel } from '../../shared/models/api/base-response.model';
+import { LoginRequestModel } from '../../shared/models/api/request/login-request.model';
+import { LoginResponseModel } from '../../shared/models/api/response/login-response.model';
+import { RegisterRequestModel } from '../../shared/models/api/request/register-request.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,45 +18,70 @@ import { RegisterRequestModel } from '../../shared/models/request/register-reque
 export class AuthService {
   private httpClient = inject(HttpClient);
 
-  LOGIN_API_URL = 'accounts/login';
-  REGISTER_API_URL = 'accounts/register';
+  BASE_API_URL = environment.apiBaseUrl;
+  LOGIN_API_URL = `${this.BASE_API_URL}/accounts/login`;
+  REGISTER_API_URL = `${this.BASE_API_URL}/accounts/register`;
+  REFRESH_API_URL = `${this.BASE_API_URL}/accounts/refresh`;
 
-  signin(loginReq: LoginRequestModel): Observable<LoginResponseModel> {
-    const body = JSON.stringify(loginReq);
-    return this.httpClient.post<LoginResponseModel>(`${environment.apiBaseUrl}/${this.LOGIN_API_URL}`, body, {
-      headers: {
-        'Content-Type' : 'application/json'
-      }
-    });
+  signin(loginReq: LoginRequestModel): Observable<BaseResponseModel<LoginResponseModel>> {
+    return this.sendPostRequest<LoginRequestModel, BaseResponseModel<LoginResponseModel>>(
+      this.LOGIN_API_URL,
+      loginReq
+    );
+  }
+  
+  register(registerReq: RegisterRequestModel): Observable<BaseResponseModel> {
+    return this.sendPostRequest<RegisterRequestModel, BaseResponseModel>(
+      this.REGISTER_API_URL,
+      registerReq
+    );
   }
 
-  register(registerReq: RegisterRequestModel) {
-    const body = JSON.stringify(registerReq);
-    return this.httpClient.post(`${environment.apiBaseUrl}/${this.REGISTER_API_URL}`, body, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+  refreshToken(): Observable<BaseResponseModel<LoginResponseModel>> {
+    return this.sendPostRequest<{}, BaseResponseModel<LoginResponseModel>>(this.REFRESH_API_URL, {});
   }
 
   isLoggedIn() {
     return !!this.getToken();
   }
 
-  saveToken(token: string, refreshToken: string) {
+  isTokenExpired() {
+    const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds so that divide for 1000
+    const expirationTime = this.getExpirationTime();
+
+    return expirationTime && parseInt(expirationTime, 10) < currentTime;
+  }
+
+  saveLocalData(token: string, refreshToken: string, expiresIn: string) {
+    const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds so that divide for 1000
+    const expirationTime = currentTime + parseInt(expiresIn, 10);
+
     localStorage.setItem(TOKEN_KEY, token);  
     localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);  
+    localStorage.setItem(EXPIRES_IN_KEY, expirationTime.toString());  
   }
 
   getToken() {
     return localStorage.getItem(TOKEN_KEY);
   }
 
+  getExpirationTime() {
+    return localStorage.getItem(EXPIRES_IN_KEY);
+  }
+
   deleteToken() {
     localStorage.removeItem(TOKEN_KEY);
   }
 
-  getClaims(){
-   return JSON.parse(window.atob(this.getToken()!.split('.')[1]))
+  private sendPostRequest<T, R>(url: string, body: T): Observable<R> {
+    return this.httpClient.post<R>(
+      url,
+      JSON.stringify(body),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
   }
 }
