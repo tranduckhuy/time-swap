@@ -24,12 +24,13 @@
 
         public int IndustryId { get; set; }
 
-        public Guid? LocationId { get; set; }
+        public IList<string> LocationIds { get; set; } = [];
+
+        public bool IsActive { get; set; }
 
         // Navigation properties
         public virtual Category Category { get; set; } = null!;
         public virtual Industry Industry { get; set; } = null!;
-        public virtual Location? Location { get; set; }
         public virtual UserProfile User { get; set; } = null!;
         public virtual ICollection<JobApplicant> JobApplicants { get; set; } = [];
         public virtual ICollection<Review> Reviews { get; set; } = [];

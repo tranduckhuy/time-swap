@@ -57,7 +57,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddDatabase<UserIdentityDbContext>(builder.Configuration);
 builder.Services.AddHealthChecks().Services.AddDbContext<UserIdentityDbContext>();
 builder.Services.AddAutoMapper(typeof(AuthMappingProfile));
-builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddAuthInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
