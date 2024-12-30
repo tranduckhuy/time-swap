@@ -23,7 +23,7 @@ namespace TimeSwap.Auth.Models.Requests
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Client URI is required")]
-        public string ClientUri { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Client URL is required")]
+        public string ClientUrl { get; set; } = string.Empty;
     }
 }

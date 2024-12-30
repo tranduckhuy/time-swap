@@ -14,17 +14,18 @@
         /// <summary>
         /// Error Codes 2xxx
         /// </summary>
-        ModelInvalid = 2000,
-        EmailAlreadyExists = 2001,
-        RegisterFailed = 2002,
-        UserNotExists = 2003,
-        UserNotConfirmed = 2004,
-        InvalidCredentials = 2005,
-        UserAuthenticationFailed = 2006,
-        ConfirmEmailTokenInvalidOrExpired = 2007,
-        UserAlreadyConfirmed = 2008,
-        InvalidToken = 2009,
-        ProvidedInformationIsInValid = 2010,
-        TokenIsBlacklisted = 2011,
+        RequestProcessingFailed = 2000,
+        ModelInvalid = 2001,
+        EmailAlreadyExists = 2002,
+        RegisterFailed = 2003,
+        UserNotExists = 2004,
+        UserNotConfirmed = 2005,
+        InvalidCredentials = 2006,
+        UserAuthenticationFailed = 2007,
+        ConfirmEmailTokenInvalidOrExpired = 2008,
+        UserAlreadyConfirmed = 2009,
+        InvalidToken = 2010,
+        ProvidedInformationIsInValid = 2011,
+        TokenIsBlacklisted = 2012,
     }
 }
