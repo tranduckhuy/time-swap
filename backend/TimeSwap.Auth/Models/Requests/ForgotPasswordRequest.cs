@@ -9,6 +9,6 @@ namespace TimeSwap.Auth.Models.Requests
         public string Email { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Client URI is required")]
-        public string ClientUri { get; set; } = string.Empty;
+        public string ClientUrl { get; set; } = string.Empty;
     }
 }
