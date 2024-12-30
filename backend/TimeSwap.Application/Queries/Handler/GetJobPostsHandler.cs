@@ -1,17 +1,16 @@
 ﻿using MediatR;
 using TimeSwap.Application.Mappings;
 using TimeSwap.Application.Responses;
-using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Interfaces.Repositories;
 using TimeSwap.Domain.Specs;
 
 namespace TimeSwap.Application.Queries.Handler
 {
-    public class GetJobPostsQueryHandler : IRequestHandler<GetJobPostsQuery, Pagination<JobPostResponse>>
+    public class GetJobPostsHandler : IRequestHandler<GetJobPostsQuery, Pagination<JobPostResponse>>
     {
         private readonly IJobPostRepository _jobPostRepository;
 
-        public GetJobPostsQueryHandler(IJobPostRepository jobPostRepository)
+        public GetJobPostsHandler(IJobPostRepository jobPostRepository)
         {
             _jobPostRepository = jobPostRepository;
         }
