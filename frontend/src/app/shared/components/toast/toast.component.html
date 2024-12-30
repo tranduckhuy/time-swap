@@ -1,0 +1,16 @@
+<div id="toast">
+  @for (toast of toasts; track toast) {
+      <div class="toast" [ngClass]="'toast--' + toast.type" [@toastAnimation]>
+        <div class="toast__icon">
+          <i [class]="toast.icon"></i>
+        </div>
+        <div class="toast__body">
+          <h3 class="toast__title">{{ toast.title }}</h3>
+          <p class="toast__msg">{{ toast.message }}</p>
+        </div>
+        <button class="toast__close" (click)="removeToast(toast.id)">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+  }
+</div>
