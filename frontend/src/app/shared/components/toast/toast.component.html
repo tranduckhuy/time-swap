@@ -8,9 +8,9 @@
           <h3 class="toast__title">{{ toast.title }}</h3>
           <p class="toast__msg">{{ toast.message }}</p>
         </div>
-        <div class="toast__close" (click)="removeToast(toast.id)">
+        <button class="toast__close" (click)="removeToast(toast.id)">
           <i class="fa fa-times"></i>
-        </div>
+        </button>
       </div>
   }
 </div>
