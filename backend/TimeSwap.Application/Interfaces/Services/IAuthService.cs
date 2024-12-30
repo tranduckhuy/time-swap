@@ -15,5 +15,7 @@ namespace TimeSwap.Application.Interfaces.Services
         Task<StatusCode> ResendConfirmationEmailAsync(ResendConfirmationEmailRequestDto resendConfirmationEmailRequestDto);
         Task<(StatusCode, AuthenticationResponse)> RefreshTokenAsync(RefreshTokenDto request);
         Task Logout(string userId, string accessToken);
+        Task<StatusCode> AddClaimAsync(string userId, string claimType, string claimValue);
+        Task<StatusCode> RemoveClaimAsync(string userId, string claimType, string claimValue);
     }
 }
