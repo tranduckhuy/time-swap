@@ -2,12 +2,15 @@ import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { ToastComponent } from "../../../../shared/components/toast/toast.component";
+
 import { AuthService } from '../../auth.service';
+import { ToastService } from '../../../../shared/services/toast.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ToastComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -19,6 +22,7 @@ export class LoginComponent implements OnInit {
   private authService = inject(AuthService);
   private destroyRef = inject(DestroyRef);
   private router = inject(Router);
+  private toastService = inject(ToastService);
 
   ngOnInit(): void {
     this.initForm();
@@ -39,9 +43,14 @@ export class LoginComponent implements OnInit {
     
     const subscription = this.authService.signin(this.form.value).subscribe({
       next: (res) => {
-        this.authService.saveToken(res.accessToken, res.refreshToken);
-        this.router.navigateByUrl('/home');
-        console.log(res.userId);
+        if (res.data) {
+          const { accessToken, refreshToken, expiresIn } = res.data;
+          this.authService.saveLocalData(accessToken, refreshToken, expiresIn);
+          this.toastService.success('Success', 'Login Successfully!');
+          this.router.navigateByUrl('/home');
+        } else {
+          this.toastService.error('Error', 'Error occurred while executing. Please try again later.');
+        }
       },
       error: (error) => {
         console.log(error);
