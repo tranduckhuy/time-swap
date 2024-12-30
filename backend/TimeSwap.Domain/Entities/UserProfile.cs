@@ -14,11 +14,10 @@ namespace TimeSwap.Domain.Entities
         
         public string AvatarUrl { get; set; } = string.Empty;
 
-        public Guid? LocationId { get; set; }
+        public IList<string> LocationIds { get; set; } = [];
 
 
         // Navigation properties
-        public virtual Location? Location { get; set; }
         public virtual ICollection<JobPost> JobPosts { get; set; } = [];
         public virtual ICollection<JobApplicant> AppliedJobs { get; set; } = [];
         public virtual ICollection<Payment> Payments { get; set; } = [];

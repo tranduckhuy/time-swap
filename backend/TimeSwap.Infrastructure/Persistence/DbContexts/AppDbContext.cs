@@ -13,7 +13,6 @@ namespace TimeSwap.Infrastructure.Persistence.DbContexts
         public DbSet<Category> Categories { get; set; }
         public DbSet<Industry> Industries { get; set; }
         public DbSet<JobPost> JobPosts { get; set; }
-        public DbSet<Location> Locations { get; set; }
         public DbSet<JobApplicant> JobApplicants { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<ReviewCriteria> ReviewsCriteria { get; set; }
@@ -41,15 +40,6 @@ namespace TimeSwap.Infrastructure.Persistence.DbContexts
                 entity.Property(u => u.CurrentSubscription).HasMaxLength(50);
                 entity.Property(u => u.Balance).HasColumnType("decimal(18, 2)");
                 entity.Property(u => u.AvatarUrl).HasMaxLength(255);
-            });
-
-            // Location entity
-            modelBuilder.Entity<Location>(entity =>
-            {
-                entity.Property(l => l.Street).HasMaxLength(255);
-                entity.Property(l => l.Ward).HasMaxLength(100);
-                entity.Property(l => l.District).HasMaxLength(100);
-                entity.Property(l => l.City).HasMaxLength(100);
             });
 
             // Payment entity
