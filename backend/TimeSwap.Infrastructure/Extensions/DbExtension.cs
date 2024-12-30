@@ -94,32 +94,6 @@ namespace TimeSwap.Infrastructure.Extensions
 
             if (await context.Database.EnsureCreatedAsync())
             {
-                if (!await context.Locations.AnyAsync())
-                {
-                    var locations = new List<Location>
-                    {
-                        new Location
-                        {
-                            Id = new Guid("1b1b1b1b-1b1b-1b1b-1b1b-1b1b1b1b1b1b"),
-                            Street = "An Phú Thịnh",
-                            Ward = "Nhơn Bình",
-                            City = "Quy Nhơn",
-                            Province = "Bình Định"
-                        },
-
-                        new Location
-                        {
-                            Id = new Guid("2b2b2b2b-2b2b-2b2b-2b2b-2b2b2b2b2b2b"),
-                            Street = "Trần Hưng Đạo",
-                            Ward = "Đống Đa",
-                            City = "Quy Nhơn",
-                            Province = "Bình Định"
-                        }
-                    };
-
-                    await context.Locations.AddRangeAsync(locations);
-                }
-
                 if (!await context.UserProfiles.AnyAsync())
                 {
                     var userProfiles = new List<UserProfile>
@@ -132,7 +106,7 @@ namespace TimeSwap.Infrastructure.Extensions
                             Balance = 9999,
                             Description = "Tôi là một lập trình viên, tôi yêu thích công việc của mình. Hãy để tôi giúp bạn!",
                             AvatarUrl = "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50",
-                            LocationId = new Guid("1b1b1b1b-1b1b-1b1b-1b1b-1b1b1b1b1b1b")
+                            LocationIds = ["52", "540", "21550"]
                         },
 
                         new UserProfile
@@ -143,7 +117,7 @@ namespace TimeSwap.Infrastructure.Extensions
                             Balance = 0,
                             Description = "Tôi là một người dọn dẹp chuyên nghiệp, hãy để tôi giúp bạn dọn dẹp nhà cửa của mình!",
                             AvatarUrl = "https://gravatar.com/images/homepage/avatar-07.png",
-                            LocationId = new Guid("2b2b2b2b-2b2b-2b2b-2b2b-2b2b2b2b2b2b")
+                            LocationIds = ["52", "540", "21556"]
                         }
                     };
 
@@ -199,23 +173,38 @@ namespace TimeSwap.Infrastructure.Extensions
                             Title = "Code hộ",
                             Description = "Cần code hộ 1 trang web",
                             Fee = 100,
+                            AssignedTo = new Guid("1a1a1a1a-1a1a-1a1a-1a1a-1a1a1a1a1a1a"),
                             DueDate = DateTime.UtcNow.AddDays(7),
                             CategoryId = 1,
                             IndustryId = 1,
-                            LocationId = new Guid("1b1b1b1b-1b1b-1b1b-1b1b-1b1b1b1b1b1b"),
+                            LocationIds = ["52", "540", "21550"]
                         },
 
                         new JobPost
                         {
                             Id = new Guid("2c2c2c2c-2c2c-2c2c-2c2c-2c2c2c2c2c2c"),
+                            UserId = new Guid("2a2a2a2a-2a2a-2a2a-2a2a-2a2a2a2a2a2a"),
+                            Title = "Code hộ",
+                            Description = "Cần code hộ backend cho 1 ứng dụng di động",
+                            Fee = 200,
+                            DueDate = DateTime.UtcNow.AddDays(30),
+                            CategoryId = 1,
+                            IndustryId = 1,
+                            LocationIds = ["52", "540", "21550"]
+                        },
+
+                        new JobPost
+                        {
+                            Id = new Guid("3c3c3c3c-3c3c-3c3c-3c3c-3c3c3c3c3c3c"),
                             UserId = new Guid("1a1a1a1a-1a1a-1a1a-1a1a-1a1a1a1a1a1a"),
                             Title = "Dọn dẹp nhà cửa",
                             Description = "Cần người dọn dẹp nhà cửa",
                             Fee = 50,
+                            AssignedTo = new Guid("2a2a2a2a-2a2a-2a2a-2a2a-2a2a2a2a2a2a"),
                             DueDate = DateTime.UtcNow.AddDays(3),
                             CategoryId = 2,
                             IndustryId = 2,
-                            LocationId = new Guid("2b2b2b2b-2b2b-2b2b-2b2b-2b2b2b2b2b2b"),
+                            LocationIds = ["52", "540", "21556"]
                         }
                     };
 
@@ -231,6 +220,14 @@ namespace TimeSwap.Infrastructure.Extensions
                             Id = new Guid("1d1d1d1d-1d1d-1d1d-1d1d-1d1d1d1d1d1d"),
                             JobPostId = new Guid("1c1c1c1c-1c1c-1c1c-1c1c-1c1c1c1c1c1c"),
                             UserAppliedId = new Guid("2a2a2a2a-2a2a-2a2a-2a2a-2a2a2a2a2a2a"),
+                            AppliedAt = DateTime.UtcNow
+                        },
+
+                        new JobApplicant
+                        {
+                            Id = new Guid("2d2d2d2d-2d2d-2d2d-2d2d-2d2d2d2d2d2d"),
+                            JobPostId = new Guid("2c2c2c2c-2c2c-2c2c-2c2c-2c2c2c2c2c2c"),
+                            UserAppliedId = new Guid("1a1a1a1a-1a1a-1a1a-1a1a-1a1a1a1a1a1a"),
                             AppliedAt = DateTime.UtcNow
                         },
                     };
