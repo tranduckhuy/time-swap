@@ -15,6 +15,8 @@ namespace TimeSwap.Auth.Models.Requests
         public string Email { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Phone number is required")]
+        [RegularExpression(@"^(0[3|5|7|8|9]\d{8}|(\+84)[3|5|7|8|9]\d{8})$",
+            ErrorMessage = "Invalid phone number format")]
         public string PhoneNumber { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Password is required")]
