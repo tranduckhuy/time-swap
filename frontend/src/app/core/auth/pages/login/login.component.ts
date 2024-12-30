@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 
 import { ToastComponent } from "../../../../shared/components/toast/toast.component";
+import { PreLoaderComponent } from "../../../../shared/components/pre-loader/pre-loader.component";
 
 import { AuthService } from '../../auth.service';
 import { ToastService } from '../../../../shared/services/toast.service';
@@ -10,22 +11,25 @@ import { ToastService } from '../../../../shared/services/toast.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, ToastComponent],
+  imports: [ReactiveFormsModule, ToastComponent, PreLoaderComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit {
   form!: FormGroup;
   userId = signal<string>('');
+  isLoading = signal<boolean>(true);
 
-  private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
+  private readonly toastService = inject(ToastService);
+  private readonly fb = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
   private readonly router = inject(Router);
-  private toastService = inject(ToastService);
 
   ngOnInit(): void {
     this.initForm();
+
+    setTimeout(() => this.isLoading.set(false), 1000);
   }
 
   initForm() {
@@ -40,6 +44,7 @@ export class LoginComponent implements OnInit {
       console.log('Form Invalid!');
       return;
     }
+    this.toastService.success('Success', 'Login Successfully!');
     
     const subscription = this.authService.signin(this.form.value).subscribe({
       next: (res) => {
