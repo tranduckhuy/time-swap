@@ -11,7 +11,7 @@ Content-Type: application/json
   "phoneNumber": "string",
   "password": "string123@A",
   "confirmPassword": "string123@A",
-  "clientUri": "https://localhost:9001/api/auth/confirm-email"
+  "clientUrl": "https://localhost:9001/api/auth/confirm-email"
 }
 
 ###
@@ -38,7 +38,7 @@ Accept: application/json
 Content-Type: application/json
 {
   "email": "destinyjustisalie@gmail.com",
-  "clientUri": "https://localhost:9001/api/auth/reset-password"
+  "clientUrl": "https://localhost:9001/api/auth/reset-password"
 }
 
 ###
@@ -58,7 +58,7 @@ Accept: application/json
 Content-Type: application/json
 {
   "email": "destinyjustisalie@gmail.com",
-  "clientUri": "https://localhost:9001/api/auth/confirm-email"
+  "clientUrl": "https://localhost:9001/api/auth/confirm-email"
 }
 
 ###
