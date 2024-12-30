@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using TimeSwap.Application.Dtos.Auth.Requests;
 using TimeSwap.Application.Dtos.Auth.Responses;
 using TimeSwap.Application.Exceptions.Auth;
@@ -92,15 +93,17 @@ namespace TimeSwap.Infrastructure.Identity
 
             var userRoles = await _userManager.GetRolesAsync(user);
 
-            var authResponse = await GenerateToken(user, userRoles, true);
+            var userClaims = await _userManager.GetClaimsAsync(user);
+
+            var authResponse = await GenerateToken(user, userRoles, userClaims, true);
 
             return (StatusCode.RequestProcessedSuccessfully, authResponse);
         }
 
-        private async Task<AuthenticationResponse> GenerateToken(ApplicationUser user, IList<string> roles, bool populateExp)
+        private async Task<AuthenticationResponse> GenerateToken(ApplicationUser user, IList<string> roles, IList<Claim> userClaims, bool populateExp)
         {
             var signingCredentials = _jwtHandler.GetSigningCredentials();
-            var claims = TokenHelper.GetClaims(user, roles);
+            var claims = TokenHelper.GetClaims(user, roles, userClaims);
             var tokenOptions = _jwtHandler.GenerateTokenOptions(signingCredentials, claims);
 
             var refreshToken = TokenHelper.GenerateRefreshToken();
@@ -198,7 +201,9 @@ namespace TimeSwap.Infrastructure.Identity
 
             var userRoles = await _userManager.GetRolesAsync(user);
 
-            var authResponse = await GenerateToken(user, userRoles, false);
+            var userClaims = await _userManager.GetClaimsAsync(user);
+
+            var authResponse = await GenerateToken(user, userRoles, userClaims, false);
 
             return (StatusCode.RequestProcessedSuccessfully, authResponse);
         }
@@ -220,6 +225,16 @@ namespace TimeSwap.Infrastructure.Identity
             {
                 await _tokenBlackListService.BlacklistTokenAsync(accessToken, expiry);
             }
+        }
+
+        public Task<StatusCode> AddClaimAsync(string userId, string claimType, string claimValue)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<StatusCode> RemoveClaimAsync(string userId, string claimType, string claimValue)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -7,7 +7,7 @@ namespace TimeSwap.Infrastructure.Authentication
 {
     public static class TokenHelper
     {
-        public static List<Claim> GetClaims(ApplicationUser user, IList<string> roles)
+        public static List<Claim> GetClaims(ApplicationUser user, IList<string> roles, IList<Claim> userClaims)
         {
             var claims = new List<Claim>
             {
@@ -20,6 +20,8 @@ namespace TimeSwap.Infrastructure.Authentication
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
+
+            claims.AddRange(userClaims);
 
             return claims;
         }
