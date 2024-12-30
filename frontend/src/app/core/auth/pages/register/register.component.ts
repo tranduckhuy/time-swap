@@ -6,7 +6,7 @@ import { AuthService } from '../../auth.service';
 
 import { controlValueEqual } from '../../../../shared/utils/form-validators';
 
-import { RegisterRequestModel } from '../../../../shared/models/request/register-request.model';
+import { RegisterRequestModel } from '../../../../shared/models/api/request/register-request.model';
 
 @Component({
   selector: 'app-register',

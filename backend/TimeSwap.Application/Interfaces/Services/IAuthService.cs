@@ -1,5 +1,4 @@
-﻿
-using TimeSwap.Application.Dtos.Auth.Requests;
+﻿using TimeSwap.Application.Dtos.Auth.Requests;
 using TimeSwap.Application.Dtos.Auth.Responses;
 using TimeSwap.Shared.Constants;
 
