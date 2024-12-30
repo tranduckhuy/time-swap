@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 /*----- Default CSS -----*/
 body {
     font-family: "Poppins", sans-serif;
@@ -2970,7 +2968,7 @@ button:focus {
 /*-- End Employer --*/
 /*-- System --*/
 .system-area {
-    background-image: url("../imgs/home-three/system-bg.jpg");
+    /* background-image: url("../imgs/home-three/system-bg.jpg"); */
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -3326,7 +3324,7 @@ button:focus {
 /*-- End Partner --*/
 /*-- Client --*/
 .client-area {
-    background-image: url("../imgs/home-two/testimonial-bg.png");
+    /* background-image: url("../imgs/home-two/testimonial-bg.png"); */
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -5633,7 +5631,7 @@ button:focus {
     height: 100vh;
 }
 .user-form-area .user-img {
-    background-image: url("../imgs/resgister-bg.jpg");
+    background-image: url("../imgs/register-bg.jpg");
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
