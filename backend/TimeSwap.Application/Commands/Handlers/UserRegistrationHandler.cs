@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using TimeSwap.Application.Interfaces.Services;
 using TimeSwap.Application.Responses;
 
 namespace TimeSwap.Application.Commands.Handlers
