@@ -17,7 +17,23 @@ namespace TimeSwap.Infrastructure.Extensions
 {
     public static class InfrastructureExtension
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddAuthInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        {
+            CommonInfrastrucutre(services, configuration);
+            services.AddScoped<IAuthService, AuthService>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddCoreInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        {
+            CommonInfrastrucutre(services, configuration);
+            services.AddScoped(typeof(IAsyncRepository<,>), typeof(RepositoryBase<,>));
+            services.AddScoped<IJobPostRepository, JobPostRepository>();
+            return services;
+        }
+
+        private static void CommonInfrastrucutre(IServiceCollection services, IConfiguration configuration)
         {
             services.AddStackExchangeRedisCache(options =>
             {
@@ -25,16 +41,11 @@ namespace TimeSwap.Infrastructure.Extensions
                 options.InstanceName = configuration["Redis:InstanceName"];
             });
 
-            services.AddScoped<IAuthService, AuthService>();
-
             var emailConfig = configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
             services.AddSingleton(emailConfig ?? throw new InvalidDataException("EmailConfiguration is missing in appsettings.json"));
             services.AddScoped<IEmailService, EmailService>();
-            services.AddScoped(typeof(IAsyncRepository<,>), typeof(RepositoryBase<,>));
             services.AddScoped<ITokenBlackListService, TokenBlackListService>();
             services.AddSingleton<JwtHandler>();
-
-            return services;
         }
 
         public static IServiceCollection AddApplicationJwtAuth(this IServiceCollection services, IConfiguration configuration)
