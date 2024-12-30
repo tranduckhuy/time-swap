@@ -1,6 +1,4 @@
-﻿using TimeSwap.Shared.Constants;
-
-namespace TimeSwap.Domain.Entities
+﻿namespace TimeSwap.Domain.Entities
 {
     public class Review : AuditableEntityBase<Guid>
     {

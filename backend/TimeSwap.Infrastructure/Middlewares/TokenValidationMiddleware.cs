@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using TimeSwap.Application.Interfaces.Services;
-using TimeSwap.Infrastructure.Authentication;
 using TimeSwap.Shared;
 using TimeSwap.Shared.Constants;
 
