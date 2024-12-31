@@ -5,6 +5,7 @@ using TimeSwap.Application.Location.Responses;
 
 namespace TimeSwap.Api.Controllers
 {
+    [Route("api/location")]
     public class LocationController : BaseController
     {
         public LocationController(IMediator mediator) : base(mediator) { }
