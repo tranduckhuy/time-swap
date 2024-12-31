@@ -4,7 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using TimeSwap.Application.Interfaces.Services;
+using TimeSwap.Application.Authentication.Interfaces;
+using TimeSwap.Application.Email;
 using TimeSwap.Domain.Interfaces.Repositories;
 using TimeSwap.Infrastructure.Authentication;
 using TimeSwap.Infrastructure.Configurations;
@@ -30,6 +31,9 @@ namespace TimeSwap.Infrastructure.Extensions
             CommonInfrastrucutre(services, configuration);
             services.AddScoped(typeof(IAsyncRepository<,>), typeof(RepositoryBase<,>));
             services.AddScoped<IJobPostRepository, JobPostRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ICityRepository, CityRepository>();
+            services.AddScoped<IWardRepository, WardRepository>();
             return services;
         }
 
@@ -43,7 +47,7 @@ namespace TimeSwap.Infrastructure.Extensions
 
             var emailConfig = configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
             services.AddSingleton(emailConfig ?? throw new InvalidDataException("EmailConfiguration is missing in appsettings.json"));
-            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IEmailSender, EmailSender>();
             services.AddScoped<ITokenBlackListService, TokenBlackListService>();
             services.AddSingleton<JwtHandler>();
         }

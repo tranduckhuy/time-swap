@@ -1,6 +1,6 @@
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using TimeSwap.Application.Queries;
+using TimeSwap.Application;
 using TimeSwap.Infrastructure.Extensions;
 using TimeSwap.Infrastructure.Persistence.DbContexts;
 
@@ -14,11 +14,14 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDatabase<AppDbContext>(builder.Configuration);
 builder.Services.AddHealthChecks().Services.AddDbContext<AppDbContext>();
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetJobPostsQuery).Assembly));
 builder.Services.AddCoreInfrastructure(builder.Configuration);
-builder.Services.AddAutoMapper(typeof(GetJobPostsQuery).Assembly);
+
+builder.Services.AddApplication(builder.Configuration);
 
 var app = builder.Build();
+
+// Load location data
+await app.LoadLocationDataAsync();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
