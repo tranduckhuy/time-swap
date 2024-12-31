@@ -17,6 +17,8 @@
         public decimal? MinFee { get; set; }
         public decimal? MaxFee { get; set; }
         public DateTime? PostedDate { get; set; }
-        public List<string> LocationIds { get; set; } = [];
+        public string? CityId { get; set; }
+        public string? WardId { get; set; }
+        public bool IsActive { get; set; } = true;
     }
 }

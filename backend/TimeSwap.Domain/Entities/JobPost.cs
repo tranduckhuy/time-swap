@@ -24,7 +24,8 @@
 
         public int IndustryId { get; set; }
 
-        public IList<string> LocationIds { get; set; } = [];
+        public string? WardId { get; set; }
+        public string? CityId { get; set; }
 
         public bool IsActive { get; set; }
 
@@ -32,6 +33,8 @@
         public virtual Category Category { get; set; } = null!;
         public virtual Industry Industry { get; set; } = null!;
         public virtual UserProfile User { get; set; } = null!;
+        public virtual Ward Ward { get; set; } = null!;
+        public virtual City City { get; set; } = null!;
         public virtual ICollection<JobApplicant> JobApplicants { get; set; } = [];
         public virtual ICollection<Review> Reviews { get; set; } = [];
     }

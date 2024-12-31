@@ -2,10 +2,11 @@
 using Microsoft.Extensions.Logging;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using TimeSwap.Application.Dtos.Auth.Requests;
-using TimeSwap.Application.Dtos.Auth.Responses;
+using TimeSwap.Application.Authentication.Dtos.Requests;
+using TimeSwap.Application.Authentication.Dtos.Responses;
+using TimeSwap.Application.Authentication.Interfaces;
+using TimeSwap.Application.Email;
 using TimeSwap.Application.Exceptions.Auth;
-using TimeSwap.Application.Interfaces.Services;
 using TimeSwap.Domain.Exceptions;
 using TimeSwap.Infrastructure.Authentication;
 using TimeSwap.Infrastructure.Email;
@@ -16,12 +17,12 @@ namespace TimeSwap.Infrastructure.Identity
     public class AuthService : IAuthService
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IEmailService _emailSender;
+        private readonly IEmailSender _emailSender;
         private readonly ILogger<AuthService> _logger;
         private readonly JwtHandler _jwtHandler;
         private readonly ITokenBlackListService _tokenBlackListService;
 
-        public AuthService(UserManager<ApplicationUser> userManager, IEmailService emailSender,
+        public AuthService(UserManager<ApplicationUser> userManager, IEmailSender emailSender,
             ILogger<AuthService> logger, JwtHandler jwtHandler, ITokenBlackListService tokenBlackListService)
         {
             _userManager = userManager;
