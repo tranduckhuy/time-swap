@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using TimeSwap.Application.Interfaces.Services;
+using TimeSwap.Application.Authentication.Interfaces;
 using TimeSwap.Shared;
 using TimeSwap.Shared.Constants;
 

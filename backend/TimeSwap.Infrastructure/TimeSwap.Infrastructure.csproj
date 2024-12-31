@@ -24,4 +24,10 @@
     <ProjectReference Include="..\TimeSwap.Application\TimeSwap.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Persistence\Location\data.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

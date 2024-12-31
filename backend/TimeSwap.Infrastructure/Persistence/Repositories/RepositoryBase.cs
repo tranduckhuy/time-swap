@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Linq.Expressions;
 using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Interfaces.Repositories;
@@ -43,15 +42,14 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
 
             var count = await query.CountAsync();
 
-            var data = await query.Skip(spec.Skip).Take(spec.Take).ToListAsync();
+            var data = await query.Skip(spec.Skip).Take(spec.Take).AsNoTracking().ToListAsync();
 
             return new Pagination<TEntity>(spec.Skip / spec.Take + 1, spec.Take, count, data);
         }
 
-
-        public async Task<IReadOnlyList<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate)
+        public async Task<IReadOnlyList<TEntity>> GetAllAsync()
         {
-            return await _context.Set<TEntity>().Where(predicate).ToListAsync();
+            return await _context.Set<TEntity>().AsNoTracking().ToListAsync();
         }
 
         public async Task<TEntity?> GetByIdAsync(TKey id)
