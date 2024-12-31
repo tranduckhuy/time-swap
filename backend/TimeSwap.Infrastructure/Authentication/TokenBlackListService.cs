@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
-using TimeSwap.Application.Interfaces.Services;
+using TimeSwap.Application.Authentication.Interfaces;
 
 namespace TimeSwap.Infrastructure.Authentication
 {

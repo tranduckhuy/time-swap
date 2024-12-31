@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.WebUtilities;
-using TimeSwap.Application.Dtos.Email;
+using TimeSwap.Application.Email;
 using TimeSwap.Infrastructure.Identity;
 
 namespace TimeSwap.Infrastructure.Email
