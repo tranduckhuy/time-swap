@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using TimeSwap.Application.Queries;
-using TimeSwap.Application.Responses;
+using TimeSwap.Application.JobPosts.Queries;
+using TimeSwap.Application.JobPosts.Responses;
 using TimeSwap.Domain.Specs;
 using TimeSwap.Domain.Specs.Job;
 

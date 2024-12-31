@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using TimeSwap.Application.Dtos.Auth.Requests;
+using TimeSwap.Application.Authentication.Dtos.Requests;
 using TimeSwap.Auth.Models.Requests;
 
 namespace TimeSwap.Auth.Mappings
