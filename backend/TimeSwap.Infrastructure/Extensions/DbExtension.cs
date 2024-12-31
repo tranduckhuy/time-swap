@@ -31,63 +31,57 @@ namespace TimeSwap.Infrastructure.Extensions
             string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Persistence", "Location", "data.json");
 
             var jsonData = await File.ReadAllTextAsync(path);
-            var cities = JsonConvert.DeserializeObject<List<City>>(jsonData);
-
-            if (cities == null)
-            {
-                throw new InvalidDataException("The location data is missing. Please provide a valid location data.");
-            }
-
+            
+            var cities = JsonConvert.DeserializeObject<List<City>>(jsonData) 
+                ?? throw new InvalidDataException("The location data is missing. Please provide a valid location data.");
+            
             using var scope = app.Services.CreateScope();
             var services = scope.ServiceProvider;
             var context = services.GetRequiredService<AppDbContext>();
 
-            if (await context.Database.EnsureCreatedAsync())
+            if (await context.Database.EnsureCreatedAsync() && !await context.Cities.AnyAsync())
             {
-                if (!await context.Cities.AnyAsync())
+                foreach (var cityData in cities)
                 {
-                    foreach (var cityData in cities)
+                    var city = new City
                     {
-                        var city = new City
+                        Id = cityData.Id,
+                        Name = cityData.Name,
+                        Img = cityData.Img,
+                    };
+
+                    context.Cities.Add(city);
+                    await context.SaveChangesAsync();
+
+                    foreach (var districtData in cityData.Districts)
+                    {
+                        var district = new District
                         {
-                            Id = cityData.Id,
-                            Name = cityData.Name,
-                            Img = cityData.Img,
+                            Id = districtData.Id,
+                            Name = districtData.Name,
+                            CityId = city.Id,
                         };
 
-                        context.Cities.Add(city);
+                        context.Districts.Add(district);
                         await context.SaveChangesAsync();
 
-                        foreach (var districtData in cityData.Districts)
+                        foreach (var wardData in districtData.Wards)
                         {
-                            var district = new District
+                            var ward = new Ward
                             {
-                                Id = districtData.Id,
-                                Name = districtData.Name,
-                                CityId = city.Id,
+                                Id = wardData.Id,
+                                Name = wardData.Name,
+                                DistrictId = district.Id,
+                                Level = wardData.Level,
+                                FullLocation = (wardData.Id == district.Id) ? wardData.FullLocation
+                                                    : ($"{wardData.Level} {wardData.Name}, {districtData.Name}, {cityData.Name}")
                             };
 
-                            context.Districts.Add(district);
-                            await context.SaveChangesAsync();
-
-                            foreach (var wardData in districtData.Wards)
-                            {
-                                var ward = new Ward
-                                {
-                                    Id = wardData.Id,
-                                    Name = wardData.Name,
-                                    DistrictId = district.Id,
-                                    Level = wardData.Level,
-                                    FullLocation = (wardData.Id == district.Id) ? wardData.FullLocation
-                                                        : ($"{wardData.Level} {wardData.Name}, {districtData.Name}, {cityData.Name}")
-                                };
-
-                                context.Wards.Add(ward);
-                            }
+                            context.Wards.Add(ward);
                         }
-
-                        await context.SaveChangesAsync();
                     }
+
+                    await context.SaveChangesAsync();
                 }
             }
         }
