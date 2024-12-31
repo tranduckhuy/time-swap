@@ -14,6 +14,9 @@ namespace TimeSwap.Infrastructure.Persistence.DbContexts
         public DbSet<Industry> Industries { get; set; }
         public DbSet<JobPost> JobPosts { get; set; }
         public DbSet<JobApplicant> JobApplicants { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<District> Districts { get; set; }
+        public DbSet<Ward> Wards { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<ReviewCriteria> ReviewsCriteria { get; set; }
         public DbSet<Payment> Payments { get; set; }
@@ -61,6 +64,14 @@ namespace TimeSwap.Infrastructure.Persistence.DbContexts
             {
                 entity.Property(r => r.IndustryName).HasMaxLength(255);
             });
+
+            // City entity
+            modelBuilder.Entity<City>(entity =>
+            {
+                entity.Property(c => c.Id).HasMaxLength(30);
+            });
+
+            // Ward entity
         }
     }
 }

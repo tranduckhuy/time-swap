@@ -25,8 +25,9 @@ namespace TimeSwap.Infrastructure.Specifications
                 (param.MinFee == null || x.Fee >= param.MinFee) &&
                 (param.MaxFee == null || x.Fee <= param.MaxFee) &&
                 (param.PostedDate == null || x.CreatedDate >= param.PostedDate) &&
-                (!param.LocationIds.Any() || x.LocationIds.Count == param.LocationIds.Count &&
-                    x.LocationIds.All(location => param.LocationIds.Contains(location)));
+                (string.IsNullOrEmpty(param.CityId) || x.CityId == param.CityId) &&
+                (string.IsNullOrEmpty(param.WardId) || x.WardId == param.WardId) &&
+                x.IsActive;
 
             // Sorting logic
             if (!string.IsNullOrEmpty(param.Sort))
@@ -48,6 +49,7 @@ namespace TimeSwap.Infrastructure.Specifications
             // Include navigation properties
             Includes.Add(x => x.Category);
             Includes.Add(x => x.Industry);
+            Includes.Add(x => x.Ward);
 
             // Pagination
             Skip = (param.PageIndex - 1) * param.PageSize;

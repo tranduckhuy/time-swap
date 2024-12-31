@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using TimeSwap.Application.Dtos.Auth.Requests;
-using TimeSwap.Application.Dtos.Auth.Responses;
-using TimeSwap.Application.Interfaces.Services;
+using TimeSwap.Application.Authentication.Dtos.Requests;
+using TimeSwap.Application.Authentication.Dtos.Responses;
+using TimeSwap.Application.Authentication.Interfaces;
 using TimeSwap.Auth.Models.Requests;
 using TimeSwap.Shared;
 using TimeSwap.Shared.Constants;
