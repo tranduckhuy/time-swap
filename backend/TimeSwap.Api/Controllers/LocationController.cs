@@ -10,7 +10,7 @@ namespace TimeSwap.Api.Controllers
     {
         public LocationController(
             IMediator mediator,
-            ILogger<BaseController<LocationController>> logger
+            ILogger<LocationController> logger
         ) : base(mediator, logger) { }
 
         [HttpGet("cities")]

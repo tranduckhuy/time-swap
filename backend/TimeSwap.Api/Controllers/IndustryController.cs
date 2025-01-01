@@ -16,7 +16,7 @@ namespace TimeSwap.Api.Controllers
     {
         public IndustryController(
             IMediator mediator,
-            ILogger<BaseController<IndustryController>> logger
+            ILogger<IndustryController> logger
         ) : base(mediator, logger) { }
 
         [HttpGet]
