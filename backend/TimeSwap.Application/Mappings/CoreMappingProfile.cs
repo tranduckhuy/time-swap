@@ -18,7 +18,9 @@ namespace TimeSwap.Application.Mappings
             CreateMap<City, CityResponse>().ReverseMap();
             CreateMap<Ward, WardResponse>().ReverseMap();
             CreateMap<Industry, IndustryResponse>().ReverseMap();
-            CreateMap<Category, CategoryResponse>().ReverseMap();
+            CreateMap<Category, CategoryResponse>().ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Id))
+                                                   .ForMember(dest => dest.IndustryName, opt => opt.MapFrom(src => src.Industry.IndustryName))
+                                                   .ReverseMap();
         }
     }
 }
