@@ -18,11 +18,9 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
             return await GetWithSpecAsync(spec);
         }
 
-        public async Task<List<Category>> GetAllAsyncIndustry()
+        public async Task<List<Category>> GetAllCategoryIncludeIndustryAsync()
         {
-            return await _context.Categories
-                                 .Include(c => c.Industry) 
-                                 .ToListAsync();
+            return await _context.Categories.Include(c => c.Industry).ToListAsync();
         }
 
     }
