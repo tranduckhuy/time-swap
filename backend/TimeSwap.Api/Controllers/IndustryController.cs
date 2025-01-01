@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TimeSwap.Application.Categories.Responses;
 using TimeSwap.Application.Industries.Commands;
 using TimeSwap.Application.Industries.Queries;
 using TimeSwap.Application.Industries.Responses;
@@ -14,22 +15,35 @@ namespace TimeSwap.Api.Controllers
     {
         public IndustryController(IMediator mediator) : base(mediator) { }
 
-        [HttpGet("all")]
+        [HttpGet]
         public async Task<IActionResult> GetIndustries()
         {
             var query = new GetIndustriesQuery();
             return await ExecuteAsync<GetIndustriesQuery, List<IndustryResponse>>(query);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetIndustryById(int id = 1)
+        [HttpGet("{industryId}")]
+        public async Task<IActionResult> GetIndustryById(int industryId = 1)
         {
-            var query = new GetIndustryByIdQuery(id);
+            var query = new GetIndustryByIdQuery(industryId);
             return await ExecuteAsync<GetIndustryByIdQuery, IndustryResponse>(query);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateIndustry([FromBody] UpdateIndustryCommand command, int id = 1)
+        [HttpGet("{industryId}/categories")]
+        public async Task<IActionResult> GetCategoriesByIndustry(int industryId = 1, [FromQuery] int pageIndex = 1, [FromQuery] int pageSize = 10)
+        {
+            var query = new GetCategoriesByIndustryQuery
+            {
+                IndustryId = industryId,
+                PageIndex = pageIndex,
+                PageSize = pageSize
+            };
+
+            return await ExecuteAsync<GetCategoriesByIndustryQuery, List<CategoryResponse>>(query);
+        }
+
+        [HttpPut("{industryId}")]
+        public async Task<IActionResult> UpdateIndustry([FromBody] UpdateIndustryCommand command, int industryId = 1)
         {
             if (command == null)
             {
@@ -40,7 +54,7 @@ namespace TimeSwap.Api.Controllers
                     Errors = ["Request body cannot be null"]
                 });
             }
-            command.IndustryId = id;
+            command.IndustryId = industryId;
             return await ExecuteAsync<UpdateIndustryCommand, bool>(command);
         }
 
