@@ -5,9 +5,11 @@ namespace TimeSwap.Auth.Models.Requests
     public class RegisterRequest
     {
         [Required(ErrorMessage = "First name is required")]
+        [MaxLength(50, ErrorMessage = "First name must be less than 50 characters")]
         public string FirstName { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Last name is required")]
+        [MaxLength(50, ErrorMessage = "First name must be less than 50 characters")]
         public string LastName { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Email is required")]
@@ -26,6 +28,7 @@ namespace TimeSwap.Auth.Models.Requests
         public string ConfirmPassword { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Client URL is required")]
+        [MaxLength(255, ErrorMessage = "Client URL must be less than 255 characters")]
         public string ClientUrl { get; set; } = string.Empty;
     }
 }

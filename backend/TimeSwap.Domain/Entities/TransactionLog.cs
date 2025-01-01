@@ -10,7 +10,7 @@ namespace TimeSwap.Domain.Entities
 
         public Guid PaymentId { get; set; }
 
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         // Navigation properties
         public virtual Payment Payment { get; set; } = null!;

@@ -6,13 +6,13 @@ namespace TimeSwap.Domain.Entities
     {
         public SubscriptionPlan CurrentSubscription { get; set; } = SubscriptionPlan.Basic;
 
-        public DateTime SubscriptionExpiryDate { get; set; }
+        public DateTime? SubscriptionExpiryDate { get; set; }
         
         public decimal Balance { get; set; }
         
-        public string Description { get; set; } = string.Empty;
-        
-        public string AvatarUrl { get; set; } = string.Empty;
+        public string? Description { get; set; }
+
+        public string AvatarUrl { get; set; } = AppConstant.DEFAULT_AVATAR;
 
         public string? CityId { get; set; }
 

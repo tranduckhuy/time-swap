@@ -19,5 +19,11 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
                 .AsNoTracking()
                 .ToListAsync();
         }
+
+        public Task<bool> ValidateWardInCityAsync(string wardId, string cityId)
+        {
+            return _context.Wards
+                .AnyAsync(w => w.Id == wardId && w.District.CityId == cityId);
+        }
     }
 }
