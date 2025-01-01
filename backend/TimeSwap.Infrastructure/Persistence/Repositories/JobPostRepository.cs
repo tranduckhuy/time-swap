@@ -47,7 +47,7 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
             return result;
         }
 
-        private string GenerateCacheKeyForSpec(JobPostSpecParam param)
+        private static string GenerateCacheKeyForSpec(JobPostSpecParam param)
         {
             return $"jobpost:spec:{param.Search}:{param.IndustryId}:{param.CategoryId}:{param.MinFee}:{param.MaxFee}:" +
                 $"{param.PostedDate}:{param.CityId}:{param.WardId}:{param.Sort}:{param.PageIndex}:{param.PageSize}:{param.IsActive}";

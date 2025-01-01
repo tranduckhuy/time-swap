@@ -13,7 +13,7 @@ namespace TimeSwap.Api.Controllers
     {
         public JobPostController(
             IMediator mediator,
-            ILogger<BaseController<JobPostController>> logger
+            ILogger<JobPostController> logger
         ) : base(mediator, logger) { }
 
         [HttpGet]

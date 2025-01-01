@@ -14,7 +14,7 @@ namespace TimeSwap.Api.Controllers
     {
         public CategoryController(
             IMediator mediator,
-            ILogger<BaseController<CategoryController>> logger
+            ILogger<CategoryController> logger
         ) : base(mediator, logger) { }
 
 
