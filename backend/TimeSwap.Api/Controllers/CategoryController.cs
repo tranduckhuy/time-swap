@@ -15,29 +15,15 @@ namespace TimeSwap.Api.Controllers
         public CategoryController(IMediator mediator) : base(mediator) { }
 
 
-        [HttpGet("all")]
+        [HttpGet]
         public async Task<IActionResult> GetAllCategories()
         {
             var query = new GetAllCategoriesQuery();
             return await ExecuteAsync<GetAllCategoriesQuery, List<CategoryResponse>>(query);
         }
 
-        [HttpGet("byIndustry")]
-        public async Task<IActionResult> GetCategoriesByIndustry([FromQuery] int industryId = 1, [FromQuery] int pageIndex = 1, [FromQuery] int pageSize = 10)
-        {
-            var query = new GetCategoriesByIndustryQuery
-            {
-                IndustryId = industryId,
-                PageIndex = pageIndex,
-                PageSize = pageSize
-            };
-
-            return await ExecuteAsync<GetCategoriesByIndustryQuery, List<CategoryResponse>>(query);
-        }
-
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCategory([FromBody] UpdateCategoryCommand command, int id = 1)
+        [HttpPut("{categoryId}")]
+        public async Task<IActionResult> UpdateCategory([FromBody] UpdateCategoryCommand command, int categoryId = 1)
         {
             if (command == null)
             {
@@ -49,7 +35,7 @@ namespace TimeSwap.Api.Controllers
                     Errors = new List<string> { "Request body cannot be null" }
                 });
             }
-            command.CategoryId = id;
+            command.CategoryId = categoryId;
             return await ExecuteAsync<UpdateCategoryCommand, bool>(command);
         }
 
@@ -59,11 +45,5 @@ namespace TimeSwap.Api.Controllers
             return await ExecuteAsync<CreateCategoryCommand, int>(command);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCategory(int id = 1)
-        {
-            var command = new DeleteCategoryCommand { CategoryId = id };
-            return await ExecuteAsync<DeleteCategoryCommand, bool>(command);
-        }
     }
 }

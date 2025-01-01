@@ -1,8 +1,7 @@
 ﻿using MediatR;
+using TimeSwap.Application.Exceptions.Industries;
 using TimeSwap.Application.Industries.Commands;
-using TimeSwap.Domain.Exceptions;
 using TimeSwap.Domain.Interfaces.Repositories;
-using TimeSwap.Shared.Constants;
 
 namespace TimeSwap.Application.Industries.Handlers
 {
@@ -20,12 +19,12 @@ namespace TimeSwap.Application.Industries.Handlers
             var industry = await _industryRepository.GetByIdAsync(request.IndustryId);
             if (industry == null)
             {
-                throw new AppException(StatusCode.IndustryNotFound);
+                throw new IndustryNotFoundException();
             }
 
             if (await _industryRepository.GetByNameAsync(request.IndustryName) != null)
             {
-                throw new AppException(StatusCode.IndustrySameName);
+                throw new IndustrySameNameException();
             }
 
             industry.IndustryName = request.IndustryName;

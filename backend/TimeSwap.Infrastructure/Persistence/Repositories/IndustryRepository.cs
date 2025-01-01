@@ -11,11 +11,10 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
         {
 
         }
+
         public async Task<Industry?> GetByNameAsync(string industryName)
         {
-            return await _context.Industries
-                .FirstOrDefaultAsync(i => i.IndustryName.ToLower() == industryName.ToLower());
+            return await _context.Industries.FirstOrDefaultAsync(i => i.IndustryName.ToLower() == industryName.ToLower());
         }
-
     }
 }
