@@ -7,11 +7,11 @@ using TimeSwap.Domain.Interfaces.Repositories;
 
 namespace TimeSwap.Application.Industries.Handlers
 {
-    public class GetIndustryByIdHandler : IRequestHandler<GetIndustryByIdQuery, IndustryResponse>
+    public class GetIndustryByIdQueryHandler : IRequestHandler<GetIndustryByIdQuery, IndustryResponse>
     {
         private readonly IIndustryRepository _industryRepository;
 
-        public GetIndustryByIdHandler(IIndustryRepository industryRepository)
+        public GetIndustryByIdQueryHandler(IIndustryRepository industryRepository)
         {
             _industryRepository = industryRepository;
         }

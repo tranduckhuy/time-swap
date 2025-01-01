@@ -30,6 +30,13 @@
         IndustryNotFound = 2013,
         IndustrySameName = 2014,
         CategoryNotFound = 2015,
-        CategoryNotFoundByIndustryId = 2016
+        WardNotFound = 2016,
+        CityNotFound = 2017,
+        JobPostNotFound = 2018,
+        InvalidWardInCity = 2019,
+        WardIdRequireWhenCityIdProvidedException = 2020,
+        CityIdRequireWhenWardIdProvidedException = 2021,
+        InvalidCategoryInIndustryException = 2022,
+        UserNotEnoughBalanceException = 2023,
     }
 }
