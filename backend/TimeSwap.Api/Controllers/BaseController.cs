@@ -77,7 +77,8 @@ namespace TimeSwap.Api.Controllers
                 return Ok(new ApiResponse<TResponse>
                 {
                     StatusCode = (int)exception.StatusCode,
-                    Message = ex.Message,
+                    Message = exception.Message,
+                    Errors = exception.Errors
                 });
             }
 

@@ -27,5 +27,9 @@
         InvalidToken = 2010,
         ProvidedInformationIsInValid = 2011,
         TokenIsBlacklisted = 2012,
+        IndustryNotFound = 2013,
+        IndustrySameName = 2014,
+        CategoryNotFound = 2015,
+        CategoryNotFoundByIndustryId = 2016
     }
 }
