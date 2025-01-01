@@ -6,11 +6,11 @@ using TimeSwap.Domain.Interfaces.Repositories;
 
 namespace TimeSwap.Application.Location.Handlers
 {
-    public class GetWardsByCityIdHandler : IRequestHandler<GetWardsByCityIdQuery, IEnumerable<WardResponse>>
+    public class GetWardsByCityIdQueryHandler : IRequestHandler<GetWardsByCityIdQuery, IEnumerable<WardResponse>>
     {
         private readonly IWardRepository _wardRepository;
 
-        public GetWardsByCityIdHandler(IWardRepository wardRepository)
+        public GetWardsByCityIdQueryHandler(IWardRepository wardRepository)
         {
             _wardRepository = wardRepository;
         }

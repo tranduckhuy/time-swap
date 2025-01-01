@@ -7,6 +7,7 @@ namespace TimeSwap.Domain.Entities
         [MaxLength(100)]
         public string Name { get; set; } = string.Empty;
 
+        [MaxLength(30)]
         public string DistrictId { get; set; } = string.Empty;
 
         [MaxLength(100)]

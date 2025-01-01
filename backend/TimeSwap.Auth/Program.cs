@@ -1,6 +1,8 @@
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using TimeSwap.Auth.Mappings;
 using TimeSwap.Infrastructure.Extensions;
@@ -13,6 +15,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+// SuppressModelStateInvalidFilter can be used to disable the automatic 400 response for invalid models.
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(setup =>
 {
@@ -54,7 +63,17 @@ builder.Services.AddApplicationJwtAuth(builder.Configuration);
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddDatabase<UserIdentityDbContext>(builder.Configuration);
+builder.Services.Configure<DataProtectionTokenProviderOptions>(opt =>
+{
+    opt.TokenLifespan = TimeSpan.FromMinutes(1);
+});
+
+builder.Services.AddDatabase<AppDbContext>(builder.Configuration.GetConnectionString("CoreDbConnection")
+                ?? throw new InvalidDataException("The CoreDbConnection string is missing in the configuration."));
+
+builder.Services.AddDatabase<UserIdentityDbContext>(builder.Configuration.GetConnectionString("AuthDbConnection")
+                ?? throw new InvalidDataException("The AuthDbConnection string is missing in the configuration."));
+
 builder.Services.AddHealthChecks().Services.AddDbContext<UserIdentityDbContext>();
 builder.Services.AddAutoMapper(typeof(AuthMappingProfile));
 builder.Services.AddAuthInfrastructure(builder.Configuration);

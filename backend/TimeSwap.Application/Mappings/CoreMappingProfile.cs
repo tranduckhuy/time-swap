@@ -1,6 +1,7 @@
-﻿using AutoMapper;
+using AutoMapper;
 using TimeSwap.Application.Categories.Responses;
 using TimeSwap.Application.Industries.Responses;
+using TimeSwap.Application.JobPosts.Commands;
 using TimeSwap.Application.JobPosts.Responses;
 using TimeSwap.Application.Location.Responses;
 using TimeSwap.Domain.Entities;
@@ -18,9 +19,9 @@ namespace TimeSwap.Application.Mappings
             CreateMap<City, CityResponse>().ReverseMap();
             CreateMap<Ward, WardResponse>().ReverseMap();
             CreateMap<Industry, IndustryResponse>().ReverseMap();
-            CreateMap<Category, CategoryResponse>().ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Id))
-                                                   .ForMember(dest => dest.IndustryName, opt => opt.MapFrom(src => src.Industry.IndustryName))
-                                                   .ReverseMap();
+            CreateMap<Category, CategoryResponse>().ReverseMap();
+
+            CreateMap<CreateJobPostCommand, JobPost>();
         }
     }
 }

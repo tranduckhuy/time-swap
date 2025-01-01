@@ -5,23 +5,19 @@ using TimeSwap.Domain.Interfaces.Repositories;
 
 namespace TimeSwap.Application.Industries.Handlers
 {
-    public class UpdateIndustryHandler : IRequestHandler<UpdateIndustryCommand, bool>
+    public class UpdateIndustryCommandHandler : IRequestHandler<UpdateIndustryCommand, Unit>
     {
         private readonly IIndustryRepository _industryRepository;
 
-        public UpdateIndustryHandler(IIndustryRepository industryRepository)
+        public UpdateIndustryCommandHandler(IIndustryRepository industryRepository)
         {
             _industryRepository = industryRepository;
         }
 
-        public async Task<bool> Handle(UpdateIndustryCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateIndustryCommand request, CancellationToken cancellationToken)
         {
-            var industry = await _industryRepository.GetByIdAsync(request.IndustryId);
-            if (industry == null)
-            {
-                throw new IndustryNotFoundException();
-            }
-
+            var industry = await _industryRepository.GetByIdAsync(request.IndustryId) ?? throw new IndustryNotFoundException();
+            
             if (await _industryRepository.GetByNameAsync(request.IndustryName) != null)
             {
                 throw new IndustrySameNameException();
@@ -30,7 +26,8 @@ namespace TimeSwap.Application.Industries.Handlers
             industry.IndustryName = request.IndustryName;
 
             await _industryRepository.UpdateAsync(industry);
-            return true;
+
+            return Unit.Value;
         }
     }
 }

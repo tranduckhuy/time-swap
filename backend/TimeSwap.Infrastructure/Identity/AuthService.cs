@@ -7,7 +7,9 @@ using TimeSwap.Application.Authentication.Dtos.Responses;
 using TimeSwap.Application.Authentication.Interfaces;
 using TimeSwap.Application.Email;
 using TimeSwap.Application.Exceptions.Auth;
+using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Exceptions;
+using TimeSwap.Domain.Interfaces.Repositories;
 using TimeSwap.Infrastructure.Authentication;
 using TimeSwap.Infrastructure.Email;
 using TimeSwap.Shared.Constants;
@@ -21,15 +23,17 @@ namespace TimeSwap.Infrastructure.Identity
         private readonly ILogger<AuthService> _logger;
         private readonly JwtHandler _jwtHandler;
         private readonly ITokenBlackListService _tokenBlackListService;
+        private readonly IUserRepository _userRepository;
 
-        public AuthService(UserManager<ApplicationUser> userManager, IEmailSender emailSender,
-            ILogger<AuthService> logger, JwtHandler jwtHandler, ITokenBlackListService tokenBlackListService)
+        public AuthService(UserManager<ApplicationUser> userManager, IEmailSender emailSender, ILogger<AuthService> logger,
+            JwtHandler jwtHandler, ITokenBlackListService tokenBlackListService, IUserRepository userRepository)
         {
             _userManager = userManager;
             _emailSender = emailSender;
             _logger = logger;
             _jwtHandler = jwtHandler;
             _tokenBlackListService = tokenBlackListService;
+            _userRepository = userRepository;
         }
 
         public async Task<StatusCode> RegisterAsync(RegisterRequestDto request)
@@ -41,8 +45,11 @@ namespace TimeSwap.Infrastructure.Identity
                 throw new EmailAlreadyExistsException();
             }
 
+            var userId = Guid.NewGuid();
+
             var newUser = new ApplicationUser
             {
+                Id = userId.ToString(),
                 Email = request.Email,
                 UserName = request.Email,
                 FirstName = request.FirstName,
@@ -59,6 +66,10 @@ namespace TimeSwap.Infrastructure.Identity
             }
 
             await _userManager.AddToRoleAsync(newUser, nameof(Role.User));
+
+            // Update user profile in core database
+            await _userRepository.AddAsync(new UserProfile { Id = userId });
+            _logger.LogInformation("Synced user profile with core database for user: {email}.", request.Email);
 
             _ = SendConfirmEmailMessage(request.ClientUrl, newUser);
 

@@ -14,11 +14,8 @@ namespace TimeSwap.Infrastructure.Extensions
 {
     public static class DbExtension
     {
-        public static IServiceCollection AddDatabase<TContext>(this IServiceCollection services, IConfiguration configuration) where TContext : DbContext
+        public static IServiceCollection AddDatabase<TContext>(this IServiceCollection services, string connectionString) where TContext : DbContext
         {
-            var connectionString = configuration.GetConnectionString("DefaultConnection")
-                ?? throw new InvalidDataException("The connection string is missing in the configuration. Please provide a valid connection string.");
-
             services.AddDbContext<TContext>(options =>
             {
                 options.UseNpgsql(connectionString);
@@ -94,9 +91,6 @@ namespace TimeSwap.Infrastructure.Extensions
 
             var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-
-            // TODO: Remove this block of code before deploying to production
-            //await context.Database.EnsureDeletedAsync();
 
             if (await context.Database.EnsureCreatedAsync())
             {

@@ -6,9 +6,12 @@ using TimeSwap.Application.Location.Responses;
 namespace TimeSwap.Api.Controllers
 {
     [Route("api/location")]
-    public class LocationController : BaseController
+    public class LocationController : BaseController<LocationController>
     {
-        public LocationController(IMediator mediator) : base(mediator) { }
+        public LocationController(
+            IMediator mediator,
+            ILogger<BaseController<LocationController>> logger
+        ) : base(mediator, logger) { }
 
         [HttpGet("cities")]
         public async Task<IActionResult> GetCities()

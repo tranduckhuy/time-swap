@@ -8,13 +8,15 @@ using TimeSwap.Shared.Constants;
 namespace TimeSwap.Api.Controllers
 {
     [ApiController]
-    public class BaseController : ControllerBase
+    public class BaseController<TController> : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<BaseController<TController>> _logger;
 
-        protected BaseController(IMediator mediator)
+        protected BaseController(IMediator mediator, ILogger<BaseController<TController>> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         private BadRequestObjectResult ValidateRequest<TRequest, TResponse>()
@@ -26,6 +28,10 @@ namespace TimeSwap.Api.Controllers
                     .SelectMany(x => x.Errors.Select(e => e.ErrorMessage))
                     .ToList();
 
+                _logger.LogWarning("Request validation failed for {ControllerName}: {ErrorMessages}",
+                        typeof(TController).Name,
+                        string.Join(", ", errors));
+
                 var statusCode = Shared.Constants.StatusCode.ModelInvalid;
 
                 return BadRequest(new ApiResponse<TRequest>
@@ -34,6 +40,7 @@ namespace TimeSwap.Api.Controllers
                     Message = ResponseMessages.GetMessage(statusCode),
                     Errors = errors
                 });
+
             }
 
             return null!;
@@ -71,6 +78,16 @@ namespace TimeSwap.Api.Controllers
 
         private IActionResult HandleError<TResponse>(Exception ex)
         {
+            if (ex is AuthException authException)
+            {
+                return Unauthorized(new ApiResponse<object>
+                {
+                    StatusCode = (int)authException.StatusCode,
+                    Message = authException.Message,
+                    Errors = authException.Errors
+                });
+            }
+
             // Handle custom exceptions
             if (ex is AppException exception)
             {
@@ -81,6 +98,8 @@ namespace TimeSwap.Api.Controllers
                     Errors = exception.Errors
                 });
             }
+
+            _logger.LogError(ex, "An error occurred while processing request for {ControllerName}", typeof(TController).Name);
 
             var statusCode = (int)HttpStatusCode.InternalServerError;
 
