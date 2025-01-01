@@ -32,6 +32,8 @@ namespace TimeSwap.Infrastructure.Extensions
             services.AddScoped(typeof(IAsyncRepository<,>), typeof(RepositoryBase<,>));
             services.AddScoped<IJobPostRepository, JobPostRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IIndustryRepository, IndustryRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<IWardRepository, WardRepository>();
             return services;
