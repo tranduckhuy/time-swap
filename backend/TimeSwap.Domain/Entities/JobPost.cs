@@ -2,6 +2,11 @@
 {
     public class JobPost : AuditableEntityBase<Guid>
     {
+        public JobPost() : base()
+        {
+            Id = Guid.NewGuid();
+        }
+
         public Guid UserId { get; set; }
 
         public string Title { get; set; } = string.Empty;
@@ -25,9 +30,10 @@
         public int IndustryId { get; set; }
 
         public string? WardId { get; set; }
+
         public string? CityId { get; set; }
 
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
 
         // Navigation properties
         public virtual Category Category { get; set; } = null!;

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TimeSwap.Application.Industries.Commands
 {
-    public class UpdateIndustryCommand : IRequest<bool>
+    public class UpdateIndustryCommand : IRequest<Unit>
     {
         [Required(ErrorMessage = "Industry Id is required.")]
         public int IndustryId { get; set; }

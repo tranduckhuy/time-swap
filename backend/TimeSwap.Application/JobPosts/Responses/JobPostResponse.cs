@@ -1,4 +1,6 @@
-﻿using TimeSwap.Domain.Entities;
+﻿using TimeSwap.Application.Categories.Responses;
+using TimeSwap.Application.Industries.Responses;
+using TimeSwap.Application.Location.Responses;
 
 namespace TimeSwap.Application.JobPosts.Responses
 {
@@ -14,8 +16,10 @@ namespace TimeSwap.Application.JobPosts.Responses
         public Guid? AssignedTo { get; set; }
         public bool IsOwnerCompleted { get; set; }
         public bool IsAssigneeCompleted { get; set; }
-        public Category Category { get; set; } = null!;
-        public Industry Industry { get; set; } = null!;
-        public List<string> LocationIds { get; set; } = [];
+        public CategoryResponse Category { get; set; } = null!;
+        public IndustryResponse Industry { get; set; } = null!;
+        public WardResponse Ward { get; set; } = null!;
+        public DateTime CreatedAt { get; set; }
+        public DateTime ModifiedAt { get; set; }
     }
 }

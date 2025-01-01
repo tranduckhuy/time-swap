@@ -7,11 +7,11 @@ using TimeSwap.Domain.Specs;
 
 namespace TimeSwap.Application.JobPosts.Handlers
 {
-    public class GetJobPostsHandler : IRequestHandler<GetJobPostsQuery, Pagination<JobPostResponse>>
+    public class GetJobPostsQueryHandler : IRequestHandler<GetJobPostsQuery, Pagination<JobPostResponse>>
     {
         private readonly IJobPostRepository _jobPostRepository;
 
-        public GetJobPostsHandler(IJobPostRepository jobPostRepository)
+        public GetJobPostsQueryHandler(IJobPostRepository jobPostRepository)
         {
             _jobPostRepository = jobPostRepository;
         }
