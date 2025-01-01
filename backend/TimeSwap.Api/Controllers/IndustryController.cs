@@ -4,6 +4,7 @@ using TimeSwap.Application.Categories.Responses;
 using TimeSwap.Application.Industries.Commands;
 using TimeSwap.Application.Industries.Queries;
 using TimeSwap.Application.Industries.Responses;
+using TimeSwap.Domain.Specs;
 using TimeSwap.Shared;
 using TimeSwap.Shared.Constants;
 
@@ -11,9 +12,12 @@ namespace TimeSwap.Api.Controllers
 {
     [Route("api/industries")]
     [ApiController]
-    public class IndustryController : BaseController
+    public class IndustryController : BaseController<IndustryController>
     {
-        public IndustryController(IMediator mediator) : base(mediator) { }
+        public IndustryController(
+            IMediator mediator,
+            ILogger<BaseController<IndustryController>> logger
+        ) : base(mediator, logger) { }
 
         [HttpGet]
         public async Task<IActionResult> GetIndustries()
@@ -39,7 +43,7 @@ namespace TimeSwap.Api.Controllers
                 PageSize = pageSize
             };
 
-            return await ExecuteAsync<GetCategoriesByIndustryQuery, List<CategoryResponse>>(query);
+            return await ExecuteAsync<GetCategoriesByIndustryQuery, Pagination<CategoryResponse>>(query);
         }
 
         [HttpPut("{industryId}")]
@@ -55,7 +59,7 @@ namespace TimeSwap.Api.Controllers
                 });
             }
             command.IndustryId = industryId;
-            return await ExecuteAsync<UpdateIndustryCommand, bool>(command);
+            return await ExecuteAsync<UpdateIndustryCommand, Unit>(command);
         }
 
     }

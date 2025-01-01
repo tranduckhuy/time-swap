@@ -29,7 +29,6 @@ namespace TimeSwap.Infrastructure.Extensions
         public static IServiceCollection AddCoreInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             CommonInfrastrucutre(services, configuration);
-            services.AddScoped(typeof(IAsyncRepository<,>), typeof(RepositoryBase<,>));
             services.AddScoped<IJobPostRepository, JobPostRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IIndustryRepository, IndustryRepository>();
@@ -50,8 +49,12 @@ namespace TimeSwap.Infrastructure.Extensions
             var emailConfig = configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
             services.AddSingleton(emailConfig ?? throw new InvalidDataException("EmailConfiguration is missing in appsettings.json"));
             services.AddScoped<IEmailSender, EmailSender>();
+
             services.AddScoped<ITokenBlackListService, TokenBlackListService>();
             services.AddSingleton<JwtHandler>();
+
+            services.AddScoped(typeof(IAsyncRepository<,>), typeof(RepositoryBase<,>));
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         public static IServiceCollection AddApplicationJwtAuth(this IServiceCollection services, IConfiguration configuration)
