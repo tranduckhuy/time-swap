@@ -28,7 +28,13 @@
             { StatusCode.IndustryNotFound, "Industry with Id does not exist." },
             { StatusCode.IndustrySameName, "Industry with the same name already exists." },
             { StatusCode.CategoryNotFound, "Category with Id does not exist." },
-            { StatusCode.CategoryNotFoundByIndustryId, "No categories found for the given industry." }
+            { StatusCode.WardNotFound, "Ward with Id does not exist." },
+            { StatusCode.CityNotFound, "City with Id does not exist." },
+            { StatusCode.JobPostNotFound, "Job post with Id does not exist." },
+            { StatusCode.InvalidWardInCity, "Ward does not belong to the city." },
+            { StatusCode.WardIdRequireWhenCityIdProvidedException, "WardId is required when CityId is provided in the request." },
+            { StatusCode.CityIdRequireWhenWardIdProvidedException, "CityId is required when WardId is provided in the request." },
+            { StatusCode.InvalidCategoryInIndustryException, "Category does not belong to the industry." },
         };
 
         public static string GetMessage(StatusCode code) => _messages[code];

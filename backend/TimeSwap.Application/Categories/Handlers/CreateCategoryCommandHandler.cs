@@ -19,12 +19,8 @@ namespace TimeSwap.Application.Categories.Handlers
 
         public async Task<int> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
         {
-            var industry = await _industryRepository.GetByIdAsync(request.IndustryId);
-            if (industry == null)
-            {
-                throw new IndustryNotFoundException();
-            }
-
+            _ = await _industryRepository.GetByIdAsync(request.IndustryId) ?? throw new IndustryNotFoundException();
+            
             var category = new Category
             {
                 CategoryName = request.CategoryName,

@@ -33,6 +33,8 @@ namespace TimeSwap.Infrastructure.Persistence.DbContexts
                 entity.Property(j => j.Title).HasMaxLength(255).IsRequired();
                 entity.Property(j => j.Description).IsRequired();
                 entity.Property(j => j.Fee).HasColumnType("decimal(18, 2)");
+                entity.Property(j => j.WardId).HasMaxLength(30);
+                entity.Property(j => j.CityId).HasMaxLength(30);
                 entity.Property(j => j.DueDate).IsRequired();
             });
 
@@ -43,6 +45,8 @@ namespace TimeSwap.Infrastructure.Persistence.DbContexts
                 entity.Property(u => u.CurrentSubscription).HasMaxLength(50);
                 entity.Property(u => u.Balance).HasColumnType("decimal(18, 2)");
                 entity.Property(u => u.AvatarUrl).HasMaxLength(255);
+                entity.Property(j => j.WardId).HasMaxLength(30);
+                entity.Property(j => j.CityId).HasMaxLength(30);
             });
 
             // Payment entity
@@ -72,6 +76,17 @@ namespace TimeSwap.Infrastructure.Persistence.DbContexts
             });
 
             // Ward entity
+            modelBuilder.Entity<Ward>(entity =>
+            {
+                entity.Property(w => w.Id).HasMaxLength(30);
+
+            });
+
+            // District entity
+            modelBuilder.Entity<District>(entity =>
+            {
+                entity.Property(d => d.Id).HasMaxLength(30);
+            });
         }
     }
 }

@@ -10,9 +10,12 @@ namespace TimeSwap.Api.Controllers
 {
     [Route("api/categories")]
     [ApiController]
-    public class CategoryController : BaseController
+    public class CategoryController : BaseController<CategoryController>
     {
-        public CategoryController(IMediator mediator) : base(mediator) { }
+        public CategoryController(
+            IMediator mediator,
+            ILogger<CategoryController> logger
+        ) : base(mediator, logger) { }
 
 
         [HttpGet]
@@ -20,6 +23,12 @@ namespace TimeSwap.Api.Controllers
         {
             var query = new GetAllCategoriesQuery();
             return await ExecuteAsync<GetAllCategoriesQuery, List<CategoryResponse>>(query);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryCommand command)
+        {
+            return await ExecuteAsync<CreateCategoryCommand, int>(command);
         }
 
         [HttpPut("{categoryId}")]
@@ -38,12 +47,5 @@ namespace TimeSwap.Api.Controllers
             command.CategoryId = categoryId;
             return await ExecuteAsync<UpdateCategoryCommand, bool>(command);
         }
-
-        [HttpPost]
-        public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryCommand command)
-        {
-            return await ExecuteAsync<CreateCategoryCommand, int>(command);
-        }
-
     }
 }

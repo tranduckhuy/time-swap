@@ -24,10 +24,10 @@ namespace TimeSwap.Infrastructure.Specifications
                 (param.CategoryId == 0 || x.CategoryId == param.CategoryId) &&
                 (param.MinFee == null || x.Fee >= param.MinFee) &&
                 (param.MaxFee == null || x.Fee <= param.MaxFee) &&
-                (param.PostedDate == null || x.CreatedDate >= param.PostedDate) &&
+                (param.PostedDate == null || x.CreatedAt >= param.PostedDate) &&
                 (string.IsNullOrEmpty(param.CityId) || x.CityId == param.CityId) &&
                 (string.IsNullOrEmpty(param.WardId) || x.WardId == param.WardId) &&
-                x.IsActive;
+                (x.IsActive == param.IsActive);
 
             // Sorting logic
             if (!string.IsNullOrEmpty(param.Sort))
@@ -56,5 +56,4 @@ namespace TimeSwap.Infrastructure.Specifications
             Take = param.PageSize;
         }
     }
-
 }
