@@ -41,34 +41,34 @@ namespace TimeSwap.Application.JobPosts.Validators
 
             if (category == null)
             {
-                _logger.LogWarning("Category with id { CategoryId} not found", request.CategoryId);
+                _logger.LogWarning("Category with id {CategoryId} not found", request.CategoryId);
                 throw new CategoryNotFoundException();
             }
 
             var industry = await _industryRepository.GetByIdAsync(request.IndustryId);
             if (industry == null)
             {
-                _logger.LogWarning("Industry with id { IndustryId} not found", request.IndustryId);
+                _logger.LogWarning("Industry with id {IndustryId} not found", request.IndustryId);
                 throw new IndustryNotFoundException();
             }
 
             if (category.IndustryId != industry.Id)
             {
-                _logger.LogWarning("Category with id { CategoryId} is not valid in Industry with id { IndustryId}", request.CategoryId, request.IndustryId);
+                _logger.LogWarning("Category with id {CategoryId} is not valid in Industry with id {IndustryId}", request.CategoryId, request.IndustryId);
                 throw new InvalidCategoryInIndustryException();
             }
 
             var user = await _userRepository.GetByIdAsync(request.UserId);
             if (user == null)
             {
-                _logger.LogWarning("User with id { UserId} not found", request.UserId);
+                _logger.LogWarning("User with id {UserId} not found", request.UserId);
                 throw new UserNotExistsException();
             }
 
             // Check if user has enough balance to create job post
             if (user.Balance < request.Fee * (1 + 0.1m))
             {
-                _logger.LogWarning("User with id { UserId} does not have enough balance", request.UserId);
+                _logger.LogWarning("User with id {UserId} does not have enough balance", request.UserId);
                 throw new UserNotEnoughBalanceException();
             }
 

@@ -11,17 +11,14 @@ namespace TimeSwap.Application.JobPosts.Handlers
 {
     public class CreateJobPostCommandHandler : IRequestHandler<CreateJobPostCommand, JobPostResponse>
     {
-        private readonly ILogger<CreateJobPostCommand> _logger;
         private readonly IJobPostRepository _jobPostRepository;
         private readonly JobPostValidatorService _jobPostValidatorService;
 
         public CreateJobPostCommandHandler(
             IJobPostRepository jobPostRepository, 
-            ILogger<CreateJobPostCommand> logger,
             JobPostValidatorService jobPostValidatorService)
         {
             _jobPostRepository = jobPostRepository;
-            _logger = logger;
             _jobPostValidatorService = jobPostValidatorService;
         }
 

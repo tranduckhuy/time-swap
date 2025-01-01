@@ -23,7 +23,7 @@ namespace TimeSwap.Application.Industries.Handlers
 
         public async Task<Pagination<CategoryResponse>> Handle(GetCategoriesByIndustryQuery request, CancellationToken cancellationToken)
         {
-            var industry = await _industryRepository.GetByIdAsync(request.IndustryId) ?? throw new IndustryNotFoundException();
+            _ = await _industryRepository.GetByIdAsync(request.IndustryId) ?? throw new IndustryNotFoundException();
 
             var paginationResult = await _categoryRepository
                 .GetCategoriesByIndustryAsync(request.IndustryId, request.PageIndex, request.PageSize);
