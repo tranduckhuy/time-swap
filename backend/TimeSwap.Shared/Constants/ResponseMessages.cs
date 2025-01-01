@@ -23,7 +23,12 @@
             { StatusCode.UserAlreadyConfirmed, "User is already confirmed." },
             { StatusCode.InvalidToken, "Invalid token." },
             { StatusCode.ProvidedInformationIsInValid, "Provided information is invalid." },
-            { StatusCode.TokenIsBlacklisted, "Token is blacklisted." }
+            { StatusCode.TokenIsBlacklisted, "Token is blacklisted." },
+            { StatusCode.RequestProcessingFailed, "The request processing has failed." },
+            { StatusCode.IndustryNotFound, "Industry with Id does not exist." },
+            { StatusCode.IndustrySameName, "Industry with the same name already exists." },
+            { StatusCode.CategoryNotFound, "Category with Id does not exist." },
+            { StatusCode.CategoryNotFoundByIndustryId, "No categories found for the given industry." }
         };
 
         public static string GetMessage(StatusCode code) => _messages[code];
