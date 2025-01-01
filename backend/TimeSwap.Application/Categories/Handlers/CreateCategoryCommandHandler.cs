@@ -1,9 +1,8 @@
 ﻿using MediatR;
 using TimeSwap.Application.Categories.Commands;
+using TimeSwap.Application.Exceptions.Industries;
 using TimeSwap.Domain.Entities;
-using TimeSwap.Domain.Exceptions;
 using TimeSwap.Domain.Interfaces.Repositories;
-using TimeSwap.Shared.Constants;
 
 namespace TimeSwap.Application.Categories.Handlers
 {
@@ -23,7 +22,7 @@ namespace TimeSwap.Application.Categories.Handlers
             var industry = await _industryRepository.GetByIdAsync(request.IndustryId);
             if (industry == null)
             {
-                throw new AppException(StatusCode.IndustryNotFound);
+                throw new IndustryNotFoundException();
             }
 
             var category = new Category

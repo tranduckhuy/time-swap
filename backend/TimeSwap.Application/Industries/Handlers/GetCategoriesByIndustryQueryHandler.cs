@@ -1,11 +1,11 @@
 ﻿using MediatR;
-using TimeSwap.Application.Categories.Queries;
 using TimeSwap.Application.Categories.Responses;
-using TimeSwap.Domain.Exceptions;
+using TimeSwap.Application.Exceptions.Categories;
+using TimeSwap.Application.Industries.Queries;
+using TimeSwap.Application.Mappings;
 using TimeSwap.Domain.Interfaces.Repositories;
-using TimeSwap.Shared.Constants;
 
-namespace TimeSwap.Application.Categories.Handlers
+namespace TimeSwap.Application.Industries.Handlers
 {
     public class GetCategoriesByIndustryQueryHandler : IRequestHandler<GetCategoriesByIndustryQuery, List<CategoryResponse>>
     {
@@ -22,16 +22,10 @@ namespace TimeSwap.Application.Categories.Handlers
 
             if (paginationResult.Data == null || !paginationResult.Data.Any())
             {
-                throw new AppException(StatusCode.CategoryNotFoundByIndustryId);
+                throw new CategoryNotFoundByIndustryIdException();
             }
 
-            return paginationResult.Data.Select(c => new CategoryResponse
-            {
-                CategoryId = c.Id,
-                CategoryName = c.CategoryName,
-                IndustryId = c.IndustryId,
-                IndustryName = c.Industry.IndustryName
-            }).ToList();
+            return AppMapper<CoreMappingProfile>.Mapper.Map<List<CategoryResponse>>(paginationResult.Data);
         }
     }
 }
