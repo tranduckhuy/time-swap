@@ -1,9 +1,9 @@
 ﻿using MediatR;
+using TimeSwap.Application.Exceptions.Industries;
 using TimeSwap.Application.Industries.Queries;
 using TimeSwap.Application.Industries.Responses;
-using TimeSwap.Domain.Exceptions;
+using TimeSwap.Application.Mappings;
 using TimeSwap.Domain.Interfaces.Repositories;
-using TimeSwap.Shared.Constants;
 
 namespace TimeSwap.Application.Industries.Handlers
 {
@@ -21,14 +21,10 @@ namespace TimeSwap.Application.Industries.Handlers
             var industry = await _industryRepository.GetByIdAsync(request.Id);
             if (industry == null)
             {
-                throw new AppException(StatusCode.IndustryNotFound);
+                throw new IndustryNotFoundException();
             }
 
-            return new IndustryResponse
-            {
-                Id = industry.Id,
-                IndustryName = industry.IndustryName
-            };
+            return AppMapper<CoreMappingProfile>.Mapper.Map<IndustryResponse>(industry);
         }
     }
 }
