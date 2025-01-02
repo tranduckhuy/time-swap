@@ -15,8 +15,12 @@
         "confirmPassword": "Mật khẩu không khớp."
       }
     },
-    "messages": {
-      "error": "Đã xảy ra lỗi. Vui lòng thử lại sau."
+    "notify": {
+      "success-title": "Thành công",
+      "error-title": "Lỗi",
+      "warning-title": "Cảnh báo",
+      "info-title": "Thông tin",
+      "error-message": "Đã xảy ra lỗi. Vui lòng thử lại sau."
     }
   },
   "navbar": {
@@ -36,7 +40,11 @@
       "link-message": "Bạn đã có tài khoản chưa?",
       "link": "Đăng ký ngay!",
       "success": "Bạn đã đăng nhập thành công!",
-      "failure": "Đăng nhập không thành công. Vui lòng thử lại."
+      "confirm-success": "Xác nhận email thành công! Bạn có thể sử dụng email để đăng nhập.",
+      "re-confirm-success": "Email khác đã được gửi thành công! Hãy kiểm tra hộp thư đến để xác nhận email.",
+      "failure": "Đăng nhập không thành công. Vui lòng thử lại.",
+      "not-confirm": "Email chưa được xác nhận. Vui lòng kiểm tra hộp thư.",
+      "token-expired": "Liên kết đã hết hạn. Một liên kết mới đã được gửi đến email của bạn."
     },
     "register": {
       "header": "Đăng ký",
@@ -46,7 +54,9 @@
       "confirm-password": "Xác nhận mật khẩu",
       "link-message": "Bạn đã có tài khoản?",
       "link": "Đăng nhập ngay!",
-      "success": "Đăng ký thành công. Hãy kiểm tra hộp thư đến để xác nhận email."
+      "success": "Đăng ký thành công. Hãy kiểm tra hộp thư đến để xác nhận email.",
+      "failure": "Đăng ký không thành công. Vui lòng thử lại.",
+      "email-exist": "Đăng ký không thành công. Email này đã được sử dụng. Vui lòng sử dụng email khác."
     }
   }
 }
