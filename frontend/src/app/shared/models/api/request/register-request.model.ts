@@ -5,5 +5,5 @@ export interface RegisterRequestModel {
     phone: string;
     password: string;
     confirmPassword: string;
-    clientUri: string;
+    clientUrl: string;
 }
