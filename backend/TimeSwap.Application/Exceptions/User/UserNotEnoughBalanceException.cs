@@ -5,6 +5,6 @@ namespace TimeSwap.Application.Exceptions.User
 {
     public class UserNotEnoughBalanceException : AppException
     {
-        public UserNotEnoughBalanceException() : base(StatusCode.UserNotEnoughBalanceException) { }
+        public UserNotEnoughBalanceException() : base(StatusCode.UserNotEnoughBalance) { }
     }
 }

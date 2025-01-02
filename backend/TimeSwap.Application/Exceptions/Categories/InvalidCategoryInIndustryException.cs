@@ -5,6 +5,6 @@ namespace TimeSwap.Application.Exceptions.Categories
 {
     public class InvalidCategoryInIndustryException : AppException
     {
-        public InvalidCategoryInIndustryException() : base(StatusCode.InvalidCategoryInIndustryException) { }
+        public InvalidCategoryInIndustryException() : base(StatusCode.InvalidCategoryInIndustry) { }
     }
 }

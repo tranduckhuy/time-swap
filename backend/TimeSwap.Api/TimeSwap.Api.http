@@ -4,3 +4,16 @@ GET {{TimeSwap.Api_HostAddress}}/api/v1/jobs
 Accept: application/json
 
 ###
+
+{
+  "userId": "f80b4c5f-1f5c-46f8-920f-732233e0a5bf",
+  "title": "test",
+  "description": "test",
+  "fee": 80000,
+  "startDate": "2025-01-02T07:24:05.442Z",
+  "dueDate": "2025-01-03T07:24:05.442Z",
+  "categoryId": 1,
+  "industryId": 1,
+  "wardId": "21550",
+  "cityId": "52"
+}

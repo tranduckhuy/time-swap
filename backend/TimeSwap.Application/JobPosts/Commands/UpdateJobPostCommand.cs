@@ -1,10 +1,11 @@
 ﻿using MediatR;
-using TimeSwap.Application.JobPosts.Responses;
 
 namespace TimeSwap.Application.JobPosts.Commands
 {
-    public class CreateJobPostCommand : IRequest<JobPostResponse>
+    public class UpdateJobPostCommand : IRequest<Unit>
     {
+        public Guid Id { get; set; }
+
         public Guid UserId { get; set; }
 
         public string Title { get; set; } = string.Empty;
@@ -12,8 +13,8 @@ namespace TimeSwap.Application.JobPosts.Commands
         public string Description { get; set; } = string.Empty;
 
         public decimal Fee { get; set; }
-        
-        public DateTime? StartDate { get; set; }
+
+        public DateTime? StartDate { get; set; } = null;
 
         public DateTime DueDate { get; set; }
 
