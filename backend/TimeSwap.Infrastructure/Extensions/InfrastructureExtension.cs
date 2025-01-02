@@ -22,7 +22,7 @@ namespace TimeSwap.Infrastructure.Extensions
         {
             CommonInfrastrucutre(services, configuration);
             services.AddScoped<IAuthService, AuthService>();
-
+            services.AddScoped<IUserService, UserService>();
             return services;
         }
 
@@ -35,6 +35,7 @@ namespace TimeSwap.Infrastructure.Extensions
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<IWardRepository, WardRepository>();
+            services.AddScoped<IJobApplicantRepository, JobApplicantRepository>();
             return services;
         }
 

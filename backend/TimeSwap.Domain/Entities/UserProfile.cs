@@ -14,6 +14,10 @@ namespace TimeSwap.Domain.Entities
 
         public string AvatarUrl { get; set; } = AppConstant.DEFAULT_AVATAR;
 
+        public string FullName { get; set; } = string.Empty;
+
+        public string Email { get; set; } = string.Empty;
+
         public string? CityId { get; set; }
 
         public string? WardId { get; set; }

@@ -1,4 +1,5 @@
-﻿using TimeSwap.Domain.Entities;
+﻿using System.Linq.Expressions;
+using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Specs;
 
 namespace TimeSwap.Domain.Interfaces.Repositories
