@@ -2,10 +2,10 @@
 using TimeSwap.Application.Exceptions.Auth;
 using TimeSwap.Application.Exceptions.Categories;
 using TimeSwap.Application.Exceptions.Industries;
+using TimeSwap.Application.Exceptions.JobPost;
 using TimeSwap.Application.Exceptions.Location;
 using TimeSwap.Application.Exceptions.User;
 using TimeSwap.Application.JobPosts.Commands;
-using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Interfaces.Repositories;
 
 namespace TimeSwap.Application.JobPosts.Validators
@@ -35,44 +35,87 @@ namespace TimeSwap.Application.JobPosts.Validators
             _logger = logger;
         }
 
-        public async Task ValidateAsync(CreateJobPostCommand request)
+
+        public async Task ValidateCreateJobPostAsync(CreateJobPostCommand request)
         {
-            var category = await _categoryRepository.GetByIdAsync(request.CategoryId);
+            await ValidateAsync(request.CategoryId, request.IndustryId, request.WardId, request.CityId);
+
+            ValidateJobPostCommandDateTime(request.StartDate, request.DueDate);
+
+        }
+
+        private void ValidateJobPostCommandDateTime(DateTime? startDate, DateTime dueDate)
+        {
+            if (startDate.HasValue && dueDate <= startDate)
+            {
+                _logger.LogWarning("[JobPostCommand] - DueDate must be greater than StartDate");
+                throw new DueDateMustBeGreaterThanStartDateException();
+            }
+
+            if (dueDate <= DateTime.UtcNow)
+            {
+                _logger.LogWarning("[JobPostCommand] - DueDate must be greater than current date");
+                throw new DueDateMustBeGreaterThanCurrentDateException();
+            }
+        }
+
+        public async Task ValidateUpdateJobPostAsync(UpdateJobPostCommand request)
+        {
+            await ValidateAsync(request.CategoryId, request.IndustryId, request.WardId, request.CityId);
+
+            await ValidateUserAsync(request.UserId, request.Fee);
+
+            ValidateJobPostCommandDateTime(request.StartDate, request.DueDate);
+        }
+
+        private async Task ValidateAsync(int categoryId, int industryId, string? wardId, string? cityId)
+        {
+            var category = await _categoryRepository.GetByIdAsync(categoryId);
 
             if (category == null)
             {
-                _logger.LogWarning("Category with id {CategoryId} not found", request.CategoryId);
+                _logger.LogWarning("[JobPostCommand] - Category with id {CategoryId} not found", categoryId);
                 throw new CategoryNotFoundException();
             }
 
-            var industry = await _industryRepository.GetByIdAsync(request.IndustryId);
+            var industry = await _industryRepository.GetByIdAsync(industryId);
             if (industry == null)
             {
-                _logger.LogWarning("Industry with id {IndustryId} not found", request.IndustryId);
+                _logger.LogWarning("[JobPostCommand] - Industry with id {IndustryId} not found", industryId);
                 throw new IndustryNotFoundException();
             }
 
             if (category.IndustryId != industry.Id)
             {
-                _logger.LogWarning("Category with id {CategoryId} is not valid in Industry with id {IndustryId}", request.CategoryId, request.IndustryId);
+                _logger.LogWarning("[JobPostCommand] - Category with id {CategoryId} does not belong to Industry with id {IndustryId}",
+                    categoryId, industryId);
                 throw new InvalidCategoryInIndustryException();
             }
 
-            var user = await _userRepository.GetByIdAsync(request.UserId);
+            await ValidateWardAndCityAsync(wardId, cityId);
+        }
+
+        private async Task ValidateUserAsync(Guid userId, decimal fee)
+        {
+            var user = await _userRepository.GetByIdAsync(userId);
             if (user == null)
             {
-                _logger.LogWarning("User with id {UserId} not found", request.UserId);
+                _logger.LogWarning("User with id {UserId} not found", userId);
                 throw new UserNotExistsException();
             }
 
-            // Check if user has enough balance to create job post
-            if (user.Balance < request.Fee * (1 + 0.1m))
+            if (fee < 50000)
             {
-                _logger.LogWarning("User with id {UserId} does not have enough balance", request.UserId);
-                throw new UserNotEnoughBalanceException();
+                _logger.LogWarning("[User:{userId}] on [JobPostCommand] - Fee must be greater than 50,000 VND", userId);
+                throw new FeeMustBeGreaterThanFiftyThousandException();
             }
 
-            await ValidateWardAndCityAsync(request.WardId, request.CityId);
+            // Check if user has enough balance to create job post
+            if (user.Balance < fee * (0.1m))
+            {
+                _logger.LogWarning("[User:{userId}] on [JobPostCommand] - User does not have enough balance to create job post", userId);
+                throw new UserNotEnoughBalanceException();
+            }
         }
 
         private async Task ValidateWardAndCityAsync(string? wardId, string? cityId)

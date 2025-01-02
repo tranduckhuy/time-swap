@@ -13,26 +13,32 @@ namespace TimeSwap.Application.JobPosts.Handlers
     {
         private readonly IJobPostRepository _jobPostRepository;
         private readonly JobPostValidatorService _jobPostValidatorService;
+        private readonly IUserRepository _userRepository;
 
         public CreateJobPostCommandHandler(
-            IJobPostRepository jobPostRepository, 
-            JobPostValidatorService jobPostValidatorService)
+            IJobPostRepository jobPostRepository,
+            JobPostValidatorService jobPostValidatorService,
+            IUserRepository userRepository)
         {
             _jobPostRepository = jobPostRepository;
             _jobPostValidatorService = jobPostValidatorService;
+            _userRepository = userRepository;
         }
 
         public async Task<JobPostResponse> Handle(CreateJobPostCommand request, CancellationToken cancellationToken)
         {
-            await _jobPostValidatorService.ValidateAsync(request);
+            await _jobPostValidatorService.ValidateCreateJobPostAsync(request);
 
             var jobPost = AppMapper<CoreMappingProfile>.Mapper.Map<JobPost>(request);
 
             await _jobPostRepository.CreateJobPostAsync(jobPost);
 
-            var jobPostResponse = AppMapper<CoreMappingProfile>.Mapper.Map<JobPostResponse>(jobPost);
+            // Deduct 10% of the fee as a service fee
+            var user = await _userRepository.GetByIdAsync(request.UserId);
+            user!.Balance -= jobPost.Fee * (0.1m);
+            await _userRepository.UpdateAsync(user);
 
-            return jobPostResponse;
+            return AppMapper<CoreMappingProfile>.Mapper.Map<JobPostResponse>(jobPost);
         }
     }
 }
