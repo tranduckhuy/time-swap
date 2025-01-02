@@ -14,16 +14,32 @@
             </div>
             <div class="col-lg-6 p-0">
                 <div class="user-content">
+                    <p style="margin-bottom: 0; text-align: left;">
+                        <a routerLink="/">
+                            <i class="fa fa-arrow-left"></i>
+                        </a>
+                    </p>
                     <div class="top">
-                        <h2>Login</h2>
+                        <h2>{{ 'auth.login.header' | translate }}</h2>
                         <form [formGroup]="form" (ngSubmit)="onSubmit()">
                             <div class="form-group">
-                                <input type="email" class="form-control" placeholder="Email" formControlName="email">
+                                <input 
+                                    type="email" 
+                                    [class.form-control]="true" 
+                                    [class.invalid]="isControlInvalid('email')" 
+                                    [placeholder]="isControlInvalid('email') ? getMessage('email', 'Email') : 'auth.email' | translate"
+                                    formControlName="email"
+                                />
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control" placeholder="Password" formControlName="password">
+                                <input 
+                                    type="password"
+                                    [class.form-control]="true" 
+                                    [class.invalid]="isControlInvalid('password')" 
+                                    [placeholder]="isControlInvalid('password') ? getMessage('password', 'Password') : 'auth.password' | translate"
+                                    formControlName="password">
                             </div>
-                            <button type="submit" class="btn">Login Here</button>
+                            <button type="submit" class="btn">{{ 'common.buttons.auth.login' | translate }}</button>
                         </form>
                     </div>
                     <div class="end">
@@ -49,6 +65,12 @@
                                 </a>
                             </li>
                         </ul>
+                    </div>
+                    <div class="end" style="margin-top: 30px; margin-bottom: 0;">
+                        <p>
+                            {{ 'auth.login.link-message' | translate }}
+                            <a routerLink="/auth/register">{{ 'auth.login.link' | translate }}</a>
+                        </p>
                     </div>
                 </div>
             </div>

@@ -1,3 +1,3 @@
 export const environment = {
-  apiBaseUrl: 'https://tranduchuy.me:9001/api'
+  apiBaseUrl: 'https://localhost:9001/api'
 };

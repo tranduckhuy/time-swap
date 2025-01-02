@@ -1,0 +1,52 @@
+{
+  "common": {
+    "buttons": {
+      "auth": {
+        "login": "Login",
+        "register": "Register"
+      }
+    },
+    "form": {
+        "errors": {
+        "required": "{{ name }} is required.",
+        "email": "Please enter a valid email address.",
+        "min-length": "{{ name }} must be at least {{ requiredLength }} characters long.",
+        "pattern": "{{ name }} is not valid.",
+        "confirmPassword": "Passwords do not match."
+      }
+    },
+    "messages": {
+      "error": "An error occurred. Please try again later."
+    }
+  },
+  "navbar": {
+    "home": "Home",
+    "about": "About",
+    "jobs": "Jobs",
+    "blog": "Blog",
+    "contact": "Contact",
+    "auth": "Login/Register",
+    "post-job": "Post A Job"
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "login": {
+      "header": "Login",
+      "link-message": "Do you have an account?",
+      "link": "Register now!",
+      "success": "Login successful!",
+      "failure": "Login failed. Please try again."
+    },
+    "register": {
+      "header": "Register",
+      "first-name": "First Name",
+      "last-name": "Last Name",
+      "phone": "Phone",
+      "confirm-password": "Confirm Password",
+      "link-message": "Already have an account?",
+      "link": "Login now!",
+      "success": "Registration successful. Please check your inbox to confirm your email."
+    }
+  }
+}
