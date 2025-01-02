@@ -1,0 +1,1 @@
+export const REGISTER_SUCCESS_CODE = 1001;
