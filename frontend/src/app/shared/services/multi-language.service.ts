@@ -27,11 +27,10 @@ export class MultiLanguageService {
 
   updateLanguage(lang: string): void {
     this.languageSignal.update(() => {
-      switch (lang) {
-        case 'en':
-          return 'en';
-        default:
-          return 'vi';
+      if (lang === 'vi') {
+        return 'vi';
+      } else {
+        return 'en';
       }
     });
   }
