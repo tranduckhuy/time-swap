@@ -1,5 +1,6 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, input, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -7,8 +8,18 @@ import { ToastComponent } from "../../../../shared/components/toast/toast.compon
 import { PreLoaderComponent } from "../../../../shared/components/pre-loader/pre-loader.component";
 
 import { getErrorMessage } from '../../../../shared/utils/form-validators';
+import { showToast } from '../../../../shared/utils/util-functions';
+
+import { AUTH_CLIENT_URL } from '../../../../shared/constants/auth-constants';
+import { 
+  NOT_CONFIRM_CODE, 
+  REGISTER_CONFIRM_SUCCESS_CODE, 
+  SUCCESS_CODE, 
+  TOKEN_EXPIRED_CODE 
+} from '../../../../shared/constants/status-code-constants';
 
 import type { LoginRequestModel } from '../../../../shared/models/api/request/login-request.model';
+import type { ReConfirmRequestModel } from '../../../../shared/models/api/request/confirm-request.model';
 
 import { AuthService } from '../../auth.service';
 import { ToastService } from '../../../../shared/services/toast.service';
@@ -25,6 +36,8 @@ export class LoginComponent implements OnInit {
   form!: FormGroup;
   userId = signal<string>('');
   isLoading = signal<boolean>(true);
+  token = input<string>('');
+  email = input<string>('');
 
   private readonly authService = inject(AuthService);
   private readonly toastService = inject(ToastService);
@@ -34,6 +47,10 @@ export class LoginComponent implements OnInit {
   private readonly router = inject(Router);
 
   ngOnInit(): void {
+    if (this.token() && this.email()) {
+      this.confirmEmail();
+    }
+
     this.initForm();
 
     const timeOutId = setTimeout(() => this.isLoading.set(false), 1000);
@@ -63,20 +80,131 @@ export class LoginComponent implements OnInit {
     }
     
     const req: LoginRequestModel = this.form.value;
-    const subscription = this.authService.signin(req).subscribe({
+    const subscription = this.authService.signin(req)
+      .subscribe({
+        next: (res) => {
+          if (res.data) {
+            const { accessToken, refreshToken, expiresIn } = res.data;
+            this.form.reset();
+            this.authService.saveLocalData(accessToken, refreshToken, expiresIn);
+            this.router.navigateByUrl('/home');
+          } else if (res.statusCode === NOT_CONFIRM_CODE) {
+            showToast(
+              this.toastService, 
+              this.multiLanguageService, 
+              'warn', 
+              'common.notify.warning-title', 
+              'auth.login.not-confirm'
+            );
+          } else {
+            showToast(
+              this.toastService, 
+              this.multiLanguageService, 
+              'error', 
+              'common.notify.error-title', 
+              'common.notify.error-message'
+            );
+          }
+        },
+        error: () => 
+          showToast(
+            this.toastService, 
+            this.multiLanguageService, 
+            'error', 
+            'common.notify.error-title', 
+            'common.notify.error-message'
+          )
+      });
+      
+    this.destroyRef.onDestroy(() => subscription.unsubscribe());
+  }
+
+  confirmEmail() {
+    const decodedToken = decodeURIComponent(this.token());
+    const req = {
+      token: decodedToken,
+      email: this.email()
+    }
+    const subscription = this.authService.confirmEmail(req).subscribe({
       next: (res) => {
-        if (res.data) {
-          const { accessToken, refreshToken, expiresIn } = res.data;
-          this.authService.saveLocalData(accessToken, refreshToken, expiresIn);
-          this.router.navigateByUrl('/home');
+        if (res.statusCode === SUCCESS_CODE) {
+          showToast(
+            this.toastService, 
+            this.multiLanguageService, 
+            'success', 
+            'common.notify.success-title', 
+            'auth.login.confirm-success'
+          );
         } else {
-          this.toastService.error('Error', this.multiLanguageService.getTranslatedLang('common.messages.error'));
+          showToast(
+            this.toastService, 
+            this.multiLanguageService, 
+            'error', 
+            'common.notify.error-title', 
+            'common.notify.error-message'
+          );
         }
       },
-      error: () => this.toastService.error('Error', this.multiLanguageService.getTranslatedLang('common.messages.error'))
+      error: (error: HttpErrorResponse) => {
+        if (error.error.statusCode === TOKEN_EXPIRED_CODE) {
+          showToast(
+            this.toastService, 
+            this.multiLanguageService, 
+            'warn', 
+            'common.notify.warning-title', 
+            'auth.login.token-expired'
+          );
+          this.reConfirmEmail();
+        } else {
+          showToast(
+            this.toastService, 
+            this.multiLanguageService, 
+            'error', 
+            'common.notify.error-title', 
+            'common.notify.error-message'
+          );
+        }
+      } 
     });
 
-    this.form.reset();
+    this.destroyRef.onDestroy(() => subscription.unsubscribe());
+  }
+
+  reConfirmEmail() {
+    const req: ReConfirmRequestModel = {
+      email: this.email(),
+      clientUrl: AUTH_CLIENT_URL
+    }
+    const subscription = this.authService.resendConfirmEmail(req).subscribe({
+      next: (res) => {
+        if (res.statusCode === REGISTER_CONFIRM_SUCCESS_CODE) {
+          showToast(
+            this.toastService, 
+            this.multiLanguageService, 
+            'success', 
+            'common.notify.success-title', 
+            'auth.login.re-confirm-success'
+          );
+        } else {
+          showToast(
+            this.toastService, 
+            this.multiLanguageService, 
+            'error', 
+            'common.notify.error-title', 
+            'common.notify.error-message'
+          );
+        }
+      }, 
+      error: () =>
+        showToast(
+          this.toastService, 
+          this.multiLanguageService, 
+          'error', 
+          'common.notify.error-title', 
+          'common.notify.error-message'
+        )
+    });
+
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 }
