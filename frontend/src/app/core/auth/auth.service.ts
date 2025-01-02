@@ -19,9 +19,9 @@ export class AuthService {
   private httpClient = inject(HttpClient);
 
   BASE_API_URL = environment.apiBaseUrl;
-  LOGIN_API_URL = `${this.BASE_API_URL}/accounts/login`;
-  REGISTER_API_URL = `${this.BASE_API_URL}/accounts/register`;
-  REFRESH_API_URL = `${this.BASE_API_URL}/accounts/refresh`;
+  LOGIN_API_URL = `${this.BASE_API_URL}/auth/login`;
+  REGISTER_API_URL = `${this.BASE_API_URL}/auth/register`;
+  REFRESH_API_URL = `${this.BASE_API_URL}/auth/refresh`;
 
   signin(loginReq: LoginRequestModel): Observable<BaseResponseModel<LoginResponseModel>> {
     return this.sendPostRequest<LoginRequestModel, BaseResponseModel<LoginResponseModel>>(
