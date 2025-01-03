@@ -57,7 +57,7 @@ services:
       - POSTGRES_PASSWORD=${AUTH_DB_PASSWORD}
       - POSTGRES_DB=TimeSwapAuth
     ports:
-      - "5432:5432"
+      - "4444:5432"
     volumes:
       - authdb_data:/var/lib/postgresql/data
 
@@ -69,7 +69,7 @@ services:
       - POSTGRES_PASSWORD=${CORE_DB_PASSWORD}
       - POSTGRES_DB=TimeSwapApi
     ports:
-      - "5433:5432"
+      - "5555:5432"
     volumes:
       - timeswapdb_data:/var/lib/postgresql/data
 
