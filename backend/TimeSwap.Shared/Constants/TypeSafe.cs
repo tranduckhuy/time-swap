@@ -19,4 +19,12 @@
         View,
         ViewAndEdit
     }
+
+    public enum PostedDate
+    {
+        Today,
+        Yesterday,
+        Last7Days,
+        Last30Days
+    }
 }
