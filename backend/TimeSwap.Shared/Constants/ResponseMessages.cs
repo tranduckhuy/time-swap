@@ -39,7 +39,7 @@
             { StatusCode.DueDateMustBeGreaterThanStartDate, "Due date must be greater than the start date." },
             { StatusCode.DueDateMustBeGreaterThanCurrentDate, "Due date must be greater than the current date." },
             { StatusCode.FeeMustBeGreaterThanFiftyThousand, "Fee must be greater than 50,000 VND." },
-            { StatusCode.UserNotAppliedToJobPost, "User has not applied to the job post." },
+            { StatusCode.UserNotAppliedToJobPost, "User has not applied to the job post. Please apply first." },
             { StatusCode.JobPostAlreadyAssigned, "Job post has already been assigned to another user." },
             { StatusCode.AssignJobToOwner, "Cannot assign job to the owner. Please assign to another user." },
             { StatusCode.OwnerJobPostMismatch, "The owner of the job post does not match the user." },
