@@ -1,17 +1,17 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using TimeSwap.Api.Mapping;
+using TimeSwap.Api.Models;
 using TimeSwap.Application.JobPosts.Commands;
 using TimeSwap.Application.JobPosts.Queries;
 using TimeSwap.Application.JobPosts.Responses;
+using TimeSwap.Application.Mappings;
 using TimeSwap.Domain.Specs;
 using TimeSwap.Domain.Specs.Job;
-using TimeSwap.Shared.Constants;
 using TimeSwap.Shared;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
-using TimeSwap.Api.Models;
-using TimeSwap.Application.Mappings;
-using TimeSwap.Api.Mapping;
+using TimeSwap.Shared.Constants;
 
 namespace TimeSwap.Api.Controllers
 {
@@ -50,7 +50,7 @@ namespace TimeSwap.Api.Controllers
                 {
                     StatusCode = (int)Shared.Constants.StatusCode.ModelInvalid,
                     Message = ResponseMessages.GetMessage(Shared.Constants.StatusCode.ModelInvalid),
-                    Errors = ["Request body cannot be null or userId is not found in the claims"]
+                    Errors = ["The request body does not contain required fields or the user id is not found in the claims"]
                 });
             }
 
@@ -70,7 +70,8 @@ namespace TimeSwap.Api.Controllers
             {
                 var errorMessage = string.IsNullOrEmpty(userId)
                     ? "The user id is not found in the claims"
-                    : $"Request body cannot be null or JobPostId: `{jobPostId}` does not match";
+                    : $"[The request body does not contain required fields] or" +
+                    $" [The job post id in the request body ({request?.Id}) does not match the job post id in the route ({jobPostId})]";
 
                 return BadRequest(new ApiResponse<object>
                 {
@@ -98,7 +99,7 @@ namespace TimeSwap.Api.Controllers
                 {
                     StatusCode = (int)Shared.Constants.StatusCode.ModelInvalid,
                     Message = ResponseMessages.GetMessage(Shared.Constants.StatusCode.ModelInvalid),
-                    Errors = [$"Request body cannot be null or userId not exist"]
+                    Errors = ["The request body does not contain required fields or the user id is not found in the claims"]
                 });
             }
 
