@@ -31,7 +31,7 @@ namespace TimeSwap.Auth.Controllers
                 {
                     StatusCode = (int)Shared.Constants.StatusCode.InvalidToken,
                     Message = ResponseMessages.GetMessage(Shared.Constants.StatusCode.InvalidToken),
-                    Errors = ["User id does not exist in the claims"]
+                    Errors = ["User id does not exist in the claims. Please login again."]
                 });
             }
 
