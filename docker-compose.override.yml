@@ -1,17 +1,3 @@
-x-common-environment: &common-environment
-  ConnectionStrings__CoreDbConnection: Host=timeswapdb;Port=5433;Database=TimeSwapApi;Username=${CORE_DB_USER};Password=${CORE_DB_PASSWORD}
-  JWTSettings_SecretKey: ${JWT_SECRET}
-  JWTSettings_ValidAudience: ${JWT_AUDIENCE}
-  JWTSettings_ValidIssuer: ${JWT_ISSUER}
-  JWTSettings_ExpiryInSecond: ${JWT_EXPIRY}
-  EmailSettings__From: ${EMAIL_FROM}
-  EmailSettings__SmtpServer: ${EMAIL_SMTP_SERVER}
-  EmailSettings__Port: ${EMAIL_PORT}
-  EmailSettings__Username: ${EMAIL_USERNAME}
-  EmailSettings__Password: ${EMAIL_PASSWORD}
-  Redis__ConnectionString: ${REDIS_CONNECTION}
-  Redis__InstanceName: ${REDIS_INSTANCE}
-
 services:
   reverse-proxy:
     container_name: reverse-proxy
@@ -32,8 +18,10 @@ services:
   timeswap-auth:
     container_name: timeswap-auth
     restart: always
+    extends:
+      file: base.yml
+      service: base
     environment:
-      <<: *common-environment
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:9001
       - FrontendUrl=${FRONTEND_URL}
@@ -45,8 +33,10 @@ services:
   timeswap-api:
     container_name: timeswap-api
     restart: always
+    extends:
+      file: base.yml
+      service: base
     environment:
-      <<: *common-environment
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:9002
     depends_on:
