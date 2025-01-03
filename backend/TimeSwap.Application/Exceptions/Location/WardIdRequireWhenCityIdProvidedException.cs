@@ -5,6 +5,6 @@ namespace TimeSwap.Application.Exceptions.Location
 {
     public class WardIdRequireWhenCityIdProvidedException : AppException
     {
-        public WardIdRequireWhenCityIdProvidedException() : base(StatusCode.WardIdRequireWhenCityIdProvidedException) { }
+        public WardIdRequireWhenCityIdProvidedException() : base(StatusCode.WardIdRequireWhenCityIdProvided) { }
     }
 }
