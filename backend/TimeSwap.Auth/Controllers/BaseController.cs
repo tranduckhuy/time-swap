@@ -9,8 +9,15 @@ using TimeSwap.Shared.Constants;
 namespace TimeSwap.Auth.Controllers
 {
     [ApiController]
-    public abstract class BaseController : ControllerBase
+    public abstract class BaseController<TController> : ControllerBase
     {
+        private readonly ILogger<BaseController<TController>> _logger;
+
+        protected BaseController(ILogger<BaseController<TController>> logger)
+        {
+            _logger = logger;
+        }
+
         protected IActionResult CheckModelStateValidity()
         {
             if (!ModelState.IsValid)
@@ -18,6 +25,10 @@ namespace TimeSwap.Auth.Controllers
                 var errors = ModelState.Values
                     .SelectMany(x => x.Errors.Select(e => e.ErrorMessage))
                     .ToList();
+
+                _logger.LogWarning("Request validation failed for {ControllerName}: {ErrorMessages}",
+                        typeof(TController).Name,
+                        string.Join(", ", errors));
 
                 var statusCode = Shared.Constants.StatusCode.ModelInvalid;
 
@@ -68,14 +79,23 @@ namespace TimeSwap.Auth.Controllers
 
             try
             {
-                var dto = AppMapper<AuthMappingProfile>.Mapper.Map<TDto>(request);
-                var (statusCode, response) = await serviceCall(dto);
+                (Shared.Constants.StatusCode StatusCode, TResponse Response) result;
+
+                if (typeof(TDto).IsClass && !typeof(TDto).IsAbstract)
+                {
+                    var dto = AppMapper<AuthMappingProfile>.Mapper.Map<TDto>(request);
+                    result = await serviceCall(dto);
+                }
+                else
+                {
+                    result = await serviceCall((TDto)(object)request!);
+                }
 
                 return Ok(new ApiResponse<TResponse>
                 {
-                    StatusCode = (int)statusCode,
-                    Message = ResponseMessages.GetMessage(statusCode),
-                    Data = response
+                    StatusCode = (int) result.StatusCode,
+                    Message = ResponseMessages.GetMessage(result.StatusCode),
+                    Data = result.Response
                 });
             }
             catch (Exception ex)
@@ -105,6 +125,8 @@ namespace TimeSwap.Auth.Controllers
                     Errors = appException.Errors
                 });
             }
+
+            _logger.LogError(ex, "An error occurred while processing request for {ControllerName}", typeof(TController).Name);
 
             return StatusCode((int)HttpStatusCode.InternalServerError, new ApiResponse<object>
             {
