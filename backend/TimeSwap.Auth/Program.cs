@@ -85,8 +85,9 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    await app.SeedAuthDataAsync();
 }
+
+await app.SeedAuthDataAsync();
 
 app.UseHttpsRedirection();
 
