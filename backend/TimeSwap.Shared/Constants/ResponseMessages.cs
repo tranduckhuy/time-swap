@@ -43,7 +43,7 @@
             { StatusCode.JobPostAlreadyAssigned, "Job post has already been assigned to another user." },
             { StatusCode.AssignJobToOwner, "Cannot assign job to the owner. Please assign to another user." },
             { StatusCode.OwnerJobPostMismatch, "The owner of the job post does not match the user." },
-            { StatusCode.UserAppliedToOwnJobPost, "You cannot apply to your own job post." },
+            { StatusCode.UserAppliedToOwnJobPost, "You cannot apply to your own job post. Please try with another job post." },
         };
 
         public static string GetMessage(StatusCode code) => _messages[code];
