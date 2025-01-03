@@ -11,10 +11,11 @@ using TimeSwap.Shared.Constants;
 namespace TimeSwap.Auth.Controllers
 {
     [Route("api/auth")]
-    public class AuthController : BaseController
+    public class AuthController : BaseController<AuthController>
     {
         private readonly IAuthService _authService;
-        public AuthController(IAuthService authService)
+
+        public AuthController(IAuthService authService, ILogger<AuthController> logger) : base(logger)
         {
             _authService = authService;
         }
