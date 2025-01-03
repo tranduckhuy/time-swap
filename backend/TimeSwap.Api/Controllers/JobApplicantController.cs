@@ -44,7 +44,7 @@ namespace TimeSwap.Api.Controllers
                 {
                     StatusCode = (int)Shared.Constants.StatusCode.ModelInvalid,
                     Message = ResponseMessages.GetMessage(Shared.Constants.StatusCode.ModelInvalid),
-                    Errors = ["Request body cannot be null or userId is not found in the claims"]
+                    Errors = ["Request body cannot be null or user id is not found in the claims"]
                 });
             }
 
