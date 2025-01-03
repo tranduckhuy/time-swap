@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using TimeSwap.Domain.Entities;
@@ -28,10 +27,10 @@ namespace TimeSwap.Infrastructure.Extensions
             string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Persistence", "Location", "data.json");
 
             var jsonData = await File.ReadAllTextAsync(path);
-            
-            var cities = JsonConvert.DeserializeObject<List<City>>(jsonData) 
+
+            var cities = JsonConvert.DeserializeObject<List<City>>(jsonData)
                 ?? throw new InvalidDataException("The location data is missing. Please provide a valid location data.");
-            
+
             using var scope = app.Services.CreateScope();
             var services = scope.ServiceProvider;
             var context = services.GetRequiredService<AppDbContext>();
@@ -105,33 +104,61 @@ namespace TimeSwap.Infrastructure.Extensions
 
                 if (!await context.Users.AnyAsync())
                 {
-                    var adminUser = new ApplicationUser
+                    var huyAdmin = new ApplicationUser
                     {
                         Id = new Guid("1a1a1a1a-1a1a-1a1a-1a1a-1a1a1a1a1a1a").ToString(),
                         Email = "huytde.dev@gmail.com",
                         UserName = "huytde.dev@gmail.com",
                         EmailConfirmed = true,
                         FirstName = "Huy",
-                        LastName = "Tran",
+                        LastName = "Tran Duc",
                         PhoneNumber = "0838683869"
                     };
 
-                    await userManager.CreateAsync(adminUser, "Admin11@");
-                    await userManager.AddToRoleAsync(adminUser, nameof(Role.Admin));
+                    await userManager.CreateAsync(huyAdmin, "Admin11@");
+                    await userManager.AddToRoleAsync(huyAdmin, nameof(Role.Admin));
 
-                    var user = new ApplicationUser
+                    var quyAdmin = new ApplicationUser
                     {
                         Id = new Guid("2a2a2a2a-2a2a-2a2a-2a2a-2a2a2a2a2a2a").ToString(),
-                        Email = "user@gmail.com",
-                        UserName = "user@gmail.com",
+                        Email = "quynxqe170239@fpt.edu.vn",
+                        UserName = "quynxqe170239@fpt.edu.vn",
                         EmailConfirmed = true,
-                        FirstName = "User",
-                        LastName = "Test",
+                        FirstName = "Quy",
+                        LastName = "Nguyen Xuan",
                         PhoneNumber = "0838683868"
                     };
 
-                    await userManager.CreateAsync(user, "User111@");
-                    await userManager.AddToRoleAsync(user, nameof(Role.User));
+                    await userManager.CreateAsync(quyAdmin, "User111@");
+                    await userManager.AddToRoleAsync(quyAdmin, nameof(Role.Admin));
+
+                    var sangAdmin = new ApplicationUser
+                    {
+                        Id = new Guid("3a3a3a3a-3a3a-3a3a-3a3a-3a3a3a3a3a3a").ToString(),
+                        Email = "sangtnqe170193@fpt.edu.vn",
+                        UserName = "sangtnqe170193@fpt.edu.vn",
+                        EmailConfirmed = true,
+                        FirstName = "Sang",
+                        LastName = "Tran Ngoc",
+                        PhoneNumber = "0838683866"
+                    };
+
+                    await userManager.CreateAsync(sangAdmin, "User111@");
+                    await userManager.AddToRoleAsync(sangAdmin, nameof(Role.Admin));
+
+                    var huyAdmin2 = new ApplicationUser
+                    {
+                        Id = new Guid("4a4a4a4a-4a4a-4a4a-4a4a-4a4a4a4a4a4a").ToString(),
+                        Email = "huydt170135@fpt.edu.vn",
+                        UserName = "huydt170135@fpt.edu.vn",
+                        EmailConfirmed = true,
+                        FirstName = "Huy",
+                        LastName = "Dinh Trong",
+                        PhoneNumber = "0838683865"
+                    };
+
+                    await userManager.CreateAsync(huyAdmin2, "User111@");
+                    await userManager.AddToRoleAsync(huyAdmin2, nameof(Role.Admin));
                 }
             }
 
@@ -144,9 +171,6 @@ namespace TimeSwap.Infrastructure.Extensions
             var services = scope.ServiceProvider;
             var context = services.GetRequiredService<AppDbContext>();
 
-            // TODO: Remove this block of code before deploying to production
-            //await context.Database.EnsureDeletedAsync();
-
             if (!await context.UserProfiles.AnyAsync())
             {
                 var userProfiles = new List<UserProfile>
@@ -155,8 +179,10 @@ namespace TimeSwap.Infrastructure.Extensions
                         {
                             Id = new Guid("1a1a1a1a-1a1a-1a1a-1a1a-1a1a1a1a1a1a"),
                             CurrentSubscription = SubscriptionPlan.Premium,
-                            SubscriptionExpiryDate = DateTime.UtcNow.AddMonths(1),
-                            Balance = 9999,
+                            SubscriptionExpiryDate = DateTime.UtcNow.AddYears(99),
+                            Balance = 999999999,
+                            Email = "huytde.dev@gmail.com",
+                            FullName = "Huy Tran Duc",
                             Description = "Tôi là một lập trình viên, tôi yêu thích công việc của mình. Hãy để tôi giúp bạn!",
                             AvatarUrl = "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50",
                             CityId = "52",
@@ -166,13 +192,43 @@ namespace TimeSwap.Infrastructure.Extensions
                         new UserProfile
                         {
                             Id = new Guid("2a2a2a2a-2a2a-2a2a-2a2a-2a2a2a2a2a2a"),
-                            CurrentSubscription = SubscriptionPlan.Basic,
-                            SubscriptionExpiryDate = DateTime.UtcNow.AddMonths(1),
-                            Balance = 0,
-                            Description = "Tôi là một người dọn dẹp chuyên nghiệp, hãy để tôi giúp bạn dọn dẹp nhà cửa của mình!",
-                            AvatarUrl = "https://gravatar.com/images/homepage/avatar-07.png",
+                            CurrentSubscription = SubscriptionPlan.Premium,
+                            SubscriptionExpiryDate = DateTime.UtcNow.AddYears(99),
+                            Balance = 999999999,
+                            Email = "quynxqe170239@fpt.edu.vn",
+                            FullName = "Quy Nguyen Xuan",
+                            Description = "Tôi là một lập trình viên, tôi đã có nhiều năm kinh nghiệm làm việc trong lĩnh vực này.",
+                            AvatarUrl = "https://gravatar.com/images/homepage/avatar-03.png",
                             CityId = "52",
                             WardId = "21550"
+                        },
+
+                        new UserProfile
+                        {
+                            Id = new Guid("3a3a3a3a-3a3a-3a3a-3a3a-3a3a3a3a3a3a"),
+                            CurrentSubscription = SubscriptionPlan.Premium,
+                            SubscriptionExpiryDate = DateTime.UtcNow.AddYears(99),
+                            Balance = 999999999,
+                            Email = "sangtnqe170193@fpt.edu.vn",
+                            FullName = "Sang Tran Ngoc",
+                            Description = "Tôi là một lập trình viên, tôi rất vui khi được giúp đỡ mọi người.",
+                            AvatarUrl = "https://gravatar.com/images/homepage/avatar-02.png",
+                            CityId = "52",
+                            WardId = "21553"
+                        },
+
+                        new UserProfile
+                        {
+                            Id = new Guid("4a4a4a4a-4a4a-4a4a-4a4a-4a4a4a4a4a4a"),
+                            CurrentSubscription = SubscriptionPlan.Premium,
+                            SubscriptionExpiryDate = DateTime.UtcNow.AddYears(99),
+                            Balance = 999999999,
+                            Email = "huydt170135@fpt.edu.vn",
+                            FullName = "Huy Dinh Trong",
+                            Description = "Tôi là một lập trình viên, tôi rất vui khi được giúp đỡ mọi người.",
+                            AvatarUrl = "https://gravatar.com/images/homepage/avatar-01.png",
+                            CityId = "52",
+                            WardId = "21571"
                         }
                     };
 
