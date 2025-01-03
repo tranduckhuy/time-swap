@@ -1,4 +1,4 @@
-service:
+services:
   base:
     environment:
       ConnectionStrings__CoreDbConnection: Host=timeswapdb;Port=5433;Database=TimeSwapApi;Username=${CORE_DB_USER};Password=${CORE_DB_PASSWORD}

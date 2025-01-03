@@ -7,10 +7,13 @@ import { environment } from '../../../environments/environment';
 
 import { TOKEN_KEY, REFRESH_TOKEN_KEY, EXPIRES_IN_KEY  } from '../../shared/constants/auth-constants';
 
-import { BaseResponseModel } from '../../shared/models/api/base-response.model';
-import { LoginRequestModel } from '../../shared/models/api/request/login-request.model';
-import { LoginResponseModel } from '../../shared/models/api/response/login-response.model';
-import { RegisterRequestModel } from '../../shared/models/api/request/register-request.model';
+import { createHttpParams } from '../../shared/utils/request-utils';
+
+import type { BaseResponseModel } from '../../shared/models/api/base-response.model';
+import type { LoginRequestModel, RefreshRequestModel } from '../../shared/models/api/request/login-request.model';
+import type { LoginResponseModel } from '../../shared/models/api/response/login-response.model';
+import type { RegisterRequestModel } from '../../shared/models/api/request/register-request.model';
+import type { ConfirmRequestModel, ReConfirmRequestModel } from '../../shared/models/api/request/confirm-request.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +22,11 @@ export class AuthService {
   private httpClient = inject(HttpClient);
 
   BASE_API_URL = environment.apiBaseUrl;
-  LOGIN_API_URL = `${this.BASE_API_URL}/accounts/login`;
-  REGISTER_API_URL = `${this.BASE_API_URL}/accounts/register`;
-  REFRESH_API_URL = `${this.BASE_API_URL}/accounts/refresh`;
+  LOGIN_API_URL = `${this.BASE_API_URL}/auth/login`;
+  REGISTER_API_URL = `${this.BASE_API_URL}/auth/register`;
+  REFRESH_API_URL = `${this.BASE_API_URL}/auth/refresh-token`;
+  CONFIRM_API_URL = `${this.BASE_API_URL}/auth/confirm-email`;
+  RE_CONFIRM_API_URL = `${this.BASE_API_URL}/auth/resend-confirmation-email`;
 
   signin(loginReq: LoginRequestModel): Observable<BaseResponseModel<LoginResponseModel>> {
     return this.sendPostRequest<LoginRequestModel, BaseResponseModel<LoginResponseModel>>(
@@ -37,8 +42,23 @@ export class AuthService {
     );
   }
 
-  refreshToken(): Observable<BaseResponseModel<LoginResponseModel>> {
-    return this.sendPostRequest<{}, BaseResponseModel<LoginResponseModel>>(this.REFRESH_API_URL, {});
+  refreshToken(refreshReq: RefreshRequestModel): Observable<BaseResponseModel<LoginResponseModel>> {
+    return this.sendPostRequest<RefreshRequestModel, BaseResponseModel<LoginResponseModel>>(
+      this.REFRESH_API_URL, 
+      refreshReq
+    );
+  }
+
+  resendConfirmEmail(reConfirmReq: ReConfirmRequestModel): Observable<BaseResponseModel> {
+    return this.sendPostRequest<ReConfirmRequestModel, BaseResponseModel>(
+      this.RE_CONFIRM_API_URL, 
+      reConfirmReq
+    );
+  }
+
+  confirmEmail(confirmReq: ConfirmRequestModel): Observable<BaseResponseModel> {
+    const reqParams = createHttpParams(confirmReq);
+    return this.httpClient.get<BaseResponseModel>(this.CONFIRM_API_URL, { params: reqParams });
   }
 
   isLoggedIn() {
@@ -62,6 +82,10 @@ export class AuthService {
   }
 
   getToken() {
+    return localStorage.getItem(TOKEN_KEY);
+  }
+
+  getRefreshToken() {
     return localStorage.getItem(TOKEN_KEY);
   }
 
