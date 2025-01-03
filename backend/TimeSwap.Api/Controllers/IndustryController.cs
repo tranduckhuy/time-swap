@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TimeSwap.Application.Categories.Responses;
 using TimeSwap.Application.Industries.Commands;
@@ -47,6 +48,7 @@ namespace TimeSwap.Api.Controllers
         }
 
         [HttpPut("{industryId}")]
+        [Authorize(Roles = nameof(Role.Admin))]
         public async Task<IActionResult> UpdateIndustry([FromBody] UpdateIndustryCommand command, int industryId = 1)
         {
             if (command == null)
@@ -55,7 +57,7 @@ namespace TimeSwap.Api.Controllers
                 {
                     StatusCode = (int)Shared.Constants.StatusCode.ModelInvalid,
                     Message = ResponseMessages.GetMessage(Shared.Constants.StatusCode.ModelInvalid),
-                    Errors = ["Request body cannot be null"]
+                    Errors = ["The request body does not contain required fields"]
                 });
             }
             command.IndustryId = industryId;
