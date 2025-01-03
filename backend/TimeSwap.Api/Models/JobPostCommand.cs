@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace TimeSwap.Api.Models
 {
@@ -10,16 +11,18 @@ namespace TimeSwap.Api.Models
         [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; } = string.Empty;
 
+        [JsonRequired]
         public decimal Fee { get; set; }
 
         public DateTime? StartDate { get; set; }
 
+        [JsonRequired]
         public DateTime DueDate { get; set; }
 
-        [Required(ErrorMessage = "CategoryId is required")]
+        [JsonRequired]
         public int CategoryId { get; set; }
 
-        [Required(ErrorMessage = "IndustryId is required")]
+        [JsonRequired]
         public int IndustryId { get; set; }
 
         public string? WardId { get; set; }
