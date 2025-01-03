@@ -1,0 +1,110 @@
+@if (isLoading()) {
+    <app-loader />
+}
+
+<app-toast />
+
+<div class="user-form-area">
+    <div class="container-fluid p-0">
+        <div class="row m-0 align-items-center">
+            <div class="col-lg-6 p-0">
+                <div class="user-img">
+                    <img src="assets/imgs/register-bg.jpg" alt="User">
+                </div>
+            </div>
+            <div class="col-lg-6 p-0">
+                <div class="user-content">
+                    <p style="margin-bottom: 0; text-align: left;">
+                        <a routerLink="/">
+                            <i class="fa fa-arrow-left"></i>
+                        </a>
+                    </p>
+                    <div class="top">
+                        <h2>{{ 'auth.register.header' | translate }}</h2>
+                        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                            <div class="form-group">
+                                <input 
+                                    type="text"
+                                    [class.form-control]="true" 
+                                    [class.invalid]="isControlInvalid('firstName')"  
+                                    [placeholder]="isControlInvalid('firstName') ? getMessage('firstName', 'First Name') : 'auth.register.first-name' | translate" 
+                                    formControlName="firstName">
+                            </div>
+                            <div class="form-group">
+                                <input 
+                                    type="text"
+                                    [class.form-control]="true" 
+                                    [class.invalid]="isControlInvalid('lastName')"  
+                                    [placeholder]="isControlInvalid('lastName') ? getMessage('lastName', 'Last Name') : 'auth.register.last-name' | translate" 
+                                    formControlName="lastName">
+                            </div>
+                            <div class="form-group">
+                                <input 
+                                    type="email"
+                                    [class.form-control]="true" 
+                                    [class.invalid]="isControlInvalid('email')"  
+                                    [placeholder]="isControlInvalid('email') ? getMessage('email', 'Email') : 'auth.email' | translate" 
+                                    formControlName="email">
+                            </div>
+                            <div class="form-group">
+                                <input 
+                                    type="text"
+                                    [class.form-control]="true" 
+                                    [class.invalid]="isControlInvalid('email')"  
+                                    [placeholder]="isControlInvalid('phoneNumber') ? getMessage('phoneNumber', 'Phone Number') : 'auth.register.phone' | translate" 
+                                    formControlName="phoneNumber">
+                            </div>
+                            <div class="form-group">
+                                <input 
+                                    type="password"
+                                    [class.form-control]="true" 
+                                    [class.invalid]="isControlInvalid('password')"  
+                                    [placeholder]="isControlInvalid('password') ? getMessage('password', 'Password') : 'auth.password' | translate" 
+                                    formControlName="password">
+                            </div>
+                            <div class="form-group">
+                                <input 
+                                    type="password"
+                                    [class.form-control]="true" 
+                                    [class.invalid]="isControlInvalid('confirmPassword')"  
+                                    [placeholder]="isControlInvalid('confirmPassword') ? getMessage('confirmPassword', 'Confirm Password') : 'auth.register.confirm-password' | translate" 
+                                    formControlName="confirmPassword">
+                            </div>
+                            <button type="submit" class="btn">{{ 'common.buttons.auth.register' | translate }}</button>
+                        </form>
+                    </div>
+                    <div class="end">
+                        <ul>
+                            <li>
+                                <a href="#" target="_blank">
+                                    <i class='bx bxl-facebook'></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">
+                                    <i class='bx bxl-twitter'></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">
+                                    <i class='bx bxl-linkedin'></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" target="_blank">
+                                    <i class='bx bxl-pinterest-alt'></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="end" style="margin-top: 30px; margin-bottom: 0;">
+                        <p>
+                            {{ 'auth.register.link-message' | translate }}
+                            <a routerLink="/auth/login">{{ 'auth.register.link' | translate }}</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

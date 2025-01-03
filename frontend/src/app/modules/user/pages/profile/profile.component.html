@@ -1,0 +1,23 @@
+<!-- Page Title -->
+<app-banner>
+    <app-breadcrumb [title]="'Profile'"/>
+ </app-banner>
+<!-- End Page Title -->
+
+<div class="dashboard-area ptb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="profile-item">
+                    <img src="assets/imgs/user/dashboard1.jpg" alt="Dashboard">
+                    <h2>Tom Henry</h2>
+                    <span>Web Developer</span>
+                </div>
+                <app-profile-tabs/>
+            </div>
+            <div class="col-lg-8">
+                <app-profile-content/>
+            </div>
+          </div>
+    </div>
+</div>

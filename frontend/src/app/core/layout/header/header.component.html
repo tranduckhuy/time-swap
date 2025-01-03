@@ -1,0 +1,60 @@
+<div class="navbar-area fixed-top">
+    <!-- Menu For Mobile Device -->
+    <div class="mobile-nav">
+        <a href="#!" class="logo">
+            <img src="assets/imgs/logo-three.png" alt="Logo" />
+        </a>
+    </div>
+
+    <!-- Menu For Desktop Device -->
+    <div [class.main-nav]="true" [class.three]="!isHome()">
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-md navbar-light">
+                <a class="navbar-brand" href="#!">
+                    @if (isHome()) {
+                        <img src="assets/imgs/logo.png" class="logo-one" alt="Logo" />
+                    } @else {
+                        <img src="assets/imgs/logo-three.png" alt="Logo" />
+                    }
+                </a>
+                <div class="navbar-collapse mean-menu" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a routerLink="/home" class="nav-link">
+                                {{ 'navbar.home' | translate }} 
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#!" class="nav-link">{{ 'navbar.about' | translate }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <span class="tooltip-span">Hot</span>
+                            <a routerLink="/jobs" class="nav-link">
+                                {{ 'navbar.jobs' | translate }} 
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <span class="tooltip-span two">New</span>
+                            <a routerLink="/coming-soon" class="nav-link">
+                                {{ 'navbar.blog' | translate }} 
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a routerLink="/contact" class="nav-link">{{ 'navbar.contact' | translate }}</a>
+                        </li>
+                    </ul>
+                    <div [class.side-nav]="true" [class.three]="!isHome()">
+                        <a class="login-left" [routerLink]="['auth', 'login']">
+                            <i class="flaticon-enter"></i>
+                            {{ 'navbar.auth' | translate }}
+                        </a>
+                        <a class="job-right" href="#!">
+                            {{ 'navbar.post-job' | translate }}
+                            <i class="bx bx-plus"></i>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
