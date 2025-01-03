@@ -1,22 +1,21 @@
-import { Component } from '@angular/core';
-import Swal from 'sweetalert2'
+import { Component, inject, OnInit } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+
+import { TranslateModule } from '@ngx-translate/core';
+
+import { MultiLanguageService } from './shared/services/multi-language.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [],
+  imports: [RouterOutlet, TranslateModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
-  title = 'time-swap-ui';
+export class AppComponent implements OnInit {
+  private readonly multiLanguage = inject(MultiLanguageService);
 
-  show() {
-    Swal.fire({
-      title: 'Error!',
-      text: 'Do you want to continue',
-      icon: 'error',
-      confirmButtonText: 'Cool'
-    });
+  ngOnInit(): void {
+   this.multiLanguage.updateLanguage(this.multiLanguage.language());
   }
 }
