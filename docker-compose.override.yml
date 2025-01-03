@@ -33,11 +33,11 @@ services:
     container_name: timeswap-auth
     restart: always
     environment:
+      <<: *common-environment
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:9001
       - FrontendUrl=${FRONTEND_URL}
       - ConnectionStrings__AuthDbConnection=Host=authdb;Port=5432;Database=TimeSwapAuth;Username=${AUTH_DB_USER};Password=${AUTH_DB_PASSWORD}
-      <<: *common-environment
     depends_on:
       - authdb
       - redis
@@ -46,9 +46,9 @@ services:
     container_name: timeswap-api
     restart: always
     environment:
+      <<: *common-environment
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:9002
-      <<: *common-environment
     depends_on:
       - timeswapdb
       - redis
