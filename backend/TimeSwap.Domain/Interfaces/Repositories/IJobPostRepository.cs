@@ -10,5 +10,6 @@ namespace TimeSwap.Domain.Interfaces.Repositories
         Task<JobPost?> GetJobPostByIdAsync(Guid id);
         Task<JobPost> CreateJobPostAsync(JobPost jobPost);
         Task UpdateJobPostAsync(JobPost jobPost);
+        Task<int> GetUserJobPostCountOnCurrentDayAsync(Guid userId);
     }
 }

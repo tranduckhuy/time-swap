@@ -71,5 +71,11 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
         {
             await UpdateAsync(jobPost);
         }
+
+        public Task<int> GetUserJobPostCountOnCurrentDayAsync(Guid userId)
+        {
+            var today = DateTime.UtcNow.Date;
+            return _context.JobPosts.CountAsync(x => x.UserId == userId && x.CreatedAt.Date == today);
+        }
     }
 }

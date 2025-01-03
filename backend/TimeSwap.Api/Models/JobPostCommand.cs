@@ -1,24 +1,28 @@
-﻿using MediatR;
-using TimeSwap.Application.JobPosts.Responses;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
-namespace TimeSwap.Application.JobPosts.Commands
+namespace TimeSwap.Api.Models
 {
-    public class CreateJobPostCommand : IRequest<JobPostResponse>
+    public abstract class JobPostCommand
     {
-        public Guid UserId { get; set; }
-
+        [Required(ErrorMessage = "Title is required")]
         public string Title { get; set; } = string.Empty;
 
+        [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; } = string.Empty;
 
+        [JsonRequired]
         public decimal Fee { get; set; }
-        
+
         public DateTime? StartDate { get; set; }
 
+        [JsonRequired]
         public DateTime DueDate { get; set; }
 
+        [JsonRequired]
         public int CategoryId { get; set; }
 
+        [JsonRequired]
         public int IndustryId { get; set; }
 
         public string? WardId { get; set; }
