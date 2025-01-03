@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TimeSwap.Application.Categories.Commands;
 using TimeSwap.Application.Categories.Queries;
@@ -26,12 +27,14 @@ namespace TimeSwap.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = nameof(Role.Admin))]
         public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryCommand command)
         {
             return await ExecuteAsync<CreateCategoryCommand, int>(command);
         }
 
         [HttpPut("{categoryId}")]
+        [Authorize(Roles = nameof(Role.Admin))]
         public async Task<IActionResult> UpdateCategory([FromBody] UpdateCategoryCommand command, int categoryId = 1)
         {
             if (command == null)
@@ -41,7 +44,7 @@ namespace TimeSwap.Api.Controllers
                     StatusCode = (int)Shared.Constants.StatusCode.ModelInvalid,
                     Data = null,
                     Message = ResponseMessages.GetMessage(Shared.Constants.StatusCode.ModelInvalid),
-                    Errors = new List<string> { "Request body cannot be null" }
+                    Errors = ["The request body does not contain required fields"]
                 });
             }
             command.CategoryId = categoryId;
