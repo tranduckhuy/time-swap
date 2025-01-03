@@ -70,8 +70,8 @@ namespace TimeSwap.Api.Controllers
             {
                 var errorMessage = string.IsNullOrEmpty(userId)
                     ? "The user id is not found in the claims"
-                    : $"[The request body does not contain required fields] or" +
-                    $" [The job post id in the request body ({request?.Id}) does not match the job post id in the route ({jobPostId})]";
+                    : $"[The request body does not contain required fields] or " +
+                    $"[The job post id in the request body ({request?.Id}) does not match the job post id in the route ({jobPostId})]";
 
                 return BadRequest(new ApiResponse<object>
                 {
