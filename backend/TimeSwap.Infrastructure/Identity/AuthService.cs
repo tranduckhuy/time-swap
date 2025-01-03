@@ -68,7 +68,15 @@ namespace TimeSwap.Infrastructure.Identity
             await _userManager.AddToRoleAsync(newUser, nameof(Role.User));
 
             // Update user profile in core database
-            await _userRepository.AddAsync(new UserProfile { Id = userId });
+            await _userRepository.AddAsync(
+                new UserProfile
+                {
+                    Id = userId,
+                    Email = newUser.Email,
+                    FullName = $"{newUser.FirstName} {newUser.LastName}"
+                }
+            );
+
             _logger.LogInformation("Synced user profile with core database for user: {email}.", request.Email);
 
             _ = SendConfirmEmailMessage(request.ClientUrl, newUser);
