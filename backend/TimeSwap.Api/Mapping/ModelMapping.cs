@@ -12,7 +12,6 @@ namespace TimeSwap.Api.Mapping
             CreateMap<CreateJobPostRequest, CreateJobPostCommand>();
             CreateMap<UpdateJobPostRequest, UpdateJobPostCommand>();
             CreateMap<AssignJobPostRequest, AssignJobCommand>();
-
             CreateMap<CreateJobApplicantRequest, CreateJobApplicantCommand>();
         }
     }

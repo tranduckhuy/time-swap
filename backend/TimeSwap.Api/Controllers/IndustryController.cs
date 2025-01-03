@@ -57,7 +57,7 @@ namespace TimeSwap.Api.Controllers
                 {
                     StatusCode = (int)Shared.Constants.StatusCode.ModelInvalid,
                     Message = ResponseMessages.GetMessage(Shared.Constants.StatusCode.ModelInvalid),
-                    Errors = ["The request body does not contain required fields"]
+                    Errors = ["The request body does not contain required fields."]
                 });
             }
             command.IndustryId = industryId;
