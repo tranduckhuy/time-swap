@@ -30,7 +30,27 @@
     "blog": "Blog",
     "contact": "Liên hệ",
     "auth": "Đăng nhập/Đăng ký",
-    "post-job": "Đăng công việc"
+    "post-job": "Đăng công việc",
+    "language": {
+      "vi": "Tiếng Việt",
+      "en": "Tiếng Anh"
+    },
+    "profile": {
+      "my-profile": {
+        "title": "Hồ sơ của tôi",
+        "description": "Xem chi tiết hồ sơ cá nhân"
+      },
+      "sign-out": "Đăng xuất"
+    } 
+  },
+  "banner": {
+    "home": "Trang chủ",
+    "about": "Về chúng tôi",
+    "jobs": "Công việc",
+    "blog": "Blog",
+    "contact": "Liên hệ", 
+    "profile": "Hồ sơ",
+    "assignees": "Người nhận việc"
   },
   "auth": {
     "email": "Email",
@@ -58,5 +78,103 @@
       "failure": "Đăng ký không thành công. Vui lòng thử lại.",
       "email-exist": "Đăng ký không thành công. Email này đã được sử dụng. Vui lòng sử dụng email khác."
     }
-  }
+  },
+  "profile": {
+    "tabs": {
+      "my-profile": "Hồ sơ của tôi",
+      "applied-jobs": "Công việc đã ứng tuyển",
+      "posted-jobs": "Công việc đã đăng",
+      "logout": "Đăng xuất"
+    },
+    "form": {
+      "info": {
+        "heading": "Thông tin cơ bản",
+        "name": "Tên:",
+        "email": "Email:",
+        "phone": "Số điện thoại:",
+        "dob": "Ngày sinh:",
+        "job": "Công việc:",
+        "position": "Vị trí:",
+        "salary": "Lương:",
+        "avatar": "Ảnh đại diện:"
+      },
+      "education": {
+        "heading": "Giáo dục",
+        "title": "Học vấn:",
+        "degree": "Bằng cấp:",
+        "institute": "Cơ sở đào tạo:",
+        "year": "Năm tốt nghiệp:"
+      },
+      "socials": {
+        "heading": "Liên kết"
+      },
+      "button": "Lưu thông tin"
+    }
+  },
+  "jobs": {
+    "results": "Kết quả tìm kiếm",
+    "sort-by": {
+      "title": "Sắp xếp:"
+    },
+    "find-a-job": "Tìm kiếm công việc",
+    "email-placeholder": "Địa chỉ email",
+    "get-a-job": "Nhận Thông Báo",
+    "search-keywords": "Tìm Kiếm",
+    "keyword": "Từ khóa",
+    "category": "Danh mục",
+    "location": "Vị trí",
+    "fee": "Phí",
+    "phone": "Số điện thoại",
+    "date-posted": "Ngày đăng",
+    "industry": "Ngành nghề",
+    "filter-now": "Lọc ngay",
+    "first-name": "Họ:",
+    "last-name": "Tên:",
+    "job-title": "Công việc:",
+    "salary": "Lương:",
+    "type": "Loại công việc:",
+    "street": "Đường:",
+    "department": "Phòng ban (Tùy chọn):",
+    "province": "Tỉnh:",
+    "district": "Quận (Thành phố):",
+    "ward": "Phường:"
+  },
+  "job-detail": {
+    "job-info": "Thông tin công việc",
+    "owner-info": "Thông tin chủ sở hữu",
+    "applied": "Người ứng tuyển",
+    "related": "Công việc liên quan",
+    "save": "Lưu",
+    "share": "Chia sẻ",
+    "report": "Báo cáo"
+  },
+  "assignee": {
+      "assign-now": "Giao Ngay",
+      "my-profile": "Hồ sơ của tôi",
+      "work-exp": "Kinh nghiệm",
+      "skill": "Kĩ năng",
+      "portfolio": "Portfolio",
+      "add-review": "Thêm đánh giá",
+      "review-msg": "Đánh giá của bạn cho mục này",
+      "review-option": "Lưu tên, email và trang web của tôi trên trình duyệt này để lần sau tôi bình luận.",
+      "name": "Tên",
+      "email": "Email",
+      "write-msg": "Đánh giá của bạn",
+      "submit": "Gửi đánh giá",
+      "job-overview": "Tổng quan công việc",
+      "experience": "Kinh nghiệm:",
+      "age": "Tuổi:",
+      "languages": "Ngôn ngữ:",
+      "qualification": "Bằng cấp:",
+      "gender": "Giới tính:"
+    },
+    "contact": {
+      "heading": "Liên hệ với chúng tôi",
+      "name": "Tên",
+      "phone": "Số điện thoại",
+      "subject": "Chuyên môn",
+      "message": "Tin nhắn",
+      "condition": "Chấp nhận Điều khoản & Điều kiện và Chính sách bảo mật.",
+      "submit": "Gửi Tin Nhắn"
+    }
 }
