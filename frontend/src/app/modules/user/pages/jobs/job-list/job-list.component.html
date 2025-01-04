@@ -1,6 +1,6 @@
 <!-- Page Title -->
 <app-banner>
-    <app-breadcrumb title="Jobs"/>
+    <app-breadcrumb [title]="'banner.jobs' | translate"/>
 </app-banner>
 <!-- End Page Title -->
 
@@ -10,14 +10,14 @@
         <div ngProjectAs="leftContainer">
             <ul class="job-list-item align-items-center">
                 <li>
-                    <a href="#">Results Found <span>(17)</span></a>
+                    <a href="#">{{ 'jobs.results' | translate }} <span>(17)</span></a>
                     <a class="rss" href="#">
                         <i class='bx bx-rss'></i>
                         RSS Feed
                     </a>
                 </li>
                 <li>
-                    <span class="sort">Sort By:</span>
+                    <span class="sort">{{ 'jobs.sort-by' | translate }}</span>
                     <form>
                         <div class="form-group">
                             <select style="display: none;">
@@ -64,13 +64,13 @@
                     <form>
                         <div class="search">
                             <!-- ? Title -->
-                            <h3>Search Keywords</h3>
-                                <input type="text" class="form-control" placeholder="Keyword">
+                            <h3>{{ 'jobs.find-a-job' | translate }}</h3>
+                                <input type="text" class="form-control" [placeholder]="'jobs.keyword' | translate">
                                 <button type="submit" class="btn">
                                     <i class="flaticon-send"></i>
                                 </button>
                             <!-- ? Category -->
-                            <h3>Category</h3>
+                            <h3>{{ 'jobs.category' | translate }}</h3>
                             <ul class="job-cmn-cat">
                                 <li>
                                     <div class="form-check">
@@ -148,7 +148,7 @@
                         </div>
                         <!-- ? Location -->
                         <div class="location-list cmn-padding">
-                            <h3>Location List</h3>
+                            <h3>{{ 'jobs.location' | translate }}</h3>
                             <ul class="job-cmn-cat">
                                 <li>
                                     <div class="form-check">
@@ -201,7 +201,7 @@
                             </ul>
                         </div>
                         <div class="salary cmn-padding">
-                            <h3>Fee</h3>
+                            <h3>{{ 'jobs.fee' | translate }}</h3>
                             <div class="job-cmn-cat flex-divide">
                                 <ul class="left">
                                     <li>
@@ -250,7 +250,7 @@
                             </div>
                         </div>
                         <div class="date cmn-padding">
-                            <h3>Date Posted</h3>
+                            <h3>{{ 'jobs.date-posted' | translate }}</h3>
                             <div class="job-cmn-cat flex-divide">
                                 <ul class="left">
                                     <li>
@@ -315,7 +315,7 @@
                             </div>
                         </div>
                         <div class="industry cmn-padding">
-                            <h3>Industry</h3>
+                            <h3>{{ 'jobs.industry' | translate }}</h3>
                             <div class="job-cmn-cat flex-divide">
                                 <ul class="left">
                                     <li>
@@ -372,7 +372,7 @@
                             </div>
                         </div>
                         <div class="level">
-                            <button type="submit" class="btn">Filter Now</button>
+                            <button type="submit" class="btn">{{ 'jobs.filter-now' | translate }}</button>
                         </div>
                     </form>
                 </div>

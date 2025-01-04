@@ -44,10 +44,53 @@
                         </li>
                     </ul>
                     <div [class.side-nav]="true" [class.three]="!isHome()">
-                        <a class="login-left" [routerLink]="['auth', 'login']">
-                            <i class="flaticon-enter"></i>
-                            {{ 'navbar.auth' | translate }}
-                        </a>
+                        <!-- Multi Language -->
+                        <div class="right-nav-item nav-link">
+                                <img class="language-flag" [src]="currentLanguage() === 'vi' ? 'assets/imgs/flag-1.png' : 'assets/imgs/flag-2.png'" alt="language flag"/>
+                                <span>{{currentLanguage() === 'vi' ? "VI" : "EN"}}</span>
+                                <i class='bx bx-chevron-down language-icon'></i>  
+                            <div class="sub-items sub-items--language">
+                                <div class="sub-item" (click)="onChangeLanguage('vi')">
+                                    <img class="language-flag" src="assets/imgs/flag-1.png" alt="VI"/>
+                                    <span>{{ 'navbar.language.vi' | translate }}</span>
+                                </div>
+                                <div class="sub-item" (click)="onChangeLanguage('en')">
+                                    <img class="language-flag" src="assets/imgs/flag-2.png" alt="EN"/>
+                                    <span>{{ 'navbar.language.en' | translate }}</span>
+                                </div>
+                            </div>                          
+                        </div>
+                        
+                        <!-- Profile -->
+                         @if (isLoggedIn()) {
+                             <div class="right-nav-item">
+                                     <div class="profile-wrapper">
+                                         <img class="avatar" src="assets/imgs/candidate/candidate2.jpg" alt="Avatar"/>
+                                         <span>Barry Tech</span>
+                                     </div>  
+                                 <div class="sub-items">
+                                     <a routerLink="/profile" class="sub-item profile-item">
+                                         <i class='bx bx-user-pin profile-item-icon'></i>
+                                         <div class="profile-item-body">
+                                             <span>{{ 'navbar.profile.my-profile.title' | translate }}</span>
+                                             <span>{{ 'navbar.profile.my-profile.description' | translate }}</span>
+                                         </div>
+                                     </a>
+                                     <div class="sub-item profile-item">
+                                         <i class='bx bx-log-out profile-item-icon'></i>
+                                         <div class="profile-item-body">
+                                             <span>{{ 'navbar.profile.sign-out' | translate }}</span>
+                                             <span></span>
+                                         </div>
+                                     </div>
+                                 </div>                          
+                             </div>
+                         } @else {
+                             <a class="login-left" [routerLink]="['auth', 'login']">
+                                <i class="flaticon-enter"></i>
+                                {{ 'navbar.auth' | translate }}
+                            </a>
+                         }
                         <a class="job-right" href="#!">
                             {{ 'navbar.post-job' | translate }}
                             <i class="bx bx-plus"></i>

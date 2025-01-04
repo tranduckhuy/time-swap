@@ -15,10 +15,13 @@ import { MultiLanguageService } from '../../../shared/services/multi-language.se
 })
 export class HeaderComponent {
   isHome = signal<boolean>(false);
+  isLoggedIn = signal<boolean>(true);
   
   private readonly multiLanguageService = inject(MultiLanguageService);
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
+
+  currentLanguage = this.multiLanguageService.language
 
   constructor() {
     const subscription = this.router.events

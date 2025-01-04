@@ -8,11 +8,11 @@
     },
     "form": {
         "errors": {
-        "required": "{{ name }} is required.",
-        "email": "Please enter a valid email address.",
-        "min-length": "{{ name }} must be at least {{ requiredLength }} characters long.",
-        "pattern": "{{ name }} is not valid.",
-        "confirmPassword": "Passwords do not match."
+          "required": "{{ name }} is required.",
+          "email": "Please enter a valid email address.",
+          "min-length": "{{ name }} must be at least {{ requiredLength }} characters long.",
+          "pattern": "{{ name }} is not valid.",
+          "confirmPassword": "Passwords do not match."
       }
     },
     "notify": {
@@ -30,7 +30,27 @@
     "blog": "Blog",
     "contact": "Contact",
     "auth": "Login/Register",
-    "post-job": "Post A Job"
+    "post-job": "Post A Job",
+    "language": {
+      "vi": "Viet Nam",
+      "en": "English"
+    },
+    "profile": {
+      "my-profile": {
+        "title": "My Profile",
+        "description": "View personal profile details"
+      },
+      "sign-out": "Sign out"
+    } 
+  },
+  "banner": {
+    "home": "Home",
+    "about": "About",
+    "jobs": "Jobs",
+    "blog": "Blog",
+    "contact": "Contact",
+    "profile": "Profile",
+    "assignees": "Assignees"
   },
   "auth": {
     "email": "Email",
@@ -57,6 +77,105 @@
       "success": "Registration successful. Please check your inbox to confirm your email.",
       "failure": "Register failed. Please try again.",
       "email-exist": "Registration failed. This email is already in use. Please use a different email."
+    }
+  },
+  "profile": {
+    "tabs": {
+      "my-profile": "My Profile",
+      "applied-jobs": "Applied Jobs",
+      "posted-jobs": "Posted Jobs",
+      "logout": "Logout"
+    },
+    "form": {
+      "info": {
+        "heading": "Basic Info",
+        "name": "Your Name:",
+        "email": "Your Email:",
+        "phone": "Phone:",
+        "dob": "Date Of Birth:",
+        "job": "Job Title:",
+        "position": "Position:",
+        "salary": "Salary",
+        "avatar": "Cover Picture"
+      },
+      "education": {
+        "heading": "Education",
+        "title": "Title:",
+        "degree": "Degree:",
+        "institute": "Institute:",
+        "year": "Year:"
+      },
+      "socials": {
+        "heading": "Social Links"
+      },
+      "button": "Save your information"
+    },
+    "jobs": {
+      "results": "Results Found",
+      "sort-by": {
+        "title": "Sort By:"
+      },
+      "find-a-job": "Find A Job",
+      "email-placeholder": "Email address",
+      "get-a-job": "Get A Job Alert",
+      "search-keywords": "Search Keywords",
+      "keyword": "Keyword",
+      "category": "Category",
+      "location": "Location List",
+      "phone": "Phone",
+      "fee": "Fee",
+      "date-posted": "Date Posted",
+      "industry": "Industry",
+      "filter-now": "Filter Now",
+      "first-name": "First Name:",
+      "last-name": "Last Name:",
+      "job-title": "Title:",
+      "salary": "Salary:",
+      "type": "Type:",
+      "street": "Street:",
+      "department": "Department (Optional):",
+      "province": "Province:",
+      "district": "District:",
+      "ward": "Ward:"
+
+    },
+    "job-detail": {
+      "job-info": "Job Information",
+      "owner-info": "Owner Info",
+      "applied": "Applied",
+      "related": "Related Jobs",
+      "save": "Save",
+      "share": "Share",
+      "report": "Report"
+    },
+    "assignee": {
+      "assign-now": "Assign Now",
+      "my-profile": "My Profile",
+      "work-exp": "Work Experience",
+      "skill": "Skills",
+      "portfolio": "Portfolio",
+      "add-review": "Add Review",
+      "review-msg": "Your rating for this listing",
+      "review-option": "Save my name, email, and website in this browser for the next time I comment.",
+      "name": "Name",
+      "email": "Email",
+      "write-msg": "Write message",
+      "submit": "Submit A Review",
+      "job-overview": "Job Overview",
+      "experience": "Experience",
+      "age": "Age:",
+      "languages": "Language:",
+      "qualification": "Qualification:",
+      "gender": "Gender:"
+    },
+    "contact": {
+      "heading": "Contact Us",
+      "name": "Name",
+      "phone": "Phone",
+      "subject": "Subject",
+      "message": "Message",
+      "condition": "Accept Terms & Conditions And Privacy Policy.",
+      "submit": "Send Message"
     }
   }
 }
