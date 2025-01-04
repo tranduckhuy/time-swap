@@ -44,6 +44,11 @@
             { StatusCode.AssignJobToOwner, "Cannot assign job to the owner. Please assign to another user." },
             { StatusCode.OwnerJobPostMismatch, "The owner of the job post does not match the user." },
             { StatusCode.UserAppliedToOwnJobPost, "You cannot apply to your own job post." },
+            { StatusCode.PaymentMethodNotExists, "Payment method does not exist." },
+            { StatusCode.PaymentFailed, "Payment failed. Please try again." },
+            { StatusCode.PaymentSuccess, "Payment successful." },
+            { StatusCode.PaymentNotExists, "Payment does not exist." },
+            { StatusCode.InvalidSignature, "Invalid signature." }
         };
 
         public static string GetMessage(StatusCode code) => _messages[code];
