@@ -2,10 +2,8 @@
 
 namespace TimeSwap.Application.Industries.Commands
 {
-    public class UpdateIndustryCommand : IRequest<Unit>
+    public class CreateIndustryCommand : IRequest<int>
     {
-        public int IndustryId { get; set; }
-
         public string IndustryName { get; set; } = string.Empty;
     }
 }
