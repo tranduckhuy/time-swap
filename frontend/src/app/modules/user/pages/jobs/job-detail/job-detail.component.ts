@@ -8,11 +8,12 @@ import { JobAlertComponent } from "../../../../../shared/components/job-alert/jo
 import { ButtonWithIconComponent } from "../../../../../shared/components/button-with-icon/button-with-icon.component";
 import { BannerDetailComponent } from "../../../../../shared/components/banner/banner-detail/banner-detail.component";
 import { BannerComponent } from "../../../../../shared/components/banner/banner.component";
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-job-detail',
   standalone: true,
-  imports: [JobPostComponent, GridLayoutComponent, JobAlertComponent, ButtonWithIconComponent, BannerDetailComponent, BannerComponent],
+  imports: [JobPostComponent, GridLayoutComponent, JobAlertComponent, ButtonWithIconComponent, BannerDetailComponent, BannerComponent, TranslateModule],
   templateUrl: './job-detail.component.html',
   styleUrl: './job-detail.component.css'
 })
