@@ -6,6 +6,7 @@ using TimeSwap.Application.JobPosts.Commands;
 using TimeSwap.Application.JobPosts.Responses;
 using TimeSwap.Application.Location.Responses;
 using TimeSwap.Application.Payments.Commands;
+using TimeSwap.Application.Payments.Responses;
 using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Specs;
 using TimeSwap.Shared.Constants;
@@ -27,6 +28,13 @@ namespace TimeSwap.Application.Mappings
             CreateMap<CreateJobPostCommand, JobPost>();
             CreateMap<UpdateJobPostCommand, JobPost>();
             CreateMap<AssignJobCommand, JobApplicant>();
+
+            CreateMap<Payment, PaymentDetailResponse>()
+                .ForMember(dest => dest.PaymentId, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.PaymentMethodType,
+                    opt => opt.MapFrom(src => src.PaymentMethod != null ? src.PaymentMethod.PaymentMethodType.ToString() : string.Empty))
+                .ForMember(dest => dest.MethodDetailName,
+                    opt => opt.MapFrom(src => src.PaymentMethod != null ? src.PaymentMethod.MethodDetailName : string.Empty));
 
             CreateMap<CreatePaymentCommand, Payment>()
                 .ForMember(dest => dest.PaymentStatus, opt => opt.MapFrom(src => PaymentStatus.Pending))

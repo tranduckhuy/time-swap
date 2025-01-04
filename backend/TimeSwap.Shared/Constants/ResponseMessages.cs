@@ -48,7 +48,8 @@
             { StatusCode.PaymentFailed, "Payment failed. Please try again." },
             { StatusCode.PaymentSuccess, "Payment successful." },
             { StatusCode.PaymentNotExists, "Payment does not exist." },
-            { StatusCode.InvalidSignature, "Invalid signature." }
+            { StatusCode.InvalidSignature, "Invalid signature." },
+            { StatusCode.PaymentNotFoundByUserIdException, "No payments found for the user." }
         };
 
         public static string GetMessage(StatusCode code) => _messages[code];

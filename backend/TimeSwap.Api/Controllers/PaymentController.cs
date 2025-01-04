@@ -5,6 +5,8 @@ using TimeSwap.Api.Models;
 using TimeSwap.Application.Configurations.Payments.Responses;
 using TimeSwap.Application.Mappings;
 using TimeSwap.Application.Payments.Commands;
+using TimeSwap.Application.Payments.Queries;
+using TimeSwap.Application.Payments.Responses;
 using TimeSwap.Shared;
 using TimeSwap.Shared.Constants;
 
@@ -60,6 +62,24 @@ namespace TimeSwap.Api.Controllers
             };
 
             return await ExecuteAsync<VnpayReturnCommand, string>(command);
+        }
+
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetPaymentsByUserId([FromRoute] Guid userId)
+        {
+            if (userId == Guid.Empty)
+            {
+                return BadRequest(new ApiResponse<object>
+                {
+                    StatusCode = (int)Shared.Constants.StatusCode.ModelInvalid,
+                    Message = ResponseMessages.GetMessage(Shared.Constants.StatusCode.ModelInvalid),
+                    Errors = ["The userId is not valid"]
+                });
+            }
+
+            var query = new GetPaymentsByUserIdQuery(userId);
+
+            return await ExecuteAsync<GetPaymentsByUserIdQuery, List<PaymentDetailResponse>>(query);
         }
 
     }
