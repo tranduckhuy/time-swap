@@ -1,0 +1,146 @@
+@if (isLoading()) {
+    <app-loader />
+}
+
+<app-toast />
+
+<!-- ? Page Title -->
+<app-banner>
+    <app-breadcrumb title="Jobs"/>
+</app-banner>
+<!-- ? End Page Title -->
+
+<!-- ? Filter -->
+<form [formGroup]="form">
+    <div class="job-filter-area pt-100">
+        <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Title" formControlName="search">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Fee From" formControlName="minFee">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Fee To" formControlName="maxFee">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="form-group">
+                            <select style="display: none;" formControlName="industryId">
+                                @for (industry of industries(); track industry.id) {
+                                    <option [value]="industry.id">{{ industry }}</option>
+                                }
+                            </select>
+                            <app-nice-select 
+                                [listData]="industriesName()" 
+                                (valueChange)="handleSelectChange('industryId', $event, industries())"
+                            />
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="form-group">
+                            <select style="display: none;" formControlName="categoryId">
+                                @for (category of categories(); track category.id) {
+                                    <option [value]="category.id">{{ category }}</option>
+                                }
+                            </select>
+                            <app-nice-select 
+                                [listData]="categoriesName()" 
+                                (valueChange)="handleSelectChange('categoryId', $event, categories())"
+                            />
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="form-group">
+                            <select style="display: none;" formControlName="cityId">
+                                @for (city of cities(); track city.id) {
+                                    <option [value]="city.id">{{ city }}</option>
+                                }
+                            </select>
+                            <app-nice-select 
+                                [listData]="citiesName()" 
+                                (valueChange)="handleSelectChange('cityId', $event, cities())"
+                            />
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="form-group">
+                            <select style="display: none;" formControlName="wardId">
+                                @for (ward of wards(); track ward.id) {
+                                    <option [value]="ward.id">{{ ward.fullLocation }}</option>
+                                }
+                            </select>
+                            <app-nice-select 
+                                [listData]="wardsName()" 
+                                (valueChange)="handleSelectChange('wardId', $event, wards())"
+                            />
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <button type="submit" class="btn cmn-btn" (click)="onSearch()">
+                            Search By Filter
+                            <i class="bx bx-plus"></i>
+                        </button>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <!-- ? End Filter -->
+
+    <!-- ? Showing -->
+    <div class="job-showing-area">
+        <div class="container">
+            <div class="showing" style="margin-bottom: 30px;">
+                <div class="row">
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="left">
+                            <div class="form-group">
+                                <select style="display: none;" formControlName="postedDate">
+                                    <option value="">All Date Posted</option>
+                                    <option value="0">Today</option>
+                                    <option value="1">Yesterday</option>
+                                    <option value="2">Last 7 Days</option>
+                                    <option value="3">Last 30 Days</option>
+                                </select>
+                                <app-nice-select 
+                                    [listData]="postedDate()" 
+                                    (valueChange)="handleSelectChange('postedDate', $event, postedDate())"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-6">
+                        <div class="right">
+                            <h4 style="font-size: 16px;">Showing {{ start() }} - {{ end() }} of {{ totalJobs() }} results</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ? End Showing -->
+</form>
+
+<!-- ? Jobs -->
+<div class="candidate-area pb-100">
+    <div class="container">
+        <!-- ? Job Post List -->
+        <div class="row" style="margin-top: 20px;">
+            @for (job of jobs(); track job.id) {
+                <div class="col-lg-6 col-12">
+                    <app-job-post [job]="job"/>
+                </div>
+            }
+        </div>
+
+        <!-- ? Pagination -->
+        <app-pagination [currentPage]="pageIndex()" [totalJobs]="totalJobs()" [limit]="pageSize()" (pageChange)="onPageChange($event)"/>
+    </div>
+</div>
+<!-- ? End Jobs -->

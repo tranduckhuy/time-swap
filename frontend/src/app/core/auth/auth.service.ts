@@ -21,12 +21,12 @@ import type { ConfirmRequestModel, ReConfirmRequestModel } from '../../shared/mo
 export class AuthService {
   private httpClient = inject(HttpClient);
 
-  BASE_API_URL = environment.apiBaseUrl;
-  LOGIN_API_URL = `${this.BASE_API_URL}/auth/login`;
-  REGISTER_API_URL = `${this.BASE_API_URL}/auth/register`;
-  REFRESH_API_URL = `${this.BASE_API_URL}/auth/refresh-token`;
-  CONFIRM_API_URL = `${this.BASE_API_URL}/auth/confirm-email`;
-  RE_CONFIRM_API_URL = `${this.BASE_API_URL}/auth/resend-confirmation-email`;
+  private BASE_API_URL = environment.apiAuthBaseUrl;
+  private LOGIN_API_URL = `${this.BASE_API_URL}/auth/login`;
+  private REGISTER_API_URL = `${this.BASE_API_URL}/auth/register`;
+  private REFRESH_API_URL = `${this.BASE_API_URL}/auth/refresh-token`;
+  private CONFIRM_API_URL = `${this.BASE_API_URL}/auth/confirm-email`;
+  private RE_CONFIRM_API_URL = `${this.BASE_API_URL}/auth/resend-confirmation-email`;
 
   signin(loginReq: LoginRequestModel): Observable<BaseResponseModel<LoginResponseModel>> {
     return this.sendPostRequest<LoginRequestModel, BaseResponseModel<LoginResponseModel>>(
@@ -86,7 +86,7 @@ export class AuthService {
   }
 
   getRefreshToken() {
-    return localStorage.getItem(TOKEN_KEY);
+    return localStorage.getItem(REFRESH_TOKEN_KEY);
   }
 
   getExpirationTime() {
@@ -95,6 +95,8 @@ export class AuthService {
 
   deleteToken() {
     localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(REFRESH_TOKEN_KEY);
+    localStorage.removeItem(EXPIRES_IN_KEY);
   }
 
   private sendPostRequest<T, R>(url: string, body: T): Observable<R> {
