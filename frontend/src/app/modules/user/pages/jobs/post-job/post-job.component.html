@@ -1,6 +1,6 @@
 <!-- ? Banner -->
 <app-banner>
-  <app-breadcrumb title="Post A Job"/>
+  <app-breadcrumb [title]="'navbar.post-job' | translate"/>
 </app-banner>
 
 <!-- ? Form post a job  -->
@@ -9,14 +9,14 @@
       <form>
           <div class="post-item">
               <div class="section-title">
-                  <h2>Post A Job</h2>
+                  <h2>{{ 'navbar.post-job' | translate }}</h2>
                   <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet placeat totam laboriosam ut labore aliquid veniam repellendus similique? Id molestiae pariatur molestias, alias quia sint autem nemo architecto facere asperiores.</p>
               </div>
               <div class="row">
                   <div class="col-lg-6">
                       <div class="form-group">
                           <label>
-                              First Name:
+                            {{ 'jobs.first-name' | translate }}
                           </label>
                           <input type="text" class="form-control" placeholder="Nguyen">
                       </div>
@@ -24,7 +24,7 @@
                   <div class="col-lg-6">
                       <div class="form-group">
                           <label>
-                              Last Name:
+                            {{ 'jobs.last-name' | translate }}
                           </label>
                           <input type="text" class="form-control" placeholder="Quy">
                       </div>
@@ -32,7 +32,7 @@
                   <div class="col-lg-6">
                       <div class="form-group">
                           <label>
-                              Email:
+                            {{ 'jobs.email-placeholder' | translate }}
                           </label>
                           <input type="email" class="form-control" placeholder="example@gmail.com">
                       </div>
@@ -40,7 +40,7 @@
                   <div class="col-lg-6">
                       <div class="form-group">
                           <label>
-                              Phone:
+                            {{ 'jobs.phone' | translate }}
                           </label>
                           <input type="text" class="form-control" placeholder="+123-456-789">
                       </div>
@@ -48,7 +48,7 @@
                   <div class="col-lg-6">
                       <div class="form-group">
                           <label>
-                              Job Title:
+                            {{ 'jobs.job-title' | translate }}
                           </label>
                           <input type="text" class="form-control" placeholder="Web Developer">
                       </div>
@@ -56,7 +56,7 @@
                   <div class="col-lg-6">
                       <div class="form-group">
                           <label>
-                              Job Salary:
+                            {{ 'jobs.salary' | translate }}
                           </label>
                           <select style="display: none;">
                               <option>500$ - 1000$</option>
@@ -70,7 +70,7 @@
                   <div class="col-lg-6">
                       <div class="form-group">
                           <label>
-                              Job Type:
+                            {{ 'jobs.type' | translate }}
                           </label>
                           <select style="display: none;">
                               <option>Full Time</option>
@@ -84,7 +84,7 @@
                   <div class="col-lg-6">
                       <div class="form-group">
                           <label>
-                              Job Category:
+                            {{ 'jobs.category' | translate }}
                           </label>
                           <select style="display: none;">
                               <option>Digital & Creative</option>
@@ -98,7 +98,7 @@
                   <div class="col-lg-6">
                       <div class="form-group">
                           <label>
-                              Street:
+                            {{ 'jobs.street' | translate }}
                           </label>
                           <input type="text" class="form-control" placeholder="111 Phan Dinh Phung">
                       </div>
@@ -106,7 +106,7 @@
                   <div class="col-lg-6">
                       <div class="form-group">
                           <label>
-                              Department (Optional):
+                            {{ 'jobs.department' | translate }}
                           </label>
                           <input type="text" class="form-control" placeholder="Optional">
                       </div>
@@ -114,7 +114,7 @@
                   <div class="col-lg-4 col-md-6 col-12">
                       <div class="form-group">
                           <label>
-                              Province:
+                            {{ 'jobs.province' | translate }}
                           </label>
                           <select style="display: none;">
                               <option>Tỉnh Bình Định</option>
@@ -127,7 +127,7 @@
                   <div class="col-lg-4 col-md-6 col-12">
                       <div class="form-group">
                           <label>
-                              District:
+                            {{ 'jobs.district' | translate }}
                           </label>
                           <select style="display: none;">
                               <option>Thành Phố Quy Nhơn</option>
@@ -141,7 +141,7 @@
                   <div class="col-lg-4 col-md-6 col-12">
                       <div class="form-group">
                           <label>
-                              Ward:
+                            {{ 'jobs.ward' | translate }}
                           </label>
                           <select style="display: none;">
                               <option>Phường Ghềnh Ráng</option>
@@ -152,7 +152,7 @@
                       </div>
                   </div>
               </div>
-              <button type="submit" class="btn">Post A Job</button>
+              <button type="submit" class="btn">{{ 'navbar.post-job' | translate }}</button>
           </div>
       </form>
   </div>
