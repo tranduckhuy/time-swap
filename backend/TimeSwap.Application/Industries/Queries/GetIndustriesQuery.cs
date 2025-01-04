@@ -5,5 +5,6 @@ namespace TimeSwap.Application.Industries.Queries
 {
     public class GetIndustriesQuery : IRequest<List<IndustryResponse>>
     {
+
     }
 }
