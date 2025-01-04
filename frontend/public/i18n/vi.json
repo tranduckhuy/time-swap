@@ -84,7 +84,6 @@
       "fetch-jobs-failed": "Rất tiếc! Chúng tôi gặp sự cố khi lấy thông tin công việc. Vui lòng liên hệ với quản trị viên để được hỗ trợ thêm.",
       "fetch-wards-failed": "Rất tiếc! Chúng tôi gặp sự cố khi lấy thông tin huyện/xã. Vui lòng liên hệ với quản trị viên để được hỗ trợ thêm."
     }
-  }
   },
   "profile": {
     "tabs": {
@@ -116,9 +115,8 @@
         "heading": "Liên kết"
       },
       "button": "Lưu thông tin"
-    }
-  },
-  "jobs": {
+    },
+    "jobs": {
     "results": "Kết quả tìm kiếm",
     "sort-by": {
       "title": "Sắp xếp:"
@@ -184,4 +182,5 @@
       "condition": "Chấp nhận Điều khoản & Điều kiện và Chính sách bảo mật.",
       "submit": "Gửi Tin Nhắn"
     }
+  }
 }
