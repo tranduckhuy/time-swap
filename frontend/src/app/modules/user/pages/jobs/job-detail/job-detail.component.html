@@ -17,24 +17,24 @@
                 </ul>
             </div>
             <div class="right" ngProjectAs="right-content">
-                <app-button-icon title="Apply Now" icon="bx bx-plus"/>
+                <app-button-icon [title]="'navbar.post-job' | translate" icon="bx bx-plus"/>
                 <ul>
                   <li>
                       <a href="#">
                           <i class='bx bx-heart'></i>
-                          Save
+                          {{ 'job-detail.save' | translate }}
                       </a>
                   </li>
                   <li>
                       <a href="#">
                           <i class='bx bx-share-alt'></i>
-                          Share
+                          {{ 'job-detail.share' | translate }}
                       </a>
                   </li>
                   <li>
                       <a href="#">
                           <i class='bx bxs-report'></i>
-                          Report
+                          {{ 'job-detail.report' | translate }}
                       </a>
                   </li>
                 </ul>
@@ -128,36 +128,36 @@
         <app-job-alert />
         <!-- ? Job Information -->
         <div class="information widget-item">
-            <h3>Job Information</h3>
+            <h3>{{ 'job-detail.job-info' | translate }}</h3>
             <ul>
                 <li>
                     <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                    <h4>Fee</h4>
+                    <h4>{{ 'jobs.fee' | translate }}</h4>
                     <span>$1,500 - $2,000</span>
                 </li>
                 <li>
                     <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                    <h4>Category</h4>
+                    <h4>{{ 'jobs.category' | translate }}</h4>
                     <span>Sales & Marketing</span>
                 </li>
                 <li>
                     <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                    <h4>Location</h4>
+                    <h4>{{ 'jobs.location' | translate }}</h4>
                     <span>10th St Long Island, NY</span>
                 </li>
                 <li>
                     <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                    <h4>Posted</h4>
+                    <h4>{{ 'jobs.date-posted' | translate }}</h4>
                     <span>7 Months Ago</span>
                 </li>
                 <li>
                     <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                    <h4>Industry</h4>
+                    <h4>{{ 'jobs.industry' | translate }}</h4>
                     <span>Development</span>
                 </li>
                 <li>
                     <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                    <h4>Applied</h4>
+                    <h4>{{ 'job-detail.applied' | translate }}</h4>
                     <span>01</span>
                 </li>
             </ul>
@@ -165,7 +165,7 @@
         <div class="owner">
             <div class="top">
                 <img src="assets/imgs/job/job4.png" alt="Owner">
-                <h3>Owner Info</h3>
+                <h3>{{ 'job-detail.results' | translate }}</h3>
                 <i class="flaticon-send"></i>
                 <span>Los Angeles, CA, USA</span>
             </div>
@@ -173,17 +173,17 @@
                 <ul>
                     <li>
                         <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                        <h4>Phone</h4>
+                        <h4>{{ 'jobs.phone' | translate }}</h4>
                         <a href="tel:">123-456-7891</a>
                     </li>
                     <li>
                         <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                        <h4>Email</h4>
+                        <h4>{{ 'jobs.email-placeholder' | translate }}</h4>
                         <a href="mailto:">timeswap&#x40;contact.com</a>
                     </li>
                     <li>
                         <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                        <h4>Location</h4>
+                        <h4>{{ 'jobs.location' | translate }}</h4>
                         <a href="#" target="_blank">www.timeswap.com</a>
                     </li>
                 </ul>
@@ -199,7 +199,7 @@
 <div class="job-details-related pt-100 pb-70">
   <div class="container">
       <div class="section-title">
-          <h2>Related Jobs</h2>
+          <h2>{{ 'job-detail.related' | translate }}</h2>
       </div>
       @for (job of relatedJobs; track job.title) {
         <!-- <app-job-post [job]="job"/> -->
