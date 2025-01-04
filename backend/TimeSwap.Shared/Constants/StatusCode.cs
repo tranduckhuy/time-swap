@@ -50,6 +50,7 @@
         PaymentFailed = 2033,
         PaymentSuccess = 2034,
         PaymentNotExists = 2035,
-        InvalidSignature = 2036
+        InvalidSignature = 2036,
+        PaymentNotFoundByUserIdException = 2037
     }
 }
