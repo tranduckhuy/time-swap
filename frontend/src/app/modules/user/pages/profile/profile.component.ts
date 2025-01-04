@@ -3,11 +3,12 @@ import { BannerComponent } from "../../../../shared/components/banner/banner.com
 import { BreadcrumbComponent } from "../../../../shared/components/breadcrumb/breadcrumb.component";
 import { ProfileTabsComponent } from "./profile-tabs/profile-tabs.component";
 import { ProfileContentComponent } from "./profile-content/profile-content.component";
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [BannerComponent, BreadcrumbComponent, ProfileTabsComponent, ProfileContentComponent],
+  imports: [BannerComponent, BreadcrumbComponent, ProfileTabsComponent, ProfileContentComponent, TranslateModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })

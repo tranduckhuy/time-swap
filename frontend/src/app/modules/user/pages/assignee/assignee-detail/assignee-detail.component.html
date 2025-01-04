@@ -17,24 +17,24 @@
                 </ul>
             </div>
             <div class="right" ngProjectAs="right-content">
-                <app-button-icon title="Assign now" icon="bx bx-plus"/>
+                <app-button-icon [title]="'assignee.assign-now' | translate" icon="bx bx-plus"/>
                 <ul>
                   <li>
                       <a href="#">
                           <i class='bx bx-heart'></i>
-                          Save
+                          {{ 'job-detail.save' | translate }}
                       </a>
                   </li>
                   <li>
                       <a href="#">
                           <i class='bx bx-share-alt'></i>
-                          Share
+                          {{ 'job-detail.share' | translate }}
                       </a>
                   </li>
                   <li>
                       <a href="#">
                           <i class='bx bxs-report'></i>
-                          Report
+                          {{ 'job-detail.report' | translate }}
                       </a>
                   </li>
                 </ul>
@@ -49,12 +49,12 @@
     <app-grid-layout>
         <div class="details-item" ngProjectAs="leftContainer">
             <div class="profile">
-                <h3>My Profile</h3>
+                <h3>{{ 'assignee.my-profile' | translate }}</h3>
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
                 <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search.</p>
             </div>
             <div class="work bottom-item">
-                <h3>Work Experience</h3>
+                <h3>{{ 'assignee.work-exp' | translate }}</h3>
                 <ul>
                     <li>
                         <img src="assets/imgs/title-img.png" alt="Icon">
@@ -125,7 +125,7 @@
                 <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
             </div>
             <div class="skills">
-                <h3>Skills</h3>
+                <h3>{{ 'assignee.skill' | translate }}</h3>
 
                 <div class="skill-wrap">
                     <div class="skill">
@@ -167,7 +167,7 @@
                 </div>
             </div>
             <div class="portfolio">
-                <h3>Portfolio</h3>
+                <h3>{{ 'assignee.portfolio' | translate }}</h3>
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="img">
@@ -213,8 +213,8 @@
                 </ul>
             </div>
             <div class="review">
-                <h3>Add Review</h3>
-                <span>Your rating for this listing</span>
+                <h3>{{ 'assignee.add-review' | translate }}</h3>
+                <span>{{ 'assignee.review-msg' | translate }}</span>
                 <ul>
                     <li>
                         <i class='bx bxs-star checked'></i>
@@ -235,29 +235,29 @@
                 <form>
                     <div class="form-group form-check">
                         <input type="checkbox" class="form-check-input" id="exampleCheck59">
-                        <label class="form-check-label" for="exampleCheck59">Save my name, email, and website in this browser for the next time I comment.</label>
+                        <label class="form-check-label" for="exampleCheck59">{{ 'assignee.review-option' | translate }}</label>
                     </div>
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <i class='bx bx-user'></i>
-                                <input type="text" class="form-control" placeholder="Name*">
+                                <input type="text" class="form-control" [placeholder]="'assignee.name' | translate">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <i class='bx bx-mail-send'></i>
-                                <input type="email" class="form-control" placeholder="Email*">
+                                <input type="email" class="form-control" placeholder="Email">
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <i class='bx bx-mail-send'></i>
-                                <textarea id="your-message" rows="10" class="form-control" placeholder="Write message"></textarea>
+                                <textarea id="your-message" rows="10" class="form-control" [placeholder]="'assignee.write-msg' | translate"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <button type="submit" class="btn">Submit A Review</button>
+                            <button type="submit" class="btn">{{ 'assignee.submit' | translate }}</button>
                         </div>
                     </div>
                 </form>
@@ -265,47 +265,47 @@
         </div>
         <div class="widget-area" ngProjectAs="rightContainer">
             <div class="information widget-item">
-                <h3>Job Overview</h3>
+                <h3>{{'assignee.job-overview' | translate }}</h3>
                 <ul>
                     <li>
                         <img src="assets/imgs/job-details-icon.png" alt="Details">
-                        <h4>Salary:</h4>
+                        <h4>{{'jobs.salary' | translate }}</h4>
                         <span>$1,500 - $2,000</span>
                     </li>
                     <li>
                         <img src="assets/imgs/job-details-icon.png" alt="Details">
-                        <h4>Experience:</h4>
+                        <h4>{{'assignee.experience' | translate }}</h4>
                         <span>5 years</span>
                     </li>
                     <li>
                         <img src="assets/imgs/job-details-icon.png" alt="Details">
-                        <h4>Age:</h4>
+                        <h4>{{'assignee.age' | translate }}</h4>
                         <span>30-35</span>
                     </li>
                     <li>
                         <img src="assets/imgs/job-details-icon.png" alt="Details">
-                        <h4>Gender:</h4>
+                        <h4>{{'assignee.gender' | translate }}</h4>
                         <span>Both</span>
                     </li>
                     <li>
                         <img src="assets/imgs/job-details-icon.png" alt="Details">
-                        <h4>Languages:</h4>
+                        <h4>{{'assignee.language' | translate }}</h4>
                         <span>Bangla, English, Arbi, Spanish</span>
                     </li>
                     <li>
                         <img src="assets/imgs/job-details-icon.png" alt="Details">
-                        <h4>Qualification:</h4>
+                        <h4>{{'assignee.qualification' | translate }}</h4>
                         <span>Certificate, Associate Degree</span>
                     </li>
                 </ul>
             </div>
             <div class="download widget-item">
-                <a href="#">Assign now</a>
+                <a href="#">{{'assignee.assign-now' | translate }}</a>
             </div>
             <div class="owner">
                 <div class="top">
                     <img src="assets/imgs/job/job4.png" alt="Owner">
-                    <h3>Owner Info</h3>
+                    <h3>{{'job-detail.owner-info' | translate }}</h3>
                     <i class="flaticon-send"></i>
                     <span>Los Angeles, CA, USA</span>
                 </div>
@@ -313,7 +313,7 @@
                     <ul>
                         <li>
                             <img src="assets/imgs/job-details-icon.png" alt="Details">
-                            <h4>Phone</h4>
+                            <h4>{{'jobs.phone' | translate }}</h4>
                             <a href="tel:+34561232349987">+3456 123 234 9987</a>
                         </li>
                         <li>
@@ -323,7 +323,7 @@
                         </li>
                         <li>
                             <img src="assets/imgs/job-details-icon.png" alt="Details">
-                            <h4>Location</h4>
+                            <h4>{{'jobs.location' | translate }}</h4>
                             <a href="#" target="_blank">www.jectothemes.com</a>
                         </li>
                     </ul>
