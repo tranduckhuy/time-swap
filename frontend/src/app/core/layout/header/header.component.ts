@@ -2,6 +2,7 @@ import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 
 import { TranslateModule } from '@ngx-translate/core';
+
 import { filter } from 'rxjs';
 
 import { MultiLanguageService } from '../../../shared/services/multi-language.service';
@@ -11,6 +12,7 @@ import { MultiLanguageService } from '../../../shared/services/multi-language.se
   standalone: true,
   imports: [RouterLink, TranslateModule],
   templateUrl: './header.component.html',
+  styleUrl: './header.component.css'
 })
 export class HeaderComponent {
   isHome = signal<boolean>(false);
