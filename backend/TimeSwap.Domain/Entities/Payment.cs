@@ -4,6 +4,12 @@ namespace TimeSwap.Domain.Entities
 {
     public class Payment : AuditableEntityBase<Guid>
     {
+        public Payment() : base() 
+        {
+            Id = Guid.NewGuid();
+            TransactionId = Guid.NewGuid();
+        }
+
         public Guid UserId { get; set; }
 
         public string PaymentContent { get; set; } = string.Empty;

@@ -5,8 +5,10 @@ using TimeSwap.Application.JobApplicants.Responses;
 using TimeSwap.Application.JobPosts.Commands;
 using TimeSwap.Application.JobPosts.Responses;
 using TimeSwap.Application.Location.Responses;
+using TimeSwap.Application.Payments.Commands;
 using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Specs;
+using TimeSwap.Shared.Constants;
 
 namespace TimeSwap.Application.Mappings
 {
@@ -25,6 +27,16 @@ namespace TimeSwap.Application.Mappings
             CreateMap<CreateJobPostCommand, JobPost>();
             CreateMap<UpdateJobPostCommand, JobPost>();
             CreateMap<AssignJobCommand, JobApplicant>();
+
+            CreateMap<CreatePaymentCommand, Payment>()
+                .ForMember(dest => dest.PaymentStatus, opt => opt.MapFrom(src => PaymentStatus.Pending))
+                .ForMember(dest => dest.ExpiryDate, opt => opt.MapFrom(src => DateTime.UtcNow.AddMinutes(15)))
+                .ForMember(dest => dest.ModifiedAt, opt => opt.MapFrom(src => DateTime.UtcNow));
+
+            CreateMap<Payment, TransactionLog>()
+                .ForMember(dest => dest.TransactionId, opt => opt.MapFrom(src => src.TransactionId))
+                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => DateTime.UtcNow));
+
             CreateMap<JobApplicant, JobApplicantResponse>()
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserAppliedId))
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.UserApplied.FullName))

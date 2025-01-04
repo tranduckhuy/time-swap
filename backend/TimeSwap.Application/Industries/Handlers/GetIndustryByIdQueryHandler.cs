@@ -18,11 +18,7 @@ namespace TimeSwap.Application.Industries.Handlers
 
         public async Task<IndustryResponse> Handle(GetIndustryByIdQuery request, CancellationToken cancellationToken)
         {
-            var industry = await _industryRepository.GetByIdAsync(request.Id);
-            if (industry == null)
-            {
-                throw new IndustryNotFoundException();
-            }
+            var industry = await _industryRepository.GetByIdAsync(request.Id) ?? throw new IndustryNotFoundException();
 
             return AppMapper<CoreMappingProfile>.Mapper.Map<IndustryResponse>(industry);
         }

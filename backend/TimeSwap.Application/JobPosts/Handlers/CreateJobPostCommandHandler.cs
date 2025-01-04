@@ -1,5 +1,4 @@
 using MediatR;
-using Microsoft.Extensions.Logging;
 using TimeSwap.Application.JobPosts.Commands;
 using TimeSwap.Application.JobPosts.Responses;
 using TimeSwap.Application.JobPosts.Validators;
