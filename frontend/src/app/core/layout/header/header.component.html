@@ -46,16 +46,16 @@
                     <div [class.side-nav]="true" [class.three]="!isHome()">
                         <!-- Multi Language -->
                         <div class="right-nav-item nav-link">
-                                <img class="language-flag" [src]="currentLanguage() === 'vi' ? 'assets/imgs/flag-1.png' : 'assets/imgs/flag-2.png'"/>
+                                <img class="language-flag" [src]="currentLanguage() === 'vi' ? 'assets/imgs/flag-1.png' : 'assets/imgs/flag-2.png'" alt="language flag"/>
                                 <span>{{currentLanguage() === 'vi' ? "VI" : "EN"}}</span>
                                 <i class='bx bx-chevron-down language-icon'></i>  
                             <div class="sub-items sub-items--language">
                                 <div class="sub-item" (click)="onChangeLanguage('vi')">
-                                    <img class="language-flag" src="assets/imgs/flag-1.png"/>
+                                    <img class="language-flag" src="assets/imgs/flag-1.png" alt="VI"/>
                                     <span>{{ 'navbar.language.vi' | translate }}</span>
                                 </div>
                                 <div class="sub-item" (click)="onChangeLanguage('en')">
-                                    <img class="language-flag" src="assets/imgs/flag-2.png"/>
+                                    <img class="language-flag" src="assets/imgs/flag-2.png" alt="EN"/>
                                     <span>{{ 'navbar.language.en' | translate }}</span>
                                 </div>
                             </div>                          
@@ -65,7 +65,7 @@
                          @if (isLoggedIn()) {
                              <div class="right-nav-item">
                                      <div class="profile-wrapper">
-                                         <img class="avatar" src="assets/imgs/candidate/candidate2.jpg"/>
+                                         <img class="avatar" src="assets/imgs/candidate/candidate2.jpg" alt="Avatar"/>
                                          <span>Barry Tech</span>
                                      </div>  
                                  <div class="sub-items">
