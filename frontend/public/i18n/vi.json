@@ -61,7 +61,7 @@
       "link": "Đăng ký ngay!",
       "success": "Bạn đã đăng nhập thành công!",
       "confirm-success": "Xác nhận email thành công! Bạn có thể sử dụng email để đăng nhập.",
-      "re-confirm-success": "Email khác đã được gửi thành công! Hãy kiểm tra hộp thư đến để xác nhận email.",
+      "re-confirm-success": "Email mới đã được gửi thành công! Hãy kiểm tra hộp thư đến để xác nhận email.",
       "failure": "Đăng nhập không thành công. Vui lòng thử lại.",
       "not-confirm": "Email chưa được xác nhận. Vui lòng kiểm tra hộp thư.",
       "token-expired": "Liên kết đã hết hạn. Một liên kết mới đã được gửi đến email của bạn."
@@ -78,6 +78,13 @@
       "failure": "Đăng ký không thành công. Vui lòng thử lại.",
       "email-exist": "Đăng ký không thành công. Email này đã được sử dụng. Vui lòng sử dụng email khác."
     }
+  },
+  "jobs": {
+    "notify": {
+      "fetch-jobs-failed": "Rất tiếc! Chúng tôi gặp sự cố khi lấy thông tin công việc. Vui lòng liên hệ với quản trị viên để được hỗ trợ thêm.",
+      "fetch-wards-failed": "Rất tiếc! Chúng tôi gặp sự cố khi lấy thông tin huyện/xã. Vui lòng liên hệ với quản trị viên để được hỗ trợ thêm."
+    }
+  }
   },
   "profile": {
     "tabs": {

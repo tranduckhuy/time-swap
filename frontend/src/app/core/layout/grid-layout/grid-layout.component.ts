@@ -5,7 +5,6 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './grid-layout.component.html',
-  styleUrl: './grid-layout.component.css'
 })
 export class GridLayoutComponent {
 

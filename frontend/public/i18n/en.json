@@ -61,7 +61,7 @@
       "link": "Register now!",
       "success": "Login successful!",
       "confirm-success": "Email confirmed successfully! You can now use your email to log in.",
-      "re-confirm-success": "Another email sent successfully! Please check your inbox to confirm your email.",
+      "re-confirm-success": "A new email sent successfully! Please check your inbox to confirm your email.",
       "failure": "Login failed. Please try again.",
       "not-confirm": "Email not confirmed. Please check your inbox.",
       "token-expired": "The link has expired. A new one has been sent to your email."
@@ -77,6 +77,12 @@
       "success": "Registration successful. Please check your inbox to confirm your email.",
       "failure": "Register failed. Please try again.",
       "email-exist": "Registration failed. This email is already in use. Please use a different email."
+    }
+  },
+  "jobs": {
+    "notify": {
+      "fetch-jobs-failed": "Oops! We encountered an issue while fetching jobs. Please reach out to the administrator for further assistance.",
+      "fetch-wards-failed": "Oops! We encountered an issue while fetching wards. Please reach out to the administrator for further assistance."
     }
   },
   "profile": {
