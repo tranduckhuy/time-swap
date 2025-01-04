@@ -6,7 +6,9 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
 {
     public class TransactionLogRepository : RepositoryBase<TransactionLog, Guid>, ITransactionLogRepository
     {
-        public TransactionLogRepository(AppDbContext context) : base(context) { }
-
+        public TransactionLogRepository(AppDbContext context) : base(context) 
+        {
+        
+        }
     }
 }
