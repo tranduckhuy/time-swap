@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { DUMMY_JOBS } from '../job-list/dummy-job';
+import { DUMMY_JOBS } from '../dummy-job';
 
 import { JobPostComponent } from "../../../../../shared/components/job-post/job-post.component";
 import { GridLayoutComponent } from "../../../../../core/layout/grid-layout/grid-layout.component";

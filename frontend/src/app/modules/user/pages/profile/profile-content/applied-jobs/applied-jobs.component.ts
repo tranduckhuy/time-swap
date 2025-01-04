@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DUMMY_JOBS } from '../../../jobs/job-list/dummy-job';
+import { DUMMY_JOBS } from '../../../jobs/dummy-job';
 import { JobPostComponent } from "../../../../../../shared/components/job-post/job-post.component";
 
 @Component({
