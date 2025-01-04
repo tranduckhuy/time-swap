@@ -38,8 +38,8 @@ namespace TimeSwap.Application.Payments.Handlers
         public async Task<string> Handle(CreatePaymentCommand request, CancellationToken cancellationToken)
 
         {
-            var userId = await _userRepository.GetByIdAsync(request.UserId) ?? throw new UserNotExistsException();
-            var paymentMethodId = await _paymentMethodRepository.GetByIdAsync(request.PaymentMethodId) ?? throw new PaymentMethodNotExistsException();
+            _ = await _userRepository.GetByIdAsync(request.UserId) ?? throw new UserNotExistsException();
+            _ = await _paymentMethodRepository.GetByIdAsync(request.PaymentMethodId) ?? throw new PaymentMethodNotExistsException();
 
             var payment = AppMapper<CoreMappingProfile>.Mapper.Map<Payment>(request);
 
