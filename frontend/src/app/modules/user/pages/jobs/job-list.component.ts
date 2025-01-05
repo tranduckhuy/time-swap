@@ -1,6 +1,8 @@
 import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
 
+import { TranslateModule } from '@ngx-translate/core';
+
 import { forkJoin, map } from 'rxjs';
 
 import { JobPostComponent } from '../../../../shared/components/job-post/job-post.component';
@@ -11,15 +13,17 @@ import { NiceSelectComponent } from "../../../../shared/components/nice-select/n
 import { ToastComponent } from "../../../../shared/components/toast/toast.component";
 import { PreLoaderComponent } from "../../../../shared/components/pre-loader/pre-loader.component";
 
+import { 
+  createFilterOptions, 
+  createPostedDateOptions 
+} from '../../../../shared/utils/util-functions';
+
 import { PAGE_SIZE_JOBS } from '../../../../shared/constants/page-constants';
 import { SUCCESS_CODE } from '../../../../shared/constants/status-code-constants';
-import { 
-  DEFAULT_FILTER_OPTIONS, 
-  DEFAULT_POSTED_DATE_OPTIONS 
-} from '../../../../shared/constants/jobs-constants';
 
 import { JobsService } from './jobs.service';
 import { ToastHandlingService } from '../../../../shared/services/toast-handling.service';
+import { MultiLanguageService } from '../../../../shared/services/multi-language.service';
 
 import type { JobPostModel } from '../../../../shared/models/entities/job.model';
 import type { IndustryModel } from '../../../../shared/models/entities/industry.model';
@@ -31,6 +35,7 @@ import type { JobListRequestModel } from '../../../../shared/models/api/request/
   selector: 'app-job-list',
   standalone: true,
   imports: [
+    TranslateModule,
     ReactiveFormsModule,
     JobPostComponent,
     BannerComponent,
@@ -55,7 +60,7 @@ export class JobListComponent implements OnInit {
   categories = signal<CategoryModel[]>([]);
   cities = signal<CityModel[]>([]);
   wards = signal<WardModel[]>([]);
-  postedDate = signal(DEFAULT_POSTED_DATE_OPTIONS);
+  postedDate = signal<string[]>([]);
 
   // ? Data Response
   jobs = signal<JobPostModel[]>([]);
@@ -74,6 +79,7 @@ export class JobListComponent implements OnInit {
   // ? Dependency Injection
   private readonly jobsService = inject(JobsService);
   private readonly toastHandlingService = inject(ToastHandlingService);
+  private readonly multiLanguageService = inject(MultiLanguageService);
   private readonly fb = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
 
@@ -127,9 +133,9 @@ export class JobListComponent implements OnInit {
     ])
     .pipe(
       map(([industryRes, categoryRes, cityRes]) => ({
-        industries: [DEFAULT_FILTER_OPTIONS.industries, ...(industryRes.data || [])],
-        categories: [DEFAULT_FILTER_OPTIONS.categories, ...(categoryRes.data || [])],
-        cities: [DEFAULT_FILTER_OPTIONS.cities, ...(cityRes.data || [])],
+        industries: [this.industries()[0], ...(industryRes.data || [])],
+        categories: [this.categories()[0], ...(categoryRes.data || [])],
+        cities: [this.cities()[0], ...(cityRes.data || [])],
       }))
     )
     .subscribe({
@@ -193,10 +199,14 @@ export class JobListComponent implements OnInit {
   }
 
   private setDefaultSelectOptions(): void {
-    this.industries.set([DEFAULT_FILTER_OPTIONS.industries]);
-    this.categories.set([DEFAULT_FILTER_OPTIONS.categories]);
-    this.cities.set([DEFAULT_FILTER_OPTIONS.cities]);
-    this.wards.set([DEFAULT_FILTER_OPTIONS.wards]);
+    const defaultFilterOptions = createFilterOptions(this.multiLanguageService);
+    const defaultPostedDateOptions = createPostedDateOptions(this.multiLanguageService);
+
+    this.industries.set([defaultFilterOptions.industries]);
+    this.categories.set([defaultFilterOptions.categories]);
+    this.cities.set([defaultFilterOptions.cities]);
+    this.wards.set([defaultFilterOptions.wards]);
+    this.postedDate.set(defaultPostedDateOptions);
   }
 
   private resetJobs(): void {

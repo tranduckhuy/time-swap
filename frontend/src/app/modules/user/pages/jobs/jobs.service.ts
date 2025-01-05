@@ -11,6 +11,7 @@ import type { BaseResponseModel } from '../../../../shared/models/api/base-respo
 import type { IndustryModel } from '../../../../shared/models/entities/industry.model';
 import type { CategoryModel } from '../../../../shared/models/entities/category.model';
 import type { CityModel, WardModel } from '../../../../shared/models/entities/location.model';
+import type { JobPostModel } from '../../../../shared/models/entities/job.model';
 import type { JobListRequestModel } from '../../../../shared/models/api/request/job-list-request.model';
 import type { JobsResponseModel } from '../../../../shared/models/api/response/jobs-response.model';
 
@@ -45,5 +46,9 @@ export class JobsService {
 
   getWardByCityId(cityId: string): Observable<BaseResponseModel<WardModel[]>> {
     return this.httpClient.get<BaseResponseModel<WardModel[]>>(`${this.CITIES_API_URL}/${cityId}/wards`);
+  }
+
+  getJobDetailById(jobId: string): Observable<BaseResponseModel<JobPostModel>> {
+    return this.httpClient.get<BaseResponseModel<JobPostModel>>(`${this.JOBS_API_URL}/${jobId}`);
   }
 }
