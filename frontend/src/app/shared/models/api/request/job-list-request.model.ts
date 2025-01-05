@@ -7,7 +7,7 @@ export interface JobListRequestModel {
   cityId: string;
   wardId: string;
   postedDate: string;
-  pageIndex: number;
-  pageSize: number;
-  isActive: boolean;
+  pageIndex?: number;
+  pageSize?: number;
+  isActive?: boolean;
 }
