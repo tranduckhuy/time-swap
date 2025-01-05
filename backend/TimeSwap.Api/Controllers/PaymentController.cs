@@ -7,6 +7,7 @@ using TimeSwap.Application.Mappings;
 using TimeSwap.Application.Payments.Commands;
 using TimeSwap.Application.Payments.Queries;
 using TimeSwap.Application.Payments.Responses;
+using TimeSwap.Domain.Specs;
 using TimeSwap.Shared;
 using TimeSwap.Shared.Constants;
 
@@ -64,8 +65,14 @@ namespace TimeSwap.Api.Controllers
             return await ExecuteAsync<VnpayReturnCommand, string>(command);
         }
 
-        [HttpGet("user/{userId}")]
-        public async Task<IActionResult> GetPaymentsByUserId([FromRoute] Guid userId)
+        [HttpGet("{userId:guid}")]
+        public async Task<IActionResult> GetPaymentsByUserId(
+           [FromRoute] Guid userId,
+           [FromQuery] string? paymentStatus,
+           [FromQuery] int dataFilter = 0,
+           [FromQuery] int pageIndex = 1,
+           [FromQuery] int pageSize = 10
+        )
         {
             if (userId == Guid.Empty)
             {
@@ -77,9 +84,9 @@ namespace TimeSwap.Api.Controllers
                 });
             }
 
-            var query = new GetPaymentsByUserIdQuery(userId);
+            var query = new GetPaymentsByUserIdQuery(userId, paymentStatus, dataFilter, pageIndex, pageSize);
 
-            return await ExecuteAsync<GetPaymentsByUserIdQuery, List<PaymentDetailResponse>>(query);
+            return await ExecuteAsync<GetPaymentsByUserIdQuery, Pagination<PaymentDetailResponse>>(query);
         }
 
     }
