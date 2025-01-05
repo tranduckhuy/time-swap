@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { CanActivateFn, ResolveFn, Router, Routes } from '@angular/router';
+import { ResolveFn, Routes } from '@angular/router';
 
 import { catchError, map, of } from 'rxjs';
 
@@ -18,10 +18,10 @@ import { SUCCESS_CODE } from '../../shared/constants/status-code-constants';
 
 import { JobsService } from './pages/jobs/jobs.service';
 
+import { authGuard } from '../../core/auth/auth.guard';
 import { jobDetailCanActivate } from './pages/jobs/jobs.guard';
 
 import type { JobPostModel } from '../../shared/models/entities/job.model';
-import { authGuard } from '../../core/auth/auth.guard';
 
 const jobDetailResolver: ResolveFn<JobPostModel | null> = (activatedRoute) => {
     const jobsService = inject(JobsService);

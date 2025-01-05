@@ -82,7 +82,7 @@ export const apiInterceptor: HttpInterceptorFn = (req, next) => {
   // ? Use cached refresh token request
   return refreshTokenRequest.pipe(
     switchMap(() => {
-      return next(addAuthHeader(req, authService.accessToken!)).pipe(
+      return next(addAuthHeader(req, authService.accessToken)).pipe(
         retry({
           count: MAX_RETRIES,
           delay: retryStrategy
