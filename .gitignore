@@ -180,6 +180,8 @@ testem.log
 .DS_Store
 Thumbs.db
 
+frontend/.env
+
 backend/TimeSwap.Api/appsettings.json
 
 backend/TimeSwap.Auth/appsettings.json
