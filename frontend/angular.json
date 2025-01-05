@@ -16,7 +16,7 @@
             "customWebpackConfig": {
               "path": "custom-webpack.config.ts"
             },
-            "outputPath": "dist/time-swap-ui",
+            "outputPath": "dist/time-swap-ui/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
