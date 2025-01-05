@@ -4,7 +4,6 @@ using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Specs;
 using TimeSwap.Domain.Specs.Job;
 using TimeSwap.Shared.Constants;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TimeSwap.Infrastructure.Specifications
 {
