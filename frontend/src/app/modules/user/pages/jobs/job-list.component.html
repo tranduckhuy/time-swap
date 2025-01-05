@@ -17,17 +17,17 @@
                 <div class="row">
                     <div class="col-sm-6 col-lg-3">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Title" formControlName="search">
+                            <input type="text" class="form-control" [placeholder]="'jobs.filter.title' | translate" formControlName="search">
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-3">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Fee From" formControlName="minFee">
+                            <input type="text" class="form-control" [placeholder]="'jobs.filter.min-fee' | translate" formControlName="minFee">
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-3">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Fee To" formControlName="maxFee">
+                            <input type="text" class="form-control" [placeholder]="'jobs.filter.max-fee' | translate" formControlName="maxFee">
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-3">
@@ -84,7 +84,7 @@
                     </div>
                     <div class="col-sm-6 col-lg-3">
                         <button type="submit" class="btn cmn-btn" (click)="onSearch()">
-                            Search By Filter
+                            {{ 'common.buttons.search' }}
                             <i class="bx bx-plus"></i>
                         </button>
                     </div>
@@ -102,11 +102,11 @@
                         <div class="left">
                             <div class="form-group">
                                 <select style="display: none;" formControlName="postedDate">
-                                    <option value="">All Date Posted</option>
-                                    <option value="0">Today</option>
-                                    <option value="1">Yesterday</option>
-                                    <option value="2">Last 7 Days</option>
-                                    <option value="3">Last 30 Days</option>
+                                    <option value="">{{ 'jobs.all-posted-date' | translate }}</option>
+                                    <option value="0">{{ 'jobs.today' | translate }}</option>
+                                    <option value="1">{{ 'jobs.yesterday' | translate }}</option>
+                                    <option value="2">{{ 'jobs.last-7-days' | translate }}</option>
+                                    <option value="3">{{ 'jobs.last-30-days' | translate }}</option>
                                 </select>
                                 <app-nice-select 
                                     [listData]="postedDate()" 
@@ -117,7 +117,11 @@
                     </div>
                     <div class="col-sm-6 col-lg-6">
                         <div class="right">
-                            <h4 style="font-size: 16px;">Showing {{ start() }} - {{ end() }} of {{ totalJobs() }} results</h4>
+                            <h4 style="font-size: 16px;">
+                                {{ 'jobs.showing' | translate }} {{ start() }} - {{ end() }} 
+                                {{ 'jobs.of' | translate }} {{ totalJobs() }} 
+                                {{ 'jobs.results' | translate }}
+                            </h4>
                         </div>
                     </div>
                 </div>
