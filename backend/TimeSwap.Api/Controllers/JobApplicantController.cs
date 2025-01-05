@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using System.Security.Claims;
 using TimeSwap.Api.Mapping;
 using TimeSwap.Api.Models;
@@ -26,6 +27,7 @@ namespace TimeSwap.Api.Controllers
 
         [HttpGet("{jobPostId}")]
         [Authorize]
+        [ProducesResponseType(typeof(ApiResponse<IEnumerable<JobApplicantResponse>>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetApplicantsByJobPostId(Guid jobPostId)
         {
             var query = new GetApplicantsByJobPostIdQuery(jobPostId);
@@ -34,6 +36,7 @@ namespace TimeSwap.Api.Controllers
 
         [HttpPost]
         [Authorize]
+        [ProducesResponseType(typeof(ApiResponse<JobApplicantResponse>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> CreateJobApplicant([FromBody] CreateJobApplicantRequest request)
         {
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;

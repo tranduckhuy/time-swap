@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using TimeSwap.Application.Categories.Responses;
 using TimeSwap.Application.Industries.Commands;
 using TimeSwap.Application.Industries.Queries;
@@ -21,6 +22,7 @@ namespace TimeSwap.Api.Controllers
         ) : base(mediator, logger) { }
 
         [HttpGet]
+        [ProducesResponseType(typeof(ApiResponse<List<IndustryResponse>>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetIndustries()
         {
             var query = new GetIndustriesQuery();
@@ -28,6 +30,7 @@ namespace TimeSwap.Api.Controllers
         }
 
         [HttpGet("{industryId}")]
+        [ProducesResponseType(typeof(ApiResponse<IndustryResponse>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetIndustryById(int industryId = 1)
         {
             var query = new GetIndustryByIdQuery(industryId);
@@ -35,6 +38,7 @@ namespace TimeSwap.Api.Controllers
         }
 
         [HttpGet("{industryId}/categories")]
+        [ProducesResponseType(typeof(ApiResponse<Pagination<CategoryResponse>>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetCategoriesByIndustry(int industryId = 1, [FromQuery] int pageIndex = 1, [FromQuery] int pageSize = 10)
         {
             var query = new GetCategoriesByIndustryQuery
@@ -49,6 +53,7 @@ namespace TimeSwap.Api.Controllers
 
         [HttpPut("{industryId}")]
         [Authorize(Roles = nameof(Role.Admin))]
+        [ProducesResponseType(typeof(ApiResponse<Unit>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateIndustry([FromBody] UpdateIndustryCommand command, int industryId = 1)
         {
             if (command == null)
