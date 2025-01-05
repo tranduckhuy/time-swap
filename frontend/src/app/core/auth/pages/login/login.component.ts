@@ -12,10 +12,12 @@ import { getErrorMessage } from '../../../../shared/utils/form-validators';
 
 import { AUTH_CLIENT_URL } from '../../../../shared/constants/auth-constants';
 import { 
+  INVALID_CREDENTIAL_CODE,
   NOT_CONFIRM_CODE, 
   REGISTER_CONFIRM_SUCCESS_CODE, 
   SUCCESS_CODE, 
-  TOKEN_EXPIRED_CODE 
+  TOKEN_EXPIRED_CODE, 
+  USER_NOT_EXIST_CODE
 } from '../../../../shared/constants/status-code-constants';
 
 import { AuthService } from '../../auth.service';
@@ -83,9 +85,7 @@ export class LoginComponent implements OnInit {
         next: (res) => {
           if (res.data) {
             const { accessToken, refreshToken, expiresIn } = res.data;
-            this.form.reset();
             this.authService.saveLocalData(accessToken, refreshToken, expiresIn);
-            this.router.navigateByUrl('/home');
           } else {
             this.toastHandlingService.handleCommonError();
           }
@@ -93,10 +93,21 @@ export class LoginComponent implements OnInit {
         error: (error: HttpErrorResponse) => {
           if (error.error.statusCode === NOT_CONFIRM_CODE) {
             this.toastHandlingService.handleWarning('auth.login.not-confirm');
+          } else if (error.error.statusCode === USER_NOT_EXIST_CODE) {
+            this.toastHandlingService.handleWarning('auth.login.user-not-exist');
+          } else if (error.error.statusCode === INVALID_CREDENTIAL_CODE) {
+            this.toastHandlingService.handleInfo('auth.login.invalid-credentials');
           } else {
             this.toastHandlingService.handleCommonError();
           }
-        } 
+        },
+        complete: () => {
+          this.form.reset();
+          this.toastHandlingService.handleSuccess('auth.login.success');
+          this.router.navigateByUrl('/home', {
+            replaceUrl: true
+          });
+        }
       });
       
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
