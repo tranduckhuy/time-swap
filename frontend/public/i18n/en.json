@@ -83,7 +83,33 @@
     "notify": {
       "fetch-jobs-failed": "Oops! We encountered an issue while fetching jobs. Please reach out to the administrator for further assistance.",
       "fetch-wards-failed": "Oops! We encountered an issue while fetching wards. Please reach out to the administrator for further assistance."
-    }
+    },
+    "results": "Results Found",
+    "sort-by": {
+      "title": "Sort By:"
+    },
+    "find-a-job": "Find A Job",
+    "email-placeholder": "Email address",
+    "get-a-job": "Get A Job Alert",
+    "search-keywords": "Search Keywords",
+    "keyword": "Keyword",
+    "category": "Category",
+    "location": "Location List",
+    "phone": "Phone",
+    "fee": "Fee",
+    "date-posted": "Date Posted",
+    "industry": "Industry",
+    "filter-now": "Filter Now",
+    "first-name": "First Name:",
+    "last-name": "Last Name:",
+    "job-title": "Title:",
+    "salary": "Salary:",
+    "type": "Type:",
+    "street": "Street:",
+    "department": "Department (Optional):",
+    "province": "Province:",
+    "district": "District:",
+    "ward": "Ward:"
   },
   "profile": {
     "tabs": {
@@ -115,73 +141,44 @@
         "heading": "Social Links"
       },
       "button": "Save your information"
-    },
-    "jobs": {
-      "results": "Results Found",
-      "sort-by": {
-        "title": "Sort By:"
-      },
-      "find-a-job": "Find A Job",
-      "email-placeholder": "Email address",
-      "get-a-job": "Get A Job Alert",
-      "search-keywords": "Search Keywords",
-      "keyword": "Keyword",
-      "category": "Category",
-      "location": "Location List",
-      "phone": "Phone",
-      "fee": "Fee",
-      "date-posted": "Date Posted",
-      "industry": "Industry",
-      "filter-now": "Filter Now",
-      "first-name": "First Name:",
-      "last-name": "Last Name:",
-      "job-title": "Title:",
-      "salary": "Salary:",
-      "type": "Type:",
-      "street": "Street:",
-      "department": "Department (Optional):",
-      "province": "Province:",
-      "district": "District:",
-      "ward": "Ward:"
-
-    },
-    "job-detail": {
-      "job-info": "Job Information",
-      "owner-info": "Owner Info",
-      "applied": "Applied",
-      "related": "Related Jobs",
-      "save": "Save",
-      "share": "Share",
-      "report": "Report"
-    },
-    "assignee": {
-      "assign-now": "Assign Now",
-      "my-profile": "My Profile",
-      "work-exp": "Work Experience",
-      "skill": "Skills",
-      "portfolio": "Portfolio",
-      "add-review": "Add Review",
-      "review-msg": "Your rating for this listing",
-      "review-option": "Save my name, email, and website in this browser for the next time I comment.",
-      "name": "Name",
-      "email": "Email",
-      "write-msg": "Write message",
-      "submit": "Submit A Review",
-      "job-overview": "Job Overview",
-      "experience": "Experience",
-      "age": "Age:",
-      "languages": "Language:",
-      "qualification": "Qualification:",
-      "gender": "Gender:"
-    },
-    "contact": {
-      "heading": "Contact Us",
-      "name": "Name",
-      "phone": "Phone",
-      "subject": "Subject",
-      "message": "Message",
-      "condition": "Accept Terms & Conditions And Privacy Policy.",
-      "submit": "Send Message"
     }
+  },
+  "job-detail": {
+    "job-info": "Job Information",
+    "owner-info": "Owner Info",
+    "applied": "Applied",
+    "related": "Related Jobs",
+    "save": "Save",
+    "share": "Share",
+    "report": "Report"
+  },
+  "assignee": {
+    "assign-now": "Assign Now",
+    "my-profile": "My Profile",
+    "work-exp": "Work Experience",
+    "skill": "Skills",
+    "portfolio": "Portfolio",
+    "add-review": "Add Review",
+    "review-msg": "Your rating for this listing",
+    "review-option": "Save my name, email, and website in this browser for the next time I comment.",
+    "name": "Name",
+    "email": "Email",
+    "write-msg": "Write message",
+    "submit": "Submit A Review",
+    "job-overview": "Job Overview",
+    "experience": "Experience",
+    "age": "Age:",
+    "languages": "Language:",
+    "qualification": "Qualification:",
+    "gender": "Gender:"
+  },
+  "contact": {
+    "heading": "Contact Us",
+    "name": "Name",
+    "phone": "Phone",
+    "subject": "Subject",
+    "message": "Message",
+    "condition": "Accept Terms & Conditions And Privacy Policy.",
+    "submit": "Send Message"
   }
 }

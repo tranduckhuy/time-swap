@@ -83,7 +83,33 @@
     "notify": {
       "fetch-jobs-failed": "Rất tiếc! Chúng tôi gặp sự cố khi lấy thông tin công việc. Vui lòng liên hệ với quản trị viên để được hỗ trợ thêm.",
       "fetch-wards-failed": "Rất tiếc! Chúng tôi gặp sự cố khi lấy thông tin huyện/xã. Vui lòng liên hệ với quản trị viên để được hỗ trợ thêm."
-    }
+    },
+    "results": "Kết quả tìm kiếm",
+    "sort-by": {
+      "title": "Sắp xếp:"
+    },
+    "find-a-job": "Tìm kiếm công việc",
+    "email-placeholder": "Địa chỉ email",
+    "get-a-job": "Nhận Thông Báo",
+    "search-keywords": "Tìm Kiếm",
+    "keyword": "Từ khóa",
+    "category": "Danh mục",
+    "location": "Vị trí",
+    "fee": "Phí",
+    "phone": "Số điện thoại",
+    "date-posted": "Ngày đăng",
+    "industry": "Ngành nghề",
+    "filter-now": "Lọc ngay",
+    "first-name": "Họ:",
+    "last-name": "Tên:",
+    "job-title": "Công việc:",
+    "salary": "Lương:",
+    "type": "Loại công việc:",
+    "street": "Đường:",
+    "department": "Phòng ban (Tùy chọn):",
+    "province": "Tỉnh:",
+    "district": "Quận (Thành phố):",
+    "ward": "Phường:"
   },
   "profile": {
     "tabs": {
@@ -115,34 +141,7 @@
         "heading": "Liên kết"
       },
       "button": "Lưu thông tin"
-    },
-    "jobs": {
-    "results": "Kết quả tìm kiếm",
-    "sort-by": {
-      "title": "Sắp xếp:"
-    },
-    "find-a-job": "Tìm kiếm công việc",
-    "email-placeholder": "Địa chỉ email",
-    "get-a-job": "Nhận Thông Báo",
-    "search-keywords": "Tìm Kiếm",
-    "keyword": "Từ khóa",
-    "category": "Danh mục",
-    "location": "Vị trí",
-    "fee": "Phí",
-    "phone": "Số điện thoại",
-    "date-posted": "Ngày đăng",
-    "industry": "Ngành nghề",
-    "filter-now": "Lọc ngay",
-    "first-name": "Họ:",
-    "last-name": "Tên:",
-    "job-title": "Công việc:",
-    "salary": "Lương:",
-    "type": "Loại công việc:",
-    "street": "Đường:",
-    "department": "Phòng ban (Tùy chọn):",
-    "province": "Tỉnh:",
-    "district": "Quận (Thành phố):",
-    "ward": "Phường:"
+    }
   },
   "job-detail": {
     "job-info": "Thông tin công việc",
@@ -172,7 +171,7 @@
       "languages": "Ngôn ngữ:",
       "qualification": "Bằng cấp:",
       "gender": "Giới tính:"
-    },
+  },
     "contact": {
       "heading": "Liên hệ với chúng tôi",
       "name": "Tên",
@@ -181,6 +180,5 @@
       "message": "Tin nhắn",
       "condition": "Chấp nhận Điều khoản & Điều kiện và Chính sách bảo mật.",
       "submit": "Gửi Tin Nhắn"
-    }
   }
 }
