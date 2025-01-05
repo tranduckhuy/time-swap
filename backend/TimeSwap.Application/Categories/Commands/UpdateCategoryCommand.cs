@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TimeSwap.Application.Categories.Commands
 {
-    public class UpdateCategoryCommand : IRequest<bool>
+    public class UpdateCategoryCommand : IRequest<Unit>
     {
         [Required]
         public int CategoryId { get; set; }
