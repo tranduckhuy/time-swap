@@ -6,7 +6,7 @@ using TimeSwap.Domain.Interfaces.Repositories;
 
 namespace TimeSwap.Application.Categories.Handlers
 {
-    public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, bool>
+    public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryCommand, Unit>
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IIndustryRepository _industryRepository;
@@ -17,7 +17,7 @@ namespace TimeSwap.Application.Categories.Handlers
             _industryRepository = industryRepository;
         }
 
-        public async Task<bool> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
         {
             var industry = await _industryRepository.GetByIdAsync(request.IndustryId);
             if (industry == null)
@@ -35,7 +35,7 @@ namespace TimeSwap.Application.Categories.Handlers
             category.IndustryId = request.IndustryId;
 
             await _categoryRepository.UpdateAsync(category);
-            return true;
+            return Unit.Value;
         }
     }
 }

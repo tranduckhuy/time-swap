@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using TimeSwap.Application.Categories.Commands;
 using TimeSwap.Application.Categories.Queries;
 using TimeSwap.Application.Categories.Responses;
@@ -20,6 +21,7 @@ namespace TimeSwap.Api.Controllers
 
 
         [HttpGet]
+        [ProducesResponseType(typeof(ApiResponse<List<CategoryResponse>>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAllCategories()
         {
             var query = new GetAllCategoriesQuery();
@@ -28,6 +30,7 @@ namespace TimeSwap.Api.Controllers
 
         [HttpPost]
         [Authorize(Roles = nameof(Role.Admin))]
+        [ProducesResponseType(typeof(ApiResponse<int>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryCommand command)
         {
             return await ExecuteAsync<CreateCategoryCommand, int>(command);
@@ -35,6 +38,7 @@ namespace TimeSwap.Api.Controllers
 
         [HttpPut("{categoryId}")]
         [Authorize(Roles = nameof(Role.Admin))]
+        [ProducesResponseType(typeof(ApiResponse<Unit>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateCategory([FromBody] UpdateCategoryCommand command, int categoryId = 1)
         {
             if (command == null)
@@ -48,7 +52,7 @@ namespace TimeSwap.Api.Controllers
                 });
             }
             command.CategoryId = categoryId;
-            return await ExecuteAsync<UpdateCategoryCommand, bool>(command);
+            return await ExecuteAsync<UpdateCategoryCommand, Unit>(command);
         }
     }
 }
