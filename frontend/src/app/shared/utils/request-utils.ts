@@ -29,7 +29,7 @@ export function createHttpParams(params: Record<string, any>): HttpParams {
  */
 export function addAuthHeader(req: HttpRequest<unknown>, token: string | null): HttpRequest<unknown> {
     return req.clone({
-      headers: req.headers.set('Authorization', `Bearer ${token || ''}`)
+      headers: req.headers.set('Authorization', `Bearer ${token ?? ''}`)
     });
 };
 
