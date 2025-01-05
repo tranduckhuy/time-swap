@@ -11,7 +11,7 @@ export const defaultLayoutRoutes: Routes = [
     }
 ];
 
-export const authLayoutRoutes: Routes = [
+export const noHeaderFooterLayoutRoutes: Routes = [
     {
         path: 'auth',
         component: AuthLayoutComponent,
@@ -20,5 +20,13 @@ export const authLayoutRoutes: Routes = [
     {
         path: 'coming-soon',
         loadComponent: () => import('./shared/components/coming-soon/coming-soon.component').then(mod => mod.ComingSoonComponent)
+    },
+    {
+        path: 'not-found',
+        loadComponent: () => import('./shared/components/not-found/not-found.component').then(mod => mod.NotFoundComponent)
+    },
+    {
+        path: '**',
+        loadComponent: () => import('./shared/components/not-found/not-found.component').then(mod => mod.NotFoundComponent)
     }
 ]

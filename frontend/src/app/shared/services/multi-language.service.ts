@@ -29,12 +29,12 @@ export class MultiLanguageService {
   /**
    * Translates a message key into the current language.
    * 
-   * @param message - The translation key to look up.
+   * @param value - The translation key to look up.
    * @param params - Optional parameters for interpolation in the translated string.
    * @returns The translated string.
    */
-  getTranslatedLang(message: string, params?: any) {
-    return this.translateService.instant(message, params);
+  getTranslatedLang(value: string, params?: any) {
+    return this.translateService.instant(value, params);
   }
 
   /**

@@ -6,7 +6,7 @@
             [disabled]="currentPage() === 1"
             (click)="changePage(currentPage() - 1)"
             >
-            Prev
+                {{ 'common.pagination.prev' | translate }}
             </button>
         </li>
         @for (page of visiblePages; track page) {
@@ -26,7 +26,7 @@
             [disabled]="currentPage() === totalPages()"
             (click)="changePage(currentPage() + 1)"
             >
-            Next
+                {{ 'common.pagination.next' | translate }}
             </button>
         </li>
     </ul>

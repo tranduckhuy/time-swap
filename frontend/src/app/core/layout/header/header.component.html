@@ -34,7 +34,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <span class="tooltip-span two">New</span>
+                            <span class="tooltip-span two">{{ 'navbar.new' | translate }}</span>
                             <a routerLink="/coming-soon" class="nav-link">
                                 {{ 'navbar.blog' | translate }} 
                             </a>
@@ -47,7 +47,7 @@
                         <!-- Multi Language -->
                         <div class="right-nav-item nav-link">
                                 <img class="language-flag" [src]="currentLanguage() === 'vi' ? 'assets/imgs/flag-1.png' : 'assets/imgs/flag-2.png'" alt="language flag"/>
-                                <span>{{currentLanguage() === 'vi' ? "VI" : "EN"}}</span>
+                                <span>{{ currentLanguage() === 'vi' ? "VI" : "EN" }}</span>
                                 <i class='bx bx-chevron-down language-icon'></i>  
                             <div class="sub-items sub-items--language">
                                 <div class="sub-item" (click)="onChangeLanguage('vi')">
@@ -78,7 +78,7 @@
                                      </a>
                                      <div class="sub-item profile-item">
                                          <i class='bx bx-log-out profile-item-icon'></i>
-                                         <div class="profile-item-body">
+                                         <div class="profile-item-body" (click)="onLogout()">
                                              <span>{{ 'navbar.profile.sign-out' | translate }}</span>
                                              <span></span>
                                          </div>
