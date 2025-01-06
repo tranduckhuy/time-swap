@@ -33,8 +33,12 @@ jobs:
           echo "JWT_EXPIRY=${{ secrets.JWT_EXPIRY }}" >> .env
           echo "FRONTEND_URL=${{ secrets.FRONTEND_URL }}" >> .env
           echo "EMAIL_FROM=${{ secrets.EMAIL_FROM }}" >> .env
+          echo "EMAIL_SMTP_SERVER=${{ secrets.EMAIL_SMTP_SERVER }}" >> .env
+          echo "EMAIL_PORT=${{ secrets.EMAIL_PORT }}" >> .env
+          echo "EMAIL_USERNAME=${{ secrets.EMAIL_USERNAME }}" >> .env
           echo "EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }}" >> .env
           echo "REDIS_CONNECTION=${{ secrets.REDIS_CONNECTION }}" >> .env
+          echo "REDIS_INSTANCE=${{ secrets.REDIS_INSTANCE }}" >> .env
 
       - name: Deploy with Docker Compose
         run: |
