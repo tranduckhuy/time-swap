@@ -1,9 +1,11 @@
-import { Component, DestroyRef, inject, signal } from '@angular/core';
-import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router';
 
 import { TranslateModule } from '@ngx-translate/core';
+
 import { filter } from 'rxjs';
 
+import { AuthService } from '../../auth/auth.service';
 import { MultiLanguageService } from '../../../shared/services/multi-language.service';
 
 @Component({
@@ -11,14 +13,20 @@ import { MultiLanguageService } from '../../../shared/services/multi-language.se
   standalone: true,
   imports: [RouterLink, TranslateModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css',
+  styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-  isHome = signal<boolean>(false);
-  
+  private readonly authService = inject(AuthService);
   private readonly multiLanguageService = inject(MultiLanguageService);
   private readonly router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
+
+  // ? State Management
+  isHome = signal<boolean>(false);
+  currentLanguage = signal<string>(this.multiLanguageService.language());
+
+  isLoggedIn = computed<boolean>(() => this.authService.isLoggedIn());
 
   constructor() {
     const subscription = this.router.events
@@ -37,5 +45,16 @@ export class HeaderComponent {
 
   onChangeLanguage(lang: string) {
     this.multiLanguageService.updateLanguage(lang);
+  }
+
+  onLogout() {
+    this.authService.logout().subscribe({
+      next: () => {
+        this.router.navigate(['./'], {
+          relativeTo: this.activatedRoute,
+          onSameUrlNavigation: 'reload',
+        });
+      }
+    });
   }
 }

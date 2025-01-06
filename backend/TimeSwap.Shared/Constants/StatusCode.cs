@@ -46,5 +46,11 @@
         AssignJobToOwner = 2029,
         OwnerJobPostMismatch = 2030,
         UserAppliedToOwnJobPost = 2031,
+        PaymentMethodNotExists = 2032,
+        PaymentFailed = 2033,
+        PaymentSuccess = 2034,
+        PaymentNotExists = 2035,
+        InvalidSignature = 2036,
+        PaymentNotFoundByUserId = 2037
     }
 }

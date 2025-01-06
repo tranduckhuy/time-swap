@@ -2,28 +2,30 @@ import { Component, DestroyRef, inject, input, OnInit, signal } from '@angular/c
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
+
 import { TranslateModule } from '@ngx-translate/core';
 
 import { ToastComponent } from "../../../../shared/components/toast/toast.component";
 import { PreLoaderComponent } from "../../../../shared/components/pre-loader/pre-loader.component";
 
 import { getErrorMessage } from '../../../../shared/utils/form-validators';
-import { showToast } from '../../../../shared/utils/util-functions';
 
 import { AUTH_CLIENT_URL } from '../../../../shared/constants/auth-constants';
 import { 
+  INVALID_CREDENTIAL_CODE,
   NOT_CONFIRM_CODE, 
   REGISTER_CONFIRM_SUCCESS_CODE, 
   SUCCESS_CODE, 
-  TOKEN_EXPIRED_CODE 
+  TOKEN_EXPIRED_CODE, 
+  USER_NOT_EXIST_CODE
 } from '../../../../shared/constants/status-code-constants';
+
+import { AuthService } from '../../auth.service';
+import { ToastHandlingService } from '../../../../shared/services/toast-handling.service';
+import { MultiLanguageService } from '../../../../shared/services/multi-language.service';
 
 import type { LoginRequestModel } from '../../../../shared/models/api/request/login-request.model';
 import type { ReConfirmRequestModel } from '../../../../shared/models/api/request/confirm-request.model';
-
-import { AuthService } from '../../auth.service';
-import { ToastService } from '../../../../shared/services/toast.service';
-import { MultiLanguageService } from '../../../../shared/services/multi-language.service';
 
 @Component({
   selector: 'app-login',
@@ -33,35 +35,33 @@ import { MultiLanguageService } from '../../../../shared/services/multi-language
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit {
+  // ? Form Properties
   form!: FormGroup;
-  userId = signal<string>('');
+
+  // ? State Management
   isLoading = signal<boolean>(true);
+
+  // ? Query Params Properties
   token = input<string>('');
   email = input<string>('');
 
+  // ? Dependency Injection
   private readonly authService = inject(AuthService);
-  private readonly toastService = inject(ToastService);
+  private readonly toastHandlingService = inject(ToastHandlingService);
   private readonly multiLanguageService = inject(MultiLanguageService);
   private readonly fb = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
   private readonly router = inject(Router);
 
   ngOnInit(): void {
-    if (this.token() && this.email()) {
+    if (this.token() && this.email())
       this.confirmEmail();
-    }
 
-    this.initForm();
+    this.initialForm();
 
     const timeOutId = setTimeout(() => this.isLoading.set(false), 1000);
+    
     this.destroyRef.onDestroy(() => clearTimeout(timeOutId));
-  }
-
-  initForm() {
-    this.form = this.fb.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-    });
   }
 
   isControlInvalid(controlName: string): boolean {
@@ -85,41 +85,42 @@ export class LoginComponent implements OnInit {
         next: (res) => {
           if (res.data) {
             const { accessToken, refreshToken, expiresIn } = res.data;
-            this.form.reset();
             this.authService.saveLocalData(accessToken, refreshToken, expiresIn);
-            this.router.navigateByUrl('/home');
-          } else if (res.statusCode === NOT_CONFIRM_CODE) {
-            showToast(
-              this.toastService, 
-              this.multiLanguageService, 
-              'warn', 
-              'common.notify.warning-title', 
-              'auth.login.not-confirm'
-            );
           } else {
-            showToast(
-              this.toastService, 
-              this.multiLanguageService, 
-              'error', 
-              'common.notify.error-title', 
-              'common.notify.error-message'
-            );
+            this.toastHandlingService.handleCommonError();
           }
         },
-        error: () => 
-          showToast(
-            this.toastService, 
-            this.multiLanguageService, 
-            'error', 
-            'common.notify.error-title', 
-            'common.notify.error-message'
-          )
+        error: (error: HttpErrorResponse) => {
+          if (error.error.statusCode === NOT_CONFIRM_CODE) {
+            this.toastHandlingService.handleWarning('auth.login.not-confirm');
+          } else if (error.error.statusCode === USER_NOT_EXIST_CODE) {
+            this.toastHandlingService.handleWarning('auth.login.user-not-exist');
+          } else if (error.error.statusCode === INVALID_CREDENTIAL_CODE) {
+            this.toastHandlingService.handleInfo('auth.login.invalid-credentials');
+          } else {
+            this.toastHandlingService.handleCommonError();
+          }
+        },
+        complete: () => {
+          this.form.reset();
+          this.toastHandlingService.handleSuccess('auth.login.success');
+          this.router.navigateByUrl('/home', {
+            replaceUrl: true
+          });
+        }
       });
       
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
-  confirmEmail() {
+  private initialForm() {
+    this.form = this.fb.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+    });
+  }
+
+  private confirmEmail() {
     const decodedToken = decodeURIComponent(this.token());
     const req = {
       token: decodedToken,
@@ -128,41 +129,17 @@ export class LoginComponent implements OnInit {
     const subscription = this.authService.confirmEmail(req).subscribe({
       next: (res) => {
         if (res.statusCode === SUCCESS_CODE) {
-          showToast(
-            this.toastService, 
-            this.multiLanguageService, 
-            'success', 
-            'common.notify.success-title', 
-            'auth.login.confirm-success'
-          );
+          this.toastHandlingService.handleSuccess('auth.login.confirm-success');
         } else {
-          showToast(
-            this.toastService, 
-            this.multiLanguageService, 
-            'error', 
-            'common.notify.error-title', 
-            'common.notify.error-message'
-          );
+          this.toastHandlingService.handleCommonError();
         }
       },
       error: (error: HttpErrorResponse) => {
         if (error.error.statusCode === TOKEN_EXPIRED_CODE) {
-          showToast(
-            this.toastService, 
-            this.multiLanguageService, 
-            'warn', 
-            'common.notify.warning-title', 
-            'auth.login.token-expired'
-          );
+          this.toastHandlingService.handleWarning('auth.login.token-expired');
           this.reConfirmEmail();
         } else {
-          showToast(
-            this.toastService, 
-            this.multiLanguageService, 
-            'error', 
-            'common.notify.error-title', 
-            'common.notify.error-message'
-          );
+          this.toastHandlingService.handleCommonError();
         }
       } 
     });
@@ -170,7 +147,7 @@ export class LoginComponent implements OnInit {
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
-  reConfirmEmail() {
+  private reConfirmEmail() {
     const req: ReConfirmRequestModel = {
       email: this.email(),
       clientUrl: AUTH_CLIENT_URL
@@ -178,31 +155,12 @@ export class LoginComponent implements OnInit {
     const subscription = this.authService.resendConfirmEmail(req).subscribe({
       next: (res) => {
         if (res.statusCode === REGISTER_CONFIRM_SUCCESS_CODE) {
-          showToast(
-            this.toastService, 
-            this.multiLanguageService, 
-            'success', 
-            'common.notify.success-title', 
-            'auth.login.re-confirm-success'
-          );
+          this.toastHandlingService.handleSuccess('auth.login.re-confirm-success');
         } else {
-          showToast(
-            this.toastService, 
-            this.multiLanguageService, 
-            'error', 
-            'common.notify.error-title', 
-            'common.notify.error-message'
-          );
+          this.toastHandlingService.handleCommonError();
         }
       }, 
-      error: () =>
-        showToast(
-          this.toastService, 
-          this.multiLanguageService, 
-          'error', 
-          'common.notify.error-title', 
-          'common.notify.error-message'
-        )
+      error: () => this.toastHandlingService.handleCommonError()
     });
 
     this.destroyRef.onDestroy(() => subscription.unsubscribe());

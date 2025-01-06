@@ -2,17 +2,17 @@
     <div class="d-table-cell">
         <div class="container">
             <div class="title-item">
-                <h2>{{title()}}</h2>
+                <h2>{{ title() }}</h2>
                 <ul>
                     <li>
                         <img src="assets/imgs/title-img-two.png" alt="Image">
-                        <a routerLink="/">Home</a>
+                        <a routerLink="/">{{ 'navbar.home' | translate }}</a>
                     </li>
                     <li>
                         <span>/</span>
                     </li>
                     <li>
-                        {{title()}}
+                        {{ title() }}
                     </li>
                 </ul>
             </div>
