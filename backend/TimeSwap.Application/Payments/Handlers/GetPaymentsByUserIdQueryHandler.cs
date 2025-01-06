@@ -4,28 +4,31 @@ using TimeSwap.Application.Mappings;
 using TimeSwap.Application.Payments.Queries;
 using TimeSwap.Application.Payments.Responses;
 using TimeSwap.Domain.Interfaces.Repositories;
+using TimeSwap.Domain.Specs;
 
 namespace TimeSwap.Application.Payments.Handlers
 {
-    public class GetPaymentsByUserIdQueryHandler : IRequestHandler<GetPaymentsByUserIdQuery, List<PaymentDetailResponse>>
+    public class GetPaymentsByUserIdQueryHandler(IPaymentRepository paymentRepository) : IRequestHandler<GetPaymentsByUserIdQuery, Pagination<PaymentDetailResponse>>
     {
-        private readonly IPaymentRepository _paymentRepository;
+        private readonly IPaymentRepository _paymentRepository = paymentRepository;
 
-        public GetPaymentsByUserIdQueryHandler(IPaymentRepository paymentRepository)
+        public async Task<Pagination<PaymentDetailResponse>> Handle(GetPaymentsByUserIdQuery request, CancellationToken cancellationToken)
         {
-            _paymentRepository = paymentRepository;
-        }
+            var paginationResult = await _paymentRepository
+                .GetPaymentsByUserIdAsync(
+                    request.UserId,
+                    request.PaymentStatus,
+                    request.DateFilter,
+                    request.PageIndex,
+                    request.PageSize
+                );
 
-        public async Task<List<PaymentDetailResponse>> Handle(GetPaymentsByUserIdQuery request, CancellationToken cancellationToken)
-        {
-            var payments = await _paymentRepository.GetPaymentsByUserIdAsync(request.UserId);
-
-            if (!payments.Any())
+            if (paginationResult.Data.Count == 0)
             {
                 throw new PaymentNotFoundByUserIdException();
             }
 
-            return AppMapper<CoreMappingProfile>.Mapper.Map<List<PaymentDetailResponse>>(payments);
+            return AppMapper<CoreMappingProfile>.Mapper.Map<Pagination<PaymentDetailResponse>>(paginationResult);
         }
     }
 }

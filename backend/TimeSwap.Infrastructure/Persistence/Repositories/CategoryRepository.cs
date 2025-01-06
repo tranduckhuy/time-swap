@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Interfaces.Repositories;
-using TimeSwap.Domain.Specs;
 using TimeSwap.Infrastructure.Persistence.DbContexts;
-using TimeSwap.Infrastructure.Specifications;
 
 namespace TimeSwap.Infrastructure.Persistence.Repositories
 {
@@ -12,10 +10,12 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
         public CategoryRepository(AppDbContext context) : base(context)
         {
         }
-        public async Task<Pagination<Category>> GetCategoriesByIndustryAsync(int industryId, int pageIndex = 1, int pageSize = 10)
+        public async Task<List<Category>> GetCategoriesByIndustryAsync(int industryId)
         {
-            var spec = new CategoryByIndustrySpecification(industryId, pageIndex, pageSize);
-            return await GetWithSpecAsync(spec);
+            return await _context.Categories
+                .Where(category => category.IndustryId == industryId)
+                .OrderBy(category => category.CategoryName)
+                .ToListAsync();
         }
 
         public async Task<List<Category>> GetAllCategoryIncludeIndustryAsync()
