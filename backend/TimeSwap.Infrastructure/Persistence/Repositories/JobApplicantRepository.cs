@@ -19,6 +19,11 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
+        public async Task<int> GetTotalApplicantsByJobPostIdAsync(Guid jobPostId)
+        {
+            return await _context.JobApplicants.CountAsync(x => x.JobPostId == jobPostId);
+        }
+
         public async Task<bool> IsUserAppliedToJobPostAsync(Guid jobPostId, Guid userId)
         {
             return await _context.JobApplicants.AnyAsync(x => x.JobPostId == jobPostId && x.UserAppliedId == userId);

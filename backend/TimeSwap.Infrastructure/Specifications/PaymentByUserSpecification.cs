@@ -15,6 +15,8 @@ namespace TimeSwap.Infrastructure.Specifications
 
         public List<Expression<Func<Payment, object>>> Includes { get; private set; } = [];
 
+        public Func<IQueryable<Payment>, IQueryable<Payment>>? Selector { get; private set; }
+
         public int Skip { get; private set; }
 
         public int Take { get; private set; }

@@ -35,7 +35,7 @@ namespace TimeSwap.Api.Controllers
         public async Task<IActionResult> GetJobPostById(Guid jobPostId)
         {
             var query = new GetJobPostByIdQuery(jobPostId);
-            return await ExecuteAsync<GetJobPostByIdQuery, JobPostResponse>(query);
+            return await ExecuteAsync<GetJobPostByIdQuery, JobPostDetailResponse>(query);
         }
 
         [HttpPost]
@@ -107,6 +107,14 @@ namespace TimeSwap.Api.Controllers
             command.OwnerId = Guid.Parse(userId);
 
             return await ExecuteAsync<AssignJobCommand, Unit>(command);
+        }
+
+        [HttpGet("user/{userId:guid}")]
+        [Authorize]
+        public async Task<IActionResult> GetJobPostsByUserId(Guid userId, bool isOwner)
+        {
+            var query = new GetJobPostsByUserIdQuery(userId, isOwner);
+            return await ExecuteAsync<GetJobPostsByUserIdQuery, IEnumerable<JobPostResponse>>(query);
         }
     }
 }
