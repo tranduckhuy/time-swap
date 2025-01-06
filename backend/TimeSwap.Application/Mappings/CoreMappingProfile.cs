@@ -19,7 +19,6 @@ namespace TimeSwap.Application.Mappings
         {
             CreateMap<JobPost, JobPostResponse>().ReverseMap();
             CreateMap<Pagination<JobPost>, Pagination<JobPostResponse>>().ReverseMap();
-            CreateMap<Pagination<Category>, Pagination<CategoryResponse>>().ReverseMap();
             CreateMap<City, CityResponse>().ReverseMap();
             CreateMap<Ward, WardResponse>().ReverseMap();
             CreateMap<Industry, IndustryResponse>().ReverseMap();
