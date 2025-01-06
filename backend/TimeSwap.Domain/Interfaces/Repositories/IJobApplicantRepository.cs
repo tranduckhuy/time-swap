@@ -6,5 +6,6 @@ namespace TimeSwap.Domain.Interfaces.Repositories
     {
         Task<bool> IsUserAppliedToJobPostAsync(Guid jobPostId, Guid userId);
         Task<IEnumerable<JobApplicant>> GetApplicantsByJobPostIdAsync(Guid jobPostId);
+        Task<int> GetTotalApplicantsByJobPostIdAsync(Guid jobPostId);
     }
 }
