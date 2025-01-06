@@ -4,11 +4,10 @@ using TimeSwap.Application.Exceptions.Industries;
 using TimeSwap.Application.Industries.Queries;
 using TimeSwap.Application.Mappings;
 using TimeSwap.Domain.Interfaces.Repositories;
-using TimeSwap.Domain.Specs;
 
 namespace TimeSwap.Application.Industries.Handlers
 {
-    public class GetCategoriesByIndustryQueryHandler : IRequestHandler<GetCategoriesByIndustryQuery, Pagination<CategoryResponse>>
+    public class GetCategoriesByIndustryQueryHandler : IRequestHandler<GetCategoriesByIndustryQuery, List<CategoryResponse>>
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IIndustryRepository _industryRepository;
@@ -21,14 +20,14 @@ namespace TimeSwap.Application.Industries.Handlers
             _industryRepository = industryRepository;
         }
 
-        public async Task<Pagination<CategoryResponse>> Handle(GetCategoriesByIndustryQuery request, CancellationToken cancellationToken)
+        public async Task<List<CategoryResponse>> Handle(GetCategoriesByIndustryQuery request, CancellationToken cancellationToken)
         {
             _ = await _industryRepository.GetByIdAsync(request.IndustryId) ?? throw new IndustryNotFoundException();
 
-            var paginationResult = await _categoryRepository
-                .GetCategoriesByIndustryAsync(request.IndustryId, request.PageIndex, request.PageSize);
+            var category = await _categoryRepository
+                .GetCategoriesByIndustryAsync(request.IndustryId);
 
-            return AppMapper<CoreMappingProfile>.Mapper.Map<Pagination<CategoryResponse>>(paginationResult);
+            return AppMapper<CoreMappingProfile>.Mapper.Map<List<CategoryResponse>>(category);
         }
     }
 }
