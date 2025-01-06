@@ -1,17 +1,17 @@
 <app-banner>
-    <app-breadcrumb [title]="'Contact'"/>
+    <app-breadcrumb [title]="'navbar.contact' | translate"/>
  </app-banner>
 
 <!-- Contact -->
 <div class="contact-form-area pb-100">
     <div class="container">
         <div class="form-item">
-            <h2>Contact Us</h2>
+            <h2>{{'contact.heading' | translate }}</h2>
             <form id="contactForm">
                 <div class="row">
                     <div class="col-sm-6 col-lg-6">
                         <div class="form-group">
-                            <label>Name</label>
+                            <label>{{'contact.name' | translate }}</label>
                             <input type="text" name="name" id="name" class="form-control" required data-error="Please enter your name">
                             <div class="help-block with-errors"></div>
                         </div>
@@ -27,7 +27,7 @@
 
                     <div class="col-sm-6 col-lg-6">
                         <div class="form-group">
-                            <label>Phone</label>
+                            <label>{{'contact.phone' | translate }}</label>
                             <input type="text" name="phone_number" id="phone_number" required data-error="Please enter your number" class="form-control">
                             <div class="help-block with-errors"></div>
                         </div>
@@ -35,7 +35,7 @@
 
                     <div class="col-sm-6 col-lg-6">
                         <div class="form-group">
-                            <label>Subject</label>
+                            <label>{{'contact.subject' | translate }}</label>
                             <input type="text" name="msg_subject" id="msg_subject" class="form-control" required data-error="Please enter your subject">
                             <div class="help-block with-errors"></div>
                         </div>
@@ -43,7 +43,7 @@
 
                     <div class="col-md-12 col-lg-12">
                         <div class="form-group">
-                            <label>Message</label>
+                            <label>{{'contact.message' | translate }}</label>
                             <textarea name="message" class="form-control" id="message" cols="30" rows="8" required data-error="Write your message"></textarea>
                             <div class="help-block with-errors"></div>
                         </div>
@@ -61,7 +61,7 @@
                                     required
                                 >
                                 <label class="form-check-label" for="gridCheck">
-                                    Accept <a href="terms-condition.html">Terms & Conditions</a> And <a href="privacy-policy.html">Privacy Policy.</a>
+                                    {{'contact.condition' | translate }}
                                 </label>
                                 <div class="help-block with-errors gridCheck-error"></div>
                             </div>
@@ -70,7 +70,7 @@
 
                     <div class="col-md-12 col-lg-12">
                         <button type="submit" class="btn">
-                            Send Message
+                            {{'contact.submit' | translate }}
                         </button>
                         <div id="msgSubmit" class="h3 text-center hidden"></div>
                         <div class="clearfix"></div>

@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using TimeSwap.Application.Authentication.Interfaces;
+using TimeSwap.Application.Configurations.Payments;
 using TimeSwap.Application.Email;
 using TimeSwap.Domain.Interfaces.Repositories;
 using TimeSwap.Infrastructure.Authentication;
@@ -36,6 +37,10 @@ namespace TimeSwap.Infrastructure.Extensions
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<IWardRepository, WardRepository>();
             services.AddScoped<IJobApplicantRepository, JobApplicantRepository>();
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
+            services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
+            services.AddScoped<ITransactionLogRepository, TransactionLogRepository>();
+            services.Configure<VnPayConfig>(configuration.GetSection("Vnpay"));
             return services;
         }
 

@@ -3,17 +3,17 @@
         <li>
             <button
             class="pagination-button"
-            [disabled]="currentPage === 1"
-            (click)="changePage(currentPage - 1)"
+            [disabled]="currentPage() === 1"
+            (click)="changePage(currentPage() - 1)"
             >
-            Prev
+                {{ 'common.pagination.prev' | translate }}
             </button>
         </li>
         @for (page of visiblePages; track page) {
             <li>
                 <button
                 class="pagination-button"
-                [class.active]="currentPage === page"
+                [class.active]="currentPage() === page"
                 (click)="changePage(page)"
                 >
                 {{ page }}
@@ -23,10 +23,10 @@
         <li>
             <button
             class="pagination-button"
-            [disabled]="currentPage === totalPages()"
-            (click)="changePage(currentPage + 1)"
+            [disabled]="currentPage() === totalPages()"
+            (click)="changePage(currentPage() + 1)"
             >
-            Next
+                {{ 'common.pagination.next' | translate }}
             </button>
         </li>
     </ul>

@@ -113,21 +113,23 @@ src
         |        ├── card.component.html
         |        └── card.component.css
         ├── constants
-        |    ├── constants.ts
-        |    ├── notification-constants.ts
-        |    ├── success-constants.ts
-        |    └── error-constants.ts
+        |    ├── jobs-constants.ts
+        |    ├── auth-constants.ts
+        |    ├── status-code-constants.ts
+        |    └── ...
         ├── models
         |    ├── api
-        |    |   ├── ...
-        |    |   └── base-api-response.model.ts
-        |    ├── request
-        |    |   └── ...
-        |    └── response
-        |        └── ...
-        ├── pipes
-        |    ├── ...
-        |    └── date.pipe.ts
+        |    |    ├── request
+        |    |    ├── response
+        |    |    └── base-api-response.model.ts
+        |    ├── entities
+        |    |     └── ...
+        |    └── utils
+        |          └── ...
+        ├── directives
+        |    ├── stop-propagation.directive.ts
+        |    └── ...
         └── utils
-            ├── ...
-            └── http-request.utils.ts
+            ├── form-validators.ts
+            ├── request-utils.ts
+            └── ...

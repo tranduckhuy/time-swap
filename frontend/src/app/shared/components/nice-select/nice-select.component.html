@@ -1,0 +1,29 @@
+<div class="nice-select" tabindex="0">
+  <span class="current" [title]="current()">{{ current() }}</span>
+  <div class="nice-select-search-box" appStopPropagation>
+      <input 
+        #searchBox
+        type="text" 
+        class="nice-select-search" 
+        placeholder="Search..." 
+        (input)="onSearch(searchBox.value)"
+      />
+  </div>
+  <ul class="list">
+      @for(data of filteredList(); track $index) {
+        <li 
+          [title]="data"
+          [attr.data-value]="data" 
+          [class.option]="true" 
+          [ngClass]="data === current() ? 'selected': ''"
+          (click)="onValueChange(data)"
+        >
+          {{ data }}
+        </li>
+      } @empty {
+        <div class="select-empty-box">
+          <p class="select-empty-text">No Results Found</p>
+        </div>
+      }
+  </ul>
+</div>

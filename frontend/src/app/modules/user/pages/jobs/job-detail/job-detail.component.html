@@ -3,38 +3,38 @@
     <app-banner>
         <app-banner-detail>
             <div class="left" ngProjectAs="left-content">
-                <img src="assets/imgs/job/job-img.png" alt="Details">
-                <h2>Product Designer</h2>
+                <img src="assets/imgs/job/job-img.png" [alt]="job().title">
+                <h2>{{ job().title }}</h2>
                 <ul>
                     <li>
                         <i class='bx bx-pie-chart-alt-2'></i>
-                        Sales & Marketing
+                        {{ job().industry.industryName }}
                     </li>
                     <li>
                         <i class='bx bx-time'></i>
-                        Posted date: 10 months ago
+                        Posted date: {{ job().createdAt | date: 'fullDate' }}
                     </li>
                 </ul>
             </div>
             <div class="right" ngProjectAs="right-content">
-                <app-button-icon title="Apply Now" icon="bx bx-plus"/>
+                <app-button-icon [title]="'navbar.post-job' | translate" icon="bx bx-plus"/>
                 <ul>
                   <li>
                       <a href="#">
                           <i class='bx bx-heart'></i>
-                          Save
+                          {{ 'job-detail.save' | translate }}
                       </a>
                   </li>
                   <li>
                       <a href="#">
                           <i class='bx bx-share-alt'></i>
-                          Share
+                          {{ 'job-detail.share' | translate }}
                       </a>
                   </li>
                   <li>
                       <a href="#">
                           <i class='bx bxs-report'></i>
-                          Report
+                          {{ 'job-detail.report' | translate }}
                       </a>
                   </li>
                 </ul>
@@ -51,7 +51,7 @@
       <div class="details-item">
         <div class="details-inner">
             <h3>Job Description</h3>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+            <p>{{ job().description }}</p>
         </div>
         <div class="details-inner">
             <h3>Our Company</h3>
@@ -128,63 +128,63 @@
         <app-job-alert />
         <!-- ? Job Information -->
         <div class="information widget-item">
-            <h3>Job Information</h3>
+            <h3>{{ 'job-detail.job-information.title' | translate }}</h3>
             <ul>
                 <li>
                     <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                    <h4>Fee</h4>
-                    <span>$1,500 - $2,000</span>
+                    <h4>{{ 'job-detail.job-information.fee' | translate }}</h4>
+                    <span>{{ job().fee }}</span>
                 </li>
                 <li>
                     <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                    <h4>Category</h4>
-                    <span>Sales & Marketing</span>
+                    <h4>{{ 'job-detail.job-information.industry' | translate }}</h4>
+                    <span>{{ job().industry.industryName }}</span>
                 </li>
                 <li>
                     <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                    <h4>Location</h4>
-                    <span>10th St Long Island, NY</span>
+                    <h4>{{ 'job-detail.job-information.category' | translate }}</h4>
+                    <span>{{ job().category.categoryName }}</span>
                 </li>
                 <li>
                     <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                    <h4>Posted</h4>
-                    <span>7 Months Ago</span>
+                    <h4>{{ 'job-detail.location' | translate }}</h4>
+                    <span>{{ job().ward.fullLocation }}</span>
                 </li>
                 <li>
                     <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                    <h4>Industry</h4>
-                    <span>Development</span>
+                    <h4>{{ 'job-detail.job-information.posted-date' | translate }}</h4>
+                    <span>{{ job().createdAt | date: 'fullDate' }}</span>
                 </li>
                 <li>
                     <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                    <h4>Applied</h4>
-                    <span>01</span>
+                    <h4>{{ 'job-detail.job-information.applied' | translate }}</h4>
+                    <span>{{ job().assignedTo }}</span>
                 </li>
             </ul>
         </div>
         <div class="owner">
             <div class="top">
                 <img src="assets/imgs/job/job4.png" alt="Owner">
-                <h3>Owner Info</h3>
+                <h3>{{ 'job-detail.owner-information.title' | translate }}</h3>
                 <i class="flaticon-send"></i>
-                <span>Los Angeles, CA, USA</span>
+                <span>{{ job().userId }}</span>
             </div>
             <div class="information widget-item">
                 <ul>
                     <li>
                         <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                        <h4>Phone</h4>
-                        <a href="tel:">123-456-7891</a>
+                        <h4>{{ 'job-detail.phone' | translate }}</h4>
+                        <a [href]="'tel:' + job().userId">{{ job().userId }}</a>
                     </li>
                     <li>
                         <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                        <h4>Email</h4>
-                        <a href="mailto:">timeswap&#x40;contact.com</a>
+                        <h4>{{ 'job-detail.email-placeholder' | translate }}</h4>
+                        <a [href]="'mailto:' + job().userId">{{ job().userId }}</a>
                     </li>
                     <li>
                         <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                        <h4>Location</h4>
-                        <a href="#" target="_blank">www.timeswap.com</a>
+                        <h4>{{ 'job-detail.location' | translate }}</h4>
+                        <p>{{ job().userId }}</p>
                     </li>
                 </ul>
             </div>
@@ -199,10 +199,10 @@
 <div class="job-details-related pt-100 pb-70">
   <div class="container">
       <div class="section-title">
-          <h2>Related Jobs</h2>
+          <h2>{{ 'job-detail.related' | translate }}</h2>
       </div>
       @for (job of relatedJobs; track job.title) {
-        <app-job-post [job]="job"/>
+        <!-- <app-job-post [job]="job"/> -->
       }
   </div>
 </div>

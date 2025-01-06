@@ -4,7 +4,8 @@
       "auth": {
         "login": "Đăng nhập",
         "register": "Đăng ký"
-      }
+      },
+      "search": "Tìm kiếm theo bộ lọc"
     },
     "form": {
       "errors": {
@@ -21,6 +22,15 @@
       "warning-title": "Cảnh báo",
       "info-title": "Thông tin",
       "error-message": "Đã xảy ra lỗi. Vui lòng thử lại sau."
+    },
+    "pagination": {
+      "prev": "Trước",
+      "next": "Sau"
+    },
+    "job-alert": {
+      "find-a-job": "Tìm công việc",
+      "email-placeholder": "Địa chỉ email",
+      "job-alert-btn": "Nhận thông báo công việc"
     }
   },
   "navbar": {
@@ -28,9 +38,25 @@
     "about": "Về chúng tôi",
     "jobs": "Danh sách công việc",
     "blog": "Blog",
+    "new": "Mới",
     "contact": "Liên hệ",
     "auth": "Đăng nhập/Đăng ký",
-    "post-job": "Đăng công việc"
+    "post-job": "Đăng công việc",
+    "language": {
+      "vi": "Tiếng Việt",
+      "en": "Tiếng Anh"
+    },
+    "profile": {
+      "my-profile": {
+        "title": "Hồ sơ của tôi",
+        "description": "Xem chi tiết hồ sơ cá nhân"
+      },
+      "sign-out": "Đăng xuất"
+    } 
+  },
+  "banner": {
+    "profile": "Hồ sơ",
+    "assignees": "Người nhận việc"
   },
   "auth": {
     "email": "Email",
@@ -41,9 +67,11 @@
       "link": "Đăng ký ngay!",
       "success": "Bạn đã đăng nhập thành công!",
       "confirm-success": "Xác nhận email thành công! Bạn có thể sử dụng email để đăng nhập.",
-      "re-confirm-success": "Email khác đã được gửi thành công! Hãy kiểm tra hộp thư đến để xác nhận email.",
+      "re-confirm-success": "Email mới đã được gửi thành công! Hãy kiểm tra hộp thư đến để xác nhận email.",
       "failure": "Đăng nhập không thành công. Vui lòng thử lại.",
       "not-confirm": "Email chưa được xác nhận. Vui lòng kiểm tra hộp thư.",
+      "user-not-exist": "Địa chỉ email này không tồn tại trong hệ thống. Vui lòng kiểm tra lại email hoặc đăng ký tài khoản mới.",
+      "invalid-credentials": "Email hoặc mật khẩu bạn nhập không đúng. Vui lòng kiểm tra và thử lại.",
       "token-expired": "Liên kết đã hết hạn. Một liên kết mới đã được gửi đến email của bạn."
     },
     "register": {
@@ -57,6 +85,132 @@
       "success": "Đăng ký thành công. Hãy kiểm tra hộp thư đến để xác nhận email.",
       "failure": "Đăng ký không thành công. Vui lòng thử lại.",
       "email-exist": "Đăng ký không thành công. Email này đã được sử dụng. Vui lòng sử dụng email khác."
+    },
+    "logout": {
+      "success": "Bạn đã đăng xuất thành công!"
     }
+  },
+  "jobs": {
+    "showing": "Hiển thị",
+    "of": "trên tổng số",
+    "results": "kết quả",
+    "filter": {
+      "title": "Tiêu đề",
+      "min-fee": "Từ mức phí",
+      "max-fee": "Đến mức phí",
+      "industry": "Lọc theo ngành",
+      "category": "Lọc theo danh mục",
+      "city": "Lọc theo Tỉnh/Thành phố",
+      "ward": "Lọc theo Huyện/Xã",
+      "postedDate": {
+        "default": "Lọc theo ngày đăng",
+        "all-posted-date": "Tất cả ngày đăng",
+        "today": "Hôm nay",
+        "yesterday": "Hôm qua",
+        "last-7-days": "7 ngày trước",
+        "last-30-days": "30 ngày trước"
+      }
+    },
+    "post-job-form": {
+      "first-name": "Họ:",
+      "last-name": "Tên:",
+      "email": "Địa chỉ email:",
+      "phone": "Số điện thoại:",
+      "title": "Tiêu đề:",
+      "fee": "Phí:",
+      "industry": "Ngành:",
+      "category": "Danh mục:",
+      "street": "Đường:",
+      "department": "Căn hộ (Optional):",
+      "province": "Tỉnh/Thành phố:",
+      "district": "Quận/Huyện:",
+      "ward": "Phường/Xã:"
+    },
+    "notify": {
+      "fetch-jobs-failed": "Oops! We encountered an issue while fetching jobs. Please reach out to the administrator for further assistance.",
+      "fetch-wards-failed": "Oops! We encountered an issue while fetching wards. Please reach out to the administrator for further assistance."
+    }
+  },
+  "profile": {
+    "tabs": {
+      "my-profile": "Hồ sơ của tôi",
+      "applied-jobs": "Công việc đã ứng tuyển",
+      "posted-jobs": "Công việc đã đăng",
+      "logout": "Đăng xuất"
+    },
+    "form": {
+      "info": {
+        "heading": "Thông tin cơ bản",
+        "name": "Tên:",
+        "email": "Email:",
+        "phone": "Số điện thoại:",
+        "dob": "Ngày sinh:",
+        "job": "Công việc:",
+        "position": "Vị trí:",
+        "salary": "Lương:",
+        "avatar": "Ảnh đại diện:"
+      },
+      "education": {
+        "heading": "Giáo dục",
+        "title": "Học vấn:",
+        "degree": "Bằng cấp:",
+        "institute": "Cơ sở đào tạo:",
+        "year": "Năm tốt nghiệp:"
+      },
+      "socials": {
+        "heading": "Liên kết"
+      },
+      "button": "Lưu thông tin"
+    }
+  },
+  "job-detail": {
+    "save": "Lưu",
+    "share": "Chia sẻ",
+    "report": "Báo cáo",
+    "job-description": "Mô tả công việc",
+    "location": "Vị trí",
+    "job-information": {
+      "title": "Thông tin công việc",
+      "fee": "Phí",
+      "industry": "Ngành",
+      "category": "Danh mục",
+      "posted-date": "Ngày đăng",
+      "applied": "Đã nộp đơn"
+    },
+    "owner-information": {
+      "title": "Thông tin người đăng",
+      "phone": "Số điện thoại",
+      "email": "Địa chỉ email"
+    },
+    "related": "Công việc liên quan"
+  },
+  "assignee": {
+    "assign-now": "Giao Ngay",
+    "my-profile": "Hồ sơ của tôi",
+    "work-exp": "Kinh nghiệm",
+    "skill": "Kĩ năng",
+    "portfolio": "Portfolio",
+    "add-review": "Thêm đánh giá",
+    "review-msg": "Đánh giá của bạn cho mục này",
+    "review-option": "Lưu tên, email và trang web của tôi trên trình duyệt này để lần sau tôi bình luận.",
+    "name": "Tên",
+    "email": "Email",
+    "write-msg": "Đánh giá của bạn",
+    "submit": "Gửi đánh giá",
+    "job-overview": "Tổng quan công việc",
+    "experience": "Kinh nghiệm:",
+    "age": "Tuổi:",
+    "languages": "Ngôn ngữ:",
+    "qualification": "Bằng cấp:",
+    "gender": "Giới tính:"
+  },
+  "contact": {
+    "heading": "Liên hệ với chúng tôi",
+    "name": "Tên",
+    "phone": "Số điện thoại",
+    "subject": "Chuyên môn",
+    "message": "Tin nhắn",
+    "condition": "Chấp nhận Điều khoản & Điều kiện và Chính sách bảo mật.",
+    "submit": "Gửi Tin Nhắn"
   }
 }

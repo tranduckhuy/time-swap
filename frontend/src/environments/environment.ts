@@ -1,4 +1,6 @@
 export const environment = {
-  apiBaseUrl: 'https://localhost:9001/api'
+  production: true,
+  apiAuthBaseUrl: process.env["API_AUTH_BASE_URL"] || '',
+  apiBaseUrl: process.env["API_BASE_URL"] || ''
 };
   

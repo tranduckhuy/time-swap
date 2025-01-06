@@ -32,4 +32,7 @@ jobs:
 
       - name: Build
         working-directory: ./frontend
+        env:
+          API_AUTH_BASE_URL: ${{ secrets.API_AUTH_BASE_URL }}
+          API_BASE_URL: ${{ secrets.API_BASE_URL }}
         run: npm run build
