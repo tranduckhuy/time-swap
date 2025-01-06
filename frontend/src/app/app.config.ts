@@ -8,7 +8,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { apiInterceptor } from './core/interceptors/api.interceptor';
 
-import { defaultLayoutRoutes, authLayoutRoutes } from './app.routes';
+import { defaultLayoutRoutes, noHeaderFooterLayoutRoutes } from './app.routes';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './i18n/', '.json');
@@ -19,7 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([apiInterceptor])),
     provideAnimationsAsync(),
     provideRouter(
-      [...defaultLayoutRoutes, ...authLayoutRoutes], 
+      [...defaultLayoutRoutes, ...noHeaderFooterLayoutRoutes], 
       withComponentInputBinding(), 
       withRouterConfig({
         paramsInheritanceStrategy: 'always',

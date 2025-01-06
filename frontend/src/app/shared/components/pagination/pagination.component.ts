@@ -1,8 +1,11 @@
 import { Component, computed, input, output } from '@angular/core';
 
+import { TranslateModule } from '@ngx-translate/core';
+
 @Component({
   selector: 'app-pagination',
   standalone: true,
+  imports: [TranslateModule],
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.css']
 })

@@ -1,0 +1,135 @@
+ <!-- Page Title -->
+ <app-banner>
+  <app-breadcrumb [title]="'banner.applicants' | translate"/>
+</app-banner>
+<!-- End Page Title -->
+
+<!-- Filter -->
+<div class="job-filter-area pt-100">
+  <div class="container">
+      <form>
+          <div class="row">
+              <div class="col-sm-6 col-lg-3">
+                  <div class="form-group">
+                      <input type="text" class="form-control" placeholder="e.g UI/UX Design">
+                  </div>
+              </div>
+              <div class="col-sm-6 col-lg-3">
+                  <div class="form-group">
+                      <select style="display: none;">
+                          <option>Filter By Age</option>
+                          <option>Another option</option>
+                          <option>A option</option>
+                          <option>Potato</option>
+                      </select><div class="nice-select" tabindex="0"><span class="current">Filter By Age</span><ul class="list"><li data-value="Filter By Age" class="option selected">Filter By Age</li><li data-value="Another option" class="option">Another option</li><li data-value="A option" class="option">A option</li><li data-value="Potato" class="option">Potato</li></ul></div>
+                  </div>
+              </div>
+              <div class="col-sm-6 col-lg-3">
+                  <div class="form-group">
+                      <select style="display: none;">
+                          <option>Filter By Category</option>
+                          <option>Another option</option>
+                          <option>A option</option>
+                          <option>Potato</option>
+                      </select><div class="nice-select" tabindex="0"><span class="current">Filter By Category</span><ul class="list"><li data-value="Filter By Category" class="option selected">Filter By Category</li><li data-value="Another option" class="option">Another option</li><li data-value="A option" class="option">A option</li><li data-value="Potato" class="option">Potato</li></ul></div>
+                  </div>
+              </div>
+              <div class="col-sm-6 col-lg-3">
+                  <div class="form-group">
+                      <select style="display: none;">
+                          <option>Filter By Location</option>
+                          <option>Another option</option>
+                          <option>A option</option>
+                          <option>Potato</option>
+                      </select><div class="nice-select" tabindex="0"><span class="current">Filter By Location</span><ul class="list"><li data-value="Filter By Location" class="option selected">Filter By Location</li><li data-value="Another option" class="option">Another option</li><li data-value="A option" class="option">A option</li><li data-value="Potato" class="option">Potato</li></ul></div>
+                  </div>
+              </div>
+              <div class="col-sm-6 col-lg-3">
+                  <div class="form-group">
+                      <select style="display: none;">
+                          <option>Filter By Languages</option>
+                          <option>Another option</option>
+                          <option>A option</option>
+                          <option>Potato</option>
+                      </select><div class="nice-select" tabindex="0"><span class="current">Filter By Languages</span><ul class="list"><li data-value="Filter By Languages" class="option selected">Filter By Languages</li><li data-value="Another option" class="option">Another option</li><li data-value="A option" class="option">A option</li><li data-value="Potato" class="option">Potato</li></ul></div>
+                  </div>
+              </div>
+              <div class="col-sm-6 col-lg-3">
+                  <div class="form-group">
+                      <select style="display: none;">
+                          <option>Filter By Qualifications</option>
+                          <option>Another option</option>
+                          <option>A option</option>
+                          <option>Potato</option>
+                      </select><div class="nice-select" tabindex="0"><span class="current">Filter By Qualifications</span><ul class="list"><li data-value="Filter By Qualifications" class="option selected">Filter By Qualifications</li><li data-value="Another option" class="option">Another option</li><li data-value="A option" class="option">A option</li><li data-value="Potato" class="option">Potato</li></ul></div>
+                  </div>
+              </div>
+              <div class="col-sm-6 col-lg-3">
+                  <div class="form-group">
+                      <select style="display: none;">
+                          <option>Filter By Experiences</option>
+                          <option>Another option</option>
+                          <option>A option</option>
+                          <option>Potato</option>
+                      </select><div class="nice-select" tabindex="0"><span class="current">Filter By Experiences</span><ul class="list"><li data-value="Filter By Experiences" class="option selected">Filter By Experiences</li><li data-value="Another option" class="option">Another option</li><li data-value="A option" class="option">A option</li><li data-value="Potato" class="option">Potato</li></ul></div>
+                  </div>
+              </div>
+              <div class="col-sm-6 col-lg-3">
+                  <button type="submit" class="btn cmn-btn">
+                      Search By Filter
+                      <i class="bx bx-plus"></i>
+                  </button>
+              </div>
+          </div>
+      </form>
+  </div>
+</div>
+<!-- End Filter -->
+
+<!-- Showing -->
+<div class="job-showing-area">
+  <div class="container">
+      <div class="showing">
+          <div class="row">
+              <div class="col-sm-6 col-lg-6">
+                  <div class="left">
+                      <div class="form-group">
+                          <select style="display: none;">
+                              <option>Newest</option>
+                              <option>Another option</option>
+                              <option>A option</option>
+                              <option>Potato</option>
+                          </select><div class="nice-select" tabindex="0"><span class="current">Newest</span><ul class="list"><li data-value="Newest" class="option selected">Newest</li><li data-value="Another option" class="option">Another option</li><li data-value="A option" class="option">A option</li><li data-value="Potato" class="option">Potato</li></ul></div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-sm-6 col-lg-6">
+                  <div class="right" style="font-size: 16px;">
+                      <h4>Showing 1 - 8 of 11 results</h4>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- End Showing -->
+
+<!-- Candidate -->
+<div class="candidate-area pb-100">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-6" app-applicant-card></div>
+          <div class="col-lg-6" app-applicant-card></div>
+          <div class="col-lg-6" app-applicant-card></div>
+          <div class="col-lg-6" app-applicant-card></div>
+          <div class="col-lg-6" app-applicant-card></div>
+          <div class="col-lg-6" app-applicant-card></div>
+          <div class="col-lg-6" app-applicant-card></div>
+          <div class="col-lg-6" app-applicant-card></div>
+      </div>
+      
+      <!-- Pagination -->
+      <app-pagination [currentPage]="1" [totalJobs]="10" [limit]="3"/>
+  </div>
+</div>
+<!-- End Candidate -->
