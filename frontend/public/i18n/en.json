@@ -4,7 +4,8 @@
       "auth": {
         "login": "Login",
         "register": "Register"
-      }
+      },
+      "search": "Search By Filter"
     },
     "form": {
         "errors": {
@@ -21,6 +22,15 @@
       "warning-title": "Warning",
       "info-title": "Information",
       "error-message": "An error occurred. Please try again later."
+    },
+    "pagination": {
+      "prev": "Prev",
+      "next": "Next"
+    },
+    "job-alert": {
+      "find-a-job": "Find A Job",
+      "email-placeholder": "Email address",
+      "job-alert-btn": "Get Job Alert"
     }
   },
   "navbar": {
@@ -28,6 +38,7 @@
     "about": "About",
     "jobs": "Jobs",
     "blog": "Blog",
+    "new": "New",
     "contact": "Contact",
     "auth": "Login/Register",
     "post-job": "Post A Job",
@@ -40,17 +51,14 @@
         "title": "My Profile",
         "description": "View personal profile details"
       },
+      "account": "Account",
+      "add-money": "Deposit money",
       "sign-out": "Sign out"
     } 
   },
   "banner": {
-    "home": "Home",
-    "about": "About",
-    "jobs": "Jobs",
-    "blog": "Blog",
-    "contact": "Contact",
     "profile": "Profile",
-    "assignees": "Assignees"
+    "applicants": "Applicants"
   },
   "auth": {
     "email": "Email",
@@ -64,6 +72,8 @@
       "re-confirm-success": "A new email sent successfully! Please check your inbox to confirm your email.",
       "failure": "Login failed. Please try again.",
       "not-confirm": "Email not confirmed. Please check your inbox.",
+      "user-not-exist": "This email address does not exist in the system. Please check your email or register for a new account.",
+      "invalid-credentials": "The email address or password you entered is incorrect. Please check and try again.",
       "token-expired": "The link has expired. A new one has been sent to your email."
     },
     "register": {
@@ -77,9 +87,47 @@
       "success": "Registration successful. Please check your inbox to confirm your email.",
       "failure": "Register failed. Please try again.",
       "email-exist": "Registration failed. This email is already in use. Please use a different email."
+    },
+    "logout": {
+      "success": "Logout successful!"
     }
   },
   "jobs": {
+    "showing": "Showing",
+    "of": "of",
+    "results": "results",
+    "filter": {
+      "title": "Title",
+      "min-fee": "Fee From",
+      "max-fee": "Fee to",
+      "industry": "Filter By Industry",
+      "category": "Filter By Category",
+      "city": "Filter By Province/City",
+      "ward": "Filter By District/Ward",
+      "postedDate": {
+        "default": "Filter By Posted Date",
+        "all-posted-date": "All Posted Date",
+        "today": "Today",
+        "yesterday": "Yesterday",
+        "last-7-days": "Last 7 Days",
+        "last-30-days": "Last 30 Days"
+      }      
+    },
+    "post-job-form": {
+      "first-name": "First Name:",
+      "last-name": "Last Name:",
+      "email": "Email:",
+      "phone": "Phone:",
+      "title": "Title:",
+      "fee": "Fee:",
+      "industry": "Industry:",
+      "category": "Category:",
+      "street": "Street:",
+      "department": "Department (Optional):",
+      "province": "Province:",
+      "district": "District:",
+      "ward": "Ward:"
+    },
     "notify": {
       "fetch-jobs-failed": "Oops! We encountered an issue while fetching jobs. Please reach out to the administrator for further assistance.",
       "fetch-wards-failed": "Oops! We encountered an issue while fetching wards. Please reach out to the administrator for further assistance."
@@ -147,12 +195,28 @@
     "job-info": "Job Information",
     "owner-info": "Owner Info",
     "applied": "Applied",
-    "related": "Related Jobs",
     "save": "Save",
     "share": "Share",
-    "report": "Report"
+    "report": "Report",
+    "job-description": "Job Description",
+    "location": "Location",
+    "job-information": {
+      "title": "Job Information",
+      "fee": "Fee",
+      "industry": "Industry",
+      "category": "Category",
+      "posted-date": "Posted Date",
+      "applied": "Applied"
+    },
+    "owner-information": {
+      "title": "Owner Information",
+      "phone": "Phone",
+      "email": "Email"
+    },
+    "related": "Related Jobs",
+    "view-applicants": "View Applicants"
   },
-  "assignee": {
+  "applicant": {
     "assign-now": "Assign Now",
     "my-profile": "My Profile",
     "work-exp": "Work Experience",

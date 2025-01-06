@@ -1,16 +1,16 @@
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { PreLoaderComponent } from "../pre-loader/pre-loader.component";
 
 @Component({
-  selector: 'app-coming-soon',
+  selector: 'app-not-found',
   standalone: true,
   imports: [RouterLink, PreLoaderComponent],
-  templateUrl: './coming-soon.component.html',
-  styleUrl: './coming-soon.component.css'
+  templateUrl: './not-found.component.html',
+  styleUrl: './not-found.component.css'
 })
-export class ComingSoonComponent {
+export class NotFoundComponent implements OnInit {
   isLoading = signal<boolean>(true);
 
   private destroyRef = inject(DestroyRef);
