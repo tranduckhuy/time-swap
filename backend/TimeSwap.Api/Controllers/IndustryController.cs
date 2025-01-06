@@ -8,7 +8,6 @@ using TimeSwap.Application.Industries.Commands;
 using TimeSwap.Application.Industries.Queries;
 using TimeSwap.Application.Industries.Responses;
 using TimeSwap.Application.Mappings;
-using TimeSwap.Domain.Specs;
 using TimeSwap.Shared;
 using TimeSwap.Shared.Constants;
 
@@ -31,23 +30,21 @@ namespace TimeSwap.Api.Controllers
         }
 
         [HttpGet("{industryId}")]
-        public async Task<IActionResult> GetIndustryById(int industryId = 1)
+        public async Task<IActionResult> GetIndustryById(int industryId)
         {
             var query = new GetIndustryByIdQuery(industryId);
             return await ExecuteAsync<GetIndustryByIdQuery, IndustryResponse>(query);
         }
 
         [HttpGet("{industryId}/categories")]
-        public async Task<IActionResult> GetCategoriesByIndustry(int industryId = 1, [FromQuery] int pageIndex = 1, [FromQuery] int pageSize = 10)
+        public async Task<IActionResult> GetCategoriesByIndustry(int industryId)
         {
             var query = new GetCategoriesByIndustryQuery
             {
                 IndustryId = industryId,
-                PageIndex = pageIndex,
-                PageSize = pageSize
             };
 
-            return await ExecuteAsync<GetCategoriesByIndustryQuery, Pagination<CategoryResponse>>(query);
+            return await ExecuteAsync<GetCategoriesByIndustryQuery, List<CategoryResponse>>(query);
         }
 
         [HttpPost]

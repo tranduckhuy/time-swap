@@ -19,7 +19,6 @@ namespace TimeSwap.Application.Mappings
         {
             CreateMap<JobPost, JobPostResponse>().ReverseMap();
             CreateMap<Pagination<JobPost>, Pagination<JobPostResponse>>().ReverseMap();
-            CreateMap<Pagination<Category>, Pagination<CategoryResponse>>().ReverseMap();
             CreateMap<City, CityResponse>().ReverseMap();
             CreateMap<Ward, WardResponse>().ReverseMap();
             CreateMap<Industry, IndustryResponse>().ReverseMap();
@@ -30,11 +29,16 @@ namespace TimeSwap.Application.Mappings
             CreateMap<AssignJobCommand, JobApplicant>();
 
             CreateMap<Payment, PaymentDetailResponse>()
-                .ForMember(dest => dest.PaymentId, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.PaymentMethodType,
-                    opt => opt.MapFrom(src => src.PaymentMethod != null ? src.PaymentMethod.PaymentMethodType.ToString() : string.Empty))
-                .ForMember(dest => dest.MethodDetailName,
-                    opt => opt.MapFrom(src => src.PaymentMethod != null ? src.PaymentMethod.MethodDetailName : string.Empty));
+                  .ForMember(dest => dest.PaymentId, opt => opt.MapFrom(src => src.Id))
+                  .ForMember(dest => dest.PaymentMethodType,
+                      opt => opt.MapFrom(src => src.PaymentMethod != null ? src.PaymentMethod.PaymentMethodType.ToString() : string.Empty))
+                  .ForMember(dest => dest.MethodDetailName,
+                      opt => opt.MapFrom(src => src.PaymentMethod != null ? src.PaymentMethod.MethodDetailName : string.Empty));
+
+            CreateMap<Pagination<Payment>, Pagination<PaymentDetailResponse>>()
+                .ForMember(dest => dest.Data, opt => opt.MapFrom(src => src.Data))
+                .ReverseMap();
+
 
             CreateMap<CreatePaymentCommand, Payment>()
                 .ForMember(dest => dest.PaymentStatus, opt => opt.MapFrom(src => PaymentStatus.Pending))

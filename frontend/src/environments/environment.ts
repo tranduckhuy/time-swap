@@ -1,5 +1,6 @@
 export const environment = {
-  apiAuthBaseUrl: 'https://tranduchuy.me:9001/api',
-  apiBaseUrl: 'https://tranduchuy.me:9002/api'
+  production: true,
+  apiAuthBaseUrl: process.env["API_AUTH_BASE_URL"] || '',
+  apiBaseUrl: process.env["API_BASE_URL"] || ''
 };
   
