@@ -1,0 +1,15 @@
+services:
+  base:
+    environment:
+      ConnectionStrings__CoreDbConnection: Host=timeswapdb;Port=5432;Database=TimeSwapApi;Username=${CORE_DB_USER};Password=${CORE_DB_PASSWORD}
+      JWTSettings__SecretKey: ${JWT_SECRET}
+      JWTSettings__ValidAudience: ${JWT_AUDIENCE}
+      JWTSettings__ValidIssuer: ${JWT_ISSUER}
+      JWTSettings__ExpiryInSecond: ${JWT_EXPIRY}
+      EmailConfiguration__From: ${EMAIL_FROM}
+      EmailConfiguration__SmtpServer: ${EMAIL_SMTP_SERVER}
+      EmailConfiguration__Port: ${EMAIL_PORT}
+      EmailConfiguration__Username: ${EMAIL_USERNAME}
+      EmailConfiguration__Password: ${EMAIL_PASSWORD}
+      Redis__ConnectionString: ${REDIS_CONNECTION}
+      Redis__InstanceName: ${REDIS_INSTANCE}

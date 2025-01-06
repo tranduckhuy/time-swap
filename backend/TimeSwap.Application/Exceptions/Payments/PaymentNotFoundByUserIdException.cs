@@ -5,6 +5,6 @@ namespace TimeSwap.Application.Exceptions.Payments
 {
     public class PaymentNotFoundByUserIdException : AppException
     {
-        public PaymentNotFoundByUserIdException() : base(StatusCode.PaymentNotFoundByUserIdException) { }
+        public PaymentNotFoundByUserIdException() : base(StatusCode.PaymentNotFoundByUserId) { }
     }
 }

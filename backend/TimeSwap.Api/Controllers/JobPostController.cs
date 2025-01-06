@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using System.Security.Claims;
 using TimeSwap.Api.Mapping;
 using TimeSwap.Api.Models;
@@ -24,6 +25,7 @@ namespace TimeSwap.Api.Controllers
         ) : base(mediator, logger) { }
 
         [HttpGet]
+        [ProducesResponseType(typeof(ApiResponse<Pagination<JobPostResponse>>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetJobPosts([FromQuery] JobPostSpecParam jobPostSpecParam)
         {
             var query = new GetJobPostsQuery(jobPostSpecParam);
@@ -32,6 +34,7 @@ namespace TimeSwap.Api.Controllers
 
         [HttpGet("{jobPostId:guid}")]
         [Authorize]
+        [ProducesResponseType(typeof(ApiResponse<JobPostResponse>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetJobPostById(Guid jobPostId)
         {
             var query = new GetJobPostByIdQuery(jobPostId);
@@ -40,6 +43,7 @@ namespace TimeSwap.Api.Controllers
 
         [HttpPost]
         [Authorize]
+        [ProducesResponseType(typeof(ApiResponse<JobPostResponse>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> CreateJobPost([FromBody] CreateJobPostRequest request)
         {
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -62,6 +66,7 @@ namespace TimeSwap.Api.Controllers
 
         [HttpPut("{jobPostId:guid}")]
         [Authorize]
+        [ProducesResponseType(typeof(ApiResponse<Unit>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateJobPost(Guid jobPostId, [FromBody] UpdateJobPostRequest request)
         {
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -70,8 +75,8 @@ namespace TimeSwap.Api.Controllers
             {
                 var errorMessage = string.IsNullOrEmpty(userId)
                     ? "The user id is not found in the claims"
-                    : $"[The request body does not contain required fields] or" +
-                    $" [The job post id in the request body ({request?.Id}) does not match the job post id in the route ({jobPostId})]";
+                    : $"[The request body does not contain required fields] or " +
+                    $"[The job post id in the request body ({request?.Id}) does not match the job post id in the route ({jobPostId})]";
 
                 return BadRequest(new ApiResponse<object>
                 {
@@ -89,6 +94,7 @@ namespace TimeSwap.Api.Controllers
 
         [HttpPost("{jobPostId:guid}/apply")]
         [Authorize]
+        [ProducesResponseType(typeof(ApiResponse<Unit>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> AssignUserToJobPost(AssignJobPostRequest request)
         {
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
