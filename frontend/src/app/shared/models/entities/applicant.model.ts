@@ -1,5 +1,5 @@
 export interface ApplicantModel {
-  id: string;
+  // id: string;
   userId: string;
   jobPostId: string;
   fullName: string;

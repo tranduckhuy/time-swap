@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { ApplicantModel } from '../../../../../../shared/models/entities/applicant.model';
 
 @Component({
   selector: 'div[app-applicant-card]',
@@ -8,5 +9,5 @@ import { Component } from '@angular/core';
   styleUrl: './applicant-card.component.css'
 })
 export class ApplicantCardComponent {
-
+  applicant = input.required<ApplicantModel>()
 }
