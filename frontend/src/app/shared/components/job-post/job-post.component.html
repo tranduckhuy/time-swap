@@ -1,16 +1,14 @@
-<a [routerLink]="[job().id]">
-    <div class="employer-item">
-        <img src="assets/imgs/job/job11.png" [alt]="job().title">
-        <h3>{{ job().title }}</h3>
-        <ul>
-            <li>
-                <i class="flaticon-send"></i>
-                {{ job().ward.fullLocation }}
-            </li>
-            <li>{{ job().createdAt | date: 'fullDate' }}</li>
-        </ul>
-        <p>{{ job().description }}</p>
-        <span class="span-one">{{ job().category.categoryName }}</span>
-        <span class="span-two">{{ job().industry.industryName }}</span>
-    </div>
-</a>
+<div class="employer-item" (click)="navigateToJobPost(job().id)" style="cursor: pointer;">
+    <img [src]="job().ownerAvatarUrl" [alt]="job().title" class="owner-avt">
+    <h3>{{ job().title }}</h3>
+    <ul>
+        <li>
+            <i class="flaticon-send"></i>
+            {{ job().ward.fullLocation }}
+        </li>
+        <li>{{ job().createdAt | date: 'fullDate' }}</li>
+    </ul>
+    <p class="job-description" [title]="job().description">{{ job().description }}</p>
+    <span class="span-one">{{ job().category.categoryName }}</span>
+    <span class="span-two">{{ job().industry.industryName }}</span>
+</div>

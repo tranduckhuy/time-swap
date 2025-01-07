@@ -47,11 +47,9 @@ export class LoginComponent implements OnInit {
 
   // ? Dependency Injection
   private readonly authService = inject(AuthService);
-  private readonly toastHandlingService = inject(ToastHandlingService);
   private readonly multiLanguageService = inject(MultiLanguageService);
   private readonly fb = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
-  private readonly router = inject(Router);
 
   ngOnInit(): void {
     if (this.token() && this.email())
@@ -80,35 +78,7 @@ export class LoginComponent implements OnInit {
     }
     
     const req: LoginRequestModel = this.form.value;
-    const subscription = this.authService.signin(req)
-      .subscribe({
-        next: (res) => {
-          if (res.data) {
-            const { accessToken, refreshToken, expiresIn } = res.data;
-            this.authService.saveLocalData(accessToken, refreshToken, expiresIn);
-          } else {
-            this.toastHandlingService.handleCommonError();
-          }
-        },
-        error: (error: HttpErrorResponse) => {
-          if (error.error.statusCode === NOT_CONFIRM_CODE) {
-            this.toastHandlingService.handleWarning('auth.login.not-confirm');
-          } else if (error.error.statusCode === USER_NOT_EXIST_CODE) {
-            this.toastHandlingService.handleWarning('auth.login.user-not-exist');
-          } else if (error.error.statusCode === INVALID_CREDENTIAL_CODE) {
-            this.toastHandlingService.handleInfo('auth.login.invalid-credentials');
-          } else {
-            this.toastHandlingService.handleCommonError();
-          }
-        },
-        complete: () => {
-          this.form.reset();
-          this.toastHandlingService.handleSuccess('auth.login.success');
-          this.router.navigateByUrl('/home', {
-            replaceUrl: true
-          });
-        }
-      });
+    const subscription = this.authService.signin(req).subscribe();
       
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
@@ -121,47 +91,13 @@ export class LoginComponent implements OnInit {
   }
 
   private confirmEmail() {
+    const clientUrl = AUTH_CLIENT_URL;
     const decodedToken = decodeURIComponent(this.token());
     const req = {
       token: decodedToken,
       email: this.email()
     }
-    const subscription = this.authService.confirmEmail(req).subscribe({
-      next: (res) => {
-        if (res.statusCode === SUCCESS_CODE) {
-          this.toastHandlingService.handleSuccess('auth.login.confirm-success');
-        } else {
-          this.toastHandlingService.handleCommonError();
-        }
-      },
-      error: (error: HttpErrorResponse) => {
-        if (error.error.statusCode === TOKEN_EXPIRED_CODE) {
-          this.toastHandlingService.handleWarning('auth.login.token-expired');
-          this.reConfirmEmail();
-        } else {
-          this.toastHandlingService.handleCommonError();
-        }
-      } 
-    });
-
-    this.destroyRef.onDestroy(() => subscription.unsubscribe());
-  }
-
-  private reConfirmEmail() {
-    const req: ReConfirmRequestModel = {
-      email: this.email(),
-      clientUrl: AUTH_CLIENT_URL
-    }
-    const subscription = this.authService.resendConfirmEmail(req).subscribe({
-      next: (res) => {
-        if (res.statusCode === REGISTER_CONFIRM_SUCCESS_CODE) {
-          this.toastHandlingService.handleSuccess('auth.login.re-confirm-success');
-        } else {
-          this.toastHandlingService.handleCommonError();
-        }
-      }, 
-      error: () => this.toastHandlingService.handleCommonError()
-    });
+    const subscription = this.authService.confirmEmail(req, this.email(), clientUrl).subscribe();
 
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }

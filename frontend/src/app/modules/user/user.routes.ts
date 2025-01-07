@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { ResolveFn, Routes } from '@angular/router';
 
-import { catchError, map, of } from 'rxjs';
+import { of } from 'rxjs';
 
 import { HomeComponent } from './pages/home/home.component';
 import { JobListComponent } from './pages/jobs/job-list.component';
@@ -12,18 +12,13 @@ import { AssigneeDetailComponent } from './pages/assignee/assignee-detail/assign
 import { ContactComponent } from './pages/contact/contact.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 
-import { profileRoutes } from './pages/profile/profile.routes';
-
-import { SUCCESS_CODE } from '../../shared/constants/status-code-constants';
+import { authGuard } from '../../core/auth/auth.guard';
 
 import { JobsService } from './pages/jobs/jobs.service';
 
-import { authGuard } from '../../core/auth/auth.guard';
-import { jobDetailCanActivate } from './pages/jobs/jobs.guard';
+import type { JobDetailResponseModel } from '../../shared/models/api/response/jobs-response.model';
 
-import type { JobPostModel } from '../../shared/models/entities/job.model';
-
-const jobDetailResolver: ResolveFn<JobPostModel | null> = (activatedRoute) => {
+const jobDetailResolver: ResolveFn<JobDetailResponseModel | null> = (activatedRoute) => {
     const jobsService = inject(JobsService);
     const jobId = activatedRoute.paramMap.get('jobId');
 
@@ -31,10 +26,7 @@ const jobDetailResolver: ResolveFn<JobPostModel | null> = (activatedRoute) => {
         return of(null);
     }
 
-    return jobsService.getJobDetailById(jobId).pipe(
-        map((res) => (res.statusCode === SUCCESS_CODE && res.data ? res.data : null)),
-        catchError(() => of(null))
-    );
+    return jobsService.getJobDetailById(jobId);
 };
 
 export const userRoutes: Routes = [
@@ -55,7 +47,6 @@ export const userRoutes: Routes = [
         path: 'jobs/:jobId',
         component: JobDetailComponent,
         canMatch: [authGuard],
-        canActivate: [jobDetailCanActivate],
         resolve: {
             job: jobDetailResolver
         }
@@ -79,6 +70,6 @@ export const userRoutes: Routes = [
     {
         path: 'profile',
         component: ProfileComponent,
-        children: profileRoutes
+        loadChildren: () => import('./pages/profile/profile.routes').then(mod => mod.profileRoutes)
     }
 ]
