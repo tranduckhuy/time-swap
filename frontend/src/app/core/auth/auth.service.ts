@@ -1,12 +1,25 @@
 import { Injectable, inject, signal, computed } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+
+import { Observable, catchError, map, of, shareReplay, tap } from 'rxjs';
+
 import { environment } from '../../../environments/environment';
 
-import { TOKEN_KEY, REFRESH_TOKEN_KEY, EXPIRES_IN_KEY } from '../../shared/constants/auth-constants';
-import { SUCCESS_CODE } from '../../shared/constants/status-code-constants';
-
 import { createHttpParams } from '../../shared/utils/request-utils';
+
+import { TOKEN_KEY, REFRESH_TOKEN_KEY, EXPIRES_IN_KEY } from '../../shared/constants/auth-constants';
+import { 
+  EMAIL_EXIST_CODE, 
+  INVALID_CREDENTIAL_CODE, 
+  NOT_CONFIRM_CODE, 
+  REGISTER_CONFIRM_SUCCESS_CODE, 
+  SUCCESS_CODE, 
+  TOKEN_EXPIRED_CODE, 
+  USER_NOT_EXIST_CODE 
+} from '../../shared/constants/status-code-constants';
+
+import { ToastHandlingService } from '../../shared/services/toast-handling.service';
 
 import type { BaseResponseModel } from '../../shared/models/api/base-response.model';
 import type { LoginRequestModel, RefreshRequestModel } from '../../shared/models/api/request/login-request.model';
@@ -19,7 +32,10 @@ import type { ConfirmRequestModel, ReConfirmRequestModel } from '../../shared/mo
 })
 export class AuthService {
   private httpClient = inject(HttpClient);
+  private router = inject(Router);
+  private toastHandlingService = inject(ToastHandlingService);
 
+  // ? All API base url
   private BASE_API_URL = environment.apiAuthBaseUrl;
   private LOGIN_API_URL = `${this.BASE_API_URL}/auth/login`;
   private REGISTER_API_URL = `${this.BASE_API_URL}/auth/register`;
@@ -28,18 +44,61 @@ export class AuthService {
   private CONFIRM_API_URL = `${this.BASE_API_URL}/auth/confirm-email`;
   private RE_CONFIRM_API_URL = `${this.BASE_API_URL}/auth/resend-confirmation-email`;
 
+  // ? Signals for state management
   private loginState = signal<boolean>(this.checkLoginState());
   readonly isLoggedIn = computed(() => this.loginState());
 
-  signin(loginReq: LoginRequestModel): Observable<BaseResponseModel<LoginResponseModel>> {
+  signin(loginReq: LoginRequestModel): Observable<void> {
     return this.sendPostRequest<LoginRequestModel, BaseResponseModel<LoginResponseModel>>(
       this.LOGIN_API_URL,
       loginReq
+    ).pipe(
+      map((res) => {
+        if (res.data) {
+          const { accessToken, refreshToken, expiresIn } = res.data;
+          this.saveLocalData(accessToken, refreshToken, expiresIn);
+          this.toastHandlingService.handleSuccess('auth.login.success');
+          this.router.navigateByUrl('/home', {
+            replaceUrl: true
+          });
+        } else {
+          this.toastHandlingService.handleCommonError();
+        }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        if (error.error.statusCode === NOT_CONFIRM_CODE) {
+          this.toastHandlingService.handleWarning('auth.login.not-confirm');
+        } else if (error.error.statusCode === USER_NOT_EXIST_CODE) {
+          this.toastHandlingService.handleWarning('auth.login.user-not-exist');
+        } else if (error.error.statusCode === INVALID_CREDENTIAL_CODE) {
+          this.toastHandlingService.handleInfo('auth.login.invalid-credentials');
+        } else {
+          this.toastHandlingService.handleCommonError();
+        }
+        return of(undefined);
+      })
     );
   }
 
-  register(registerReq: RegisterRequestModel): Observable<BaseResponseModel> {
-    return this.sendPostRequest<RegisterRequestModel, BaseResponseModel>(this.REGISTER_API_URL, registerReq);
+  register(registerReq: RegisterRequestModel): Observable<void> {
+    return this.sendPostRequest<RegisterRequestModel, BaseResponseModel>(this.REGISTER_API_URL, registerReq)
+      .pipe(
+        map((res) => {
+          if (res.statusCode === REGISTER_CONFIRM_SUCCESS_CODE) {
+            this.toastHandlingService.handleSuccess('auth.register.success');
+          } else {
+            this.toastHandlingService.handleError('auth.register.failure');
+          }
+        }),
+        catchError((error: HttpErrorResponse) => {
+          if (error.error.statusCode === EMAIL_EXIST_CODE) {
+            this.toastHandlingService.handleWarning('auth.register.email-exist');
+          } else {
+            this.toastHandlingService.handleCommonError();
+          }
+          return of(undefined);
+        })
+      );
   }
 
   logout(): Observable<BaseResponseModel> {
@@ -57,16 +116,60 @@ export class AuthService {
     return this.sendPostRequest<RefreshRequestModel, BaseResponseModel<LoginResponseModel>>(
       this.REFRESH_API_URL,
       refreshReq
+    ).pipe(
+      tap(response => {
+        if (!response.data) {
+          throw new Error(response.message || 'Invalid refresh token response');
+        }
+        const { accessToken, refreshToken, expiresIn } = response.data;
+        this.saveLocalData(accessToken, refreshToken, expiresIn);
+      }),
+      shareReplay(1)
     );
   }
 
-  resendConfirmEmail(reConfirmReq: ReConfirmRequestModel): Observable<BaseResponseModel> {
-    return this.sendPostRequest<ReConfirmRequestModel, BaseResponseModel>(this.RE_CONFIRM_API_URL, reConfirmReq);
+  resendConfirmEmail(reConfirmReq: ReConfirmRequestModel): Observable<void> {
+    return this.sendPostRequest<ReConfirmRequestModel, BaseResponseModel>(this.RE_CONFIRM_API_URL, reConfirmReq)
+      .pipe(
+        map((res) => {
+          if (res.statusCode === REGISTER_CONFIRM_SUCCESS_CODE) {
+            this.toastHandlingService.handleSuccess('auth.login.re-confirm-success');
+          } else {
+            this.toastHandlingService.handleCommonError();
+          }
+        }),
+        catchError(() => {
+          this.toastHandlingService.handleCommonError();
+          return of(undefined);
+        })
+      );
   }
 
-  confirmEmail(confirmReq: ConfirmRequestModel): Observable<BaseResponseModel> {
+  confirmEmail(confirmReq: ConfirmRequestModel, email: string, clientUrl: string): Observable<void> {
     const reqParams = createHttpParams(confirmReq);
-    return this.httpClient.get<BaseResponseModel>(this.CONFIRM_API_URL, { params: reqParams });
+    return this.httpClient.get<BaseResponseModel>(this.CONFIRM_API_URL, { params: reqParams })
+      .pipe(
+        map((res) => {
+          if (res.statusCode === SUCCESS_CODE) {
+            this.toastHandlingService.handleSuccess('auth.login.confirm-success');
+          } else {
+            this.toastHandlingService.handleCommonError();
+          }
+        }),
+        catchError((error: HttpErrorResponse) => {
+          if (error.error.statusCode === TOKEN_EXPIRED_CODE) {
+            const resendReq: ReConfirmRequestModel = {
+              email,
+              clientUrl
+            }
+            this.toastHandlingService.handleWarning('auth.login.token-expired');
+            this.resendConfirmEmail(resendReq);
+          } else {
+            this.toastHandlingService.handleCommonError();
+          }
+          return of(undefined);
+        })
+      );
   }
 
   saveLocalData(token: string, refreshToken: string, expiresIn: string) {

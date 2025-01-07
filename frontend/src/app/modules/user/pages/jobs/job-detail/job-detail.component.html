@@ -3,7 +3,7 @@
     <app-banner>
         <app-banner-detail>
             <div class="left" ngProjectAs="left-content">
-                <img src="assets/imgs/job/job-img.png" [alt]="job().title">
+                <img [src]="job().ownerAvatarUrl" [alt]="job().title" class="owner-avt">
                 <h2>{{ job().title }}</h2>
                 <ul>
                     <li>
@@ -160,7 +160,7 @@
                 <li>
                     <img src="assets/imgs/job/job-details-icon.png" alt="Details">
                     <h4>{{ 'job-detail.job-information.applied' | translate }}</h4>
-                    <span>{{ job().assignedTo }}</span>
+                    <span>{{ job().totalApplicants }} {{ 'job-detail.job-information.applicants' | translate }}</span>
                 </li>
             </ul>
         </div>
@@ -171,19 +171,18 @@
             <div class="top">
                 <img src="assets/imgs/job/job4.png" alt="Owner">
                 <h3>{{ 'job-detail.owner-information.title' | translate }}</h3>
-                <i class="flaticon-send"></i>
-                <span>{{ job().userId }}</span>
+                <span>{{ job().ownerName }}</span>
             </div>
             <div class="information widget-item">
                 <ul>
                     <li>
                         <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                        <h4>{{ 'job-detail.phone' | translate }}</h4>
+                        <h4>{{ 'job-detail.owner-information.phone' | translate }}</h4>
                         <a [href]="'tel:' + job().userId">{{ job().userId }}</a>
                     </li>
                     <li>
                         <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                        <h4>{{ 'job-detail.email-placeholder' | translate }}</h4>
+                        <h4>{{ 'job-detail.owner-information.email' | translate }}</h4>
                         <a [href]="'mailto:' + job().userId">{{ job().userId }}</a>
                     </li>
                     <li>
@@ -206,8 +205,8 @@
       <div class="section-title">
           <h2>{{ 'job-detail.related' | translate }}</h2>
       </div>
-      @for (job of relatedJobs; track job.title) {
-        <!-- <app-job-post [job]="job"/> -->
+      @for (job of job().relatedJobPosts; track job.id) {
+        <app-job-post [job]="job"/>
       }
   </div>
 </div>

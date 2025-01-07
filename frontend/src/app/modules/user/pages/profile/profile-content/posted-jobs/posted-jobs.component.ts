@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DUMMY_JOBS } from '../../../jobs/dummy-job';
+
 import { JobPostComponent } from "../../../../../../shared/components/job-post/job-post.component";
 
 @Component({
@@ -10,6 +10,4 @@ import { JobPostComponent } from "../../../../../../shared/components/job-post/j
   styleUrl: './posted-jobs.component.css'
 })
 export class PostedJobsComponent {
-  postedJobs = DUMMY_JOBS.slice(0, 3);
-
 }

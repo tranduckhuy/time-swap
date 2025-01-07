@@ -159,6 +159,28 @@
     "district": "District:",
     "ward": "Ward:"
   },
+  "job-detail": {
+    "save": "Save",
+    "share": "Share",
+    "report": "Report",
+    "job-description": "Job Description",
+    "location": "Location",
+    "job-information": {
+      "title": "Job Information",
+      "fee": "Fee",
+      "industry": "Industry",
+      "category": "Category",
+      "posted-date": "Posted Date",
+      "applied": "Applied",
+      "applicants": "Applicant(s)"
+    },
+    "owner-information": {
+      "title": "Owner Information",
+      "phone": "Phone",
+      "email": "Email"
+    },
+    "related": "Related Jobs"
+  },
   "profile": {
     "tabs": {
       "my-profile": "My Profile",

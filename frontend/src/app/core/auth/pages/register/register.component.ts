@@ -67,24 +67,8 @@ export class RegisterComponent implements OnInit {
     const req: RegisterRequestModel = {
       ...this.form.value,
       clientUrl: AUTH_CLIENT_URL
-      
     };
-    const subscription = this.authService.register(req).subscribe({
-      next: (res) => {
-        if (res.statusCode === REGISTER_CONFIRM_SUCCESS_CODE) {
-          this.toastHandlingService.handleSuccess('auth.register.success');
-        } else {
-          this.toastHandlingService.handleError('auth.register.failure');
-        }
-      },
-      error: (error: HttpErrorResponse) => {
-        if (error.error.statusCode === EMAIL_EXIST_CODE) {
-          this.toastHandlingService.handleWarning('auth.register.email-exist');
-        } else {
-          this.toastHandlingService.handleCommonError();
-        }
-      }
-    });
+    const subscription = this.authService.register(req).subscribe();
 
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
