@@ -55,7 +55,7 @@ export const userRoutes: Routes = [
         path: 'jobs/:jobId',
         component: JobDetailComponent,
         canMatch: [authGuard],
-        canActivate: [jobDetailCanActivate],
+        // canActivate: [jobDetailCanActivate],
         resolve: {
             job: jobDetailResolver
         }
@@ -80,8 +80,8 @@ export const userRoutes: Routes = [
                   "categoryName": "Code hộ"
                 },
                 "industry": {
-                  "id": 1,
-                  "industryName": "Công Nghệ Thông Tin"
+                    "id": 1,
+                    "industryName": "Công Nghệ Thông Tin"
                 },
                 "ward": {
                   "id": "21550",
@@ -99,7 +99,7 @@ export const userRoutes: Routes = [
     },
     {
         path: 'applicants/:jobId',
-        component: ApplicantsComponent
+        component: ApplicantsComponent,
     },
     {
         path: 'applicants/:jobId/:applicantId',

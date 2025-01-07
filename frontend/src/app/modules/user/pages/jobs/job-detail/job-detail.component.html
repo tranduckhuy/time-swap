@@ -123,9 +123,11 @@
     </div>
     </div>
     <div ngProjectAs="rightContainer">
-      <div class="widget-area">
-        <!-- ? Job Alert -->
-        <app-job-alert />
+        <div class="widget-area">
+          <!-- Applicants -->
+          <div class="download widget-item">
+              <a [routerLink]="['/applicants', job().id]">{{'job-detail.view-applicants' | translate }}</a>
+          </div>
         <!-- ? Job Information -->
         <div class="information widget-item">
             <h3>{{ 'job-detail.job-information.title' | translate }}</h3>
@@ -162,10 +164,9 @@
                 </li>
             </ul>
         </div>
-        <!-- Applicants -->
-        <div class="download widget-item">
-            <a [routerLink]="['/applicants', job().id]">{{'job-detail.view-applicants' | translate }}</a>
-        </div>
+        <!-- ? Job Alert -->
+        <app-job-alert />
+        <!--  -->
         <div class="owner">
             <div class="top">
                 <img src="assets/imgs/job/job4.png" alt="Owner">

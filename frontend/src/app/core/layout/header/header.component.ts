@@ -24,10 +24,8 @@ export class HeaderComponent {
 
   // ? State Management
   isHome = signal<boolean>(false);
-  currentLanguage = signal<string>(this.multiLanguageService.language());
-
-  // isLoggedIn = computed<boolean>(() => this.authService.isLoggedIn());
-  isLoggedIn = computed<boolean>(() => true);
+  currentLanguage = computed(() => this.multiLanguageService.language());
+  isLoggedIn = computed<boolean>(() => this.authService.isLoggedIn());
 
   constructor() {
     const subscription = this.router.events
