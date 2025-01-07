@@ -1,6 +1,7 @@
-﻿using TimeSwap.Domain.Entities;
-using TimeSwap.Domain.Specs.Job;
+﻿using System.Linq.Expressions;
+using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Specs;
+using TimeSwap.Domain.Specs.Job;
 
 namespace TimeSwap.Domain.Interfaces.Repositories
 {
@@ -11,5 +12,7 @@ namespace TimeSwap.Domain.Interfaces.Repositories
         Task<JobPost> CreateJobPostAsync(JobPost jobPost);
         Task UpdateJobPostAsync(JobPost jobPost);
         Task<int> GetUserJobPostCountOnCurrentDayAsync(Guid userId);
+        Task<IEnumerable<JobPost>> GetRelatedJobPostsAsync(Guid jobPostId, int categoryId, int industryId, int limit);
+        Task<IEnumerable<JobPost>> GetJobPostsByUserIdAsync(Expression<Func<JobPost, bool>> expression);
     }
 }

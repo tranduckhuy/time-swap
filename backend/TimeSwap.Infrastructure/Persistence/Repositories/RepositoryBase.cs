@@ -39,6 +39,11 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
                 query = spec.OrderByDescending(query);
             }
 
+            if (spec.Selector != null)
+            {
+                query = spec.Selector(query);
+            }
+
             var count = await query.CountAsync();
 
             var data = await query.Skip(spec.Skip).Take(spec.Take).AsNoTracking().ToListAsync();

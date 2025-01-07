@@ -1,6 +1,7 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using TimeSwap.Api.Mapping;
 using TimeSwap.Api.Models;
 using TimeSwap.Application.Categories.Responses;
@@ -23,6 +24,7 @@ namespace TimeSwap.Api.Controllers
         ) : base(mediator, logger) { }
 
         [HttpGet]
+        [ProducesResponseType(typeof(ApiResponse<List<IndustryResponse>>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetIndustries()
         {
             var query = new GetIndustriesQuery();
@@ -30,6 +32,7 @@ namespace TimeSwap.Api.Controllers
         }
 
         [HttpGet("{industryId}")]
+        [ProducesResponseType(typeof(ApiResponse<IndustryResponse>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetIndustryById(int industryId)
         {
             var query = new GetIndustryByIdQuery(industryId);
@@ -37,6 +40,7 @@ namespace TimeSwap.Api.Controllers
         }
 
         [HttpGet("{industryId}/categories")]
+        [ProducesResponseType(typeof(ApiResponse<List<CategoryResponse>>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetCategoriesByIndustry(int industryId)
         {
             var query = new GetCategoriesByIndustryQuery
@@ -49,6 +53,7 @@ namespace TimeSwap.Api.Controllers
 
         [HttpPost]
         [Authorize(Roles = nameof(Role.Admin))]
+        [ProducesResponseType(typeof(ApiResponse<int>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> CreateIndustry([FromBody] CreateIndustryRequest request)
         {
             if (request == null)
@@ -57,7 +62,7 @@ namespace TimeSwap.Api.Controllers
                 {
                     StatusCode = (int)Shared.Constants.StatusCode.ModelInvalid,
                     Message = ResponseMessages.GetMessage(Shared.Constants.StatusCode.ModelInvalid),
-                    Errors = ["The request body does not contain required fields"]
+                    Errors = ["The request body does not contain required fields."]
                 });
             }
             var command = AppMapper<ModelMapping>.Mapper.Map<CreateIndustryCommand>(request);
@@ -66,6 +71,7 @@ namespace TimeSwap.Api.Controllers
 
         [HttpPut("{industryId}")]
         [Authorize(Roles = nameof(Role.Admin))]
+        [ProducesResponseType(typeof(ApiResponse<Unit>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateIndustry([FromBody] UpdateIndustryRequest request, int industryId)
         {
             if (request == null || request.IndustryId != industryId)

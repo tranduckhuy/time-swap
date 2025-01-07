@@ -1,6 +1,7 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using TimeSwap.Api.Mapping;
 using TimeSwap.Api.Models;
 using TimeSwap.Application.Categories.Commands;
@@ -23,6 +24,7 @@ namespace TimeSwap.Api.Controllers
 
 
         [HttpGet]
+        [ProducesResponseType(typeof(ApiResponse<List<CategoryResponse>>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAllCategories()
         {
             var query = new GetAllCategoriesQuery();
@@ -31,6 +33,7 @@ namespace TimeSwap.Api.Controllers
 
         [HttpPost]
         [Authorize(Roles = nameof(Role.Admin))]
+        [ProducesResponseType(typeof(ApiResponse<int>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryRequest request)
         {
             if (request == null)
@@ -48,6 +51,7 @@ namespace TimeSwap.Api.Controllers
 
         [HttpPut("{categoryId}")]
         [Authorize(Roles = nameof(Role.Admin))]
+        [ProducesResponseType(typeof(ApiResponse<Unit>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> UpdateCategory([FromBody] UpdateCategoryRequest request, int categoryId)
         {
             if (request == null || request.CategoryId != categoryId)

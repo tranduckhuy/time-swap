@@ -1,11 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text.Json;
 using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Interfaces.Repositories;
 using TimeSwap.Domain.Specs;
 using TimeSwap.Domain.Specs.Job;
 using TimeSwap.Infrastructure.Persistence.DbContexts;
+using TimeSwap.Infrastructure.Projections;
 using TimeSwap.Infrastructure.Specifications;
 
 namespace TimeSwap.Infrastructure.Persistence.Repositories
@@ -59,7 +62,9 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
                 .Include(x => x.Ward)
                 .Include(x => x.Category)
                 .Include(x => x.Industry)
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .Where(x => x.Id == id)
+                .Select(JobPostProjections.SelectJobPostProjection())
+                .FirstOrDefaultAsync();
         }
 
         public async Task<JobPost> CreateJobPostAsync(JobPost jobPost)
@@ -76,6 +81,28 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
         {
             var today = DateTime.UtcNow.Date;
             return _context.JobPosts.CountAsync(x => x.UserId == userId && x.CreatedAt.Date == today);
+        }
+
+        public async Task<IEnumerable<JobPost>> GetRelatedJobPostsAsync(Guid jobPostId, int categoryId, int industryId, int limit)
+        {
+            return await _context.JobPosts
+                .Include(x => x.Category)
+                .Include(x => x.Industry)
+                .Where(x => x.Id != jobPostId && (x.CategoryId == categoryId || x.IndustryId == industryId))
+                .OrderByDescending(x => x.CreatedAt)
+                .Select(JobPostProjections.SelectJobPostProjection())
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<JobPost>> GetJobPostsByUserIdAsync(Expression<Func<JobPost, bool>> expression)
+        {
+            return await _context.JobPosts
+                .Include(x => x.Category)
+                .Include(x => x.Industry)
+                .Where(expression)
+                .OrderByDescending(x => x.CreatedAt)
+                .Select(JobPostProjections.SelectJobPostProjection())
+                .ToListAsync();
         }
     }
 }

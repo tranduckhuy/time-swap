@@ -17,12 +17,15 @@ namespace TimeSwap.Application.Mappings
     {
         public CoreMappingProfile()
         {
-            CreateMap<JobPost, JobPostResponse>().ReverseMap();
-            CreateMap<Pagination<JobPost>, Pagination<JobPostResponse>>().ReverseMap();
-            CreateMap<City, CityResponse>().ReverseMap();
-            CreateMap<Ward, WardResponse>().ReverseMap();
-            CreateMap<Industry, IndustryResponse>().ReverseMap();
-            CreateMap<Category, CategoryResponse>().ReverseMap();
+            CreateMap<JobPost, JobPostResponse>()
+                .ForMember(dest => dest.OwnerAvatarUrl, opt => opt.MapFrom(src => src.User.AvatarUrl))
+                .ForMember(dest => dest.OwnerName, opt => opt.MapFrom(src => src.User.FullName));
+
+            CreateMap<Pagination<JobPost>, Pagination<JobPostResponse>>();
+            CreateMap<City, CityResponse>();
+            CreateMap<Ward, WardResponse>();
+            CreateMap<Industry, IndustryResponse>();
+            CreateMap<Category, CategoryResponse>();
 
             CreateMap<CreateJobPostCommand, JobPost>();
             CreateMap<UpdateJobPostCommand, JobPost>();
@@ -54,6 +57,10 @@ namespace TimeSwap.Application.Mappings
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.UserApplied.FullName))
                 .ForMember(dest => dest.AvatarUrl, opt => opt.MapFrom(src => src.UserApplied.AvatarUrl))
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.UserApplied.Email));
+
+            CreateMap<JobPost, JobPostDetailResponse>()
+                .ForMember(dest => dest.OwnerAvatarUrl, opt => opt.MapFrom(src => src.User.AvatarUrl))
+                .ForMember(dest => dest.OwnerName, opt => opt.MapFrom(src => src.User.FullName));
         }
     }
 }
