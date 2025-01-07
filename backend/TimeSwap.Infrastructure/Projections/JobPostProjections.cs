@@ -27,7 +27,9 @@ namespace TimeSwap.Infrastructure.Projections
                 User = new UserProfile
                 {
                     AvatarUrl = x.User.AvatarUrl,
-                    FullName = x.User.FullName
+                    FullName = x.User.FullName,
+                    Email = x.User.Email,
+                    Ward = x.User.Ward,
                 }
             };
         }

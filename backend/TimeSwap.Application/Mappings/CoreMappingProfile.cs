@@ -58,9 +58,13 @@ namespace TimeSwap.Application.Mappings
                 .ForMember(dest => dest.AvatarUrl, opt => opt.MapFrom(src => src.UserApplied.AvatarUrl))
                 .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.UserApplied.Email));
 
+            CreateMap<Pagination<JobApplicant>, Pagination<JobApplicantResponse>>();
+
             CreateMap<JobPost, JobPostDetailResponse>()
                 .ForMember(dest => dest.OwnerAvatarUrl, opt => opt.MapFrom(src => src.User.AvatarUrl))
-                .ForMember(dest => dest.OwnerName, opt => opt.MapFrom(src => src.User.FullName));
+                .ForMember(dest => dest.OwnerName, opt => opt.MapFrom(src => src.User.FullName))
+                .ForMember(dest => dest.OwnerEmail, opt => opt.MapFrom(src => src.User.Email))
+                .ForMember(dest => dest.OwnerLocation, opt => opt.MapFrom(src => src.User.Ward != null ? src.User.Ward.FullLocation : string.Empty));
         }
     }
 }

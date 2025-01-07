@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
+using TimeSwap.Application;
 using TimeSwap.Auth.Mappings;
 using TimeSwap.Infrastructure.Extensions;
 using TimeSwap.Infrastructure.Identity;
@@ -77,6 +78,7 @@ builder.Services.AddDatabase<UserIdentityDbContext>(builder.Configuration.GetCon
 builder.Services.AddHealthChecks().Services.AddDbContext<UserIdentityDbContext>();
 builder.Services.AddAutoMapper(typeof(AuthMappingProfile));
 builder.Services.AddAuthInfrastructure(builder.Configuration);
+builder.Services.AddModelValidator();
 
 var app = builder.Build();
 

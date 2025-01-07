@@ -1,8 +1,8 @@
 using MediatR;
 using TimeSwap.Application.JobPosts.Commands;
 using TimeSwap.Application.JobPosts.Responses;
-using TimeSwap.Application.JobPosts.Validators;
 using TimeSwap.Application.Mappings;
+using TimeSwap.Application.Validators;
 using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Interfaces.Repositories;
 
