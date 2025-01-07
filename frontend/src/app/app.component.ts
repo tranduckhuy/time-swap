@@ -18,6 +18,6 @@ export class AppComponent implements OnInit {
   private readonly multiLanguageService = inject(MultiLanguageService);
 
   ngOnInit(): void {
-   this.multiLanguageService.updateLanguage(localStorage.getItem(LANGUAGE) || VIETNAMESE);
+   this.multiLanguageService.updateLanguage(localStorage.getItem(LANGUAGE) ?? VIETNAMESE);
   }
 }
