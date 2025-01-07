@@ -5,8 +5,5 @@ using TimeSwap.Domain.Specs.Job;
 
 namespace TimeSwap.Application.JobPosts.Queries
 {
-    public class GetJobPostsQuery(JobPostSpecParam jobPostSpecParam) : IRequest<Pagination<JobPostResponse>>
-    {
-        public JobPostSpecParam JobPostSpecParam { get; set; } = jobPostSpecParam;
-    }
+    public record GetJobPostsQuery(JobPostSpecParam JobPostSpecParam) : IRequest<Pagination<JobPostResponse>>;
 }

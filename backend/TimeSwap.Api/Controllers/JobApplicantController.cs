@@ -9,6 +9,8 @@ using TimeSwap.Application.JobApplicants.Commands;
 using TimeSwap.Application.JobApplicants.Queries;
 using TimeSwap.Application.JobApplicants.Responses;
 using TimeSwap.Application.Mappings;
+using TimeSwap.Domain.Specs;
+using TimeSwap.Domain.Specs.Job;
 using TimeSwap.Shared;
 using TimeSwap.Shared.Constants;
 
@@ -28,10 +30,11 @@ namespace TimeSwap.Api.Controllers
         [HttpGet("{jobPostId}")]
         [Authorize]
         [ProducesResponseType(typeof(ApiResponse<IEnumerable<JobApplicantResponse>>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetApplicantsByJobPostId(Guid jobPostId)
+        public async Task<IActionResult> GetApplicantsByJobPostId([FromQuery] JobApplicantSpecParam jobApplicantSpecParam)
         {
-            var query = new GetApplicantsByJobPostIdQuery(jobPostId);
-            return await ExecuteAsync<GetApplicantsByJobPostIdQuery, IEnumerable<JobApplicantResponse>>(query);
+            var query = new GetJobApplicantsQuery(jobApplicantSpecParam);
+
+            return await ExecuteAsync<GetJobApplicantsQuery, Pagination<JobApplicantResponse>>(query);
         }
 
         [HttpPost]
