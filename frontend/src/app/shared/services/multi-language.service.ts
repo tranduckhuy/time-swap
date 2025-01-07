@@ -1,18 +1,21 @@
 import { effect, inject, Injectable, signal } from '@angular/core';
+
 import { TranslateService } from '@ngx-translate/core';
+
+import { ENGLISH, LANGUAGE, VIETNAMESE } from '../constants/multi-lang-constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MultiLanguageService {
-  private languageSignal = signal<string>(JSON.parse(window.localStorage.getItem('language') ?? '"vi"'));
+  private languageSignal = signal<string>(JSON.parse(window.localStorage.getItem(LANGUAGE) ?? '"vi"'));
   language = this.languageSignal.asReadonly();
   
   private readonly translateService = inject(TranslateService);
 
   constructor() {
     effect(() => {
-      window.localStorage.setItem('language', JSON.stringify(this.languageSignal()));
+      window.localStorage.setItem(LANGUAGE, JSON.stringify(this.languageSignal()));
       this.translateService.use(this.languageSignal());
     });
   }
@@ -22,7 +25,7 @@ export class MultiLanguageService {
    * 
    * @returns The current language code ('en' or 'vi').
    */
-  get getCurrentLang() {
+  get currentLang() {
     return this.languageSignal();
   }
 
@@ -45,10 +48,10 @@ export class MultiLanguageService {
    */
   updateLanguage(lang: string): void {
     this.languageSignal.update(() => {
-      if (lang === 'vi') {
-        return 'vi';
+      if (lang === VIETNAMESE) {
+        return VIETNAMESE;
       } else {
-        return 'en';
+        return ENGLISH;
       }
     });
   }

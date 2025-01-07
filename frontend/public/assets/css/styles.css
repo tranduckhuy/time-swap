@@ -2891,7 +2891,6 @@ button:focus {
 }
 .employer-item ul li {
     list-style-type: none;
-    display: inline-block;
     color: #7d789b;
     margin-right: 10px;
 }
