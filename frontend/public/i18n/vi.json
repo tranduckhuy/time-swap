@@ -127,9 +127,31 @@
       "ward": "Phường/Xã:"
     },
     "notify": {
-      "fetch-jobs-failed": "Oops! We encountered an issue while fetching jobs. Please reach out to the administrator for further assistance.",
-      "fetch-wards-failed": "Oops! We encountered an issue while fetching wards. Please reach out to the administrator for further assistance."
+      "fetch-jobs-failed": "Rất tiếc! Đã xảy ra sự cố khi lấy danh sách công việc. Vui lòng liên hệ với quản trị viên để được hỗ trợ thêm.",
+      "fetch-wards-failed": "Rất tiếc! Đã xảy ra sự cố khi lấy danh sách khu vực. Vui lòng liên hệ với quản trị viên để được hỗ trợ thêm."
     }
+  },
+  "job-detail": {
+    "save": "Lưu",
+    "share": "Chia sẻ",
+    "report": "Báo cáo",
+    "job-description": "Mô tả công việc",
+    "location": "Vị trí",
+    "job-information": {
+      "title": "Thông tin công việc",
+      "fee": "Phí",
+      "industry": "Ngành",
+      "category": "Danh mục",
+      "posted-date": "Ngày đăng",
+      "applied": "Đã nộp đơn",
+      "applicants": "Người xin việc"
+    },
+    "owner-information": {
+      "title": "Thông tin người đăng",
+      "phone": "Số điện thoại",
+      "email": "Địa chỉ email"
+    },
+    "related": "Công việc liên quan"
   },
   "profile": {
     "tabs": {
@@ -162,27 +184,6 @@
       },
       "button": "Lưu thông tin"
     }
-  },
-  "job-detail": {
-    "save": "Lưu",
-    "share": "Chia sẻ",
-    "report": "Báo cáo",
-    "job-description": "Mô tả công việc",
-    "location": "Vị trí",
-    "job-information": {
-      "title": "Thông tin công việc",
-      "fee": "Phí",
-      "industry": "Ngành",
-      "category": "Danh mục",
-      "posted-date": "Ngày đăng",
-      "applied": "Đã nộp đơn"
-    },
-    "owner-information": {
-      "title": "Thông tin người đăng",
-      "phone": "Số điện thoại",
-      "email": "Địa chỉ email"
-    },
-    "related": "Công việc liên quan"
   },
   "assignee": {
     "assign-now": "Giao Ngay",

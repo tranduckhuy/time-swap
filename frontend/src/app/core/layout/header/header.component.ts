@@ -23,8 +23,9 @@ export class HeaderComponent {
   private readonly destroyRef = inject(DestroyRef);
 
   // ? State Management
+  currentLanguage = this.multiLanguageService.language;
+  
   isHome = signal<boolean>(false);
-  currentLanguage = signal<string>(this.multiLanguageService.language());
 
   isLoggedIn = computed<boolean>(() => this.authService.isLoggedIn());
 
