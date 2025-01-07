@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using TimeSwap.Api.Models;
 using TimeSwap.Application.Categories.Commands;
 using TimeSwap.Application.Industries.Commands;

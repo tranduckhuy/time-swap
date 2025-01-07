@@ -6,17 +6,11 @@ services:
 
   timeswap-auth:
     image: ghcr.io/tranduckhuy/timeswap-auth:latest
-    build:
-      context: ./backend/TimeSwap.Auth
-      dockerfile: Dockerfile
     networks:
       - timeswap-network
 
   timeswap-api:
     image: ghcr.io/tranduckhuy/timeswap-api:latest
-    build:
-      context: ./backend/TimeSwap.Api
-      dockerfile: Dockerfile
     networks:
       - timeswap-network
 

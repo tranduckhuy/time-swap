@@ -1,4 +1,4 @@
-﻿namespace TimeSwap.Shared.Constants
+namespace TimeSwap.Shared.Constants
 {
     public static class ResponseMessages
     {
@@ -43,13 +43,13 @@
             { StatusCode.JobPostAlreadyAssigned, "Job post has already been assigned to another user." },
             { StatusCode.AssignJobToOwner, "Cannot assign job to the owner. Please assign to another user." },
             { StatusCode.OwnerJobPostMismatch, "The owner of the job post does not match the user." },
-            { StatusCode.UserAppliedToOwnJobPost, "You cannot apply to your own job post." },
+            { StatusCode.UserAppliedToOwnJobPost, "You cannot apply to your own job post. Please try with another job post." },
             { StatusCode.PaymentMethodNotExists, "Payment method does not exist." },
             { StatusCode.PaymentFailed, "Payment failed. Please try again." },
             { StatusCode.PaymentSuccess, "Payment successful." },
             { StatusCode.PaymentNotExists, "Payment does not exist." },
             { StatusCode.InvalidSignature, "Invalid signature." },
-            { StatusCode.PaymentNotFoundByUserIdException, "No payments found for the user." }
+            { StatusCode.PaymentNotFoundByUserId, "No payments found for the user." },
         };
 
         public static string GetMessage(StatusCode code) => _messages[code];
