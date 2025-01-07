@@ -5,6 +5,8 @@ import { IndustryModel } from "./industry.model";
 export interface JobPostModel {
   id: string;
   userId: string;
+  ownerAvatarUrl: string;
+  ownerName: string;
   title: string;
   description: string;
   fee: number;

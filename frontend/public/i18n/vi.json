@@ -158,6 +158,28 @@
     "district": "Quận (Thành phố):",
     "ward": "Phường:"
   },
+  "job-detail": {
+    "save": "Lưu",
+    "share": "Chia sẻ",
+    "report": "Báo cáo",
+    "job-description": "Mô tả công việc",
+    "location": "Vị trí",
+    "job-information": {
+      "title": "Thông tin công việc",
+      "fee": "Phí",
+      "industry": "Ngành",
+      "category": "Danh mục",
+      "posted-date": "Ngày đăng",
+      "applied": "Đã nộp đơn",
+      "applicants": "Người xin việc"
+    },
+    "owner-information": {
+      "title": "Thông tin người đăng",
+      "phone": "Số điện thoại",
+      "email": "Địa chỉ email"
+    },
+    "related": "Công việc liên quan"
+  },
   "profile": {
     "tabs": {
       "my-profile": "Hồ sơ của tôi",
