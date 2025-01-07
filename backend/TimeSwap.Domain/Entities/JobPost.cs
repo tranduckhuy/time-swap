@@ -13,6 +13,8 @@
 
         public string Description { get; set; } = string.Empty;
 
+        public string Responsibilities { get; set; } = string.Empty;
+
         public decimal Fee { get; set; }
 
         public DateTime? StartDate { get; set; }

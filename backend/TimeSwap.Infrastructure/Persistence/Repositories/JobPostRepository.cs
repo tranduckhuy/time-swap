@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text.Json;
 using TimeSwap.Domain.Entities;
@@ -69,12 +68,23 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
 
         public async Task<JobPost> CreateJobPostAsync(JobPost jobPost)
         {
-            return await AddAsync(jobPost);
+            var result = await AddAsync(jobPost);
+
+            await InvalidateCacheAsync();
+
+            return result;
         }
 
         public async Task UpdateJobPostAsync(JobPost jobPost)
         {
             await UpdateAsync(jobPost);
+
+            await InvalidateCacheAsync();
+        }
+
+        private async Task InvalidateCacheAsync()
+        {
+            await _cache.RemoveAsync("jobpost:spec:*");
         }
 
         public Task<int> GetUserJobPostCountOnCurrentDayAsync(Guid userId)
@@ -91,6 +101,7 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
                 .Where(x => x.Id != jobPostId && (x.CategoryId == categoryId || x.IndustryId == industryId))
                 .OrderByDescending(x => x.CreatedAt)
                 .Select(JobPostProjections.SelectJobPostProjection())
+                .Take(limit)
                 .ToListAsync();
         }
 

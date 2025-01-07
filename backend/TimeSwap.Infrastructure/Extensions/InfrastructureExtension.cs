@@ -24,6 +24,7 @@ namespace TimeSwap.Infrastructure.Extensions
             CommonInfrastrucutre(services, configuration);
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITransactionManager, TransactionManager>();
             return services;
         }
 
@@ -32,10 +33,6 @@ namespace TimeSwap.Infrastructure.Extensions
             CommonInfrastrucutre(services, configuration);
             services.AddScoped<IJobPostRepository, JobPostRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IIndustryRepository, IndustryRepository>();
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
-            services.AddScoped<ICityRepository, CityRepository>();
-            services.AddScoped<IWardRepository, WardRepository>();
             services.AddScoped<IJobApplicantRepository, JobApplicantRepository>();
             services.AddScoped<IPaymentRepository, PaymentRepository>();
             services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
@@ -55,6 +52,11 @@ namespace TimeSwap.Infrastructure.Extensions
             var emailConfig = configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
             services.AddSingleton(emailConfig ?? throw new InvalidDataException("EmailConfiguration is missing in appsettings.json"));
             services.AddScoped<IEmailSender, EmailSender>();
+
+            services.AddScoped<IIndustryRepository, IndustryRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ICityRepository, CityRepository>();
+            services.AddScoped<IWardRepository, WardRepository>();
 
             services.AddScoped<ITokenBlackListService, TokenBlackListService>();
             services.AddSingleton<JwtHandler>();
