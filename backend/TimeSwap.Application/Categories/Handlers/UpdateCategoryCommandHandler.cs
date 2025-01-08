@@ -22,12 +22,11 @@ namespace TimeSwap.Application.Categories.Handlers
             _ = await _industryRepository.GetByIdAsync(request.IndustryId) ?? throw new IndustryNotFoundException();
 
             var category = await _categoryRepository.GetByIdAsync(request.CategoryId) ?? throw new CategoryNotFoundException();
-            if (request.CategoryId != category.Id)
+
+            if (request.CategoryId != category.Id &&
+            await _categoryRepository.GetCategoryByNameAsync(request.CategoryName) != null)
             {
-                if (await _categoryRepository.GetCategoryByNameAsync(request.CategoryName) != null)
-                {
-                    throw new CategorySameNameException();
-                }
+                throw new CategorySameNameException();
             }
 
             category.CategoryName = request.CategoryName;
