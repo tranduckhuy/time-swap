@@ -4,6 +4,7 @@ import { ResolveFn, Routes } from '@angular/router';
 import { of } from 'rxjs';
 
 import { HomeComponent } from './pages/home/home.component';
+import { AboutComponent } from './pages/about/about.component';
 import { JobListComponent } from './pages/jobs/job-list.component';
 import { JobDetailComponent } from './pages/jobs/job-detail/job-detail.component';
 import { PostJobComponent } from './pages/jobs/post-job/post-job.component';
@@ -38,6 +39,10 @@ export const userRoutes: Routes = [
     {
         path: 'home',
         component: HomeComponent
+    },
+    {
+        path: 'about',
+        component: AboutComponent
     },
     {
         path: 'jobs',
