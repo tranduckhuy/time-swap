@@ -34,7 +34,7 @@ namespace TimeSwap.Api.Controllers
 
         [HttpGet("{jobPostId:guid}")]
         [Authorize]
-        [ProducesResponseType(typeof(ApiResponse<JobPostResponse>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ApiResponse<JobPostDetailResponse>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetJobPostById(Guid jobPostId)
         {
             var query = new GetJobPostByIdQuery(jobPostId);

@@ -1,11 +1,13 @@
 ﻿using TimeSwap.Domain.Entities;
+using TimeSwap.Domain.Specs;
+using TimeSwap.Domain.Specs.Job;
 
 namespace TimeSwap.Domain.Interfaces.Repositories
 {
     public interface IJobApplicantRepository : IAsyncRepository<JobApplicant, Guid>
     {
         Task<bool> IsUserAppliedToJobPostAsync(Guid jobPostId, Guid userId);
-        Task<IEnumerable<JobApplicant>> GetApplicantsByJobPostIdAsync(Guid jobPostId);
+        Task<Pagination<JobApplicant>?> GetJobApplicantsAsync(JobApplicantSpecParam param);
         Task<int> GetTotalApplicantsByJobPostIdAsync(Guid jobPostId);
     }
 }

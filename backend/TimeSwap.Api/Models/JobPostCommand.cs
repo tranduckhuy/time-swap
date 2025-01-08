@@ -11,6 +11,9 @@ namespace TimeSwap.Api.Models
         [Required(ErrorMessage = "Description is required")]
         public string Description { get; set; } = string.Empty;
 
+        [Required(ErrorMessage = "Responsibilities is required")]
+        public string Responsibilities { get; set; } = string.Empty;
+
         [JsonRequired]
         public decimal Fee { get; set; }
 

@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Interfaces.Repositories;
+using TimeSwap.Domain.Specs;
+using TimeSwap.Domain.Specs.Job;
 using TimeSwap.Infrastructure.Persistence.DbContexts;
+using TimeSwap.Infrastructure.Specifications;
 
 namespace TimeSwap.Infrastructure.Persistence.Repositories
 {
@@ -11,12 +14,10 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
         {
         }
 
-        public async Task<IEnumerable<JobApplicant>> GetApplicantsByJobPostIdAsync(Guid jobPostId)
+        public async Task<Pagination<JobApplicant>?> GetJobApplicantsAsync(JobApplicantSpecParam param)
         {
-            return await _context.JobApplicants
-                .Where(x => x.JobPostId == jobPostId)
-                .Include(x => x.UserApplied)
-                .ToListAsync();
+            var spec = new JobApplicantSpecification(param);
+            return await GetWithSpecAsync(spec);
         }
 
         public async Task<int> GetTotalApplicantsByJobPostIdAsync(Guid jobPostId)
