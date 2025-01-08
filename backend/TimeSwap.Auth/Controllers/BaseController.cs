@@ -43,7 +43,7 @@ namespace TimeSwap.Auth.Controllers
             return null!;
         }
 
-        protected async Task<IActionResult> HandleRequestAsync<TRequest, TDto>(TRequest request, Func<TDto, Task<StatusCode>> serviceCall)
+        protected async Task<IActionResult> HandleRequestAsync<TRequest>(TRequest request, Func<TRequest, Task<StatusCode>> serviceCall)
         {
             var badRequestResponse = CheckModelStateValidity();
             if (badRequestResponse != null)
@@ -53,8 +53,7 @@ namespace TimeSwap.Auth.Controllers
 
             try
             {
-                var dto = AppMapper<AuthMappingProfile>.Mapper.Map<TDto>(request);
-                var statusCode = await serviceCall(dto);
+                var statusCode = await serviceCall(request);
 
                 return Ok(new ApiResponse<object>
                 {
@@ -68,8 +67,8 @@ namespace TimeSwap.Auth.Controllers
             }
         }
 
-        protected async Task<IActionResult> HandleRequestWithResponseAsync<TRequest, TDto, TResponse>
-            (TRequest request, Func<TDto, Task<(StatusCode, TResponse)>> serviceCall)
+        protected async Task<IActionResult> HandleRequestWithResponseAsync<TRequest, TResponse>
+            (TRequest request, Func<TRequest, Task<(StatusCode, TResponse)>> serviceCall)
         {
             var badRequestResponse = CheckModelStateValidity();
             if (badRequestResponse != null)
@@ -79,23 +78,13 @@ namespace TimeSwap.Auth.Controllers
 
             try
             {
-                (Shared.Constants.StatusCode StatusCode, TResponse Response) result;
-
-                if (typeof(TDto).IsClass && !typeof(TDto).IsAbstract)
-                {
-                    var dto = AppMapper<AuthMappingProfile>.Mapper.Map<TDto>(request);
-                    result = await serviceCall(dto);
-                }
-                else
-                {
-                    result = await serviceCall((TDto)(object)request!);
-                }
+                var (statusCode, response) = await serviceCall(request);
 
                 return Ok(new ApiResponse<TResponse>
                 {
-                    StatusCode = (int) result.StatusCode,
-                    Message = ResponseMessages.GetMessage(result.StatusCode),
-                    Data = result.Response
+                    StatusCode = (int)statusCode,
+                    Message = ResponseMessages.GetMessage(statusCode),
+                    Data = response
                 });
             }
             catch (Exception ex)

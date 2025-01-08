@@ -49,7 +49,7 @@ namespace TimeSwap.Shared.Constants
             { StatusCode.PaymentNotExists, "Payment does not exist." },
             { StatusCode.InvalidSignature, "Invalid signature." },
             { StatusCode.PaymentNotFoundByUserId, "No payments found for the user." },
-            { StatusCode.UserAppliedToOwnJobPost, "You cannot apply to your own job post. Please try with another job post." },{ StatusCode.UserAppliedToOwnJobPost, "You cannot apply to your own job post. Please try with another job post." },
+            { StatusCode.UserAppliedToOwnJobPost, "You cannot apply to your own job post. Please try with another job post." },
         };
 
         public static string GetMessage(StatusCode code) => _messages[code];

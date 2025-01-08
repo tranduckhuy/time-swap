@@ -22,7 +22,15 @@ namespace TimeSwap.Domain.Entities
 
         public string? WardId { get; set; }
 
+        public IList<string>? EducationHistory { get; set; }
+
+        public int? MajorCategoryId { get; set; }
+
+        public int? MajorIndustryId { get; set; }
+
         // Navigation properties
+        public virtual Category MajorCategory { get; set; } = null!;
+        public virtual Industry MajorIndustry { get; set; } = null!;
         public virtual City City { get; set; } = null!;
         public virtual Ward Ward { get; set; } = null!;
         public virtual ICollection<JobPost> JobPosts { get; set; } = [];

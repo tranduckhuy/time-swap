@@ -24,9 +24,10 @@ namespace TimeSwap.Infrastructure.Identity
         private readonly JwtHandler _jwtHandler;
         private readonly ITokenBlackListService _tokenBlackListService;
         private readonly IUserRepository _userRepository;
+        private readonly ITransactionManager _transactionManager;
 
         public AuthService(UserManager<ApplicationUser> userManager, IEmailSender emailSender, ILogger<AuthService> logger,
-            JwtHandler jwtHandler, ITokenBlackListService tokenBlackListService, IUserRepository userRepository)
+            JwtHandler jwtHandler, ITokenBlackListService tokenBlackListService, IUserRepository userRepository, ITransactionManager transactionManager)
         {
             _userManager = userManager;
             _emailSender = emailSender;
@@ -34,52 +35,57 @@ namespace TimeSwap.Infrastructure.Identity
             _jwtHandler = jwtHandler;
             _tokenBlackListService = tokenBlackListService;
             _userRepository = userRepository;
+            _transactionManager = transactionManager;
         }
 
         public async Task<StatusCode> RegisterAsync(RegisterRequestDto request)
         {
-            var existingUser = await _userManager.FindByEmailAsync(request.Email);
-            if (existingUser != null)
+            await _transactionManager.ExecuteAsync(async () =>
             {
-                _logger.LogWarning("Attempt to register with existing email: {email}.", request.Email);
-                throw new EmailAlreadyExistsException();
-            }
-
-            var userId = Guid.NewGuid();
-
-            var newUser = new ApplicationUser
-            {
-                Id = userId.ToString(),
-                Email = request.Email,
-                UserName = request.Email,
-                FirstName = request.FirstName,
-                LastName = request.LastName
-            };
-
-            var result = await _userManager.CreateAsync(newUser, request.Password);
-
-            if (!result.Succeeded)
-            {
-                var errors = result.Errors.Select(e => e.Description).ToList();
-                _logger.LogError("Failed to create user. Errors: {errors}", string.Join(", ", errors));
-                throw new AppException(StatusCode.ProvidedInformationIsInValid, errors);
-            }
-
-            await _userManager.AddToRoleAsync(newUser, nameof(Role.User));
-
-            // Update user profile in core database
-            await _userRepository.AddAsync(
-                new UserProfile
+                var existingUser = await _userManager.FindByEmailAsync(request.Email);
+                if (existingUser != null)
                 {
-                    Id = userId,
-                    Email = newUser.Email,
-                    FullName = $"{newUser.FirstName} {newUser.LastName}"
+                    _logger.LogWarning("Attempt to register with existing email: {email}.", request.Email);
+                    throw new EmailAlreadyExistsException();
                 }
-            );
 
-            _logger.LogInformation("Synced user profile with core database for user: {email}.", request.Email);
+                var userId = Guid.NewGuid();
 
-            _ = SendConfirmEmailMessage(request.ClientUrl, newUser);
+                var newUser = new ApplicationUser
+                {
+                    Id = userId.ToString(),
+                    Email = request.Email,
+                    PhoneNumber = request.PhoneNumber,
+                    UserName = request.Email,
+                    FirstName = request.FirstName,
+                    LastName = request.LastName
+                };
+
+                var result = await _userManager.CreateAsync(newUser, request.Password);
+
+                if (!result.Succeeded)
+                {
+                    var errors = result.Errors.Select(e => e.Description).ToList();
+                    _logger.LogError("Failed to create user. Errors: {errors}", string.Join(", ", errors));
+                    throw new AppException(StatusCode.ProvidedInformationIsInValid, errors);
+                }
+
+                await _userManager.AddToRoleAsync(newUser, nameof(Role.User));
+
+                // Update user profile in core database
+                await _userRepository.AddAsync(
+                    new UserProfile
+                    {
+                        Id = userId,
+                        Email = newUser.Email,
+                        FullName = $"{newUser.FirstName} {newUser.LastName}"
+                    }
+                );
+
+                _logger.LogInformation("Synced user profile with core database for user: {email}.", request.Email);
+
+                _ = SendConfirmEmailMessage(request.ClientUrl, newUser);
+            });
 
             return StatusCode.ConfirmationEmailSent;
         }

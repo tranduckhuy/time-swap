@@ -171,69 +171,7 @@ namespace TimeSwap.Infrastructure.Extensions
             var services = scope.ServiceProvider;
             var context = services.GetRequiredService<AppDbContext>();
 
-            if (!await context.UserProfiles.AnyAsync())
-            {
-                var userProfiles = new List<UserProfile>
-                    {
-                        new UserProfile
-                        {
-                            Id = new Guid("1a1a1a1a-1a1a-1a1a-1a1a-1a1a1a1a1a1a"),
-                            CurrentSubscription = SubscriptionPlan.Premium,
-                            SubscriptionExpiryDate = DateTime.UtcNow.AddYears(99),
-                            Balance = 999999999,
-                            Email = "huytde.dev@gmail.com",
-                            FullName = "Huy Tran Duc",
-                            Description = "Tôi là một lập trình viên, tôi yêu thích công việc của mình. Hãy để tôi giúp bạn!",
-                            AvatarUrl = "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50",
-                            CityId = "52",
-                            WardId = "21550"
-                        },
-
-                        new UserProfile
-                        {
-                            Id = new Guid("2a2a2a2a-2a2a-2a2a-2a2a-2a2a2a2a2a2a"),
-                            CurrentSubscription = SubscriptionPlan.Premium,
-                            SubscriptionExpiryDate = DateTime.UtcNow.AddYears(99),
-                            Balance = 999999999,
-                            Email = "quynxqe170239@fpt.edu.vn",
-                            FullName = "Quy Nguyen Xuan",
-                            Description = "Tôi là một lập trình viên, tôi đã có nhiều năm kinh nghiệm làm việc trong lĩnh vực này.",
-                            AvatarUrl = "https://gravatar.com/images/homepage/avatar-03.png",
-                            CityId = "52",
-                            WardId = "21550"
-                        },
-
-                        new UserProfile
-                        {
-                            Id = new Guid("3a3a3a3a-3a3a-3a3a-3a3a-3a3a3a3a3a3a"),
-                            CurrentSubscription = SubscriptionPlan.Premium,
-                            SubscriptionExpiryDate = DateTime.UtcNow.AddYears(99),
-                            Balance = 999999999,
-                            Email = "sangtnqe170193@fpt.edu.vn",
-                            FullName = "Sang Tran Ngoc",
-                            Description = "Tôi là một lập trình viên, tôi rất vui khi được giúp đỡ mọi người.",
-                            AvatarUrl = "https://gravatar.com/images/homepage/avatar-02.png",
-                            CityId = "52",
-                            WardId = "21553"
-                        },
-
-                        new UserProfile
-                        {
-                            Id = new Guid("4a4a4a4a-4a4a-4a4a-4a4a-4a4a4a4a4a4a"),
-                            CurrentSubscription = SubscriptionPlan.Premium,
-                            SubscriptionExpiryDate = DateTime.UtcNow.AddYears(99),
-                            Balance = 999999999,
-                            Email = "huydt170135@fpt.edu.vn",
-                            FullName = "Huy Dinh Trong",
-                            Description = "Tôi là một lập trình viên, tôi rất vui khi được giúp đỡ mọi người.",
-                            AvatarUrl = "https://gravatar.com/images/homepage/avatar-01.png",
-                            CityId = "52",
-                            WardId = "21571"
-                        }
-                    };
-
-                await context.UserProfiles.AddRangeAsync(userProfiles);
-            }
+            await context.Database.MigrateAsync();
 
             if (!await context.Industries.AnyAsync())
             {
@@ -275,6 +213,82 @@ namespace TimeSwap.Infrastructure.Extensions
                 await context.Categories.AddRangeAsync(categories);
             }
 
+            if (!await context.UserProfiles.AnyAsync())
+            {
+                var userProfiles = new List<UserProfile>
+                    {
+                        new UserProfile
+                        {
+                            Id = new Guid("1a1a1a1a-1a1a-1a1a-1a1a-1a1a1a1a1a1a"),
+                            CurrentSubscription = SubscriptionPlan.Premium,
+                            SubscriptionExpiryDate = DateTime.UtcNow.AddYears(99),
+                            Balance = 999999999,
+                            Email = "huytde.dev@gmail.com",
+                            FullName = "Huy Tran Duc",
+                            Description = "Tôi là một lập trình viên, tôi yêu thích công việc của mình. Hãy để tôi giúp bạn!",
+                            AvatarUrl = "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50",
+                            CityId = "52",
+                            WardId = "21550",
+                            MajorIndustryId = 1,
+                            MajorCategoryId = 1,
+                            EducationHistory = ["FPT University Quy Nhon AI Campus"]
+                        },
+
+                        new UserProfile
+                        {
+                            Id = new Guid("2a2a2a2a-2a2a-2a2a-2a2a-2a2a2a2a2a2a"),
+                            CurrentSubscription = SubscriptionPlan.Premium,
+                            SubscriptionExpiryDate = DateTime.UtcNow.AddYears(99),
+                            Balance = 999999999,
+                            Email = "quynxqe170239@fpt.edu.vn",
+                            FullName = "Quy Nguyen Xuan",
+                            Description = "Tôi là một lập trình viên, tôi đã có nhiều năm kinh nghiệm làm việc trong lĩnh vực này.",
+                            AvatarUrl = "https://gravatar.com/images/homepage/avatar-03.png",
+                            CityId = "52",
+                            WardId = "21550",
+                            MajorIndustryId = 1,
+                            MajorCategoryId = 1,
+                            EducationHistory = ["FPT University Quy Nhon AI Campus"]
+                        },
+
+                        new UserProfile
+                        {
+                            Id = new Guid("3a3a3a3a-3a3a-3a3a-3a3a-3a3a3a3a3a3a"),
+                            CurrentSubscription = SubscriptionPlan.Premium,
+                            SubscriptionExpiryDate = DateTime.UtcNow.AddYears(99),
+                            Balance = 999999999,
+                            Email = "sangtnqe170193@fpt.edu.vn",
+                            FullName = "Sang Tran Ngoc",
+                            Description = "Tôi là một lập trình viên, tôi rất vui khi được giúp đỡ mọi người.",
+                            AvatarUrl = "https://gravatar.com/images/homepage/avatar-02.png",
+                            CityId = "52",
+                            WardId = "21553",
+                            MajorIndustryId = 1,
+                            MajorCategoryId = 1,
+                            EducationHistory = ["FPT University Quy Nhon AI Campus"]
+                        },
+
+                        new UserProfile
+                        {
+                            Id = new Guid("4a4a4a4a-4a4a-4a4a-4a4a-4a4a4a4a4a4a"),
+                            CurrentSubscription = SubscriptionPlan.Premium,
+                            SubscriptionExpiryDate = DateTime.UtcNow.AddYears(99),
+                            Balance = 999999999,
+                            Email = "huydt170135@fpt.edu.vn",
+                            FullName = "Huy Dinh Trong",
+                            Description = "Tôi là một lập trình viên, tôi rất vui khi được giúp đỡ mọi người.",
+                            AvatarUrl = "https://gravatar.com/images/homepage/avatar-01.png",
+                            CityId = "52",
+                            WardId = "21571",
+                            MajorIndustryId = 1,
+                            MajorCategoryId = 1,
+                            EducationHistory = ["FPT University Quy Nhon AI Campus"]
+                        }
+                    };
+
+                await context.UserProfiles.AddRangeAsync(userProfiles);
+            }
+
             if (!await context.JobPosts.AnyAsync())
             {
                 var jobPosts = new List<JobPost>
@@ -285,7 +299,8 @@ namespace TimeSwap.Infrastructure.Extensions
                             UserId = new Guid("2a2a2a2a-2a2a-2a2a-2a2a-2a2a2a2a2a2a"),
                             Title = "Code hộ",
                             Description = "Cần code hộ 1 trang web",
-                            Fee = 100,
+                            Responsibilities = "Phát triển và duy trì ứng dụng web, đảm bảo hiệu suất cao.",
+                            Fee = 1000000,
                             AssignedTo = new Guid("1a1a1a1a-1a1a-1a1a-1a1a-1a1a1a1a1a1a"),
                             DueDate = DateTime.UtcNow.AddDays(7),
                             CategoryId = 1,
@@ -301,7 +316,8 @@ namespace TimeSwap.Infrastructure.Extensions
                             UserId = new Guid("2a2a2a2a-2a2a-2a2a-2a2a-2a2a2a2a2a2a"),
                             Title = "Code hộ",
                             Description = "Cần code hộ backend cho 1 ứng dụng di động",
-                            Fee = 200,
+                            Responsibilities = "Phát triển và duy trì ứng dụng di động, đảm bảo hiệu suất cao.",
+                            Fee = 500000,
                             DueDate = DateTime.UtcNow.AddDays(30),
                             CategoryId = 1,
                             IndustryId = 1,
@@ -316,7 +332,8 @@ namespace TimeSwap.Infrastructure.Extensions
                             UserId = new Guid("1a1a1a1a-1a1a-1a1a-1a1a-1a1a1a1a1a1a"),
                             Title = "Dọn dẹp nhà cửa",
                             Description = "Cần người dọn dẹp nhà cửa",
-                            Fee = 50,
+                            Responsibilities = "Dọn dẹp nhà cửa, lau chùi, quét dọn, vệ sinh nhà cửa.",
+                            Fee = 300000,
                             AssignedTo = new Guid("2a2a2a2a-2a2a-2a2a-2a2a-2a2a2a2a2a2a"),
                             DueDate = DateTime.UtcNow.AddDays(3),
                             CategoryId = 2,
