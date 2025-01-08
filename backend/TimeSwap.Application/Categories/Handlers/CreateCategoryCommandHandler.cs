@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using TimeSwap.Application.Categories.Commands;
+using TimeSwap.Application.Exceptions.Categories;
 using TimeSwap.Application.Exceptions.Industries;
 using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Interfaces.Repositories;
@@ -20,7 +21,12 @@ namespace TimeSwap.Application.Categories.Handlers
         public async Task<int> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
         {
             _ = await _industryRepository.GetByIdAsync(request.IndustryId) ?? throw new IndustryNotFoundException();
-            
+
+            if (await _categoryRepository.GetCategoryByNameAsync(request.CategoryName) != null)
+            {
+                throw new CategorySameNameException();
+            }
+
             var category = new Category
             {
                 CategoryName = request.CategoryName,

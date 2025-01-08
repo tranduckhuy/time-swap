@@ -50,6 +50,7 @@ namespace TimeSwap.Shared.Constants
             { StatusCode.InvalidSignature, "Invalid signature." },
             { StatusCode.PaymentNotFoundByUserId, "No payments found for the user." },
             { StatusCode.UserAppliedToOwnJobPost, "You cannot apply to your own job post. Please try with another job post." },
+            { StatusCode.CategorySameName, "Category with the same name already exists." }
         };
 
         public static string GetMessage(StatusCode code) => _messages[code];

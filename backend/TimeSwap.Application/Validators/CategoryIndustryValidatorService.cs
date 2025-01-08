@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using TimeSwap.Application.Exceptions.Categories;
 using TimeSwap.Application.Exceptions.Industries;
-using TimeSwap.Application.Exceptions.Location;
-using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Interfaces.Repositories;
 
 namespace TimeSwap.Application.Validators

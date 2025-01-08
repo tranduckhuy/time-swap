@@ -12,9 +12,10 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
 
         }
 
-        public async Task<Industry?> GetByNameAsync(string industryName)
+        public async Task<Industry?> GetIndustryByNameAsync(string industryName)
         {
-            return await _context.Industries.FirstOrDefaultAsync(i => i.IndustryName.ToLower() == industryName.ToLower());
+            return await _context.Industries
+                .FirstOrDefaultAsync(i => EF.Functions.Unaccent(i.IndustryName).ToLower() == EF.Functions.Unaccent(industryName).ToLower());
         }
     }
 }
