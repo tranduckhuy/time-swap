@@ -1,21 +1,21 @@
-import { effect, inject, Injectable, signal } from '@angular/core';
+import { Injectable, inject, effect, signal } from '@angular/core';
 
 import { TranslateService } from '@ngx-translate/core';
 
-import { ENGLISH, LANGUAGE, VIETNAMESE } from '../constants/multi-lang-constants';
+import { LANGUAGE, ENGLISH, VIETNAMESE } from '../constants/multi-lang-constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MultiLanguageService {
-  private languageSignal = signal<string>(JSON.parse(window.localStorage.getItem(LANGUAGE) ?? '"vi"'));
+  private languageSignal = signal<string>(JSON.parse(localStorage.getItem(LANGUAGE) ?? `"${VIETNAMESE}"`));
   language = this.languageSignal.asReadonly();
   
   private readonly translateService = inject(TranslateService);
 
   constructor() {
     effect(() => {
-      window.localStorage.setItem(LANGUAGE, JSON.stringify(this.languageSignal()));
+      localStorage.setItem(LANGUAGE, JSON.stringify(this.languageSignal()));
       this.translateService.use(this.languageSignal());
     });
   }
@@ -32,12 +32,12 @@ export class MultiLanguageService {
   /**
    * Translates a message key into the current language.
    * 
-   * @param value - The translation key to look up.
+   * @param key - The translation key to look up.
    * @param params - Optional parameters for interpolation in the translated string.
    * @returns The translated string.
    */
-  getTranslatedLang(value: string, params?: any) {
-    return this.translateService.instant(value, params);
+  getTranslatedLang(key: string, params?: any) {
+    return this.translateService.instant(key, params);
   }
 
   /**
@@ -47,12 +47,6 @@ export class MultiLanguageService {
    * @param lang - The language code to switch to.
    */
   updateLanguage(lang: string): void {
-    this.languageSignal.update(() => {
-      if (lang === VIETNAMESE) {
-        return VIETNAMESE;
-      } else {
-        return ENGLISH;
-      }
-    });
+    this.languageSignal.set(lang === VIETNAMESE ? VIETNAMESE : ENGLISH);
   }
 }

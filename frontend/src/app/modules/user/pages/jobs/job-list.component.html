@@ -38,7 +38,9 @@
                                 }
                             </select>
                             <app-nice-select 
-                                [listData]="industriesName()" 
+                                [listData]="industriesName()"
+                                [title]="'common.nice-select.filter.industry' | translate"
+                                [isFilter]="true"
                                 (valueChange)="handleSelectChange('industryId', $event, industries())"
                             />
                         </div>
@@ -51,7 +53,9 @@
                                 }
                             </select>
                             <app-nice-select 
-                                [listData]="categoriesName()" 
+                                [listData]="categoriesName()"
+                                [title]="'common.nice-select.filter.category' | translate"
+                                [isFilter]="true" 
                                 (valueChange)="handleSelectChange('categoryId', $event, categories())"
                             />
                         </div>
@@ -64,7 +68,9 @@
                                 }
                             </select>
                             <app-nice-select 
-                                [listData]="citiesName()" 
+                                [listData]="citiesName()"
+                                [title]="'common.nice-select.filter.city' | translate"
+                                [isFilter]="true" 
                                 (valueChange)="handleSelectChange('cityId', $event, cities())"
                             />
                         </div>
@@ -77,7 +83,9 @@
                                 }
                             </select>
                             <app-nice-select 
-                                [listData]="wardsName()" 
+                                [listData]="wardsName()"
+                                [title]="'common.nice-select.filter.ward' | translate"
+                                [isFilter]="true" 
                                 (valueChange)="handleSelectChange('wardId', $event, wards())"
                             />
                         </div>
@@ -96,7 +104,7 @@
     <!-- ? Showing -->
     <div class="job-showing-area">
         <div class="container">
-            <div class="showing" style="margin-bottom: 30px;">
+            <div class="showing">
                 <div class="row">
                     <div class="col-sm-6 col-lg-6">
                         <div class="left">
