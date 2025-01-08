@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 
 import { TranslateModule } from '@ngx-translate/core';
 
-import { LANGUAGE, VIETNAMESE } from './shared/constants/multi-lang-constants';
+import { VIETNAMESE } from './shared/constants/multi-lang-constants';
 
 import { MultiLanguageService } from './shared/services/multi-language.service';
 
@@ -18,6 +18,6 @@ export class AppComponent implements OnInit {
   private readonly multiLanguageService = inject(MultiLanguageService);
 
   ngOnInit(): void {
-   this.multiLanguageService.updateLanguage(localStorage.getItem(LANGUAGE) ?? VIETNAMESE);
+   this.multiLanguageService.updateLanguage(this.multiLanguageService.language() ?? VIETNAMESE);
   }
 }

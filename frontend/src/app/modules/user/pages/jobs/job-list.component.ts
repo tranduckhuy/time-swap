@@ -13,15 +13,13 @@ import { NiceSelectComponent } from "../../../../shared/components/nice-select/n
 import { ToastComponent } from "../../../../shared/components/toast/toast.component";
 import { PreLoaderComponent } from "../../../../shared/components/pre-loader/pre-loader.component";
 
-import { 
-  createFilterOptions, 
-  createPostedDateOptions 
-} from '../../../../shared/utils/util-functions';
+import { createPostedDateOptions } from '../../../../shared/utils/util-functions';
 
 import { PAGE_SIZE_JOBS } from '../../../../shared/constants/page-constants';
+import { VIETNAMESE } from '../../../../shared/constants/multi-lang-constants';
 
 import { JobsService } from './jobs.service';
-import { ToastHandlingService } from '../../../../shared/services/toast-handling.service';
+import { LocationService } from '../../../../shared/services/location.service';
 import { MultiLanguageService } from '../../../../shared/services/multi-language.service';
 
 import type { JobListRequestModel } from '../../../../shared/models/api/request/job-list-request.model';
@@ -51,6 +49,7 @@ export class JobListComponent implements OnInit {
 
   // ? Dependency Injection
   private readonly jobsService = inject(JobsService);
+  private readonly locationService = inject(LocationService);
   private readonly multiLanguageService = inject(MultiLanguageService);
   private readonly fb = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
@@ -61,9 +60,8 @@ export class JobListComponent implements OnInit {
   // ? Data For Select Options
   industries = this.jobsService.industries;
   categories = this.jobsService.categories; 
-  cities = this.jobsService.cities;
-  wards = this.jobsService.wards;
-  postedDate = signal<string[]>(createPostedDateOptions(this.multiLanguageService));
+  cities = this.locationService.cities;
+  wards = this.locationService.wards;
 
   // ? Data Response
   jobs = this.jobsService.jobs;
@@ -76,6 +74,10 @@ export class JobListComponent implements OnInit {
   wardsName = computed(() => this.wards().map(w => w.fullLocation));
   start = computed(() => this.totalJobs() === 0 ? 0 : (this.pageIndex() - 1) * this.pageSize() + 1);
   end = computed(() => Math.min(this.pageIndex() * this.pageSize(), this.totalJobs()));
+  postedDate = computed(() => {
+    this.multiLanguageService.language();
+    return createPostedDateOptions(this.multiLanguageService);
+  });
 
   ngOnInit(): void {
     this.initialForm();
@@ -118,8 +120,8 @@ export class JobListComponent implements OnInit {
     const subscription = forkJoin([
       this.jobsService.getAllIndustries(),
       this.jobsService.getAllCategories(),
-      this.jobsService.getAllCities(),
-      this.jobsService.getWardByCityId('0'),
+      this.locationService.getAllCities(),
+      this.locationService.getWardByCityId('0'),
     ]).subscribe();
 
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
@@ -140,7 +142,7 @@ export class JobListComponent implements OnInit {
   }
 
   private fetchWardsByCityId(cityId: string): void {
-    const subscription = this.jobsService.getWardByCityId(cityId).subscribe();
+    const subscription = this.locationService.getWardByCityId(cityId).subscribe();
 
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
@@ -148,25 +150,34 @@ export class JobListComponent implements OnInit {
   private getOptionId(value: string, options: any[]): string {
       return options.find(
           option => option.name === value || 
+          option.fullLocation === value || 
           option.industryName === value || 
           option.categoryName === value
       )?.id || (options.some(option => option.industryName || option.categoryName) ? '0' : '');
   }
 
   private getPostedDateId(value: string): string {
-      switch (value) {
-          case this.multiLanguageService.getTranslatedLang('jobs.filter.postedDate.all-posted-date'):
-              return '';
-          case this.multiLanguageService.getTranslatedLang('jobs.filter.postedDate.today'):
-              return '0';
-          case this.multiLanguageService.getTranslatedLang('jobs.filter.postedDate.yesterday'):
-              return '1';
-          case this.multiLanguageService.getTranslatedLang('jobs.filter.postedDate.last-7-days'):
-              return '2';
-          case this.multiLanguageService.getTranslatedLang('jobs.filter.postedDate.last-30-days'):
-              return '3';
-          default:
-              return '';
-      }
+    const [
+      translatedAllPostedDate,
+      translatedToday,
+      translatedYesterday,
+      translatedLast7Days,
+      translatedLast30Days
+    ] = this.postedDate();
+
+    switch (value) {
+        case translatedAllPostedDate:
+            return '';
+        case translatedToday:
+            return '0';
+        case translatedYesterday:
+            return '1';
+        case translatedLast7Days:
+            return '2';
+        case translatedLast30Days:
+            return '3';
+        default:
+            return '';
+    }
   }
 }
