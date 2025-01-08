@@ -13,7 +13,11 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
 
         public async Task<UserProfile?> GetUserProfileAsync(Guid userId)
         {
-            return await _context.UserProfiles.Include(u => u.Ward).FirstOrDefaultAsync(u => u.Id == userId);
+            return await _context.UserProfiles
+                .Include(u => u.MajorCategory)
+                .Include(u => u.MajorIndustry)
+                .Include(u => u.Ward)
+                .FirstOrDefaultAsync(u => u.Id == userId);
         }
     }
 }

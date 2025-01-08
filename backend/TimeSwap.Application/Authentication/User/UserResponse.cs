@@ -1,6 +1,7 @@
-﻿using TimeSwap.Shared.Constants;
+﻿using TimeSwap.Domain.Entities;
+using TimeSwap.Shared.Constants;
 
-namespace TimeSwap.Application.Authentication
+namespace TimeSwap.Application.Authentication.User
 {
     public class UserResponse
     {
@@ -15,5 +16,8 @@ namespace TimeSwap.Application.Authentication
         public decimal Balance { get; set; }
         public SubscriptionPlan SubscriptionPlan { get; set; }
         public DateTime? SubscriptionExpiryDate { get; set; }
+        public IEnumerable<string>? EducationHistory { get; set; }
+        public string? MajorCategory { get; set; } = string.Empty;
+        public string? MajorIndustry { get; set; } = string.Empty;
     }
 }

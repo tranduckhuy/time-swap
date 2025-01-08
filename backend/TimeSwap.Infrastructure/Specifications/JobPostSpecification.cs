@@ -37,7 +37,8 @@ namespace TimeSwap.Infrastructure.Specifications
 
             // Build Criteria (e.g., Search, Filters)
             Criteria = x =>
-            (string.IsNullOrEmpty(param.Search) || EF.Functions.Like(EF.Functions.Unaccent(x.Title).ToLower(), $"%{param.Search.ToLower()}%")) &&
+            (string.IsNullOrEmpty(param.Search) || EF.Functions.Like(EF.Functions.Unaccent(x.Title).ToLower(), $"%{param.Search.ToLower()}%")
+                    || x.Title.ToLower().Contains(param.Search.ToLower())) &&
             (param.IndustryId == 0 || x.IndustryId == param.IndustryId) &&
             (param.CategoryId == 0 || x.CategoryId == param.CategoryId) &&
             (param.MinFee == null || x.Fee >= param.MinFee) &&

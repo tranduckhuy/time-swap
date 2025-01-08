@@ -4,6 +4,8 @@ using System.Security.Claims;
 using TimeSwap.Application.Authentication.Dtos.Requests;
 using TimeSwap.Application.Authentication.Dtos.Responses;
 using TimeSwap.Application.Authentication.Interfaces;
+using TimeSwap.Application.Mappings;
+using TimeSwap.Auth.Mappings;
 using TimeSwap.Auth.Models.Requests;
 using TimeSwap.Shared;
 using TimeSwap.Shared.Constants;
@@ -23,49 +25,54 @@ namespace TimeSwap.Auth.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
-            return await HandleRequestAsync<RegisterRequest, RegisterRequestDto>(request, _authService.RegisterAsync);
+            var dto = AppMapper<AuthMappingProfile>.Mapper.Map<RegisterRequestDto>(request);
+
+            return await HandleRequestAsync(dto, _authService.RegisterAsync);
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            return await HandleRequestWithResponseAsync<LoginRequest, LoginRequestDto, AuthenticationResponse>
-                (request, _authService.LoginAsync);
+            var dto = AppMapper<AuthMappingProfile>.Mapper.Map<LoginRequestDto>(request);
+            return await HandleRequestWithResponseAsync<LoginRequestDto, AuthenticationResponse>
+                (dto, _authService.LoginAsync);
         }
 
         [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
         {
-            return await HandleRequestAsync<ForgotPasswordRequest, ForgotPasswordRequestDto>
-                (request, _authService.ForgotPasswordAsync);
+            var dto = AppMapper<AuthMappingProfile>.Mapper.Map<ForgotPasswordRequestDto>(request);
+
+            return await HandleRequestAsync(dto, _authService.ForgotPasswordAsync);
         }
 
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
         {
-            return await HandleRequestAsync<ResetPasswordRequest, ResetPasswordRequestDto>
-                (request, _authService.ResetPasswordAsync);
+            var dto = AppMapper<AuthMappingProfile>.Mapper.Map<ResetPasswordRequestDto>(request);
+            return await HandleRequestAsync(dto, _authService.ResetPasswordAsync);
         }
 
         [HttpGet("confirm-email")]
         public async Task<IActionResult> ConfirmEmail([FromQuery] ConfirmEmailRequest request)
         {
-            return await HandleRequestAsync<ConfirmEmailRequest, ConfirmEmailRequestDto>
-                (request, _authService.ConfirmEmailAsync);
+            var dto = AppMapper<AuthMappingProfile>.Mapper.Map<ConfirmEmailRequestDto>(request);
+            return await HandleRequestAsync(dto, _authService.ConfirmEmailAsync);
         }
 
         [HttpPost("resend-confirmation-email")]
         public async Task<IActionResult> ResendConfirmationEmail([FromBody] ResendConfirmationEmailRequest request)
         {
-            return await HandleRequestAsync<ResendConfirmationEmailRequest, ResendConfirmationEmailRequestDto>
-                (request, _authService.ResendConfirmationEmailAsync);
+            var dto = AppMapper<AuthMappingProfile>.Mapper.Map<ResendConfirmationEmailRequestDto>(request);
+            return await HandleRequestAsync(dto, _authService.ResendConfirmationEmailAsync);
         }
 
         [HttpPost("refresh-token")]
         public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
         {
-            return await HandleRequestWithResponseAsync<RefreshTokenRequest, RefreshTokenDto, AuthenticationResponse>
-                (request, _authService.RefreshTokenAsync);
+            var dto = AppMapper<AuthMappingProfile>.Mapper.Map<RefreshTokenDto>(request);
+            return await HandleRequestWithResponseAsync<RefreshTokenDto, AuthenticationResponse>
+                (dto, _authService.RefreshTokenAsync);
         }
 
         [HttpDelete("logout")]
