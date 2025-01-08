@@ -25,8 +25,8 @@ namespace TimeSwap.Infrastructure.Specifications
         public JobApplicantSpecification(JobApplicantSpecParam param)
         {
             Criteria = x => (param.JobPostId == Guid.Empty || x.JobPostId == param.JobPostId) &&
-                            (string.IsNullOrEmpty(param.Search) || x.UserApplied.Email.Contains(param.Search) ||
-                            (EF.Functions.Like(EF.Functions.Unaccent(x.UserApplied.FullName).ToLower(), $"%{param.Search.ToLower()}%"))) &&
+                            (string.IsNullOrEmpty(param.Search) || x.UserApplied.Email.Contains(param.Search) || x.UserApplied.FullName.ToLower().Contains(param.Search.ToLower()) 
+                            || EF.Functions.Like(EF.Functions.Unaccent(x.UserApplied.FullName).ToLower(), $"%{param.Search.ToLower()}%")) &&
                             (param.CategoryId == 0 || x.JobPost.CategoryId == param.CategoryId) &&
                             (param.IndustryId == 0 || x.JobPost.IndustryId == param.IndustryId) &&
                             (string.IsNullOrEmpty(param.CityId) || x.UserApplied.CityId == param.CityId) &&

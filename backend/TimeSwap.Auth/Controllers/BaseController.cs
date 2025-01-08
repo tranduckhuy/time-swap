@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using TimeSwap.Application.Mappings;
-using TimeSwap.Auth.Mappings;
 using TimeSwap.Domain.Exceptions;
 using TimeSwap.Shared;
 using TimeSwap.Shared.Constants;
