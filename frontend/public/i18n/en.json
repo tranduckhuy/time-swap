@@ -196,9 +196,13 @@
         "phone": "Phone:",
         "dob": "Date Of Birth:",
         "job": "Job Title:",
-        "position": "Position:",
+        "address": "Address:",
         "salary": "Salary",
-        "avatar": "Cover Picture"
+        "avatar": "Cover Picture",
+        "subscription-plan": "Subscription Plan:",
+        "subscription-expired": "Subscription Expired Date:",
+        "city": "City (Province):",
+        "full-location": "Full Location:"
       },
       "education": {
         "heading": "Education",
@@ -210,7 +214,8 @@
       "socials": {
         "heading": "Social Links"
       },
-      "button": "Save your information"
+      "save": "Save your information",
+      "edit": "Edit your information"
     }
   },
   "job-detail": {

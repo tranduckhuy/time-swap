@@ -195,9 +195,13 @@
         "phone": "Số điện thoại:",
         "dob": "Ngày sinh:",
         "job": "Công việc:",
-        "position": "Vị trí:",
+        "address": "Địa chỉ:",
         "salary": "Lương:",
-        "avatar": "Ảnh đại diện:"
+        "avatar": "Ảnh đại diện:",
+        "subscription-plan": "Gói đăng ký:",
+        "subscription-expired": "Ngày hết hạn đăng ký:",
+        "city": "Thành phố (Tỉnh):",
+        "full-location": "Địa chỉ đầy đủ:"
       },
       "education": {
         "heading": "Giáo dục",
@@ -209,7 +213,8 @@
       "socials": {
         "heading": "Liên kết"
       },
-      "button": "Lưu thông tin"
+      "save": "Lưu thông tin",
+      "edit": "Sửa thông tin"
     }
   },
   "job-detail": {
