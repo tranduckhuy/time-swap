@@ -1,0 +1,50 @@
+<div class="review">
+    <h3>{{ 'assignee.add-review' | translate }}</h3>
+    <span>{{ 'assignee.review-msg' | translate }}</span>
+    <ul>
+        <li>
+            <i class='bx bxs-star checked'></i>
+        </li>
+        <li>
+            <i class='bx bxs-star checked'></i>
+        </li>
+        <li>
+            <i class='bx bxs-star checked'></i>
+        </li>
+        <li>
+            <i class='bx bxs-star checked'></i>
+        </li>
+        <li>
+            <i class='bx bxs-star checked'></i>
+        </li>
+    </ul>
+    <form>
+        <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck59">
+            <label class="form-check-label" for="exampleCheck59">{{ 'assignee.review-option' | translate }}</label>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <i class='bx bx-user'></i>
+                    <input type="text" class="form-control" [placeholder]="'assignee.name' | translate">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <i class='bx bx-mail-send'></i>
+                    <input type="email" class="form-control" placeholder="Email">
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <i class='bx bx-mail-send'></i>
+                    <textarea id="your-message" rows="10" class="form-control" [placeholder]="'assignee.write-msg' | translate"></textarea>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <button type="submit" class="btn">{{ 'assignee.submit' | translate }}</button>
+            </div>
+        </div>
+    </form>
+</div>
