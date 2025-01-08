@@ -26,7 +26,7 @@ export class HeaderComponent {
   currentLanguage = this.multiLanguageService.language;
   
   isHome = signal<boolean>(false);
-  currentTheme = signal<string>(localStorage.getItem('theme') || 'theme-light');
+  currentTheme = signal<string>(localStorage.getItem('theme') ?? 'theme-light');
 
   isLoggedIn = computed<boolean>(() => this.authService.isLoggedIn());
 
@@ -46,7 +46,7 @@ export class HeaderComponent {
       const checkTheme = () => {
         const theme = localStorage.getItem('theme');
         if (theme !== this.currentTheme()) {
-          this.currentTheme.set(theme || 'theme-light');
+          this.currentTheme.set(theme ?? 'theme-light');
         }
       };
 

@@ -16,7 +16,6 @@ import { PreLoaderComponent } from "../../../../shared/components/pre-loader/pre
 import { createPostedDateOptions } from '../../../../shared/utils/util-functions';
 
 import { PAGE_SIZE_JOBS } from '../../../../shared/constants/page-constants';
-import { VIETNAMESE } from '../../../../shared/constants/multi-lang-constants';
 
 import { JobsService } from './jobs.service';
 import { LocationService } from '../../../../shared/services/location.service';
