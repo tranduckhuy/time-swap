@@ -127,6 +127,7 @@ export class JobListComponent implements OnInit {
 
   private search(page: number = 1): void {
     this.pageIndex.set(page);
+console.log(this.form.value);
 
     const req: JobListRequestModel = {
       ...this.form.value,

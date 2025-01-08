@@ -17,3 +17,7 @@
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 }
+
+.nice-select, .list {
+  width: 100%
+}
