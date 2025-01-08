@@ -9,7 +9,9 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
     {
         public CategoryRepository(AppDbContext context) : base(context)
         {
+
         }
+
         public async Task<List<Category>> GetCategoriesByIndustryAsync(int industryId)
         {
             return await _context.Categories
@@ -21,6 +23,12 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
         public async Task<List<Category>> GetAllCategoryIncludeIndustryAsync()
         {
             return await _context.Categories.Include(c => c.Industry).ToListAsync();
+        }
+
+        public async Task<Category?> GetCategoryByNameAsync(string categoryName)
+        {
+            return await _context.Categories
+                .FirstOrDefaultAsync(i => EF.Functions.Unaccent(i.CategoryName).ToLower() == EF.Functions.Unaccent(categoryName).ToLower());
         }
 
     }

@@ -51,6 +51,7 @@
         PaymentSuccess = 2034,
         PaymentNotExists = 2035,
         InvalidSignature = 2036,
-        PaymentNotFoundByUserId = 2037
+        PaymentNotFoundByUserId = 2037,
+        CategorySameName = 2038
     }
 }

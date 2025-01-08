@@ -20,7 +20,14 @@ namespace TimeSwap.Application.Categories.Handlers
         public async Task<Unit> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
         {
             _ = await _industryRepository.GetByIdAsync(request.IndustryId) ?? throw new IndustryNotFoundException();
+
             var category = await _categoryRepository.GetByIdAsync(request.CategoryId) ?? throw new CategoryNotFoundException();
+
+            if (request.CategoryId != category.Id &&
+            await _categoryRepository.GetCategoryByNameAsync(request.CategoryName) != null)
+            {
+                throw new CategorySameNameException();
+            }
 
             category.CategoryName = request.CategoryName;
             category.IndustryId = request.IndustryId;

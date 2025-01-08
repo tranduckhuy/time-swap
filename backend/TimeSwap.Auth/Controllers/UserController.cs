@@ -4,11 +4,9 @@ using System.Net;
 using System.Security.Claims;
 using TimeSwap.Application.Authentication.Interfaces;
 using TimeSwap.Application.Authentication.User;
-using TimeSwap.Application.JobPosts.Responses;
 using TimeSwap.Application.Mappings;
 using TimeSwap.Auth.Mappings;
 using TimeSwap.Auth.Models.Requests;
-using TimeSwap.Domain.Specs;
 using TimeSwap.Shared;
 using TimeSwap.Shared.Constants;
 
