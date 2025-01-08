@@ -1,5 +1,4 @@
-﻿using TimeSwap.Domain.Entities;
-using TimeSwap.Shared.Constants;
+﻿using TimeSwap.Shared.Constants;
 
 namespace TimeSwap.Application.Authentication.User
 {
