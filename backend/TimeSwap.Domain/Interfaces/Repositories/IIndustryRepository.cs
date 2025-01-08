@@ -4,6 +4,6 @@ namespace TimeSwap.Domain.Interfaces.Repositories
 {
     public interface IIndustryRepository : IAsyncRepository<Industry, int>
     {
-        Task<Industry?> GetByNameAsync(string industryName);
+        Task<Industry?> GetIndustryByNameAsync(string industryName);
     }
 }
