@@ -6,7 +6,7 @@ export interface UserModel {
   fullLocation?: string;
   avatarUrl: string;
   description?: string;
-  balance: number;
+  balance: number ;
   educationHistory: string[];
   majorCategory: string;
   majorIndustry: string;

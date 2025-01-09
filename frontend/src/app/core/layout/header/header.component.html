@@ -73,7 +73,7 @@
                                         <i class='bx bx-dollar profile-item-icon'></i>
                                         <div class="profile-item-body">
                                             <span>{{ 'navbar.profile.account' | translate }}</span>
-                                            <span>{{ user()?.balance }} vnd</span>
+                                            <span>{{ user()!.balance | customCurrency: lang()}}</span>
                                             <span></span>
                                         </div>
                                     </div>

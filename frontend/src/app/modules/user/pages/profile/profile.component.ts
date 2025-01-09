@@ -13,7 +13,7 @@ import { ProfileService } from './profile.service';
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
-export class ProfileComponent {
+export class ProfileComponent  {
   private readonly profileService = inject(ProfileService)
   user = this.profileService.user;
 }

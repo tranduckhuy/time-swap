@@ -21,6 +21,7 @@ import { forkJoin } from 'rxjs';
 import { ToastHandlingService } from '../../../../../../shared/services/toast-handling.service';
 import { PreLoaderComponent } from '../../../../../../shared/components/pre-loader/pre-loader.component';
 import { ToastComponent } from '../../../../../../shared/components/toast/toast.component';
+import { LocationService } from '../../../../../../shared/services/location.service';
 
 @Component({
   selector: 'app-my-profile',
@@ -40,6 +41,7 @@ export class MyProfileComponent implements OnInit {
   // Dependency Injection
   private readonly profileService = inject(ProfileService);
   private readonly jobsService = inject(JobsService);
+  private readonly locationService = inject(LocationService);
   private readonly fb = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
   private readonly toastHandlingService = inject(ToastHandlingService);
@@ -51,8 +53,8 @@ export class MyProfileComponent implements OnInit {
   user = this.profileService.user;
   subscription = this.profileService.subscription;
   industries = this.jobsService.industries;
-  cities = this.jobsService.cities;
-  wards = this.jobsService.wards;
+  cities = this.locationService.cities;
+  wards = this.locationService.wards;
   isLoading = this.profileService.isLoading;
   isEditing = signal(false);
 
@@ -107,8 +109,8 @@ export class MyProfileComponent implements OnInit {
 
   private fetchInitialData(): void {
     const subscription = forkJoin([
-      this.jobsService.getAllCities(),
-      this.jobsService.getWardByCityId('0'),
+      this.locationService.getAllCities(),
+      this.locationService.getWardByCityId('0'),
       this.jobsService.getAllIndustries(),
     ]).subscribe();
 
@@ -116,7 +118,7 @@ export class MyProfileComponent implements OnInit {
   }
 
   private fetchWardsByCityId(cityId: string): void {
-    const subscription = this.jobsService
+    const subscription = this.locationService
       .getWardByCityId(cityId)
       .subscribe();
 
