@@ -6,5 +6,6 @@ namespace TimeSwap.Domain.Interfaces.Repositories
     {
         Task<List<Category>> GetCategoriesByIndustryAsync(int industryId);
         Task<List<Category>> GetAllCategoryIncludeIndustryAsync();
+        Task<Category?> GetCategoryByNameAsync(string categoryName);
     }
 }

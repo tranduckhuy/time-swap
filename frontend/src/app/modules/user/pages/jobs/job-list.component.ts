@@ -3,7 +3,7 @@ import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
 
 import { TranslateModule } from '@ngx-translate/core';
 
-import { forkJoin, map } from 'rxjs';
+import { forkJoin } from 'rxjs';
 
 import { JobPostComponent } from '../../../../shared/components/job-post/job-post.component';
 import { BannerComponent } from "../../../../shared/components/banner/banner.component";
@@ -13,22 +13,14 @@ import { NiceSelectComponent } from "../../../../shared/components/nice-select/n
 import { ToastComponent } from "../../../../shared/components/toast/toast.component";
 import { PreLoaderComponent } from "../../../../shared/components/pre-loader/pre-loader.component";
 
-import { 
-  createFilterOptions, 
-  createPostedDateOptions 
-} from '../../../../shared/utils/util-functions';
+import { createPostedDateOptions } from '../../../../shared/utils/util-functions';
 
 import { PAGE_SIZE_JOBS } from '../../../../shared/constants/page-constants';
-import { SUCCESS_CODE } from '../../../../shared/constants/status-code-constants';
 
 import { JobsService } from './jobs.service';
-import { ToastHandlingService } from '../../../../shared/services/toast-handling.service';
+import { LocationService } from '../../../../shared/services/location.service';
 import { MultiLanguageService } from '../../../../shared/services/multi-language.service';
 
-import type { JobPostModel } from '../../../../shared/models/entities/job.model';
-import type { IndustryModel } from '../../../../shared/models/entities/industry.model';
-import type { CategoryModel } from '../../../../shared/models/entities/category.model';
-import type { CityModel, WardModel } from '../../../../shared/models/entities/location.model';
 import type { JobListRequestModel } from '../../../../shared/models/api/request/job-list-request.model';
 
 @Component({
@@ -51,22 +43,28 @@ import type { JobListRequestModel } from '../../../../shared/models/api/request/
 export class JobListComponent implements OnInit {
   // ? Form Properties
   form!: FormGroup;
-
-  // ? State Management
-  isLoading = signal(false);
-
-  // ? Data For Select Options
-  industries = signal<IndustryModel[]>([]);
-  categories = signal<CategoryModel[]>([]);
-  cities = signal<CityModel[]>([]);
-  wards = signal<WardModel[]>([]);
-  postedDate = signal<string[]>([]);
-
-  // ? Data Response
-  jobs = signal<JobPostModel[]>([]);
-  totalJobs = signal(0);
   pageIndex = signal(1);
   pageSize = signal(PAGE_SIZE_JOBS);
+
+  // ? Dependency Injection
+  private readonly jobsService = inject(JobsService);
+  private readonly locationService = inject(LocationService);
+  private readonly multiLanguageService = inject(MultiLanguageService);
+  private readonly fb = inject(FormBuilder);
+  private readonly destroyRef = inject(DestroyRef);
+
+  // ? State Management
+  isLoading = this.jobsService.isLoading;
+
+  // ? Data For Select Options
+  industries = this.jobsService.industries;
+  categories = this.jobsService.categories; 
+  cities = this.locationService.cities;
+  wards = this.locationService.wards;
+
+  // ? Data Response
+  jobs = this.jobsService.jobs;
+  totalJobs = this.jobsService.totalJobs;
 
   // ? Computed Properties
   industriesName = computed(() => this.industries().map(i => i.industryName));
@@ -75,13 +73,10 @@ export class JobListComponent implements OnInit {
   wardsName = computed(() => this.wards().map(w => w.fullLocation));
   start = computed(() => this.totalJobs() === 0 ? 0 : (this.pageIndex() - 1) * this.pageSize() + 1);
   end = computed(() => Math.min(this.pageIndex() * this.pageSize(), this.totalJobs()));
-
-  // ? Dependency Injection
-  private readonly jobsService = inject(JobsService);
-  private readonly toastHandlingService = inject(ToastHandlingService);
-  private readonly multiLanguageService = inject(MultiLanguageService);
-  private readonly fb = inject(FormBuilder);
-  private readonly destroyRef = inject(DestroyRef);
+  postedDate = computed(() => {
+    this.multiLanguageService.language();
+    return createPostedDateOptions(this.multiLanguageService);
+  });
 
   ngOnInit(): void {
     this.initialForm();
@@ -98,17 +93,14 @@ export class JobListComponent implements OnInit {
   }
 
   handleSelectChange(field: string, value: string, options: any[]): void {
-    const id = options.find(
-      option => option.name === value || 
-      option.industryName === value || 
-      option.categoryName === value
-    )?.id || '';
+    const id = field === 'postedDate' ? this.getPostedDateId(value) : this.getOptionId(value, options);
     
     this.form.get(field)?.setValue(id);
-    
-    if (field === 'cityId' && id) 
-      this.fetchWardsByCityId(id);
-  }
+
+    if (field === 'cityId' && id) {
+        this.fetchWardsByCityId(id);
+    }
+  } 
 
   private initialForm(): void {
     this.form = this.fb.group({
@@ -124,34 +116,17 @@ export class JobListComponent implements OnInit {
   }
 
   private initialSelectOptions(): void {
-    this.setDefaultSelectOptions();
-
     const subscription = forkJoin([
       this.jobsService.getAllIndustries(),
       this.jobsService.getAllCategories(),
-      this.jobsService.getAllCities(),
-    ])
-    .pipe(
-      map(([industryRes, categoryRes, cityRes]) => ({
-        industries: [this.industries()[0], ...(industryRes.data || [])],
-        categories: [this.categories()[0], ...(categoryRes.data || [])],
-        cities: [this.cities()[0], ...(cityRes.data || [])],
-      }))
-    )
-    .subscribe({
-      next: (data) => {
-        this.industries.set(data.industries);
-        this.categories.set(data.categories);
-        this.cities.set(data.cities);
-      },
-      error: () => this.showErrorToast(),
-    });
+      this.locationService.getAllCities(),
+      this.locationService.getWardByCityId('0'),
+    ]).subscribe();
 
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
   private search(page: number = 1): void {
-    this.isLoading.set(true);
     this.pageIndex.set(page);
 
     const req: JobListRequestModel = {
@@ -160,66 +135,48 @@ export class JobListComponent implements OnInit {
       pageSize: this.pageSize(),
       isActive: true,
     };
-
-    const subscription = this.jobsService.getAllJobs(req).subscribe({
-      next: (res) => {
-        if (res.statusCode === SUCCESS_CODE && res.data) {
-          const { data, count  } = res.data;
-          this.jobs.set(data.filter(job => job.ward !== null));
-          this.totalJobs.set(count);
-        } else {
-          this.resetJobs();
-          this.showFetchErrorToast();
-        }
-      },
-      error: () => {
-        this.isLoading.set(false);
-        this.resetJobs();
-        this.showFetchErrorToast();
-      },
-      complete: () => this.isLoading.set(false),
-    });
+    const subscription = this.jobsService.getAllJobs(req).subscribe();
 
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
   private fetchWardsByCityId(cityId: string): void {
-    const subscription = this.jobsService.getWardByCityId(cityId).subscribe({
-      next: (res) => {
-        if (res.statusCode === SUCCESS_CODE) {
-          this.wards.set(res.data || []);
-        } else {
-          this.toastHandlingService.handleError('jobs.notify.fetch-wards-failed');
-        }
-      },
-      error: () => this.showErrorToast(),
-    });
+    const subscription = this.locationService.getWardByCityId(cityId).subscribe();
 
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
-
-  private setDefaultSelectOptions(): void {
-    const defaultFilterOptions = createFilterOptions(this.multiLanguageService);
-    const defaultPostedDateOptions = createPostedDateOptions(this.multiLanguageService);
-
-    this.industries.set([defaultFilterOptions.industries]);
-    this.categories.set([defaultFilterOptions.categories]);
-    this.cities.set([defaultFilterOptions.cities]);
-    this.wards.set([defaultFilterOptions.wards]);
-    this.postedDate.set(defaultPostedDateOptions);
+  
+  private getOptionId(value: string, options: any[]): string {
+      return options.find(
+          option => option.name === value || 
+          option.fullLocation === value || 
+          option.industryName === value || 
+          option.categoryName === value
+      )?.id || (options.some(option => option.industryName || option.categoryName) ? '0' : '');
   }
 
-  private resetJobs(): void {
-    this.jobs.set([]);
-    this.totalJobs.set(0);
-    this.pageIndex.set(1);
-  }
+  private getPostedDateId(value: string): string {
+    const [
+      translatedAllPostedDate,
+      translatedToday,
+      translatedYesterday,
+      translatedLast7Days,
+      translatedLast30Days
+    ] = this.postedDate();
 
-  private showErrorToast(): void {
-    this.toastHandlingService.handleError('common.notify.error-message');
-  }
-
-  private showFetchErrorToast(): void {
-    this.toastHandlingService.handleError('jobs.notify.fetch-jobs-failed');
+    switch (value) {
+        case translatedAllPostedDate:
+            return '';
+        case translatedToday:
+            return '0';
+        case translatedYesterday:
+            return '1';
+        case translatedLast7Days:
+            return '2';
+        case translatedLast30Days:
+            return '3';
+        default:
+            return '';
+    }
   }
 }

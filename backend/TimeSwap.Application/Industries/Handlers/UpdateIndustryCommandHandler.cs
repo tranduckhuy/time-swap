@@ -17,8 +17,8 @@ namespace TimeSwap.Application.Industries.Handlers
         public async Task<Unit> Handle(UpdateIndustryCommand request, CancellationToken cancellationToken)
         {
             var industry = await _industryRepository.GetByIdAsync(request.IndustryId) ?? throw new IndustryNotFoundException();
-            
-            if (await _industryRepository.GetByNameAsync(request.IndustryName) != null)
+
+            if (await _industryRepository.GetIndustryByNameAsync(request.IndustryName) != null)
             {
                 throw new IndustrySameNameException();
             }

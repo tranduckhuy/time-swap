@@ -64,19 +64,7 @@ export const apiInterceptor: HttpInterceptorFn = (req, next) => {
       refreshToken: authService.refreshToken!
     };
 
-    refreshTokenRequest = authService.refreshTokenApi(refreshReq).pipe(
-      tap(response => {
-        if (!response.data) {
-          throw new Error(response.message || 'Invalid refresh token response');
-        }
-        const { accessToken, refreshToken, expiresIn } = response.data;
-        authService.saveLocalData(accessToken, refreshToken, expiresIn);
-      }),
-      finalize(() => {
-        refreshTokenRequest = null;
-      }),
-      shareReplay(1)
-    );
+    refreshTokenRequest = authService.refreshTokenApi(refreshReq);
   }
 
   // ? Use cached refresh token request

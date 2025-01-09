@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System.Transactions;
 using TimeSwap.Application.Authentication.Interfaces;
 using TimeSwap.Application.Authentication.User;
 using TimeSwap.Application.Exceptions.Auth;
@@ -44,6 +42,8 @@ namespace TimeSwap.Infrastructure.Identity
                 Id = userProfile.Id,
                 Email = userProfile.Email,
                 FullName = userProfile.FullName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 PhoneNumber = user.PhoneNumber!,
                 Role = userRoles.ToList(),
                 FullLocation = userProfile.Ward?.FullLocation,

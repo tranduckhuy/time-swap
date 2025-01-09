@@ -745,17 +745,15 @@ button:focus {
 }
 
 .job-item {
+    height: 220px;
     padding: 25px 35px 30px;
-    border: 1px dashed #4f4f4f;
-    border-left: 2px solid #4f4f4f;
+    border: 1px dashed #fe4a55;
     position: relative;
     transition: 0.5s all ease;
     margin-bottom: 30px;
     background-color: #fff;
 }
 .job-item:hover {
-    border: 1px dashed #fe4a55;
-    border-left: 2px solid #fe4a55;
     background-color: #f8e8e9;
 }
 .job-item .job-left {
@@ -765,15 +763,15 @@ button:focus {
 .job-item .job-left img {
     position: absolute;
     top: 8px;
-    left: 0;
+    left: -6px;
 }
 .job-item .job-left h3 {
-    font-size: 20px;
-    margin-bottom: 3px;
+    font-size: 18px;
+    margin-bottom: 0;
     color: #221668;
 }
 .job-item .job-left p {
-    margin-bottom: 12px;
+    margin-bottom: 8px;
     color: #5f5656;
 }
 .job-item .job-left ul {
@@ -781,23 +779,22 @@ button:focus {
     padding: 0;
 }
 .job-item .job-left ul li {
+    margin-bottom: 5px;
     list-style-type: none;
-    display: inline-block;
     color: #fe4a55;
-    margin-right: 5px;
 }
 .job-item .job-left ul li i {
     display: inline-block;
-    font-size: 16px;
     margin-right: 4px;
+    font-size: 16px;
+}
+.job-item .job-left ul li:nth-child(2) {
+    color: #7068a3;
 }
 .job-item .job-left ul li:nth-child(3) {
     color: #7068a3;
 }
-.job-item .job-left ul li:nth-child(4) {
-    color: #7068a3;
-}
-.job-item .job-left ul li:nth-child(4) i {
+.job-item .job-left ul li:nth-child(3) i {
     font-size: 18px;
     position: relative;
     top: 2px;
@@ -2891,7 +2888,6 @@ button:focus {
 }
 .employer-item ul li {
     list-style-type: none;
-    display: inline-block;
     color: #7d789b;
     margin-right: 10px;
 }
@@ -4747,7 +4743,7 @@ button:focus {
     background-color: #f8e8e9;
     padding: 15px 15px;
     border-radius: 5px;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 .job-showing-area .showing .row {
     align-items: center;
