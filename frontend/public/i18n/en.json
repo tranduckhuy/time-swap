@@ -195,7 +195,8 @@
         "email": "Your Email:",
         "phone": "Phone:",
         "dob": "Date Of Birth:",
-        "job": "Job Title:",
+        "industry": "Major Industry:",
+        "desc": "Description:",
         "address": "Address:",
         "salary": "Salary",
         "avatar": "Cover Picture",
@@ -216,6 +217,10 @@
       },
       "save": "Save your information",
       "edit": "Edit your information"
+    },
+    "notify": {
+      "update-success": "Update successfully",
+      "update-fail": "There are something wrong, please try again later!"
     }
   },
   "job-detail": {

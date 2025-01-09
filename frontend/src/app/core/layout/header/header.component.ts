@@ -1,4 +1,4 @@
-import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router';
 
 import { TranslateModule } from '@ngx-translate/core';
@@ -7,6 +7,7 @@ import { filter } from 'rxjs';
 
 import { AuthService } from '../../auth/auth.service';
 import { MultiLanguageService } from '../../../shared/services/multi-language.service';
+import { ProfileService } from '../../../modules/user/pages/profile/profile.service';
 
 @Component({
   selector: 'app-header',
@@ -15,8 +16,9 @@ import { MultiLanguageService } from '../../../shared/services/multi-language.se
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   private readonly authService = inject(AuthService);
+  private readonly profileService = inject(ProfileService);
   private readonly multiLanguageService = inject(MultiLanguageService);
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
@@ -24,6 +26,7 @@ export class HeaderComponent {
 
   // ? State Management
   currentLanguage = this.multiLanguageService.language;
+  user = this.profileService.user;
   
   isHome = signal<boolean>(false);
   isLoggedIn = computed<boolean>(() => this.authService.isLoggedIn());
@@ -41,6 +44,12 @@ export class HeaderComponent {
       });
 
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
+  }
+
+  ngOnInit(): void {
+    if (this.isLoggedIn()) {
+      this.profileService.getUserProfile().subscribe()
+    }
   }
 
   onChangeLanguage(lang: string) {
