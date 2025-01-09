@@ -10,12 +10,21 @@
       />
   </div>
   <ul class="list">
+      @if (isFilter()) {
+        <li
+          class="option selected" 
+          [attr.data-value]="''"
+          (click)="onValueChange('')"  
+        >
+          {{ 'common.nice-select.filter-by' | translate }} {{ title() }}
+        </li>
+      }
       @for(data of filteredList(); track $index) {
         <li 
           [title]="data"
           [attr.data-value]="data" 
-          [class.option]="true" 
           [ngClass]="data === current() ? 'selected': ''"
+          [class.option]="true" 
           (click)="onValueChange(data)"
         >
           {{ data }}

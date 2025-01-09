@@ -98,10 +98,11 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
             return await _context.JobPosts
                 .Include(x => x.Category)
                 .Include(x => x.Industry)
-                .Where(x => x.Id != jobPostId && (x.CategoryId == categoryId || x.IndustryId == industryId))
+                .Where(x => x.Id != jobPostId && (x.CategoryId == categoryId || x.IndustryId == industryId) && x.IsActive)
                 .OrderByDescending(x => x.CreatedAt)
                 .Select(JobPostProjections.SelectJobPostProjection())
                 .Take(limit)
+                .AsNoTracking()
                 .ToListAsync();
         }
 
@@ -113,6 +114,7 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
                 .Where(expression)
                 .OrderByDescending(x => x.CreatedAt)
                 .Select(JobPostProjections.SelectJobPostProjection())
+                .AsNoTracking()
                 .ToListAsync();
         }
 
