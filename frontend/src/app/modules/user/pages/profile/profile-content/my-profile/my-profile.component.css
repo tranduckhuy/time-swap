@@ -1,9 +1,3 @@
-.nice-select {
-    padding: 0;
-    width: 100%;
-    border: none;
-}
-
-.nice-select.open .list {
-    width: 100%;
+textarea.form-control {
+    resize: none;
 }

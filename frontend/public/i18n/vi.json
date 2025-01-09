@@ -194,7 +194,8 @@
         "email": "Email:",
         "phone": "Số điện thoại:",
         "dob": "Ngày sinh:",
-        "job": "Công việc:",
+        "industry": "Ngành nghề chính:",
+        "desc": "Giới thiệu:",
         "address": "Địa chỉ:",
         "salary": "Lương:",
         "avatar": "Ảnh đại diện:",
@@ -215,6 +216,10 @@
       },
       "save": "Lưu thông tin",
       "edit": "Sửa thông tin"
+    },
+    "notify": {
+      "update-success": "Cập nhật thông tin thành công!",
+      "update-fail": "Cập nhật thông tin thất bại, vui lòng thử lại sau!"
     }
   },
   "job-detail": {

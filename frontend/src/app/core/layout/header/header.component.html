@@ -65,15 +65,15 @@
                          @if (isLoggedIn()) {
                              <div class="right-nav-item">
                                      <div class="profile-wrapper">
-                                         <img class="avatar" src="assets/imgs/candidate/candidate2.jpg" alt="Avatar"/>
-                                         <span>Barry Tech</span>
+                                         <img class="avatar" [src]="user()?.avatarUrl" alt="Avatar"/>
+                                         <span>{{ user()?.fullName }}</span>
                                      </div>  
                                  <div class="sub-items">
                                     <div class="sub-item profile-item">
                                         <i class='bx bx-dollar profile-item-icon'></i>
                                         <div class="profile-item-body">
                                             <span>{{ 'navbar.profile.account' | translate }}</span>
-                                            <span>2000000 vnd</span>
+                                            <span>{{ user()?.balance }} vnd</span>
                                             <span></span>
                                         </div>
                                     </div>
