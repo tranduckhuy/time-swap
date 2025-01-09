@@ -31,6 +31,15 @@
       "find-a-job": "Find A Job",
       "email-placeholder": "Email address",
       "job-alert-btn": "Get Job Alert"
+    },
+    "nice-select": {
+      "filter-by": "Filter by",
+      "filter": {
+        "industry": "Industry",
+        "category": "Category",
+        "city": "Province/City",
+        "ward": "District/Ward"
+      }
     }
   },
   "navbar": {
@@ -103,7 +112,6 @@
       "city": "Filter By Province/City",
       "ward": "Filter By District/Ward",
       "postedDate": {
-        "default": "Filter By Posted Date",
         "all-posted-date": "All Posted Date",
         "today": "Today",
         "yesterday": "Yesterday",
@@ -130,6 +138,28 @@
       "fetch-jobs-failed": "Oops! We encountered an issue while fetching jobs. Please reach out to the administrator for further assistance.",
       "fetch-wards-failed": "Oops! We encountered an issue while fetching wards. Please reach out to the administrator for further assistance."
     }
+  },
+  "job-detail": {
+    "save": "Save",
+    "share": "Share",
+    "report": "Report",
+    "job-description": "Job Description",
+    "location": "Location",
+    "job-information": {
+      "title": "Job Information",
+      "fee": "Fee",
+      "industry": "Industry",
+      "category": "Category",
+      "posted-date": "Posted Date",
+      "applied": "Applied",
+      "applicants": "Applicant(s)"
+    },
+    "owner-information": {
+      "title": "Owner Information",
+      "phone": "Phone",
+      "email": "Email"
+    },
+    "related": "Related Jobs"
   },
   "profile": {
     "tabs": {
@@ -162,27 +192,6 @@
       },
       "button": "Save your information"
     }
-  },
-  "job-detail": {
-    "save": "Save",
-    "share": "Share",
-    "report": "Report",
-    "job-description": "Job Description",
-    "location": "Location",
-    "job-information": {
-      "title": "Job Information",
-      "fee": "Fee",
-      "industry": "Industry",
-      "category": "Category",
-      "posted-date": "Posted Date",
-      "applied": "Applied"
-    },
-    "owner-information": {
-      "title": "Owner Information",
-      "phone": "Phone",
-      "email": "Email"
-    },
-    "related": "Related Jobs"
   },
   "assignee": {
     "assign-now": "Assign Now",

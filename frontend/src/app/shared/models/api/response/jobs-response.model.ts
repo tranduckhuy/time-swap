@@ -6,3 +6,8 @@ export interface JobsResponseModel {
   pageSize: number;
   data: JobPostModel[];
 }
+
+export interface JobDetailResponseModel extends JobPostModel {
+  totalApplicants: number;
+  relatedJobPosts: JobPostModel[];
+}

@@ -1,4 +1,4 @@
-import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
+import { Component, computed, DestroyRef, effect, inject, signal } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router';
 
 import { TranslateModule } from '@ngx-translate/core';
@@ -23,8 +23,10 @@ export class HeaderComponent {
   private readonly destroyRef = inject(DestroyRef);
 
   // ? State Management
+  currentLanguage = this.multiLanguageService.language;
+  
   isHome = signal<boolean>(false);
-  currentLanguage = signal<string>(this.multiLanguageService.language());
+  currentTheme = signal<string>(localStorage.getItem('theme') ?? 'theme-light');
 
   isLoggedIn = computed<boolean>(() => this.authService.isLoggedIn());
 
@@ -40,8 +42,27 @@ export class HeaderComponent {
         }
       });
 
-    this.destroyRef.onDestroy(() => subscription.unsubscribe());
-  }
+    effect(() => {
+      const checkTheme = () => {
+        const theme = localStorage.getItem('theme');
+        if (theme !== this.currentTheme()) {
+          this.currentTheme.set(theme ?? 'theme-light');
+        }
+      };
+
+      // Initial check
+      checkTheme();
+
+      // Set up interval to check localStorage
+      const intervalId = setInterval(checkTheme, 100);
+
+      // Cleanup
+      this.destroyRef.onDestroy(() => {
+        clearInterval(intervalId);
+        subscription.unsubscribe();
+      });
+    });
+  } 
 
   onChangeLanguage(lang: string) {
     this.multiLanguageService.updateLanguage(lang);
@@ -56,5 +77,9 @@ export class HeaderComponent {
         });
       }
     });
+  }
+
+  shouldShowLogoOne() {
+    return this.isHome() && this.currentTheme() === 'theme-light';
   }
 }

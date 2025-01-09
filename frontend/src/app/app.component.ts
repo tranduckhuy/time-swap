@@ -3,6 +3,8 @@ import { RouterOutlet } from '@angular/router';
 
 import { TranslateModule } from '@ngx-translate/core';
 
+import { VIETNAMESE } from './shared/constants/multi-lang-constants';
+
 import { MultiLanguageService } from './shared/services/multi-language.service';
 
 @Component({
@@ -13,9 +15,9 @@ import { MultiLanguageService } from './shared/services/multi-language.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
-  private readonly multiLanguage = inject(MultiLanguageService);
+  private readonly multiLanguageService = inject(MultiLanguageService);
 
   ngOnInit(): void {
-   this.multiLanguage.updateLanguage(this.multiLanguage.language());
+   this.multiLanguageService.updateLanguage(this.multiLanguageService.language() ?? VIETNAMESE);
   }
 }

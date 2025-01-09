@@ -14,5 +14,6 @@ namespace TimeSwap.Domain.Interfaces.Repositories
         Task<int> GetUserJobPostCountOnCurrentDayAsync(Guid userId);
         Task<IEnumerable<JobPost>> GetRelatedJobPostsAsync(Guid jobPostId, int categoryId, int industryId, int limit);
         Task<IEnumerable<JobPost>> GetJobPostsByUserIdAsync(Expression<Func<JobPost, bool>> expression);
+        Task<Pagination<JobPost>?> GetJobPostsByUserIdWithSpecAsync(JobPostByUserSpecParam param);
     }
 }

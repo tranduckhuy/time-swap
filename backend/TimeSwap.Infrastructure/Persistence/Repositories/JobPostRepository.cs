@@ -8,7 +8,7 @@ using TimeSwap.Domain.Specs;
 using TimeSwap.Domain.Specs.Job;
 using TimeSwap.Infrastructure.Persistence.DbContexts;
 using TimeSwap.Infrastructure.Projections;
-using TimeSwap.Infrastructure.Specifications;
+using TimeSwap.Infrastructure.Specifications.JobPosts;
 
 namespace TimeSwap.Infrastructure.Persistence.Repositories
 {
@@ -116,6 +116,12 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
                 .Select(JobPostProjections.SelectJobPostProjection())
                 .AsNoTracking()
                 .ToListAsync();
+        }
+
+        public async Task<Pagination<JobPost>?> GetJobPostsByUserIdWithSpecAsync(JobPostByUserSpecParam param)
+        {
+            var spec = new JobPostByUserSpecification(param);
+            return await GetWithSpecAsync(spec);
         }
     }
 }
