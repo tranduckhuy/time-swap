@@ -8,7 +8,7 @@ using TimeSwap.Domain.Specs;
 using TimeSwap.Domain.Specs.Job;
 using TimeSwap.Infrastructure.Persistence.DbContexts;
 using TimeSwap.Infrastructure.Projections;
-using TimeSwap.Infrastructure.Specifications;
+using TimeSwap.Infrastructure.Specifications.JobPosts;
 
 namespace TimeSwap.Infrastructure.Persistence.Repositories
 {
@@ -98,10 +98,11 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
             return await _context.JobPosts
                 .Include(x => x.Category)
                 .Include(x => x.Industry)
-                .Where(x => x.Id != jobPostId && (x.CategoryId == categoryId || x.IndustryId == industryId))
+                .Where(x => x.Id != jobPostId && (x.CategoryId == categoryId || x.IndustryId == industryId) && x.IsActive)
                 .OrderByDescending(x => x.CreatedAt)
                 .Select(JobPostProjections.SelectJobPostProjection())
                 .Take(limit)
+                .AsNoTracking()
                 .ToListAsync();
         }
 
@@ -113,7 +114,14 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
                 .Where(expression)
                 .OrderByDescending(x => x.CreatedAt)
                 .Select(JobPostProjections.SelectJobPostProjection())
+                .AsNoTracking()
                 .ToListAsync();
+        }
+
+        public async Task<Pagination<JobPost>?> GetJobPostsByUserIdWithSpecAsync(JobPostByUserSpecParam param)
+        {
+            var spec = new JobPostByUserSpecification(param);
+            return await GetWithSpecAsync(spec);
         }
     }
 }

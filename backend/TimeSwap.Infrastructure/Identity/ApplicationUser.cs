@@ -6,10 +6,10 @@ namespace TimeSwap.Infrastructure.Identity
     public class ApplicationUser : IdentityUser
     {
         [MaxLength(50)]
-        public string? FirstName { get; set; } = string.Empty;
+        public string FirstName { get; set; } = string.Empty;
 
         [MaxLength(50)]
-        public string? LastName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
 
         public string? RefreshToken { get; set; }
 
