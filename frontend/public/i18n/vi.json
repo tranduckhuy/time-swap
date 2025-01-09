@@ -31,6 +31,15 @@
       "find-a-job": "Tìm công việc",
       "email-placeholder": "Địa chỉ email",
       "job-alert-btn": "Nhận thông báo công việc"
+    },
+    "nice-select": {
+      "filter-by": "Lọc theo",
+      "filter": {
+        "industry": "ngành",
+        "category": "danh mục",
+        "city": "Tỉnh/Thành phố",
+        "ward": "Huyện/Xã"
+      }
     }
   },
   "navbar": {
@@ -104,7 +113,6 @@
       "city": "Lọc theo Tỉnh/Thành phố",
       "ward": "Lọc theo Huyện/Xã",
       "postedDate": {
-        "default": "Lọc theo ngày đăng",
         "all-posted-date": "Tất cả ngày đăng",
         "today": "Hôm nay",
         "yesterday": "Hôm qua",

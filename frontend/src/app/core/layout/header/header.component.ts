@@ -1,4 +1,4 @@
-import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, DestroyRef, effect, inject, signal, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router';
 
 import { TranslateModule } from '@ngx-translate/core';
@@ -29,6 +29,8 @@ export class HeaderComponent implements OnInit {
   user = this.profileService.user;
   
   isHome = signal<boolean>(false);
+  currentTheme = signal<string>(localStorage.getItem('theme') ?? 'theme-light');
+
   isLoggedIn = computed<boolean>(() => this.authService.isLoggedIn());
 
   constructor() {
@@ -43,8 +45,27 @@ export class HeaderComponent implements OnInit {
         }
       });
 
-    this.destroyRef.onDestroy(() => subscription.unsubscribe());
-  }
+    effect(() => {
+      const checkTheme = () => {
+        const theme = localStorage.getItem('theme');
+        if (theme !== this.currentTheme()) {
+          this.currentTheme.set(theme ?? 'theme-light');
+        }
+      };
+
+      // Initial check
+      checkTheme();
+
+      // Set up interval to check localStorage
+      const intervalId = setInterval(checkTheme, 100);
+
+      // Cleanup
+      this.destroyRef.onDestroy(() => {
+        clearInterval(intervalId);
+        subscription.unsubscribe();
+      });
+    });
+  } 
 
   ngOnInit(): void {
     if (this.isLoggedIn()) {
@@ -65,5 +86,9 @@ export class HeaderComponent implements OnInit {
         });
       }
     });
+  }
+
+  shouldShowLogoOne() {
+    return this.isHome() && this.currentTheme() === 'theme-light';
   }
 }

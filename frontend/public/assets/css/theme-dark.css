@@ -143,6 +143,9 @@
 .theme-dark .side-nav .login-left i {
     color: #ffffff;
 }
+.theme-dark .right-nav-item {
+    color: #fff !important;
+}
 .theme-dark .banner-area {
     background-color: #0e0e0e;
 }

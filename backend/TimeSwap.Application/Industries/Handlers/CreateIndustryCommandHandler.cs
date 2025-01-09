@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using TimeSwap.Application.Exceptions.Industries;
 using TimeSwap.Application.Industries.Commands;
 using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Interfaces.Repositories;
@@ -16,6 +17,10 @@ namespace TimeSwap.Application.Industries.Handlers
 
         public async Task<int> Handle(CreateIndustryCommand request, CancellationToken cancellationToken)
         {
+            if (await _industryRepository.GetIndustryByNameAsync(request.IndustryName) != null)
+            {
+                throw new IndustrySameNameException();
+            }
 
             var industry = new Industry
             {

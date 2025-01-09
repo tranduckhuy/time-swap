@@ -1,14 +1,41 @@
-<div class="employer-item" (click)="navigateToJobPost(job().id)" style="cursor: pointer;">
-    <img [src]="job().ownerAvatarUrl" [alt]="job().title" class="owner-avt">
-    <h3>{{ job().title }}</h3>
-    <ul>
-        <li>
-            <i class="flaticon-send"></i>
-            {{ job().ward.fullLocation }}
-        </li>
-        <li>{{ job().createdAt | date: 'fullDate' }}</li>
-    </ul>
-    <p class="job-description" [title]="job().description">{{ job().description }}</p>
-    <span class="span-one">{{ job().category.categoryName }}</span>
-    <span class="span-two">{{ job().industry.industryName }}</span>
+<div class="job-item">
+    <div (click)="navigateToJobPost(job().id)" style="cursor: pointer;">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <div class="job-left">
+                    <img [src]="job().ownerAvatarUrl" [alt]="job().title" class="owner-avt"/>
+                    <h3 class="text-clamp" [title]="job().title">{{ job().title }}</h3>
+                    <p>{{ job().industry.industryName }}</p>
+                    <ul>
+                        <li style="font-weight: 600;">{{ job().fee | customCurrency: lang() }}</li>
+                        <li>
+                            <i class="flaticon-appointment"></i>
+                            {{ job().createdAt | date: 'fullDate' }}
+                        </li>
+                        <li class="text-clamp" [title]="job().ward.fullLocation">
+                            <i class="bx bx-location-plus"></i>
+                            {{ job().ward.fullLocation }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="job-right">
+                    <ul>
+                        <li>
+                            <i class="flaticon-customer"></i>
+                            {{ job().industry.industryName }}
+                        </li>
+                        <li>
+                            <i class="flaticon-mortarboard"></i>
+                            {{ job().category.categoryName }}
+                        </li>
+                        <li>
+                            <span>See Detail</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
