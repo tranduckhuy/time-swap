@@ -42,6 +42,8 @@ namespace TimeSwap.Infrastructure.Identity
                 Id = userProfile.Id,
                 Email = userProfile.Email,
                 FullName = userProfile.FullName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 PhoneNumber = user.PhoneNumber!,
                 Role = userRoles.ToList(),
                 FullLocation = userProfile.Ward?.FullLocation,
