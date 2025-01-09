@@ -117,10 +117,31 @@ namespace TimeSwap.Api.Controllers
 
         [HttpGet("user/{userId:guid}")]
         [Authorize]
+        [ProducesResponseType(typeof(ApiResponse<IEnumerable<JobPostResponse>>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetJobPostsByUserId(Guid userId, bool isOwner)
         {
             var query = new GetJobPostsByUserIdQuery(userId, isOwner);
             return await ExecuteAsync<GetJobPostsByUserIdQuery, IEnumerable<JobPostResponse>>(query);
+        }
+
+        // Get all job posts by user id with pagination
+        [HttpGet("user/pagination")]
+        [Authorize]
+        [ProducesResponseType(typeof(ApiResponse<Pagination<JobPostResponse>>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetJobPostsByUserIdWithPagination([FromQuery] JobPostByUserSpecParam request)
+        {
+            if (request.UserId == Guid.Empty)
+            {
+                return BadRequest(new ApiResponse<object>
+                {
+                    StatusCode = (int)Shared.Constants.StatusCode.ModelInvalid,
+                    Message = ResponseMessages.GetMessage(Shared.Constants.StatusCode.ModelInvalid),
+                    Errors = ["The user id is required in the request"]
+                });
+            }
+
+            var query = new GetJobPostsByUserIdWithPaginationQuery(request);
+            return await ExecuteAsync<GetJobPostsByUserIdWithPaginationQuery, Pagination<JobPostResponse>>(query);
         }
     }
 }
