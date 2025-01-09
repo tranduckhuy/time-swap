@@ -8,11 +8,13 @@ import { filter } from 'rxjs';
 import { AuthService } from '../../auth/auth.service';
 import { MultiLanguageService } from '../../../shared/services/multi-language.service';
 import { ProfileService } from '../../../modules/user/pages/profile/profile.service';
+import { VIETNAMESE } from '../../../shared/constants/multi-lang-constants';
+import { CustomCurrencyPipe } from '../../../shared/pipes/custom-currency.pipe';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, TranslateModule],
+  imports: [RouterLink, TranslateModule, CustomCurrencyPipe],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
@@ -32,6 +34,7 @@ export class HeaderComponent implements OnInit {
   currentTheme = signal<string>(localStorage.getItem('theme') ?? 'theme-light');
 
   isLoggedIn = computed<boolean>(() => this.authService.isLoggedIn());
+  lang = computed(() => this.multiLanguageService.language() === VIETNAMESE ? 'vi' : 'en');
 
   constructor() {
     const subscription = this.router.events
