@@ -6,7 +6,7 @@ using TimeSwap.Domain.Specs.Job;
 using TimeSwap.Infrastructure.Projections;
 using TimeSwap.Shared.Constants;
 
-namespace TimeSwap.Infrastructure.Specifications
+namespace TimeSwap.Infrastructure.Specifications.JobPosts
 {
     public class JobPostSpecification : ISpecification<JobPost>
     {
