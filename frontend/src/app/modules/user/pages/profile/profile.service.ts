@@ -133,12 +133,12 @@ export class ProfileService {
 
     const majorIndustry =
       majorIndustryId !== undefined
-        ? industries.find((ind) => ind.id === majorIndustryId)?.industryName || 'Unknown'
+        ? industries.find((ind) => ind.id === majorIndustryId)?.industryName ?? 'Unknown'
         : user.majorIndustry;
 
     const fullLocation =
       cityId && wardId
-        ? wards.find((ward) => ward.id === wardId)?.fullLocation || 'Unknown Location'
+        ? wards.find((ward) => ward.id === wardId)?.fullLocation ?? 'Unknown Location'
         : user.fullLocation;
 
     return { ...rest, majorIndustry, fullLocation };

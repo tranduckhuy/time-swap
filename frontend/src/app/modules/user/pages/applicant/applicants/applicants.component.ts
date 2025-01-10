@@ -63,9 +63,6 @@ export class ApplicantsComponent implements OnInit {
           const {data} = res
           this.applicants.set(data)
           this.totalApplicants.set(data.length)
-          // const {data, count} = res.data
-          // this.totalApplicants.set(count)
-          // this.applicants.set(data)
         } else {
           this.showFetchErrorToast();
         }
