@@ -13,7 +13,6 @@ import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
-  Validators,
 } from '@angular/forms';
 import { NiceSelectComponent } from '../../../../../../shared/components/nice-select/nice-select.component';
 import { JobsService } from '../../../jobs/jobs.service';
@@ -86,12 +85,15 @@ export class MyProfileComponent implements OnInit {
   onSubmit(): void {
     if (this.isEditing()) {
       this.toggleEditing(false);
-      this.profileService
-        .updateUserProfile(this.form.value, this.industries(), this.wards(), this.user()!)
+      const user = this.user();
+      if (user) {
+        this.profileService
+        .updateUserProfile(this.form.value, this.industries(), this.wards(), user)
         .subscribe({
           next: () => this.showSuccessToast(),
           error: () => this.showErrorToast(),
         });
+      }
     } else {
       this.toggleEditing(true);
       this.fetchInitialData();

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BannerComponent } from "../../../../shared/components/banner/banner.component";
 import { BreadcrumbComponent } from "../../../../shared/components/breadcrumb/breadcrumb.component";
 import { ProfileTabsComponent } from "./profile-tabs/profile-tabs.component";
