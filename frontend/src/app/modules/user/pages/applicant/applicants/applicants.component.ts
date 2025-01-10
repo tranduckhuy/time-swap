@@ -1,17 +1,22 @@
 import { Component, DestroyRef, inject, OnInit, signal, computed } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
 import { TranslateModule } from '@ngx-translate/core';
+
 import { BannerComponent } from '../../../../../shared/components/banner/banner.component';
 import { BreadcrumbComponent } from '../../../../../shared/components/breadcrumb/breadcrumb.component';
 import { PaginationComponent } from '../../../../../shared/components/pagination/pagination.component';
 import { ApplicantCardComponent } from './applicant-card/applicant-card.component';
-import { ApplicantsService } from '../applicants.service';
-import { SUCCESS_CODE } from '../../../../../shared/constants/status-code-constants';
-import { ApplicantModel } from '../../../../../shared/models/entities/applicant.model';
-import { ActivatedRoute } from '@angular/router';
 import { PreLoaderComponent } from "../../../../../shared/components/pre-loader/pre-loader.component";
-import { ToastHandlingService } from '../../../../../shared/services/toast-handling.service';
+
+import { SUCCESS_CODE } from '../../../../../shared/constants/status-code-constants';
 import { PAGE_SIZE_APPLICANTS } from '../../../../../shared/constants/page-constants';
-import { ApplicantsRequestModel } from '../../../../../shared/models/api/request/applicants-request.model';
+
+import { ApplicantsService } from '../applicants.service';
+import { ToastHandlingService } from '../../../../../shared/services/toast-handling.service';
+
+import type { ApplicantModel } from '../../../../../shared/models/entities/applicant.model';
+import type { ApplicantsRequestModel } from '../../../../../shared/models/api/request/applicants-request.model';
 
 @Component({
   selector: 'app-applicants',
@@ -40,12 +45,18 @@ export class ApplicantsComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly toastHandlingService = inject(ToastHandlingService);
 
-
-  constructor(private route: ActivatedRoute) {}
+  // ? Dependency Injection
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly router = inject(Router);
 
   ngOnInit(): void {
-    this.jobId.set(this.route.snapshot.paramMap.get('jobId')!);
-    this.search(this.jobId())
+    const jobId = this.activatedRoute.snapshot.paramMap.get('jobId');
+    if (!jobId) {
+      this.router.navigateByUrl('/not-found');
+      return;
+    }
+    this.jobId.set(jobId);
+    this.search(this.jobId());
   }
 
   private search(jobId: string): void {
