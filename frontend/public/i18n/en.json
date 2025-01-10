@@ -60,12 +60,14 @@
         "title": "My Profile",
         "description": "View personal profile details"
       },
+      "account": "Account",
+      "add-money": "Deposit Money",
       "sign-out": "Sign out"
     } 
   },
   "banner": {
     "profile": "Profile",
-    "assignees": "Assignees"
+    "applicants": "Applicants"
   },
   "auth": {
     "email": "Email",
@@ -94,9 +96,6 @@
       "success": "Registration successful. Please check your inbox to confirm your email.",
       "failure": "Register failed. Please try again.",
       "email-exist": "Registration failed. This email is already in use. Please use a different email."
-    },
-    "logout": {
-      "success": "Logout successful!"
     }
   },
   "jobs": {
@@ -147,6 +146,7 @@
     "job-responsibilities": "Job Responsibilities",
     "no-responsibilities": "This job does not have specific responsibilities.",
     "related": "Related Jobs",
+    "view-applicants": "View Applicants",
     "location": "Location",
     "job-information": {
       "title": "Job Information",
@@ -177,10 +177,15 @@
         "email": "Your Email:",
         "phone": "Phone:",
         "dob": "Date Of Birth:",
-        "job": "Job Title:",
-        "position": "Position:",
+        "industry": "Major Industry:",
+        "desc": "Description:",
+        "address": "Address:",
         "salary": "Salary",
-        "avatar": "Cover Picture"
+        "avatar": "Cover Picture",
+        "subscription-plan": "Subscription Plan:",
+        "subscription-expired": "Subscription Expired Date:",
+        "city": "City (Province):",
+        "full-location": "Full Location:"
       },
       "education": {
         "heading": "Education",
@@ -192,10 +197,15 @@
       "socials": {
         "heading": "Social Links"
       },
-      "button": "Save your information"
+      "save": "Save your information",
+      "edit": "Edit your information"
+    },
+    "notify": {
+      "update-success": "Update successfully",
+      "update-fail": "There are something wrong, please try again later!"
     }
   },
-  "assignee": {
+  "applicant": {
     "assign-now": "Assign Now",
     "my-profile": "My Profile",
     "work-exp": "Work Experience",

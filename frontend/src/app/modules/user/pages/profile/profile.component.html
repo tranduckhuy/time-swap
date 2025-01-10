@@ -1,3 +1,4 @@
+
 <!-- Page Title -->
 <app-banner>
     <app-breadcrumb [title]="'banner.profile' | translate"/>
@@ -9,9 +10,9 @@
         <div class="row">
             <div class="col-lg-4">
                 <div class="profile-item">
-                    <img src="assets/imgs/user/dashboard1.jpg" alt="Dashboard">
-                    <h2>Tom Henry</h2>
-                    <span>Web Developer</span>
+                    <img [src]="user()?.avatarUrl" alt="Dashboard">
+                    <h2>{{ user()?.fullName }}</h2>
+                    <span></span>
                 </div>
                 <app-profile-tabs />
             </div>

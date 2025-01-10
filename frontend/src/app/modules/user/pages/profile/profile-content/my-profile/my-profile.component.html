@@ -1,118 +1,112 @@
-<div class="tab-pane fade active show" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-    <div class="profile-content">
-        <form>
-            <div class="profile-content-inner">
-                <h2>{{ 'profile.form.info.heading' | translate }}</h2>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label>{{ 'profile.form.info.name' | translate }}</label>
-                            <input type="text" class="form-control" placeholder="Tom Henry">
+    @if (isLoading()) {
+        <app-loader />
+    }
+
+    <app-toast/>
+    
+    <div class="tab-pane fade active show" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+        <div class="profile-content">
+            <form [formGroup]="form">
+                <div class="profile-content-inner">
+                    <h2>{{ 'profile.form.info.heading' | translate }}</h2>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label><i class='bx bx-edit-alt'></i> {{ 'profile.form.info.name' | translate }}</label>
+                                <input type="text" class="form-control" placeholder="Tom Henry" [value]="user()?.fullName" formControlName="fullName">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label>{{ 'profile.form.info.email' | translate }}</label>
-                            <input type="email" class="form-control" placeholder="hello@jecto.com">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>{{ 'profile.form.info.email' | translate }}</label>
+                                <input type="email" class="form-control" placeholder="hello@jecto.com" [value]="user()?.email" disabled>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label>{{ 'profile.form.info.phone' | translate }}</label>
-                            <input type="text" class="form-control" placeholder="+123 - 456 - 789">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label><i class='bx bx-edit-alt'></i> {{ 'profile.form.info.phone' | translate }}</label>
+                                <input type="text" class="form-control" placeholder="+123 - 456 - 789" [value]="user()?.phoneNumber" formControlName="phoneNumber">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label>{{ 'profile.form.info.dob' | translate }}</label>
-                            <input type="text" class="form-control" placeholder="01/01/1995">
+                        
+                        @if (isEditing()) {
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Major Industry:</label>
+                                    <select style="display: none;" formControlName="majorIndustryId">
+                                        @for (industry of industries(); track industry.id) {
+                                            <option [value]="industry.id">{{ industry }}</option>
+                                        }
+                                    </select>
+                                    <app-nice-select 
+                                        [listData]="industriesName()" 
+                                        (valueChange)="handleSelectChange('majorIndustryId', $event, industries())"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>{{ 'profile.form.info.city' | translate }}</label>
+                                    <select style="display: none;" formControlName="cityId">
+                                        @for (city of cities(); track city.id) {
+                                            <option [value]="city.id">{{ city }}</option>
+                                        }
+                                    </select>
+                                    <app-nice-select 
+                                    [listData]="citiesName()" 
+                                    (valueChange)="handleSelectChange('cityId', $event, cities())"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-lg-6" style="margin-bottom: 30px;">
+                                <div class="form-group">
+                                    <label>{{ 'profile.form.info.full-location' | translate }}</label>
+                                    <select style="display: none;" formControlName="wardId">
+                                        @for (ward of wards(); track ward.id) {
+                                            <option [value]="ward.id">{{ ward.fullLocation }}</option>
+                                        }
+                                    </select>
+                                    <app-nice-select 
+                                        [listData]="wardsName()" 
+                                        (valueChange)="handleSelectChange('wardId', $event, wards())"
+                                    />
+                                </div>
+                            </div>
+                        } @else {
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label><i class='bx bx-edit-alt'></i> {{ 'profile.form.info.industry' | translate }} </label>
+                                    <input type="text" class="form-control" placeholder="Web Developer" [value]="user()?.majorIndustry" disabled >
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label><i class='bx bx-edit-alt'></i> {{ 'profile.form.info.address' | translate }}</label>
+                                    <input type="text" class="form-control" [value]="user()?.fullLocation" disabled>
+                                </div>
+                            </div>
+                        }
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label><i class='bx bx-edit-alt'></i> {{ 'profile.form.info.desc' | translate }}</label>
+                                <textarea style="height: 150px;" formControlName="description" type="text" class="form-control" placeholder="Basic" [value]="user()?.description"></textarea>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label>{{ 'profile.form.info.job' | translate }}</label>
-                            <input type="text" class="form-control" placeholder="Web Developer">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>{{ 'profile.form.info.subscription-plan' | translate }}</label>
+                                <input type="text" class="form-control" placeholder="Basic" [value]="subscription()" disabled>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label>{{ 'profile.form.info.position' | translate }}</label>
-                            <input type="text" class="form-control" placeholder="Team Leader">
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label>{{ 'profile.form.info.salary' | translate }}</label>
-                            <input type="text" class="form-control" placeholder="$1500/per month">
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label>{{ 'profile.form.info.avatar' | translate }}</label>
-                            <input class="form-control" type="file">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="profile-content-inner">
-                <h2>{{ 'profile.form.education.heading' | translate }}</h2>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label>{{ 'profile.form.education.title' | translate }}</label>
-                            <input type="text" class="form-control" placeholder="Under Graduate">
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label>{{ 'profile.form.education.degree' | translate }}</label>
-                            <input type="text" class="form-control" placeholder="BSC in Computer Science">
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label>{{ 'profile.form.education.institute' | translate }}</label>
-                            <input type="text" class="form-control" placeholder="Jecto University &amp; Technology, UK">
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label>{{ 'profile.form.education.year' | translate }}</label>
-                            <input type="text" class="form-control" placeholder="2015 - 2024">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="profile-content-inner">
-                <h2>{{ 'profile.form.socials.heading' | translate }}</h2>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label>Facebook:</label>
-                            <input type="text" class="form-control" placeholder="https://www.facebook.com">
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label>Twitter:</label>
-                            <input type="text" class="form-control" placeholder="https://www.twitter.com">
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label>Instagram:</label>
-                            <input type="text" class="form-control" placeholder="https://www.instagram.com">
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label>Linkedin:</label>
-                            <input type="text" class="form-control" placeholder="https://www.linkedin.com">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label>{{ 'profile.form.info.subscription-expired' | translate }}</label>
+                                <input type="text" class="form-control" placeholder="Basic" [value]="user()?.subscriptionExpiryDate | date:'medium'" disabled>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <button type="submit" class="btn dashboard-btn">{{ 'profile.form.button' | translate }}</button>
-        </form>
+                <button type="submit" class="btn dashboard-btn" (click)="onSubmit()">{{ isEditing() ? ('profile.form.save' | translate) : ('profile.form.edit' | translate) }}</button>
+            </form>
+        </div>
     </div>
-</div>

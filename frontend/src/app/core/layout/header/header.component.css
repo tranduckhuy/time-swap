@@ -76,6 +76,19 @@
     align-items: center;
 }
 
+.profile-item:first-child {
+    background-color: #221668;
+    color: #fff;
+    cursor: default;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.profile-item:first-child .profile-item-icon {
+    background-color: #6958cd7d;
+    color: #fff;
+}
+
 .avatar {
     width: 40px;
     height: 40px;

@@ -1,2 +1,15 @@
-<div class="tab-pane" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-</div>
+@if (isLoading()) {
+    <app-loader />
+}
+
+@if (jobs().length > 0) {
+    <div class="tab-pane fade active show" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab" >
+        @for (job of jobs(); track job.id) {
+            <div class="col-12">
+                <app-job-post [job]="job"/>
+            </div>
+        }
+    </div>
+} @else {
+    <app-empty-job [title]="'Your Applied Jobs'" [desc]="'Visit posted job list to consult!'" [btn]="{ msg: 'Go to Jobs List', link: '/jobs' }"/>
+}

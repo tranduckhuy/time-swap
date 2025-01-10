@@ -8,8 +8,6 @@ import { AboutComponent } from './pages/about/about.component';
 import { JobListComponent } from './pages/jobs/job-list.component';
 import { JobDetailComponent } from './pages/jobs/job-detail/job-detail.component';
 import { PostJobComponent } from './pages/jobs/post-job/post-job.component';
-import { AssigneesComponent } from './pages/assignee/assignees/assignees.component';
-import { AssigneeDetailComponent } from './pages/assignee/assignee-detail/assignee-detail.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 
@@ -18,6 +16,9 @@ import { authGuard } from '../../core/auth/auth.guard';
 import { JobsService } from './pages/jobs/jobs.service';
 
 import type { JobDetailResponseModel } from '../../shared/models/api/response/jobs-response.model';
+
+import { ApplicantsComponent } from './pages/applicant/applicants/applicants.component';
+import { ApplicantDetailComponent } from './pages/applicant/applicant-detail/applicant-detail.component';
 
 const jobDetailResolver: ResolveFn<JobDetailResponseModel | null> = (activatedRoute) => {
     const jobsService = inject(JobsService);
@@ -61,12 +62,12 @@ export const userRoutes: Routes = [
         component: PostJobComponent
     },
     {
-        path: 'assignees',
-        component: AssigneesComponent
+        path: 'applicants/:jobId',
+        component: ApplicantsComponent,
     },
     {
-        path: 'assignees/:assigneeId',
-        component: AssigneeDetailComponent
+        path: 'applicants/:jobId/:applicantId',
+        component: ApplicantDetailComponent
     },
     {
         path: 'contact',

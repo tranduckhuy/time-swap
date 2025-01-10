@@ -11,8 +11,8 @@ export interface JobPostModel {
   ownerLocation: string;
   title: string;
   description: string;
-  responsibilitiesString: string;
-  responsibilities: string[];
+  responsibilities: string;
+  responsibilitiesList: string[];
   fee: number;
   startDate: Date;
   dueDate: Date;

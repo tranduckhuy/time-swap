@@ -65,10 +65,25 @@
                          @if (isLoggedIn()) {
                              <div class="right-nav-item">
                                      <div class="profile-wrapper">
-                                         <img class="avatar" [src]="userInfo()?.avatarUrl" alt="Avatar"/>
-                                         <span>{{ userInfo()?.name }}</span>
+                                         <img class="avatar" [src]="user()?.avatarUrl" alt="Avatar"/>
+                                         <span>{{ user()?.fullName }}</span>
                                      </div>  
                                  <div class="sub-items">
+                                    <div class="sub-item profile-item">
+                                        <i class='bx bx-dollar profile-item-icon'></i>
+                                        <div class="profile-item-body">
+                                            <span>{{ 'navbar.profile.account' | translate }}</span>
+                                            <span>{{ user()?.balance | customCurrency: lang()}}</span>
+                                            <span></span>
+                                        </div>
+                                    </div>
+                                     <a routerLink="/profile" class="sub-item profile-item">
+                                         <i class='bx bx-wallet-alt profile-item-icon'></i>
+                                         <div class="profile-item-body">
+                                             <span>{{ 'navbar.profile.add-money' | translate }}</span>
+                                             <span></span>
+                                         </div>
+                                     </a>
                                      <a routerLink="/profile" class="sub-item profile-item">
                                          <i class='bx bx-user-pin profile-item-icon'></i>
                                          <div class="profile-item-body">

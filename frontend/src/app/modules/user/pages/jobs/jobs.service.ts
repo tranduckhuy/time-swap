@@ -114,8 +114,8 @@ export class JobsService {
       .pipe(
         map((res) => {
           if (res.statusCode === SUCCESS_CODE && res.data) {
-            res.data.responsibilities = res.data.responsibilitiesString 
-              ? res.data.responsibilitiesString
+            res.data.responsibilitiesList = res.data.responsibilities 
+              ? res.data.responsibilities
                 .split(/,\s?/)
                 .map(responsibility => `${responsibility.trim()}.`)
               : [this.multiLanguageService.getTranslatedLang('job-detail.no-responsibilities')];

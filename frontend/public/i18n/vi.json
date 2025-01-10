@@ -60,12 +60,14 @@
         "title": "Hồ sơ của tôi",
         "description": "Xem chi tiết hồ sơ cá nhân"
       },
+      "account": "Tài khoản",
+      "add-money": "Nạp tiền",
       "sign-out": "Đăng xuất"
     } 
   },
   "banner": {
     "profile": "Hồ sơ",
-    "assignees": "Người nhận việc"
+    "applicants": "Ứng viên"
   },
   "auth": {
     "email": "Email",
@@ -102,7 +104,6 @@
   "jobs": {
     "showing": "Hiển thị",
     "of": "trên tổng số",
-    "results": "kết quả",
     "filter": {
       "title": "Tiêu đề",
       "min-fee": "Từ mức phí",
@@ -135,8 +136,8 @@
       "ward": "Phường/Xã:"
     },
     "notify": {
-      "fetch-jobs-failed": "Rất tiếc! Đã xảy ra sự cố khi lấy danh sách công việc. Vui lòng liên hệ với quản trị viên để được hỗ trợ thêm.",
-      "fetch-wards-failed": "Rất tiếc! Đã xảy ra sự cố khi lấy danh sách khu vực. Vui lòng liên hệ với quản trị viên để được hỗ trợ thêm."
+      "fetch-jobs-failed": "Rất tiếc! Chúng tôi gặp sự cố khi lấy thông tin công việc. Vui lòng liên hệ với quản trị viên để được hỗ trợ thêm.",
+      "fetch-wards-failed": "Rất tiếc! Chúng tôi gặp sự cố khi lấy thông tin huyện/xã. Vui lòng liên hệ với quản trị viên để được hỗ trợ thêm."
     }
   },
   "job-detail": {
@@ -147,6 +148,7 @@
     "job-responsibilities": "Trách nhiệm công việc",
     "no-responsibilities": "Công việc này không yêu cầu trách nhiệm cụ thể.",
     "related": "Công việc liên quan",
+    "view-applicants": "Xem danh sách ứng viên",
     "location": "Vị trí",
     "job-information": {
       "title": "Thông tin công việc",
@@ -177,10 +179,15 @@
         "email": "Email:",
         "phone": "Số điện thoại:",
         "dob": "Ngày sinh:",
-        "job": "Công việc:",
-        "position": "Vị trí:",
+        "industry": "Ngành nghề chính:",
+        "desc": "Giới thiệu:",
+        "address": "Địa chỉ:",
         "salary": "Lương:",
-        "avatar": "Ảnh đại diện:"
+        "avatar": "Ảnh đại diện:",
+        "subscription-plan": "Gói đăng ký:",
+        "subscription-expired": "Ngày hết hạn đăng ký:",
+        "city": "Thành phố (Tỉnh):",
+        "full-location": "Địa chỉ đầy đủ:"
       },
       "education": {
         "heading": "Giáo dục",
@@ -192,28 +199,33 @@
       "socials": {
         "heading": "Liên kết"
       },
-      "button": "Lưu thông tin"
+      "save": "Lưu thông tin",
+      "edit": "Sửa thông tin"
+    },
+    "notify": {
+      "update-success": "Cập nhật thông tin thành công!",
+      "update-fail": "Cập nhật thông tin thất bại, vui lòng thử lại sau!"
     }
   },
-  "assignee": {
-    "assign-now": "Giao Ngay",
-    "my-profile": "Hồ sơ của tôi",
-    "work-exp": "Kinh nghiệm",
-    "skill": "Kĩ năng",
-    "portfolio": "Portfolio",
-    "add-review": "Thêm đánh giá",
-    "review-msg": "Đánh giá của bạn cho mục này",
-    "review-option": "Lưu tên, email và trang web của tôi trên trình duyệt này để lần sau tôi bình luận.",
-    "name": "Tên",
-    "email": "Email",
-    "write-msg": "Đánh giá của bạn",
-    "submit": "Gửi đánh giá",
-    "job-overview": "Tổng quan công việc",
-    "experience": "Kinh nghiệm:",
-    "age": "Tuổi:",
-    "languages": "Ngôn ngữ:",
-    "qualification": "Bằng cấp:",
-    "gender": "Giới tính:"
+  "applicant": {
+      "assign-now": "Giao Ngay",
+      "my-profile": "Hồ sơ của tôi",
+      "work-exp": "Kinh nghiệm",
+      "skill": "Kĩ năng",
+      "portfolio": "Portfolio",
+      "add-review": "Thêm đánh giá",
+      "review-msg": "Đánh giá của bạn cho mục này",
+      "review-option": "Lưu tên, email và trang web của tôi trên trình duyệt này để lần sau tôi bình luận.",
+      "name": "Tên",
+      "email": "Email",
+      "write-msg": "Đánh giá của bạn",
+      "submit": "Gửi đánh giá",
+      "job-overview": "Tổng quan công việc",
+      "experience": "Kinh nghiệm:",
+      "age": "Tuổi:",
+      "languages": "Ngôn ngữ:",
+      "qualification": "Bằng cấp:",
+      "gender": "Giới tính:"
   },
   "contact": {
     "heading": "Liên hệ với chúng tôi",
