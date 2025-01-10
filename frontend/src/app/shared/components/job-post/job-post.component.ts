@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { CustomCurrencyPipe } from '../../pipes/custom-currency.pipe';
 
-import { VIETNAMESE } from '../../constants/multi-lang-constants';
+import { ENGLISH, VIETNAMESE } from '../../constants/multi-lang-constants';
 
 import { MultiLanguageService } from '../../services/multi-language.service';
 
@@ -22,7 +22,7 @@ export class JobPostComponent {
   private readonly multiLanguageService = inject(MultiLanguageService);
 
   job = input.required<JobPostModel>();
-  lang = computed(() => this.multiLanguageService.language() === VIETNAMESE ? 'vi' : 'en');
+  lang = computed(() => this.multiLanguageService.language() === VIETNAMESE ? VIETNAMESE : ENGLISH);
 
   navigateToJobPost(jobId: string) {
     this.router.navigate(['/jobs', jobId]).then(() => {
