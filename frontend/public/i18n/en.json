@@ -144,6 +144,9 @@
     "share": "Share",
     "report": "Report",
     "job-description": "Job Description",
+    "job-responsibilities": "Job Responsibilities",
+    "no-responsibilities": "This job does not have specific responsibilities.",
+    "related": "Related Jobs",
     "location": "Location",
     "job-information": {
       "title": "Job Information",
@@ -155,11 +158,10 @@
       "applicants": "Applicant(s)"
     },
     "owner-information": {
-      "title": "Owner Information",
-      "phone": "Phone",
+      "title": "Poster Information",
+      "name": "Poster Name",
       "email": "Email"
-    },
-    "related": "Related Jobs"
+    }
   },
   "profile": {
     "tabs": {
