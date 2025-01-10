@@ -19,23 +19,23 @@ import { createHttpParams } from '../../../../shared/utils/request-utils';
 export class ProfileService {
   private readonly httpClient = inject(HttpClient);
 
-  // API Base URLs
+  // ? API Base URLs
   private readonly BASE_AUTH_API_URL = environment.apiAuthBaseUrl;
   private readonly BASE_API_URL = environment.apiBaseUrl;
   private readonly PROFILE_API_URL = `${this.BASE_AUTH_API_URL}/users/profile`;
-  private readonly JOBPOSTS_API_URL = `${this.BASE_API_URL}/jobposts/user`;
+  private readonly JOB_POSTS_API_URL = `${this.BASE_API_URL}/jobposts/user`;
 
-  // State Management Signals
+  // ? State Management Signals
   private readonly userSignal = signal<UserModel | null>(null);
   private readonly jobsSignal = signal<JobPostModel[]>([]);
   private readonly subscriptionSignal = signal<string>(SUBSCRIPTIONS[0]);
   private readonly loadingSignal = signal(false);
 
-  // Readonly Exposed Signals
-  readonly user = this.userSignal.asReadonly();
-  readonly jobs = this.jobsSignal.asReadonly();
-  readonly subscription = this.subscriptionSignal.asReadonly();
-  readonly isLoading = this.loadingSignal.asReadonly();
+  // ? Readonly Exposed Signals
+  user = this.userSignal.asReadonly();
+  jobs = this.jobsSignal.asReadonly();
+  subscription = this.subscriptionSignal.asReadonly();
+  isLoading = this.loadingSignal.asReadonly();
 
   getUserProfile(): Observable<void> {
     this.loadingSignal.set(true);
@@ -82,7 +82,7 @@ export class ProfileService {
   getJobPostsByUserId(isOwner: boolean, userId: string): Observable<void> {
     this.loadingSignal.set(true);
     return this.httpClient
-      .get<BaseResponseModel<JobPostModel | JobPostModel[]>>(`${this.JOBPOSTS_API_URL}/${userId}`, {
+      .get<BaseResponseModel<JobPostModel | JobPostModel[]>>(`${this.JOB_POSTS_API_URL}/${userId}`, {
         params: createHttpParams({ isOwner }),
       })
       .pipe(

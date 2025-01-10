@@ -58,39 +58,6 @@ export const userRoutes: Routes = [
         }
     },
     {
-        path: 'jobs-detail',
-        component: JobDetailComponent,
-        data: {
-            job: {
-                "id": "2c2c2c2c-2c2c-2c2c-2c2c-2c2c2c2c2c2c",
-                "userId": "2a2a2a2a-2a2a-2a2a-2a2a-2a2a2a2a2a2a",
-                "title": "Code hộ",
-                "description": "Cần code hộ backend cho 1 ứng dụng di động",
-                "fee": 200,
-                "startDate": null,
-                "dueDate": "2025-01-30T08:31:04.768793Z",
-                "assignedTo": null,
-                "isOwnerCompleted": false,
-                "isAssigneeCompleted": false,
-                "category": {
-                  "id": 1,
-                  "categoryName": "Code hộ"
-                },
-                "industry": {
-                    "id": 1,
-                    "industryName": "Công Nghệ Thông Tin"
-                },
-                "ward": {
-                  "id": "21550",
-                  "name": "Nhơn Bình",
-                  "fullLocation": "Phường Nhơn Bình, Quy Nhơn, Bình Định"
-                },
-                "createdAt": "2024-12-31T08:31:04.768792Z",
-                "modifiedAt": "0001-01-01T00:00:00"
-              },
-        }
-    },
-    {
         path: 'post-job',
         component: PostJobComponent
     },

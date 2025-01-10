@@ -1,15 +1,17 @@
-import { Component, computed, DestroyRef, effect, inject, signal, OnInit } from '@angular/core';
+import { Component, OnInit, DestroyRef, inject, signal, computed } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router';
 
 import { TranslateModule } from '@ngx-translate/core';
 
 import { filter } from 'rxjs';
 
-import { AuthService } from '../../auth/auth.service';
-import { MultiLanguageService } from '../../../shared/services/multi-language.service';
-import { ProfileService } from '../../../modules/user/pages/profile/profile.service';
-import { VIETNAMESE } from '../../../shared/constants/multi-lang-constants';
 import { CustomCurrencyPipe } from '../../../shared/pipes/custom-currency.pipe';
+
+import { ENGLISH, VIETNAMESE } from '../../../shared/constants/multi-lang-constants';
+
+import { AuthService } from '../../auth/auth.service';
+import { ProfileService } from '../../../modules/user/pages/profile/profile.service';
+import { MultiLanguageService } from '../../../shared/services/multi-language.service';
 
 @Component({
   selector: 'app-header',
@@ -34,45 +36,37 @@ export class HeaderComponent implements OnInit {
   currentTheme = signal<string>(localStorage.getItem('theme') ?? 'theme-light');
 
   isLoggedIn = computed<boolean>(() => this.authService.isLoggedIn());
-  lang = computed(() => this.multiLanguageService.language() === VIETNAMESE ? 'vi' : 'en');
+  lang = computed(() => this.multiLanguageService.language() === VIETNAMESE ? VIETNAMESE : ENGLISH);
 
   constructor() {
-    const subscription = this.router.events
+    // ? Subscribe to router events
+    const routerSubscription = this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         const currentUrl = event.urlAfterRedirects;
-        if (currentUrl === '/' || currentUrl === '/home' || currentUrl.includes('/home')) {
-          this.isHome.set(true);
-        } else {
-          this.isHome.set(false);
-        }
+        this.isHome.set(currentUrl === '/' || currentUrl.startsWith('/home'));
       });
 
-    effect(() => {
-      const checkTheme = () => {
-        const theme = localStorage.getItem('theme');
-        if (theme !== this.currentTheme()) {
-          this.currentTheme.set(theme ?? 'theme-light');
-        }
-      };
+    // ? Set up interval to check localStorage
+    const intervalId = setInterval(() => {
+      const theme = localStorage.getItem('theme');
+      if (theme !== this.currentTheme()) {
+        this.currentTheme.set(theme ?? 'theme-light');
+      }
+    }, 100);
 
-      // Initial check
-      checkTheme();
-
-      // Set up interval to check localStorage
-      const intervalId = setInterval(checkTheme, 100);
-
-      // Cleanup
-      this.destroyRef.onDestroy(() => {
-        clearInterval(intervalId);
-        subscription.unsubscribe();
-      });
+    // ? Cleanup
+    this.destroyRef.onDestroy(() => {
+      clearInterval(intervalId);
+      routerSubscription.unsubscribe();
     });
-  } 
+  }
 
   ngOnInit(): void {
+    // ? Get user profile if logged in
     if (this.isLoggedIn()) {
-      this.profileService.getUserProfile().subscribe()
+      const profileSubscription = this.profileService.getUserProfile().subscribe();
+      this.destroyRef.onDestroy(() => profileSubscription.unsubscribe());
     }
   }
 
