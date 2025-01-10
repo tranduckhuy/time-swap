@@ -1,7 +1,6 @@
 import { Component, DestroyRef, inject, input, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -11,21 +10,11 @@ import { PreLoaderComponent } from "../../../../shared/components/pre-loader/pre
 import { getErrorMessage } from '../../../../shared/utils/form-validators';
 
 import { AUTH_CLIENT_URL } from '../../../../shared/constants/auth-constants';
-import { 
-  INVALID_CREDENTIAL_CODE,
-  NOT_CONFIRM_CODE, 
-  REGISTER_CONFIRM_SUCCESS_CODE, 
-  SUCCESS_CODE, 
-  TOKEN_EXPIRED_CODE, 
-  USER_NOT_EXIST_CODE
-} from '../../../../shared/constants/status-code-constants';
 
 import { AuthService } from '../../auth.service';
-import { ToastHandlingService } from '../../../../shared/services/toast-handling.service';
 import { MultiLanguageService } from '../../../../shared/services/multi-language.service';
 
 import type { LoginRequestModel } from '../../../../shared/models/api/request/login-request.model';
-import type { ReConfirmRequestModel } from '../../../../shared/models/api/request/confirm-request.model';
 
 @Component({
   selector: 'app-login',
@@ -57,7 +46,7 @@ export class LoginComponent implements OnInit {
 
     this.initialForm();
 
-    const timeOutId = setTimeout(() => this.isLoading.set(false), 1000);
+    const timeOutId = setTimeout(() => this.isLoading.set(false), 800);
     
     this.destroyRef.onDestroy(() => clearTimeout(timeOutId));
   }

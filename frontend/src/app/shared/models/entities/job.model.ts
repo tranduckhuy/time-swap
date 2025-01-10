@@ -7,8 +7,12 @@ export interface JobPostModel {
   userId: string;
   ownerAvatarUrl: string;
   ownerName: string;
+  ownerEmail: string;
+  ownerLocation: string;
   title: string;
   description: string;
+  responsibilitiesString: string;
+  responsibilities: string[];
   fee: number;
   startDate: Date;
   dueDate: Date;
