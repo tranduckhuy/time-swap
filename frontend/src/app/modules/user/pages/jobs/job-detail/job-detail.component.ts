@@ -1,5 +1,5 @@
+import { Component, DestroyRef, inject, input, OnInit, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { Component, inject, input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { TranslateModule } from '@ngx-translate/core';
@@ -10,8 +10,8 @@ import { BannerComponent } from "../../../../../shared/components/banner/banner.
 import { ButtonWithIconComponent } from "../../../../../shared/components/button-with-icon/button-with-icon.component";
 import { JobAlertComponent } from "../../../../../shared/components/job-alert/job-alert.component";
 import { JobPostComponent } from "../../../../../shared/components/job-post/job-post.component";
+import { PreLoaderComponent } from "../../../../../shared/components/pre-loader/pre-loader.component";
 
-import type { JobListRequestModel } from '../../../../../shared/models/api/request/job-list-request.model';
 import type { JobDetailResponseModel } from '../../../../../shared/models/api/response/jobs-response.model';
 
 @Component({
@@ -25,24 +25,31 @@ import type { JobDetailResponseModel } from '../../../../../shared/models/api/re
     ButtonWithIconComponent,
     BannerDetailComponent,
     BannerComponent,
-    JobPostComponent
+    JobPostComponent,
+    PreLoaderComponent
 ],
   templateUrl: './job-detail.component.html',
   styleUrl: './job-detail.component.css'
 })
 export class JobDetailComponent implements OnInit {
-  // ? Input Properties got from parent component
-  queryParams = input<JobListRequestModel>();
+  // ? State management
+  isLoading = signal<boolean>(true);
 
   // ? Data Resolver
   job = input.required<JobDetailResponseModel>();
 
   // ? Dependency Injection
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
     if (!this.job()) {
       this.router.navigateByUrl('/not-found');
+      return;
     }
+
+    const timeOutId = setTimeout(() => this.isLoading.set(false), 800);
+
+    this.destroyRef.onDestroy(() => clearTimeout(timeOutId));
   }
 }

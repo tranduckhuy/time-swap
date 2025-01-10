@@ -6,7 +6,13 @@ import { TranslateModule } from '@ngx-translate/core';
 import { filter } from 'rxjs';
 
 import { AuthService } from '../../auth/auth.service';
+import { ProfileService } from '../../../modules/user/pages/profile/profile.service';
 import { MultiLanguageService } from '../../../shared/services/multi-language.service';
+
+type UserInfo = {
+  name: string,
+  avatarUrl: string
+}
 
 @Component({
   selector: 'app-header',
@@ -17,6 +23,7 @@ import { MultiLanguageService } from '../../../shared/services/multi-language.se
 })
 export class HeaderComponent {
   private readonly authService = inject(AuthService);
+  private readonly profileService = inject(ProfileService);
   private readonly multiLanguageService = inject(MultiLanguageService);
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
@@ -29,19 +36,27 @@ export class HeaderComponent {
   currentTheme = signal<string>(localStorage.getItem('theme') ?? 'theme-light');
 
   isLoggedIn = computed<boolean>(() => this.authService.isLoggedIn());
+  userInfo = computed<UserInfo | null>(() => {
+    const user = this.profileService.user();
+    if (user) {
+      return {
+        name: user.fullName ?? '',
+        avatarUrl: user.avatarUrl ?? ''
+      };
+    }
+    return null;
+  });
 
   constructor() {
+    // ? Subscribe to router events
     const subscription = this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         const currentUrl = event.urlAfterRedirects;
-        if (currentUrl === '/' || currentUrl === '/home' || currentUrl.includes('/home')) {
-          this.isHome.set(true);
-        } else {
-          this.isHome.set(false);
-        }
+        this.isHome.set(currentUrl === '/' || currentUrl.startsWith('/home'));
       });
 
+    // ? Effect: Check theme changes
     effect(() => {
       const checkTheme = () => {
         const theme = localStorage.getItem('theme');
@@ -50,17 +65,22 @@ export class HeaderComponent {
         }
       };
 
-      // Initial check
+      // ? Initial check
       checkTheme();
 
-      // Set up interval to check localStorage
+      // ? Set up interval to check localStorage
       const intervalId = setInterval(checkTheme, 100);
 
-      // Cleanup
+      // ? Cleanup
       this.destroyRef.onDestroy(() => {
         clearInterval(intervalId);
         subscription.unsubscribe();
       });
+
+      // ? Get user profile if logged in
+      if (this.isLoggedIn()) {
+        this.profileService.getUserProfile().subscribe();
+      }
     });
   } 
 
