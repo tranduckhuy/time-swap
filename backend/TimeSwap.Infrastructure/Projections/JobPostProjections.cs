@@ -13,6 +13,7 @@ namespace TimeSwap.Infrastructure.Projections
                 UserId = x.UserId,
                 Title = x.Title,
                 Description = x.Description,
+                Responsibilities = x.Responsibilities,
                 Fee = x.Fee,
                 StartDate = x.StartDate,
                 DueDate = x.DueDate,
