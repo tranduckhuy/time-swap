@@ -1,6 +1,5 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
 
 import { TranslateModule } from '@ngx-translate/core';
@@ -11,7 +10,6 @@ import { ToastComponent } from "../../../../shared/components/toast/toast.compon
 import { controlValueEqual, getErrorMessage } from '../../../../shared/utils/form-validators';
 
 import { AUTH_CLIENT_URL } from '../../../../shared/constants/auth-constants';
-import { EMAIL_EXIST_CODE, REGISTER_CONFIRM_SUCCESS_CODE } from '../../../../shared/constants/status-code-constants';
 
 import { AuthService } from '../../auth.service';
 import { ToastHandlingService } from '../../../../shared/services/toast-handling.service';
@@ -35,7 +33,6 @@ export class RegisterComponent implements OnInit {
 
   // ? Dependency Injection
   private readonly authService = inject(AuthService)
-  private readonly toastHandlingService = inject(ToastHandlingService);
   private readonly multiLanguageService = inject(MultiLanguageService);
   private readonly fb = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
@@ -43,7 +40,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
 
-    const timeOutId = setTimeout(() => this.isLoading.set(false), 1000);
+    const timeOutId = setTimeout(() => this.isLoading.set(false), 800);
 
     this.destroyRef.onDestroy(() => clearTimeout(timeOutId));
   }

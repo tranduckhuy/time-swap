@@ -10,6 +10,7 @@ import { createHttpParams } from '../../../../shared/utils/request-utils';
 import { SUCCESS_CODE } from '../../../../shared/constants/status-code-constants';
 
 import { ToastHandlingService } from '../../../../shared/services/toast-handling.service';
+import { MultiLanguageService } from '../../../../shared/services/multi-language.service';
 
 import type { BaseResponseModel } from '../../../../shared/models/api/base-response.model';
 import type { IndustryModel } from '../../../../shared/models/entities/industry.model';
@@ -24,6 +25,7 @@ import type { JobPostModel } from '../../../../shared/models/entities/job.model'
 export class JobsService {
   private httpClient = inject(HttpClient);
   private toastHandlingService = inject(ToastHandlingService);
+  private multiLanguageService = inject(MultiLanguageService);
 
   // ? All API base url
   private BASE_API_URL = environment.apiBaseUrl;
@@ -112,6 +114,11 @@ export class JobsService {
       .pipe(
         map((res) => {
           if (res.statusCode === SUCCESS_CODE && res.data) {
+            res.data.responsibilitiesList = res.data.responsibilities 
+              ? res.data.responsibilities
+                .split(/,\s?/)
+                .map(responsibility => `${responsibility.trim()}.`)
+              : [this.multiLanguageService.getTranslatedLang('job-detail.no-responsibilities')];
             return res.data;
           }
           return null;

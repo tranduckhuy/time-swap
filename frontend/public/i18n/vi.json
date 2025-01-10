@@ -138,39 +138,17 @@
     "notify": {
       "fetch-jobs-failed": "Rất tiếc! Chúng tôi gặp sự cố khi lấy thông tin công việc. Vui lòng liên hệ với quản trị viên để được hỗ trợ thêm.",
       "fetch-wards-failed": "Rất tiếc! Chúng tôi gặp sự cố khi lấy thông tin huyện/xã. Vui lòng liên hệ với quản trị viên để được hỗ trợ thêm."
-    },
-    "results": "Kết quả tìm kiếm",
-    "sort-by": {
-      "title": "Sắp xếp:"
-    },
-    "find-a-job": "Tìm kiếm công việc",
-    "email-placeholder": "Địa chỉ email",
-    "get-a-job": "Nhận Thông Báo",
-    "search-keywords": "Tìm Kiếm",
-    "keyword": "Từ khóa",
-    "category": "Danh mục",
-    "location": "Vị trí",
-    "fee": "Phí",
-    "phone": "Số điện thoại",
-    "date-posted": "Ngày đăng",
-    "industry": "Ngành nghề",
-    "filter-now": "Lọc ngay",
-    "first-name": "Họ:",
-    "last-name": "Tên:",
-    "job-title": "Công việc:",
-    "salary": "Lương:",
-    "type": "Loại công việc:",
-    "street": "Đường:",
-    "department": "Phòng ban (Tùy chọn):",
-    "province": "Tỉnh:",
-    "district": "Quận (Thành phố):",
-    "ward": "Phường:"
+    }
   },
   "job-detail": {
     "save": "Lưu",
     "share": "Chia sẻ",
     "report": "Báo cáo",
     "job-description": "Mô tả công việc",
+    "job-responsibilities": "Trách nhiệm công việc",
+    "no-responsibilities": "Công việc này không yêu cầu trách nhiệm cụ thể.",
+    "related": "Công việc liên quan",
+    "view-applicants": "Xem danh sách ứng viên",
     "location": "Vị trí",
     "job-information": {
       "title": "Thông tin công việc",
@@ -183,10 +161,9 @@
     },
     "owner-information": {
       "title": "Thông tin người đăng",
-      "phone": "Số điện thoại",
+      "name": "Tên người đăng",
       "email": "Địa chỉ email"
-    },
-    "related": "Công việc liên quan"
+    }
   },
   "profile": {
     "tabs": {
@@ -230,28 +207,6 @@
       "update-fail": "Cập nhật thông tin thất bại, vui lòng thử lại sau!"
     }
   },
-  "job-detail": {
-    "save": "Lưu",
-    "share": "Chia sẻ",
-    "report": "Báo cáo",
-    "job-description": "Mô tả công việc",
-    "location": "Vị trí",
-    "job-information": {
-      "title": "Thông tin công việc",
-      "fee": "Phí",
-      "industry": "Ngành",
-      "category": "Danh mục",
-      "posted-date": "Ngày đăng",
-      "applied": "Đã nộp đơn"
-    },
-    "owner-information": {
-      "title": "Thông tin người đăng",
-      "phone": "Số điện thoại",
-      "email": "Địa chỉ email"
-    },
-    "related": "Công việc liên quan",
-    "view-applicants": "Xem danh sách ứng viên"
-  },
   "applicant": {
       "assign-now": "Giao Ngay",
       "my-profile": "Hồ sơ của tôi",
@@ -279,22 +234,6 @@
     "subject": "Chuyên môn",
     "message": "Tin nhắn",
     "condition": "Chấp nhận Điều khoản & Điều kiện và Chính sách bảo mật.",
-    "submit": "Gửi Tin Nhắn",
-    "assign-now": "Giao Ngay",
-    "my-profile": "Hồ sơ của tôi",
-    "work-exp": "Kinh nghiệm",
-    "skill": "Kĩ năng",
-    "portfolio": "Portfolio",
-    "add-review": "Thêm đánh giá",
-    "review-msg": "Đánh giá của bạn cho mục này",
-    "review-option": "Lưu tên, email và trang web của tôi trên trình duyệt này để lần sau tôi bình luận.",
-    "email": "Email",
-    "write-msg": "Đánh giá của bạn",
-    "job-overview": "Tổng quan công việc",
-    "experience": "Kinh nghiệm:",
-    "age": "Tuổi:",
-    "languages": "Ngôn ngữ:",
-    "qualification": "Bằng cấp:",
-    "gender": "Giới tính:"
+    "submit": "Gửi Tin Nhắn"
   }
 }

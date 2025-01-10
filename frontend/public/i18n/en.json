@@ -61,7 +61,7 @@
         "description": "View personal profile details"
       },
       "account": "Account",
-      "add-money": "Deposit money",
+      "add-money": "Deposit Money",
       "sign-out": "Sign out"
     } 
   },
@@ -96,9 +96,6 @@
       "success": "Registration successful. Please check your inbox to confirm your email.",
       "failure": "Register failed. Please try again.",
       "email-exist": "Registration failed. This email is already in use. Please use a different email."
-    },
-    "logout": {
-      "success": "Logout successful!"
     }
   },
   "jobs": {
@@ -139,39 +136,17 @@
     "notify": {
       "fetch-jobs-failed": "Oops! We encountered an issue while fetching jobs. Please reach out to the administrator for further assistance.",
       "fetch-wards-failed": "Oops! We encountered an issue while fetching wards. Please reach out to the administrator for further assistance."
-    },
-    "results": "Results Found",
-    "sort-by": {
-      "title": "Sort By:"
-    },
-    "find-a-job": "Find A Job",
-    "email-placeholder": "Email address",
-    "get-a-job": "Get A Job Alert",
-    "search-keywords": "Search Keywords",
-    "keyword": "Keyword",
-    "category": "Category",
-    "location": "Location List",
-    "phone": "Phone",
-    "fee": "Fee",
-    "date-posted": "Date Posted",
-    "industry": "Industry",
-    "filter-now": "Filter Now",
-    "first-name": "First Name:",
-    "last-name": "Last Name:",
-    "job-title": "Title:",
-    "salary": "Salary:",
-    "type": "Type:",
-    "street": "Street:",
-    "department": "Department (Optional):",
-    "province": "Province:",
-    "district": "District:",
-    "ward": "Ward:"
+    }
   },
   "job-detail": {
     "save": "Save",
     "share": "Share",
     "report": "Report",
     "job-description": "Job Description",
+    "job-responsibilities": "Job Responsibilities",
+    "no-responsibilities": "This job does not have specific responsibilities.",
+    "related": "Related Jobs",
+    "view-applicants": "View Applicants",
     "location": "Location",
     "job-information": {
       "title": "Job Information",
@@ -183,11 +158,10 @@
       "applicants": "Applicant(s)"
     },
     "owner-information": {
-      "title": "Owner Information",
-      "phone": "Phone",
+      "title": "Poster Information",
+      "name": "Poster Name",
       "email": "Email"
-    },
-    "related": "Related Jobs"
+    }
   },
   "profile": {
     "tabs": {
@@ -230,31 +204,6 @@
       "update-success": "Update successfully",
       "update-fail": "There are something wrong, please try again later!"
     }
-  },
-  "job-detail": {
-    "job-info": "Job Information",
-    "owner-info": "Owner Info",
-    "applied": "Applied",
-    "save": "Save",
-    "share": "Share",
-    "report": "Report",
-    "job-description": "Job Description",
-    "location": "Location",
-    "job-information": {
-      "title": "Job Information",
-      "fee": "Fee",
-      "industry": "Industry",
-      "category": "Category",
-      "posted-date": "Posted Date",
-      "applied": "Applied"
-    },
-    "owner-information": {
-      "title": "Owner Information",
-      "phone": "Phone",
-      "email": "Email"
-    },
-    "related": "Related Jobs",
-    "view-applicants": "View Applicants"
   },
   "applicant": {
     "assign-now": "Assign Now",

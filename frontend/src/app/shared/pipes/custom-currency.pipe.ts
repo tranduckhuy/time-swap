@@ -13,11 +13,11 @@ export class CustomCurrencyPipe implements PipeTransform {
   } as const;
 
   transform(
-    value: number | string | null, 
+    value: number | string | null | undefined, 
     lang: 'vi' | 'en' = this.DEFAULT_LANGUAGE
   ): string {
     if (!value) {
-      return '';
+      return `0 ${this.CURRENCIES[lang]}`;
     }
 
     const numericValue = this.parseValue(value);
