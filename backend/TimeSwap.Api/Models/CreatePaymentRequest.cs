@@ -5,9 +5,6 @@ namespace TimeSwap.Api.Models
 {
     public class CreatePaymentRequest
     {
-        [JsonRequired]
-        public Guid UserId { get; set; }
-
         [Required(ErrorMessage = "PaymentContent is required.")]
         public string PaymentContent { get; set; } = string.Empty;
 

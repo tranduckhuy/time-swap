@@ -1,15 +1,19 @@
 ﻿using MediatR;
 using TimeSwap.Application.Payments.Responses;
 using TimeSwap.Domain.Specs;
+using TimeSwap.Domain.Specs.Job;
 
 namespace TimeSwap.Application.Payments.Queries
 {
-    public class GetPaymentsByUserIdQuery(Guid userId, string? paymentStatus = null, int dateFilter = 0, int pageIndex = 1, int pageSize = 10) : IRequest<Pagination<PaymentDetailResponse>>
+    public class GetPaymentsByUserIdQuery : IRequest<Pagination<PaymentDetailResponse>>
     {
-        public Guid UserId { get; init; } = userId;
-        public string? PaymentStatus { get; init; } = paymentStatus;
-        public int DateFilter { get; init; } = dateFilter;
-        public int PageIndex { get; init; } = pageIndex;
-        public int PageSize { get; init; } = pageSize;
+        public PaymentByUserSpecParam SpecParam { get; }
+        public Guid UserId { get; }
+
+        public GetPaymentsByUserIdQuery(PaymentByUserSpecParam specParam, Guid userId)
+        {
+            SpecParam = specParam;
+            UserId = userId;
+        }
     }
 }

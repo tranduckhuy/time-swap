@@ -46,7 +46,8 @@ namespace TimeSwap.Application.Mappings
             CreateMap<CreatePaymentCommand, Payment>()
                 .ForMember(dest => dest.PaymentStatus, opt => opt.MapFrom(src => PaymentStatus.Pending))
                 .ForMember(dest => dest.ExpiryDate, opt => opt.MapFrom(src => DateTime.UtcNow.AddMinutes(15)))
-                .ForMember(dest => dest.ModifiedAt, opt => opt.MapFrom(src => DateTime.UtcNow));
+                .ForMember(dest => dest.ModifiedAt, opt => opt.MapFrom(src => DateTime.UtcNow))
+                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => DateTime.UtcNow));
 
             CreateMap<Payment, TransactionLog>()
                 .ForMember(dest => dest.TransactionId, opt => opt.MapFrom(src => src.TransactionId))
