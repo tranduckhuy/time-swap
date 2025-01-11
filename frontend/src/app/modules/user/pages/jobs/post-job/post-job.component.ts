@@ -92,7 +92,7 @@ export class PostJobComponent implements OnInit {
       title: ['', Validators.required],
       fee: ['', [
         Validators.required, 
-        Validators.pattern('\D*$')
+        Validators.pattern('^[0-9]*$')
       ]],
       responsibilities: ['', [
         Validators.required, 
@@ -148,7 +148,7 @@ export class PostJobComponent implements OnInit {
   }
 
   onInputFee(fee: string) {
-    const value = fee.replace(/[^0-9]/g, '');
+    const value = fee.replace(/\D/g, '');
     
     if (value !== this.form.get('fee')?.value) {
       this.form.patchValue({ fee: value });
