@@ -27,7 +27,7 @@
                                     type="email" 
                                     [class.form-control]="true" 
                                     [class.invalid]="isControlInvalid('email')" 
-                                    [placeholder]="isControlInvalid('email') ? getMessage('email', 'Email') : 'auth.email' | translate"
+                                    [placeholder]="isControlInvalid('email') ? getMessage('email', 'auth.email') : 'auth.email' | translate"
                                     formControlName="email"
                                 />
                             </div>
@@ -36,7 +36,7 @@
                                     type="password"
                                     [class.form-control]="true" 
                                     [class.invalid]="isControlInvalid('password')" 
-                                    [placeholder]="isControlInvalid('password') ? getMessage('password', 'Password') : 'auth.password' | translate"
+                                    [placeholder]="isControlInvalid('password') ? getMessage('password', 'auth.password') : 'auth.password' | translate"
                                     formControlName="password">
                             </div>
                             <button type="submit" class="btn">{{ 'common.buttons.auth.login' | translate }}</button>
