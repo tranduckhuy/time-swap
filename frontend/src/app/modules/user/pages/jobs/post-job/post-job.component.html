@@ -49,7 +49,7 @@
                             formControlName="fee" 
                             [class.form-control]="true" 
                             [class.invalid]="isControlInvalid('fee')" 
-                            [value]="form.get('fee')?.value | thousand"
+                            [value]="form.get('fee')?.value | thousand: lang()"
                             [placeholder]="'jobs.post-job-form.fee-placeholder' | translate"
                             (input)="onInputFee(feeInput.value)"
                           />

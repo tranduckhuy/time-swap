@@ -60,3 +60,18 @@ export function fetchWardsByCityId(cityId: string, locationService: LocationServ
 export function fetchCategoriesByIndustryId(industryId: number, categoryService: CategoryService): Subscription {
   return categoryService.getCategoriesByIndustryId(industryId).subscribe();
 }
+
+/**
+ * Formats a numeric value according to the specified locale.
+ * Ideal for converting a number into a localized, human-readable format with thousands separators.
+ * 
+ * @param value - The numeric value to format.
+ * @param locale - A string representing the desired locale (e.g., 'en-US' for English, 'vi-VN' for Vietnamese).
+ * @returns A string representing the formatted number, including thousands separators and up to two fractional digits, based on the locale.
+ */
+export function formatNumberValue(value: number, locale: string): string {
+  return new Intl.NumberFormat(locale, {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 0
+  }).format(value);
+}

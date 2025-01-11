@@ -13,6 +13,8 @@ import { ToastComponent } from "../../../../../shared/components/toast/toast.com
 
 import { ThousandPipe } from '../../../../../shared/pipes/thousand.pipe';
 
+import { ENGLISH, VIETNAMESE } from '../../../../../shared/constants/multi-lang-constants';
+
 import { getErrorMessage } from '../../../../../shared/utils/form-validators';
 import { 
   fetchCategoriesByIndustryId, 
@@ -66,6 +68,7 @@ export class PostJobComponent implements OnInit {
   wards = this.locationService.wards;
 
   // ? Computed Properties
+  lang = computed(() => this.multiLanguageService.language() === VIETNAMESE ? VIETNAMESE : ENGLISH)
   industriesName = computed(() => this.industries().map(i => i.industryName));
   citiesName = computed(() => this.cities().map(c => c.name));
   categoriesName = computed(() => 
@@ -89,7 +92,7 @@ export class PostJobComponent implements OnInit {
       title: ['', Validators.required],
       fee: ['', [
         Validators.required, 
-        Validators.pattern('^[0-9]*$')
+        Validators.pattern('\D*$')
       ]],
       responsibilities: ['', [
         Validators.required, 
