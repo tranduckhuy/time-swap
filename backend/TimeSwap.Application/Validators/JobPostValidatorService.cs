@@ -3,6 +3,7 @@ using TimeSwap.Application.Exceptions.Auth;
 using TimeSwap.Application.Exceptions.JobPost;
 using TimeSwap.Application.Exceptions.User;
 using TimeSwap.Application.JobPosts.Commands;
+using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Interfaces.Repositories;
 
 namespace TimeSwap.Application.Validators
@@ -29,10 +30,37 @@ namespace TimeSwap.Application.Validators
 
         public async Task ValidateCreateJobPostAsync(CreateJobPostCommand request)
         {
-            await ValidateAsync(request.CategoryId, request.IndustryId, request.WardId, request.CityId);
+            await ValidateAsync(request.CategoryId, request.IndustryId, request.WardId, request.CityId, request.UserId, request.Fee);
+
+            await ValidateUserAsync(request.UserId, request.Fee, isCreate: true);
+
+            ValidateJobPostCommandDateTime(request.StartDate, request.DueDate);
+        }
+
+        public async Task<decimal> ValidateUpdateJobPostAsync(JobPost currentJobPost, UpdateJobPostCommand request)
+        {
+            await ValidateAsync(request.CategoryId, request.IndustryId, request.WardId, request.CityId, request.UserId, request.Fee);
+
+            var user = await ValidateUserAsync(request.UserId, request.Fee, isCreate: false);
+
+            var feeDifference = request.Fee - currentJobPost.Fee;
+
+            if (feeDifference > 0 && user.Balance < (request.Fee - currentJobPost.Fee) * 0.1m)
+            {
+                _logger.LogWarning("[User:{userId}] on [JobPostCommand] - User does not have enough balance to update job post", request.UserId);
+                throw new UserNotEnoughBalanceException();
+            }
 
             ValidateJobPostCommandDateTime(request.StartDate, request.DueDate);
 
+            return feeDifference;
+        }
+
+        private async Task ValidateAsync(int categoryId, int industryId, string? wardId, string? cityId, Guid userId, decimal fee)
+        {
+            await _categoryIndustryValidatorService.ValidateCategoryAndIndustryAsync(categoryId, industryId);
+
+            await _locationValidatiorService.ValidateWardAndCityAsync(wardId, cityId);
         }
 
         private void ValidateJobPostCommandDateTime(DateTime? startDate, DateTime dueDate)
@@ -50,23 +78,7 @@ namespace TimeSwap.Application.Validators
             }
         }
 
-        public async Task ValidateUpdateJobPostAsync(UpdateJobPostCommand request)
-        {
-            await ValidateAsync(request.CategoryId, request.IndustryId, request.WardId, request.CityId);
-
-            await ValidateUserAsync(request.UserId, request.Fee);
-
-            ValidateJobPostCommandDateTime(request.StartDate, request.DueDate);
-        }
-
-        private async Task ValidateAsync(int categoryId, int industryId, string? wardId, string? cityId)
-        {
-            await _categoryIndustryValidatorService.ValidateCategoryAndIndustryAsync(categoryId, industryId);
-
-            await _locationValidatiorService.ValidateWardAndCityAsync(wardId, cityId);
-        }
-
-        private async Task ValidateUserAsync(Guid userId, decimal fee)
+        private async Task<UserProfile> ValidateUserAsync(Guid userId, decimal fee, bool isCreate)
         {
             var user = await _userRepository.GetByIdAsync(userId);
             if (user == null)
@@ -82,11 +94,13 @@ namespace TimeSwap.Application.Validators
             }
 
             // Check if user has enough balance to create job post
-            if (user.Balance < fee * 0.1m)
+            if (isCreate && user.Balance < fee * 0.1m)
             {
                 _logger.LogWarning("[User:{userId}] on [JobPostCommand] - User does not have enough balance to create job post", userId);
                 throw new UserNotEnoughBalanceException();
             }
+
+            return user;
         }
     }
 }
