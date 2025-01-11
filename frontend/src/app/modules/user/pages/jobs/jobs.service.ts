@@ -79,26 +79,24 @@ export class JobsService {
       }
     }).pipe(
       map(res => {
-        if (res.data) {
-          switch (res.statusCode) {
-            case SUCCESS_CODE:
-              this.toastHandlingService.handleSuccess('jobs.notify.create-job.success');
-              break;
-            case USER_NOT_ENOUGH_BALANCE:
-              this.toastHandlingService.handleError('jobs.notify.create-job.due-date-start-failed');
-              break;
-            case DUE_DATE_START_FAILED:
-              this.toastHandlingService.handleError('jobs.notify.create-job.due-date-start-failed');
-              break;
-            case DUE_DATE_CURRENT_FAILED: 
-              this.toastHandlingService.handleError('jobs.notify.create-job.due-date-current-failed');
-              break;
-            case FEE_GREATER_THAN_FIFTY:
-              this.toastHandlingService.handleError('jobs.notify.create-job.fee-greater-than-fifty-thousand');
-              break;
-            default:
-              this.toastHandlingService.handleError('jobs.notify.create-job.failed');
-          }
+        switch (res.statusCode) {
+          case SUCCESS_CODE:
+            this.toastHandlingService.handleSuccess('jobs.notify.create-job.success');
+            break;
+          case USER_NOT_ENOUGH_BALANCE:
+            this.toastHandlingService.handleError('jobs.notify.create-job.due-date-start-failed');
+            break;
+          case DUE_DATE_START_FAILED:
+            this.toastHandlingService.handleError('jobs.notify.create-job.due-date-start-failed');
+            break;
+          case DUE_DATE_CURRENT_FAILED: 
+            this.toastHandlingService.handleError('jobs.notify.create-job.due-date-current-failed');
+            break;
+          case FEE_GREATER_THAN_FIFTY:
+            this.toastHandlingService.handleError('jobs.notify.create-job.fee-greater-than-fifty-thousand');
+            break;
+          default:
+            this.toastHandlingService.handleError('jobs.notify.create-job.failed');
         }
       }),
       catchError((error: HttpErrorResponse) => {

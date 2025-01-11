@@ -154,8 +154,8 @@
         "success": "Tạo công việc thành công!",
         "failed": "Tạo công việc thất bại. Vui lòng thử lại hoặc liên hệ quản trị viên.",
         "user-not-enough-balance": "Tài khoản của bạn không đủ {{fee}} để đăng công việc này. Vui lòng nạp thêm tiền vào tài khoản.",
-        "due-date-start-failed": "Ngày hết hạn không được vượt quá ngày bắt đầu.",
-        "due-date-current-failed": "Ngày hết hạn không được vượt quá ngày hiện tại.",
+        "due-date-start-failed": "Ngày bắt đầu không được muộn hơn hoặc bằng ngày hết hạn.",
+        "due-date-current-failed": "Ngày hiện tại không được muộn hơn hoặc bằng ngày hết hạn.",
         "fee-greater-than-fifty-thousand": "Phí luôn phải lớn hơn 50,000."
       }
     }

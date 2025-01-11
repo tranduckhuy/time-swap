@@ -8,6 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { BannerComponent } from "../../../../../shared/components/banner/banner.component";
 import { BreadcrumbComponent } from "../../../../../shared/components/breadcrumb/breadcrumb.component";
 import { NiceSelectComponent } from "../../../../../shared/components/nice-select/nice-select.component";
+import { PreLoaderComponent } from "../../../../../shared/components/pre-loader/pre-loader.component";
 import { ToastComponent } from "../../../../../shared/components/toast/toast.component";
 
 import { ThousandPipe } from '../../../../../shared/pipes/thousand.pipe';
@@ -36,6 +37,7 @@ import type { PostJobRequestModel } from '../../../../../shared/models/api/reque
     BannerComponent,
     BreadcrumbComponent,
     NiceSelectComponent,
+    PreLoaderComponent,
     ToastComponent
 ],
   templateUrl: './post-job.component.html',

@@ -151,8 +151,8 @@
         "success": "Job created successfully!",
         "failed": "Job creation failed. Please try again or contact the administrator.",
         "user-not-enough-balance": "Your account is not enough {{fee}} for create this job. Please top up your account.",
-        "due-date-start-failed": "Due date can not be later than the start date.",
-        "due-date-current-failed": "Due date can not be later than the current date.",
+        "due-date-start-failed": "Start date can not be later than or equal to the due date.",
+        "due-date-current-failed": "Current date can not be later than or equal to the due date.",
         "fee-greater-than-fifty-thousand": "Fee must be greater than fifty thousand."
       }
     }
