@@ -8,7 +8,7 @@ export class ThousandPipe implements PipeTransform {
 
   transform(value: number | string): string {
     if (!value) return '';
-    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return value.toString().replace(/(?<=\d)(?=(\d{3})+$)/g, ',');
   }
 
 }
