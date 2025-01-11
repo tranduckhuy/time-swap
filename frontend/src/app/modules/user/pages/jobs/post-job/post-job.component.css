@@ -1,0 +1,10 @@
+.invalid {
+  border: 1px solid #fe4a55 !important;
+  margin-bottom: 12px;
+  background-color: rgba(254, 74, 85, 0.2) !important;
+}
+
+.form-control.invalid::placeholder,
+.error-msg {
+  color: #fe4a55;
+}

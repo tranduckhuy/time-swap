@@ -106,10 +106,6 @@
       "title": "Title",
       "min-fee": "Fee From",
       "max-fee": "Fee to",
-      "industry": "Filter By Industry",
-      "category": "Filter By Category",
-      "city": "Filter By Province/City",
-      "ward": "Filter By District/Ward",
       "postedDate": {
         "all-posted-date": "All Posted Date",
         "today": "Today",
@@ -119,23 +115,46 @@
       }      
     },
     "post-job-form": {
-      "first-name": "First Name:",
-      "last-name": "Last Name:",
-      "email": "Email:",
-      "phone": "Phone:",
+      "sub-heading": "This form is designed to help employers easily post short-term jobs, connecting with individuals who have free time and are looking to earn extra income. Fill in the job details, duration, and requirements to enable workers to apply quickly and efficiently.",
       "title": "Title:",
+      "title-placeholder": "Web Application Development",
       "fee": "Fee:",
+      "fee-placeholder": "2,000,000",
+      "responsibilities": "Job Responsibilities:",
+      "res-placeholder": "Develop and maintain web application, ensure high performance,...",
+      "start-date": "Start Date:",
+      "due-date": "Due Date:",
+      "description": "Job Description:",
+      "desc-placeholder": "Need code a web application",
       "industry": "Industry:",
       "category": "Category:",
-      "street": "Street:",
-      "department": "Department (Optional):",
-      "province": "Province:",
-      "district": "District:",
-      "ward": "Ward:"
+      "province": "Province/City:",
+      "full-location": "Full Location:",
+      "no-category": "Select a industry to view all categories",
+      "no-ward": "Select a province/city to view full location",
+      "error-messages": {
+        "title": "Title",
+        "fee": "Fee",
+        "responsibilities": "Responsibilities",
+        "start-date":"Start Date",
+        "due-date": "Due Date",
+        "industry": "Industry",
+        "category": "Category",
+        "city": "Province/City",
+        "ward": "District/Ward"
+      }
     },
     "notify": {
       "fetch-jobs-failed": "Oops! We encountered an issue while fetching jobs. Please reach out to the administrator for further assistance.",
-      "fetch-wards-failed": "Oops! We encountered an issue while fetching wards. Please reach out to the administrator for further assistance."
+      "fetch-wards-failed": "Oops! We encountered an issue while fetching wards. Please reach out to the administrator for further assistance.",
+      "create-job": {
+        "success": "Job created successfully!",
+        "failed": "Job creation failed. Please try again or contact the administrator.",
+        "user-not-enough-balance": "Your account is not enough {{fee}} for create this job. Please top up your account.",
+        "due-date-start-failed": "Due date can not be later than the start date.",
+        "due-date-current-failed": "Due date can not be later than the current date.",
+        "fee-greater-than-fifty-thousand": "Fee must be greater than fifty thousand."
+      }
     }
   },
   "job-detail": {

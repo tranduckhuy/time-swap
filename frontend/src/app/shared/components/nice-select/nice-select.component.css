@@ -11,7 +11,6 @@
 
 .current {
   display: -webkit-box;
-  width: 250px;
   margin-bottom: 0;
   overflow: hidden;
   -webkit-line-clamp: 1;
@@ -20,4 +19,18 @@
 
 .nice-select, .list {
   width: 100%
+}
+
+.nice-select.invalid {
+  border: 1px solid #fe4a55 !important;
+  margin-bottom: 60px !important;
+  background-color: rgba(254, 74, 85, 0.2) !important;
+}
+
+.error-msg {
+  position: absolute;
+  top: 45px;
+  left: 0;
+  font-size: 15px;
+  color: #fe4a55;
 }

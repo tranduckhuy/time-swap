@@ -6,21 +6,25 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { ProfileService } from '../../profile.service';
-import { DatePipe } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { NiceSelectComponent } from '../../../../../../shared/components/nice-select/nice-select.component';
-import { JobsService } from '../../../jobs/jobs.service';
+import { DatePipe } from '@angular/common';
+
 import { forkJoin } from 'rxjs';
-import { ToastHandlingService } from '../../../../../../shared/services/toast-handling.service';
+
+import { TranslateModule } from '@ngx-translate/core';
+
+import { NiceSelectComponent } from '../../../../../../shared/components/nice-select/nice-select.component';
 import { PreLoaderComponent } from '../../../../../../shared/components/pre-loader/pre-loader.component';
 import { ToastComponent } from '../../../../../../shared/components/toast/toast.component';
+
+import { ProfileService } from '../../profile.service';
+import { ToastHandlingService } from '../../../../../../shared/services/toast-handling.service';
 import { LocationService } from '../../../../../../shared/services/location.service';
+import { IndustryService } from '../../../../../../shared/services/industry.service';
 
 @Component({
   selector: 'app-my-profile',
@@ -39,8 +43,8 @@ import { LocationService } from '../../../../../../shared/services/location.serv
 export class MyProfileComponent implements OnInit {
   // Dependency Injection
   private readonly profileService = inject(ProfileService);
-  private readonly jobsService = inject(JobsService);
   private readonly locationService = inject(LocationService);
+  private readonly industryService = inject(IndustryService);
   private readonly fb = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
   private readonly toastHandlingService = inject(ToastHandlingService);
@@ -51,7 +55,7 @@ export class MyProfileComponent implements OnInit {
   // State Management
   user = this.profileService.user;
   subscription = this.profileService.subscription;
-  industries = this.jobsService.industries;
+  industries = this.industryService.industries;
   cities = this.locationService.cities;
   wards = this.locationService.wards;
   isLoading = this.profileService.isLoading;
@@ -113,7 +117,7 @@ export class MyProfileComponent implements OnInit {
     const subscription = forkJoin([
       this.locationService.getAllCities(),
       this.locationService.getWardByCityId('0'),
-      this.jobsService.getAllIndustries(),
+      this.industryService.getAllIndustries(),
     ]).subscribe();
 
     this.destroyRef.onDestroy(() => subscription.unsubscribe());

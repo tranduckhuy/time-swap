@@ -15,6 +15,9 @@ export class MultiLanguageService {
 
   constructor() {
     effect(() => {
+      if (localStorage.getItem(LANGUAGE)) {
+        localStorage.removeItem(LANGUAGE);
+      }
       localStorage.setItem(LANGUAGE, JSON.stringify(this.languageSignal()));
       this.translateService.use(this.languageSignal());
     });

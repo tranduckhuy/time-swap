@@ -18,7 +18,9 @@ export class NiceSelectComponent {
   // ? Input properties
   listData = input.required<string[]>();
   title = input<string>();
+  errorMsg = input<string>();
   isFilter = input<boolean>();
+  isInvalid = input<boolean>(); 
 
   // ? Output for event emitting
   valueChange = output<any>();

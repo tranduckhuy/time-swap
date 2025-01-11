@@ -104,14 +104,11 @@
   "jobs": {
     "showing": "Hiển thị",
     "of": "trên tổng số",
+    "results": "kết quả",
     "filter": {
       "title": "Tiêu đề",
       "min-fee": "Từ mức phí",
       "max-fee": "Đến mức phí",
-      "industry": "Lọc theo ngành",
-      "category": "Lọc theo danh mục",
-      "city": "Lọc theo Tỉnh/Thành phố",
-      "ward": "Lọc theo Huyện/Xã",
       "postedDate": {
         "all-posted-date": "Tất cả ngày đăng",
         "today": "Hôm nay",
@@ -121,23 +118,46 @@
       }
     },
     "post-job-form": {
-      "first-name": "Họ:",
-      "last-name": "Tên:",
-      "email": "Địa chỉ email:",
-      "phone": "Số điện thoại:",
+      "sub-heading": "Mẫu đơn này được thiết kế để nhà tuyển dụng dễ dàng đăng tải công việc ngắn hạn, giúp kết nối với những người có thời gian rảnh và mong muốn nhận thêm thu nhập. Điền đầy đủ thông tin về công việc, thời gian, và yêu cầu để người lao động có thể nhanh chóng ứng tuyển.",
       "title": "Tiêu đề:",
+      "title-placeholder": "Phát triển ứng dụng web",
       "fee": "Phí:",
+      "fee-placeholder": "2,000,000",
+      "responsibilities": "Trách nhiệm công việc:",
+      "res-placeholder": "Phát triển và duy trì ứng dụng web, đảm bảo hiệu suất cao.",
+      "start-date": "Ngày bắt đầu công việc:",
+      "due-date": "Ngày hết hạn công việc:",
+      "description": "Mô tả công việc:",
+      "desc-placeholder": "Cần code hộ 1 trang web",
       "industry": "Ngành:",
       "category": "Danh mục:",
-      "street": "Đường:",
-      "department": "Căn hộ (Optional):",
       "province": "Tỉnh/Thành phố:",
-      "district": "Quận/Huyện:",
-      "ward": "Phường/Xã:"
+      "full-location": "Địa chỉ đầy đủ:",
+      "no-category": "Chọn ngành để xem toàn bộ danh mục",
+      "no-ward": "Chọn tỉnh/thành để xem địa chỉ đầy đủ",
+      "error-messages": {
+        "title": "Tiêu đề",
+        "fee": "Phí",
+        "responsibilities": "Trách nhiệm",
+        "start-date":"Ngày bắt đầu",
+        "due-date": "Ngày hết hạn",
+        "industry": "Ngành",
+        "category": "Danh mục",
+        "city": "Tỉnh/Thành phố",
+        "ward": "Huyện/Xã"
+      }
     },
     "notify": {
       "fetch-jobs-failed": "Rất tiếc! Chúng tôi gặp sự cố khi lấy thông tin công việc. Vui lòng liên hệ với quản trị viên để được hỗ trợ thêm.",
-      "fetch-wards-failed": "Rất tiếc! Chúng tôi gặp sự cố khi lấy thông tin huyện/xã. Vui lòng liên hệ với quản trị viên để được hỗ trợ thêm."
+      "fetch-wards-failed": "Rất tiếc! Chúng tôi gặp sự cố khi lấy thông tin huyện/xã. Vui lòng liên hệ với quản trị viên để được hỗ trợ thêm.",
+      "create-job": {
+        "success": "Tạo công việc thành công!",
+        "failed": "Tạo công việc thất bại. Vui lòng thử lại hoặc liên hệ quản trị viên.",
+        "user-not-enough-balance": "Tài khoản của bạn không đủ {{fee}} để đăng công việc này. Vui lòng nạp thêm tiền vào tài khoản.",
+        "due-date-start-failed": "Ngày hết hạn không được vượt quá ngày bắt đầu.",
+        "due-date-current-failed": "Ngày hết hạn không được vượt quá ngày hiện tại.",
+        "fee-greater-than-fifty-thousand": "Phí luôn phải lớn hơn 50,000."
+      }
     }
   },
   "job-detail": {
