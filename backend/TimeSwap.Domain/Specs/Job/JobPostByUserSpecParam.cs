@@ -1,6 +1,4 @@
-﻿using TimeSwap.Domain.Specs;
-
-namespace TimeSwap.Domain.Specs.Job
+﻿namespace TimeSwap.Domain.Specs.Job
 {
     public class JobPostByUserSpecParam : BaseSpecParam
     {

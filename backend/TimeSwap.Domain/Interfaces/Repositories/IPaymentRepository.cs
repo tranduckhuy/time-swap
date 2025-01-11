@@ -1,10 +1,11 @@
 ﻿using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Specs;
+using TimeSwap.Domain.Specs.Job;
 
 namespace TimeSwap.Domain.Interfaces.Repositories
 {
     public interface IPaymentRepository : IAsyncRepository<Payment, Guid>
     {
-        Task<Pagination<Payment>> GetPaymentsByUserIdAsync(Guid userId, string? paymentStatus, int dateFilter, int pageIndex = 1, int pageSize = 10);
+        Task<Pagination<Payment>> GetPaymentsByUserIdWithSpecAsync(PaymentByUserSpecParam param, Guid userId);
     }
 }

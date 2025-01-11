@@ -1,5 +1,8 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using System.Security.Claims;
 using TimeSwap.Api.Mapping;
 using TimeSwap.Api.Models;
 using TimeSwap.Application.Configurations.Payments.Responses;
@@ -8,6 +11,7 @@ using TimeSwap.Application.Payments.Commands;
 using TimeSwap.Application.Payments.Queries;
 using TimeSwap.Application.Payments.Responses;
 using TimeSwap.Domain.Specs;
+using TimeSwap.Domain.Specs.Job;
 using TimeSwap.Shared;
 using TimeSwap.Shared.Constants;
 
@@ -23,22 +27,25 @@ namespace TimeSwap.Api.Controllers
         ) : base(mediator, logger) { }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreatePayment([FromBody] CreatePaymentRequest request)
         {
             var ipAddress = Request.HttpContext.Connection.RemoteIpAddress?.ToString();
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
-            if (request == null || string.IsNullOrEmpty(ipAddress))
+            if (request == null || string.IsNullOrEmpty(ipAddress) || string.IsNullOrEmpty(userId))
             {
                 return BadRequest(new ApiResponse<object>
                 {
                     StatusCode = (int)Shared.Constants.StatusCode.ModelInvalid,
                     Message = ResponseMessages.GetMessage(Shared.Constants.StatusCode.ModelInvalid),
-                    Errors = ["The request body does not contain required fields or the ipAddress is not found in the claims"]
+                    Errors = ["The request body does not contain required fields or the ipAddress and userId is not found in the claims"]
                 });
             }
 
             var command = AppMapper<ModelMapping>.Mapper.Map<CreatePaymentCommand>(request);
             command.IpAddress = ipAddress;
+            command.UserId = Guid.Parse(userId);
             return await ExecuteAsync<CreatePaymentCommand, string>(command);
         }
 
@@ -65,27 +72,24 @@ namespace TimeSwap.Api.Controllers
             return await ExecuteAsync<VnpayReturnCommand, string>(command);
         }
 
-        [HttpGet("{userId:guid}")]
-        public async Task<IActionResult> GetPaymentsByUserId(
-           [FromRoute] Guid userId,
-           [FromQuery] string? paymentStatus,
-           [FromQuery] int dataFilter = 0,
-           [FromQuery] int pageIndex = 1,
-           [FromQuery] int pageSize = 10
-        )
+        [HttpGet("pagination")]
+        [Authorize]
+        [ProducesResponseType(typeof(ApiResponse<Pagination<PaymentDetailResponse>>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetPaymentsByUserId([FromQuery] PaymentByUserSpecParam request)
         {
-            if (userId == Guid.Empty)
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userId))
             {
                 return BadRequest(new ApiResponse<object>
                 {
                     StatusCode = (int)Shared.Constants.StatusCode.ModelInvalid,
                     Message = ResponseMessages.GetMessage(Shared.Constants.StatusCode.ModelInvalid),
-                    Errors = ["The userId is not valid"]
+                    Errors = ["The userId is not found in the claims"]
                 });
             }
 
-            var query = new GetPaymentsByUserIdQuery(userId, paymentStatus, dataFilter, pageIndex, pageSize);
-
+            var query = new GetPaymentsByUserIdQuery(request, Guid.Parse(userId));
             return await ExecuteAsync<GetPaymentsByUserIdQuery, Pagination<PaymentDetailResponse>>(query);
         }
 
