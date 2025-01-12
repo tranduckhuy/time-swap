@@ -30,7 +30,7 @@ namespace TimeSwap.Application.Validators
 
         public async Task ValidateCreateJobPostAsync(CreateJobPostCommand request)
         {
-            await ValidateAsync(request.CategoryId, request.IndustryId, request.WardId, request.CityId, request.UserId, request.Fee);
+            await ValidateAsync(request.CategoryId, request.IndustryId, request.WardId, request.CityId);
 
             await ValidateUserAsync(request.UserId, request.Fee, isCreate: true);
 
@@ -39,7 +39,7 @@ namespace TimeSwap.Application.Validators
 
         public async Task<decimal> ValidateUpdateJobPostAsync(JobPost currentJobPost, UpdateJobPostCommand request)
         {
-            await ValidateAsync(request.CategoryId, request.IndustryId, request.WardId, request.CityId, request.UserId, request.Fee);
+            await ValidateAsync(request.CategoryId, request.IndustryId, request.WardId, request.CityId);
 
             var user = await ValidateUserAsync(request.UserId, request.Fee, isCreate: false);
 
@@ -56,7 +56,7 @@ namespace TimeSwap.Application.Validators
             return feeDifference;
         }
 
-        private async Task ValidateAsync(int categoryId, int industryId, string? wardId, string? cityId, Guid userId, decimal fee)
+        private async Task ValidateAsync(int categoryId, int industryId, string? wardId, string? cityId)
         {
             await _categoryIndustryValidatorService.ValidateCategoryAndIndustryAsync(categoryId, industryId);
 
