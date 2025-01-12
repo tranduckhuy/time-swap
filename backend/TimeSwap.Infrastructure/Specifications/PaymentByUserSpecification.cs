@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Specs;
+using TimeSwap.Domain.Specs.Job;
 using TimeSwap.Shared.Constants;
 
 namespace TimeSwap.Infrastructure.Specifications
@@ -22,46 +23,28 @@ namespace TimeSwap.Infrastructure.Specifications
         public int Take { get; private set; }
 
 
-        public PaymentByUserSpecification(Guid userId, string? paymentStatus, int dateFilter, int pageIndex = 1, int pageSize = 10)
+        public PaymentByUserSpecification(PaymentByUserSpecParam param, Guid userId)
         {
-            PaymentStatus parsedStatus = PaymentStatus.Pending;
+            PaymentStatus? paymentStatus = param.PaymentStatus;
 
-            if (!string.IsNullOrEmpty(paymentStatus))
+            DateTime? dateFilter = param.DateFilter switch
             {
-                Enum.TryParse(paymentStatus, true, out parsedStatus);
-            }
-
-            DateTime? startDate = null;
-            DateTime? endDate = null;
-
-            switch (dateFilter)
-            {
-                case 0:
-                    startDate = DateTime.UtcNow.Date;
-                    endDate = DateTime.UtcNow.Date.AddDays(1);
-                    break;
-                case 1:
-                    startDate = DateTime.UtcNow.Date.AddDays(-1);
-                    endDate = DateTime.UtcNow.Date;
-                    break;
-                case 2:
-                    startDate = DateTime.UtcNow.AddDays(-7);
-                    endDate = DateTime.UtcNow;
-                    break;
-                case 3:
-                    startDate = DateTime.UtcNow.AddDays(-30);
-                    endDate = DateTime.UtcNow;
-                    break;
-            }
+                DateFilter.Today => DateTime.UtcNow.Date,
+                DateFilter.Yesterday => DateTime.UtcNow.Date.AddDays(-1),
+                DateFilter.Last7Days => DateTime.UtcNow.Date.AddDays(-7),
+                DateFilter.Last30Days => DateTime.UtcNow.Date.AddDays(-30),
+                _ => null,
+            };
 
             Criteria = payment =>
                 payment.UserId == userId &&
-                (string.IsNullOrEmpty(paymentStatus) || payment.PaymentStatus == parsedStatus) &&
-                (startDate == null || (payment.CreatedAt >= startDate && payment.CreatedAt < endDate));
+                (paymentStatus == null || payment.PaymentStatus == paymentStatus) &&
+                (dateFilter == null || payment.CreatedAt >= dateFilter);
 
             OrderBy = q => q.OrderBy(p => p.CreatedAt);
-            Skip = (pageIndex - 1) * pageSize;
-            Take = pageSize;
+
+            Skip = (param.PageIndex - 1) * param.PageSize;
+            Take = param.PageSize;
 
             Includes.Add(p => p.User);
             Includes.Add(p => p.PaymentMethod);

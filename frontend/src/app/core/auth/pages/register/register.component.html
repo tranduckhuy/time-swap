@@ -27,7 +27,7 @@
                                     type="text"
                                     [class.form-control]="true" 
                                     [class.invalid]="isControlInvalid('firstName')"  
-                                    [placeholder]="isControlInvalid('firstName') ? getMessage('firstName', 'First Name') : 'auth.register.first-name' | translate" 
+                                    [placeholder]="isControlInvalid('firstName') ? getMessage('firstName', 'auth.register.first-name') : 'auth.register.first-name' | translate" 
                                     formControlName="firstName">
                             </div>
                             <div class="form-group">
@@ -35,7 +35,7 @@
                                     type="text"
                                     [class.form-control]="true" 
                                     [class.invalid]="isControlInvalid('lastName')"  
-                                    [placeholder]="isControlInvalid('lastName') ? getMessage('lastName', 'Last Name') : 'auth.register.last-name' | translate" 
+                                    [placeholder]="isControlInvalid('lastName') ? getMessage('lastName', 'auth.register.last-name') : 'auth.register.last-name' | translate" 
                                     formControlName="lastName">
                             </div>
                             <div class="form-group">
@@ -43,7 +43,7 @@
                                     type="email"
                                     [class.form-control]="true" 
                                     [class.invalid]="isControlInvalid('email')"  
-                                    [placeholder]="isControlInvalid('email') ? getMessage('email', 'Email') : 'auth.email' | translate" 
+                                    [placeholder]="isControlInvalid('email') ? getMessage('email', 'auth.email') : 'auth.email' | translate" 
                                     formControlName="email">
                             </div>
                             <div class="form-group">
@@ -51,7 +51,7 @@
                                     type="text"
                                     [class.form-control]="true" 
                                     [class.invalid]="isControlInvalid('email')"  
-                                    [placeholder]="isControlInvalid('phoneNumber') ? getMessage('phoneNumber', 'Phone Number') : 'auth.register.phone' | translate" 
+                                    [placeholder]="isControlInvalid('phoneNumber') ? getMessage('phoneNumber', 'auth.register.phone') : 'auth.register.phone' | translate" 
                                     formControlName="phoneNumber">
                             </div>
                             <div class="form-group">
@@ -59,7 +59,7 @@
                                     type="password"
                                     [class.form-control]="true" 
                                     [class.invalid]="isControlInvalid('password')"  
-                                    [placeholder]="isControlInvalid('password') ? getMessage('password', 'Password') : 'auth.password' | translate" 
+                                    [placeholder]="isControlInvalid('password') ? getMessage('password', 'auth.password') : 'auth.password' | translate" 
                                     formControlName="password">
                             </div>
                             <div class="form-group">
@@ -67,7 +67,7 @@
                                     type="password"
                                     [class.form-control]="true" 
                                     [class.invalid]="isControlInvalid('confirmPassword')"  
-                                    [placeholder]="isControlInvalid('confirmPassword') ? getMessage('confirmPassword', 'Confirm Password') : 'auth.register.confirm-password' | translate" 
+                                    [placeholder]="isControlInvalid('confirmPassword') ? getMessage('confirmPassword', 'auth.register.confirm-password') : 'auth.register.confirm-password' | translate" 
                                     formControlName="confirmPassword">
                             </div>
                             <button type="submit" class="btn">{{ 'common.buttons.auth.register' | translate }}</button>

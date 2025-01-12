@@ -62,7 +62,7 @@
             <div class="details-inner">
                 <h3>{{ 'job-detail.job-responsibilities' | translate }}</h3>
                 <ul>
-                    @for (responsibility of job().responsibilities; track $index) {
+                    @for (responsibility of job().responsibilitiesList; track $index) {
                         <li>
                             <i class='bx bx-message-square-check'></i>
                             {{ responsibility }}

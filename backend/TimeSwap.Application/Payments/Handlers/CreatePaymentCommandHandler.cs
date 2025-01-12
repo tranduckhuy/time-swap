@@ -51,7 +51,7 @@ namespace TimeSwap.Application.Payments.Handlers
                 vnp_TmnCode = _vnPayConfig.TmnCode,
                 vnp_Amount = request.Amount * 100,
                 vnp_OrderInfo = request.PaymentContent ?? string.Empty,
-                vnp_OrderType = "nap_tien",
+                vnp_OrderType = "Nap_tien",
                 vnp_ReturnUrl = _vnPayConfig.ReturnUrl,
                 vnp_TxnRef = payment.Id.ToString(),
                 vnp_IpAddr = request.IpAddress,

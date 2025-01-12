@@ -30,8 +30,14 @@ export function controlValueEqual(controlName1: string, controlName2: string) {
  * @param multiLanguageService - The service used to get translated messages.
  * @returns The translated error message or an empty string if no error.
  */
-export function getErrorMessage(controlName: string, name: string, form: FormGroup, multiLanguageService: MultiLanguageService) {
+export function getErrorMessage(
+    controlName: string, 
+    nameKey: string, 
+    form: FormGroup, 
+    multiLanguageService: MultiLanguageService
+): string {
     const control = form.controls[controlName];
+    const name = multiLanguageService.getTranslatedLang(nameKey);
 
     if (control?.hasError('required')) {
         return multiLanguageService.getTranslatedLang('common.form.errors.required', { name });
@@ -57,4 +63,4 @@ export function getErrorMessage(controlName: string, name: string, form: FormGro
     }
 
     return '';
-}   
+}

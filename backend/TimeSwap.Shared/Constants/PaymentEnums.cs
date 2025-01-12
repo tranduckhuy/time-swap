@@ -21,4 +21,12 @@
         PaymentCompleted,
         PaymentFailed
     }
+
+    public enum DateFilter
+    {
+        Today,
+        Yesterday,
+        Last7Days,
+        Last30Days
+    }
 }

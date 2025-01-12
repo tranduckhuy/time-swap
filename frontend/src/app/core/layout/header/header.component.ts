@@ -1,4 +1,4 @@
-import { Component, OnInit, DestroyRef, inject, signal, computed } from '@angular/core';
+import { Component, DestroyRef, inject, signal, computed, effect } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router';
 
 import { TranslateModule } from '@ngx-translate/core';
@@ -20,7 +20,7 @@ import { MultiLanguageService } from '../../../shared/services/multi-language.se
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   private readonly authService = inject(AuthService);
   private readonly profileService = inject(ProfileService);
   private readonly multiLanguageService = inject(MultiLanguageService);
@@ -47,27 +47,30 @@ export class HeaderComponent implements OnInit {
         this.isHome.set(currentUrl === '/' || currentUrl.startsWith('/home'));
       });
 
-    // ? Set up interval to check localStorage
-    const intervalId = setInterval(() => {
-      const theme = localStorage.getItem('theme');
-      if (theme !== this.currentTheme()) {
-        this.currentTheme.set(theme ?? 'theme-light');
-      }
-    }, 100);
+    // ? Effect: Set up interval to check localStorage
+    effect(() => {
+      const intervalId = setInterval(() => {
+        const theme = localStorage.getItem('theme');
+        if (theme !== this.currentTheme()) {
+          this.currentTheme.set(theme ?? 'theme-light');
+        }
+      }, 100);
 
-    // ? Cleanup
-    this.destroyRef.onDestroy(() => {
-      clearInterval(intervalId);
-      routerSubscription.unsubscribe();
+      this.destroyRef.onDestroy(() => {
+        clearInterval(intervalId);
+      });
     });
-  }
 
-  ngOnInit(): void {
     // ? Get user profile if logged in
     if (this.isLoggedIn()) {
       const profileSubscription = this.profileService.getUserProfile().subscribe();
       this.destroyRef.onDestroy(() => profileSubscription.unsubscribe());
     }
+
+    // ? Cleanup
+    this.destroyRef.onDestroy(() => {
+      routerSubscription.unsubscribe();
+    });
   }
 
   onChangeLanguage(lang: string) {

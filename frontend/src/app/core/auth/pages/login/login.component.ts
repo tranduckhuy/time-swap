@@ -56,8 +56,8 @@ export class LoginComponent implements OnInit {
     return control?.invalid && control?.touched;
   }
 
-  getMessage(controlName: string, name: string) {
-    return getErrorMessage(controlName, name, this.form, this.multiLanguageService);
+  getMessage(controlName: string, nameKey: string) {
+    return getErrorMessage(controlName, nameKey, this.form, this.multiLanguageService);
   }
 
   onSubmit() {

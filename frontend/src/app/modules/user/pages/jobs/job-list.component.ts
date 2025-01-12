@@ -13,11 +13,16 @@ import { NiceSelectComponent } from "../../../../shared/components/nice-select/n
 import { ToastComponent } from "../../../../shared/components/toast/toast.component";
 import { PreLoaderComponent } from "../../../../shared/components/pre-loader/pre-loader.component";
 
-import { createPostedDateOptions } from '../../../../shared/utils/util-functions';
+import { 
+  createPostedDateOptions, 
+  fetchWardsByCityId, 
+} from '../../../../shared/utils/util-functions';
 
 import { PAGE_SIZE_JOBS } from '../../../../shared/constants/page-constants';
 
 import { JobsService } from './jobs.service';
+import { IndustryService } from '../../../../shared/services/industry.service';
+import { CategoryService } from '../../../../shared/services/category.service';
 import { LocationService } from '../../../../shared/services/location.service';
 import { MultiLanguageService } from '../../../../shared/services/multi-language.service';
 
@@ -43,11 +48,11 @@ import type { JobListRequestModel } from '../../../../shared/models/api/request/
 export class JobListComponent implements OnInit {
   // ? Form Properties
   form!: FormGroup;
-  pageIndex = signal(1);
-  pageSize = signal(PAGE_SIZE_JOBS);
 
   // ? Dependency Injection
   private readonly jobsService = inject(JobsService);
+  private readonly industryService = inject(IndustryService);
+  private readonly categoryService = inject(CategoryService);
   private readonly locationService = inject(LocationService);
   private readonly multiLanguageService = inject(MultiLanguageService);
   private readonly fb = inject(FormBuilder);
@@ -55,10 +60,12 @@ export class JobListComponent implements OnInit {
 
   // ? State Management
   isLoading = this.jobsService.isLoading;
+  pageIndex = signal(1);
+  pageSize = signal(PAGE_SIZE_JOBS);
 
   // ? Data For Select Options
-  industries = this.jobsService.industries;
-  categories = this.jobsService.categories; 
+  industries = this.industryService.industries;
+  categories = this.categoryService.categories; 
   cities = this.locationService.cities;
   wards = this.locationService.wards;
 
@@ -98,7 +105,8 @@ export class JobListComponent implements OnInit {
     this.form.get(field)?.setValue(id);
 
     if (field === 'cityId' && id) {
-        this.fetchWardsByCityId(id);
+        const subscription = fetchWardsByCityId(id, this.locationService);
+        this.destroyRef.onDestroy(() => subscription.unsubscribe());
     }
   } 
 
@@ -117,8 +125,8 @@ export class JobListComponent implements OnInit {
 
   private initialSelectOptions(): void {
     const subscription = forkJoin([
-      this.jobsService.getAllIndustries(),
-      this.jobsService.getAllCategories(),
+      this.industryService.getAllIndustries(),
+      this.categoryService.getAllCategories(),
       this.locationService.getAllCities(),
       this.locationService.getWardByCityId('0'),
     ]).subscribe();
@@ -128,7 +136,6 @@ export class JobListComponent implements OnInit {
 
   private search(page: number = 1): void {
     this.pageIndex.set(page);
-console.log(this.form.value);
 
     const req: JobListRequestModel = {
       ...this.form.value,
@@ -137,12 +144,6 @@ console.log(this.form.value);
       isActive: true,
     };
     const subscription = this.jobsService.getAllJobs(req).subscribe();
-
-    this.destroyRef.onDestroy(() => subscription.unsubscribe());
-  }
-
-  private fetchWardsByCityId(cityId: string): void {
-    const subscription = this.locationService.getWardByCityId(cityId).subscribe();
 
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }

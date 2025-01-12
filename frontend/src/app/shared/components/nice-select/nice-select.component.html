@@ -1,4 +1,4 @@
-<div class="nice-select" tabindex="0">
+<div [class.nice-select]="true" [class.invalid]="isInvalid()" tabindex="0">
   <span class="current" [title]="current()">{{ current() }}</span>
   <div class="nice-select-search-box" appStopPropagation>
       <input 
@@ -35,4 +35,7 @@
         </div>
       }
   </ul>
+  @if(isInvalid()) {
+    <span class="error-msg">{{ errorMsg() }}</span>
+  }
 </div>
