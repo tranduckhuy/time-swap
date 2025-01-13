@@ -35,7 +35,9 @@ namespace TimeSwap.Infrastructure.Extensions
             var services = scope.ServiceProvider;
             var context = services.GetRequiredService<AppDbContext>();
 
-            if (await context.Database.EnsureCreatedAsync() && !await context.Cities.AnyAsync())
+            await context.Database.MigrateAsync();
+
+            if (!await context.Cities.AnyAsync())
             {
                 foreach (var cityData in cities)
                 {
@@ -170,8 +172,6 @@ namespace TimeSwap.Infrastructure.Extensions
             using var scope = app.Services.CreateScope();
             var services = scope.ServiceProvider;
             var context = services.GetRequiredService<AppDbContext>();
-
-            await context.Database.MigrateAsync();
 
             if (!await context.Industries.AnyAsync())
             {
