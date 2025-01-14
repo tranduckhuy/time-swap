@@ -11,10 +11,9 @@
                 <div class="banner-content">
                     <div class="d-table">
                         <div class="d-table-cell">
-                            <h1>Find Thousand <span>Job</span> If You’re Ready To Get</h1>
+                            <h1>{{ 'home.banner.title' | translate }} <span>{{ 'home.banner.job' | translate }}</span> {{ 'home.banner.ready' | translate }}</h1>
                             <p>
-                                We have 280,000+ live jobs adverts on our site, helping you to find any type of
-                                job
+                                {{ 'home.banner.description' | translate }}
                             </p>
                             <div class="banner-form-area">
                                 <form>
@@ -27,19 +26,27 @@
                                                 <input
                                                     type="text"
                                                     class="form-control"
-                                                    placeholder="Search Your Job"
+                                                    [placeholder]="'home.banner.search.placeholder' | translate"
                                                 />
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-group">
                                                 <select style="display: none;">
-                                                    <option>All Categories</option>
-                                                    <option>Another option</option>
-                                                    <option>A option</option>
-                                                    <option>Potato</option>
+                                                    <option>{{ 'home.banner.categories.all' | translate }}</option>
+                                                    <option>{{ 'home.banner.categories.teaching' | translate }}</option>
+                                                    <option>{{ 'home.banner.categories.it' | translate }}</option>
+                                                    <option>{{ 'home.banner.categories.other' | translate }}</option>
                                                 </select>
-                                                <div class="nice-select" tabindex="0"><span class="current">All Categories</span><ul class="list"><li data-value="All Categories" class="option selected">All Categories</li><li data-value="Another option" class="option">Another option</li><li data-value="A option" class="option">A option</li><li data-value="Potato" class="option">Potato</li></ul></div>
+                                                <div class="nice-select" tabindex="0">
+                                                    <span class="current">{{ 'home.banner.categories.all' | translate }}</span>
+                                                    <ul class="list">
+                                                        <li data-value="All Categories" class="option selected">{{ 'home.banner.categories.all' | translate }}</li>
+                                                        <li data-value="Another option" class="option">{{ 'home.banner.categories.teaching' | translate }}</li>
+                                                        <li data-value="A option" class="option">{{ 'home.banner.categories.it' | translate }}</li>
+                                                        <li data-value="Potato" class="option">{{ 'home.banner.categories.other' | translate }}</li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
@@ -50,13 +57,13 @@
                                                 <input
                                                     type="text"
                                                     class="form-control"
-                                                    placeholder="Location"
+                                                    [placeholder]="'home.banner.location.placeholder' | translate"
                                                 />
                                             </div>
                                         </div>
                                     </div>
                                     <button type="submit" class="btn">
-                                        Search Job
+                                        {{ 'home.banner.search.button' | translate }}
                                         <i class="bx bx-search"></i>
                                     </button>
                                 </form>
@@ -64,22 +71,22 @@
                             <div class="banner-key">
                                 <ul>
                                     <li>
-                                        <span>Trending Keywords</span>
+                                        <span>{{ 'home.banner.trending' | translate }}</span>
                                     </li>
                                     <li>
-                                        <a href="#">Account Manager,</a>
+                                        <a href="#">{{ 'home.banner.keywords.teaching' | translate }}</a>
                                     </li>
                                     <li>
-                                        <a href="#">Administrative,</a>
+                                        <a href="#">{{ 'home.banner.keywords.it-support' | translate }}</a>
                                     </li>
                                     <li>
-                                        <a href="#">Android,</a>
+                                        <a href="#">{{ 'home.banner.keywords.programming' | translate }}</a>
                                     </li>
                                     <li>
-                                        <a href="#">Angular,</a>
+                                        <a href="#">{{ 'home.banner.keywords.education' | translate }}</a>
                                     </li>
                                     <li>
-                                        <a href="#">appASP.NET</a>
+                                        <a href="#">{{ 'home.banner.keywords.web-development' | translate }}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -104,7 +111,7 @@
                     <img src="assets/imgs/home/banner/banner13.png" alt="Shape" />
                     <div class="inner">
                         <img src="assets/imgs/home/banner/banner2.png" alt="Shape" />
-                        <p>Outsourcing all or part of your personnel management function can bring real</p>
+                        <p>{{ 'home.banner.outsourcing' | translate }}</p>
                     </div>
                 </div>
             </div>

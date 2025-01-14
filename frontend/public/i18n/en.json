@@ -252,5 +252,35 @@
     "message": "Message",
     "condition": "Accept Terms & Conditions And Privacy Policy.",
     "submit": "Send Message"
+  },
+  "home": {
+    "banner": {
+      "title": "Connect Time with Purpose",
+      "job": "Teaching & IT Exchanges",
+      "ready": "Ready to Share?",
+      "description": "Time-Swap connects those with spare time and those needing help in short-term tasks in Teaching and IT.",
+      "search": {
+        "placeholder": "Search Jobs",
+        "button": "Search"
+      },
+      "categories": {
+        "all": "All Categories",
+        "teaching": "Teaching",
+        "it": "IT",
+        "other": "Other"
+      },
+      "location": {
+        "placeholder": "Location"
+      },
+      "trending": "Trending Skills",
+      "keywords": {
+        "teaching": "Teaching",
+        "it-support": "IT Support",
+        "programming": "Programming",
+        "education": "Education",
+        "web-development": "Web Development"
+      },
+      "outsourcing": "Outsourcing time in Teaching & IT can benefit both sides."
+    }
   }
 }
