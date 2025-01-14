@@ -255,5 +255,35 @@
     "message": "Tin nhắn",
     "condition": "Chấp nhận Điều khoản & Điều kiện và Chính sách bảo mật.",
     "submit": "Gửi Tin Nhắn"
+  },
+  "home": {
+    "banner": {
+      "title": "Kết nối Thời gian với Mục đích",
+      "job": "Trao đổi Sư phạm & CNTT",
+      "ready": "Sẵn sàng Chia sẻ?",
+      "description": "Time-Swap kết nối người có thời gian rỗi và người cần hỗ trợ trong các công việc ngắn hạn về Sư phạm và Công nghệ thông tin.",
+      "search": {
+        "placeholder": "Tìm công việc",
+        "button": "Tìm kiếm"
+      },
+      "categories": {
+        "all": "Tất cả các loại việc",
+        "teaching": "Sư phạm",
+        "it": "CNTT",
+        "other": "Khác"
+      },
+      "location": {
+        "placeholder": "Vị trí"
+      },
+      "trending": "Từ khóa phổ biến",
+      "keywords": {
+        "teaching": "Sư phạm",
+        "it-support": "Hỗ trợ CNTT",
+        "programming": "Lập trình",
+        "education": "Giáo dục",
+        "web-development": "Phát triển Web"
+      },
+      "outsourcing": "Thuê ngoài thời gian trong Sư phạm & CNTT có thể mang lại lợi ích cho cả hai bên."
+    }
   }
 }
