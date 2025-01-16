@@ -10,7 +10,7 @@ services:
       - "9002:9002"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - /etc/nginx/ssl:/etc/nginx/ssl:ro
+      - /etc/letsencrypt/live/tranduchuy.me:/etc/nginx/ssl/private:ro
     depends_on:
       - timeswap-auth
       - timeswap-api
