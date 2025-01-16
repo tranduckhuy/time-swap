@@ -9,6 +9,7 @@ using TimeSwap.Domain.Specs.Job;
 using TimeSwap.Infrastructure.Persistence.DbContexts;
 using TimeSwap.Infrastructure.Projections;
 using TimeSwap.Infrastructure.Specifications.JobPosts;
+using TimeSwap.Shared.Constants;
 
 namespace TimeSwap.Infrastructure.Persistence.Repositories
 {
@@ -23,14 +24,20 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
 
         public async Task<Pagination<JobPost>?> GetJobPostsWithSpecAsync(JobPostSpecParam param)
         {
-            // Create cache key based on the spec
-            var cacheKey = GenerateCacheKeyForSpec(param);
-            var cachedData = await _cache.GetStringAsync(cacheKey);
+            string cacheKey = string.Empty;
 
-            // If cache is found, return the cached data
-            if (cachedData != null)
+            // Create cache key based on the spec
+            if (param.PageIndex == AppConstant.DEFAULT_PAGE_INDEX && param.PageSize == AppConstant.DEFAULT_PAGE_SIZE)
             {
-                return JsonSerializer.Deserialize<Pagination<JobPost>>(cachedData);
+                cacheKey = $"jobpost:spec:{AppConstant.DEFAULT_PAGE_INDEX}:{AppConstant.DEFAULT_PAGE_SIZE}";
+
+                var cachedData = await _cache.GetStringAsync(cacheKey);
+
+                // If cache is found, return the cached data
+                if (cachedData != null)
+                {
+                    return JsonSerializer.Deserialize<Pagination<JobPost>>(cachedData);
+                }
             }
 
             var spec = new JobPostSpecification(param);
@@ -47,12 +54,6 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
             }
 
             return result;
-        }
-
-        private static string GenerateCacheKeyForSpec(JobPostSpecParam param)
-        {
-            return $"jobpost:spec:{param.Search}:{param.IndustryId}:{param.CategoryId}:{param.MinFee}:{param.MaxFee}:" +
-                $"{param.PostedDate}:{param.CityId}:{param.WardId}:{param.Sort}:{param.PageIndex}:{param.PageSize}:{param.IsActive}";
         }
 
         public async Task<JobPost?> GetJobPostByIdAsync(Guid id)
@@ -84,7 +85,7 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
 
         private async Task InvalidateCacheAsync()
         {
-            await _cache.RemoveAsync("jobpost:spec:*");
+            await _cache.RemoveAsync($"jobpost:spec:{AppConstant.DEFAULT_PAGE_INDEX}:{AppConstant.DEFAULT_PAGE_SIZE}");
         }
 
         public Task<int> GetUserJobPostCountOnCurrentDayAsync(Guid userId)
