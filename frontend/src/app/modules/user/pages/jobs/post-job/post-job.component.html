@@ -6,207 +6,259 @@
 
 <!-- ? Banner -->
 <app-banner>
-  <app-breadcrumb [title]="'navbar.post-job' | translate"/>
+  <app-breadcrumb [title]="'navbar.post-job' | translate" />
 </app-banner>
 
 <!-- ? Form post a job  -->
- <div class="post-job-area ptb-100">
+<div class="post-job-area ptb-100">
   <div class="container">
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
-          <div class="post-item">
-              <div class="section-title">
-                  <h2>{{ 'navbar.post-job' | translate }}</h2>
-                  <p>{{ 'jobs.post-job-form.sub-heading' | translate }}</p>
-              </div>
-              <div class="row">
-                  <div class="col-lg-6 col-12">
-                      <div class="form-group">
-                          <label>
-                            {{ 'jobs.post-job-form.title' | translate }}
-                          </label>
-                          <input 
-                            type="text" 
-                            formControlName="title"
-                            [class.form-control]="true" 
-                            [class.invalid]="isControlInvalid('title')"
-                            [placeholder]="'jobs.post-job-form.title-placeholder' | translate"
-                          />
-                          @if (isControlInvalid('title')) {
-                            <span class="error-msg">
-                              {{ getMessage('title', 'jobs.post-job-form.error-messages.title') }}
-                            </span>
-                          }
-                      </div>
-                  </div>
-                  <div class="col-lg-6 col-12">
-                      <div class="form-group">
-                          <label>
-                            {{ 'jobs.post-job-form.fee' | translate }}
-                          </label>
-                          <input 
-                            #feeInput
-                            type="text" 
-                            formControlName="fee" 
-                            [class.form-control]="true" 
-                            [class.invalid]="isControlInvalid('fee')" 
-                            [value]="form.get('fee')?.value | thousand: lang()"
-                            [placeholder]="'jobs.post-job-form.fee-placeholder' | translate"
-                            (input)="onInputFee(feeInput.value)"
-                          />
-                          @if (isControlInvalid('fee')) {
-                            <span class="error-msg">
-                              {{ getMessage('fee', 'jobs.post-job-form.error-messages.fee') }}
-                            </span>
-                          }
-                      </div>
-                  </div>
-                  <div class="col-12">
-                      <div class="form-group">
-                          <label>
-                            {{ 'jobs.post-job-form.responsibilities' | translate }}
-                          </label>
-                          <input 
-                            type="text" 
-                            formControlName="responsibilities" 
-                            [class.form-control]="true" 
-                            [class.invalid]="isControlInvalid('responsibilities')" 
-                            [placeholder]="'jobs.post-job-form.res-placeholder' | translate"
-                          />
-                          @if (isControlInvalid('responsibilities')) {
-                            <span class="error-msg">
-                              {{ getMessage('responsibilities', 'jobs.post-job-form.error-messages.responsibilities') }}
-                            </span>
-                          }
-                      </div>
-                  </div>
-                  <div class="col-lg-6 col-12">
-                      <div class="form-group">
-                          <label>
-                            {{ 'jobs.post-job-form.start-date' | translate }}
-                          </label>
-                          <input 
-                            type="date" 
-                            formControlName="startDate"
-                            [class.form-control]="true" 
-                            [class.invalid]="isControlInvalid('startDate')" 
-                            placeholder="dd-MM-yyyy" 
-                          />
-                          @if (isControlInvalid('startDate')) {
-                            <span class="error-msg">
-                              {{ getMessage('startDate', 'jobs.post-job-form.error-messages.start-date') }}
-                            </span>
-                          }
-                      </div>
-                  </div>
-                  <div class="col-lg-6 col-12">
-                      <div class="form-group">
-                          <label>
-                            {{ 'jobs.post-job-form.due-date' | translate }}
-                          </label>
-                          <input 
-                            type="date" 
-                            formControlName="dueDate"
-                            [class.form-control]="true" 
-                            [class.invalid]="isControlInvalid('dueDate')" 
-                            placeholder="dd-MM-yyyy" 
-                          />
-                          @if (isControlInvalid('dueDate')) {
-                            <span class="error-msg">
-                              {{ getMessage('dueDate', 'jobs.post-job-form.error-messages.due-date') }}
-                            </span>
-                          }
-                      </div>
-                  </div>
-                  <div class="col-12">
-                      <div class="form-group">
-                          <label>
-                            {{ 'jobs.post-job-form.description' | translate }}
-                          </label>
-                          <textarea 
-                            class="form-control"
-                            style="height: unset; padding: 0.775rem .75rem;" 
-                            rows="5"
-                            formControlName="description" 
-                            [placeholder]="'jobs.post-job-form.desc-placeholder' | translate"
-                          >
-                          </textarea>
-                      </div>
-                  </div>
-                  <div class="col-lg-6 col-12">
-                      <div class="form-group">
-                          <label>
-                            {{ 'jobs.post-job-form.industry' | translate }}
-                          </label>
-                          <select style="display: none;" formControlName="industryId">
-                            @for (industry of industries(); track industry.id) {
-                                <option [value]="industry.id">{{ industry }}</option>
-                            }
-                          </select>
-                          <app-nice-select 
-                            [listData]="industriesName()"
-                            [isInvalid]="isControlInvalid('industryId')"
-                            [errorMsg]="getMessage('dueDate', 'jobs.post-job-form.error-messages.industry')"
-                            (valueChange)="handleSelectChange('industryId', $event, industries())"
-                          />
-                      </div>
-                  </div>
-                  <div class="col-lg-6 col-12">
-                      <div class="form-group">
-                          <label>
-                            {{ 'jobs.post-job-form.category' | translate }}
-                          </label>
-                          <select style="display: none;" formControlName="categoryId">
-                            @for (category of categories(); track category.id) {
-                                <option [value]="category.id">{{ category }}</option>
-                            }
-                          </select>
-                          <app-nice-select 
-                            [listData]="categoriesName()"
-                            [isInvalid]="isControlInvalid('categoryId')"
-                            [errorMsg]="getMessage('dueDate', 'jobs.post-job-form.error-messages.category')"
-                            (valueChange)="handleSelectChange('categoryId', $event, categories())"
-                          />
-                      </div>
-                  </div>
-                  <div class="col-lg-6 col-12">
-                      <div class="form-group">
-                          <label>
-                            {{ 'jobs.post-job-form.province' | translate }}
-                          </label>
-                          <select style="display: none;" formControlName="cityId">
-                            @for (city of cities(); track city.id) {
-                                <option [value]="city.id">{{ city }}</option>
-                            }
-                          </select>
-                          <app-nice-select 
-                            [listData]="citiesName()"
-                            [isInvalid]="isControlInvalid('cityId')"
-                            [errorMsg]="getMessage('dueDate', 'jobs.post-job-form.error-messages.city')"
-                            (valueChange)="handleSelectChange('cityId', $event, cities())"
-                          />
-                      </div>
-                  </div>
-                  <div class="col-lg-6 col-12">
-                      <div class="form-group">
-                          <label>
-                            {{ 'jobs.post-job-form.full-location' | translate }}
-                          </label>
-                          <select style="display: none;" formControlName="wardId">
-                            @for (ward of wards(); track ward.id) {
-                                <option [value]="ward.id">{{ ward.fullLocation }}</option>
-                            }
-                          </select>
-                          <app-nice-select 
-                            [listData]="wardsName()"
-                            [isInvalid]="isControlInvalid('wardId')"
-                            [errorMsg]="getMessage('dueDate', 'jobs.post-job-form.error-messages.ward')"
-                            (valueChange)="handleSelectChange('wardId', $event, wards())"
-                          />
-                      </div>
-                  </div>
-              </div>
-              <button type="submit" class="btn">{{ 'navbar.post-job' | translate }}</button>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="post-item">
+        <div class="section-title">
+          <h2>{{ 'navbar.post-job' | translate }}</h2>
+          <p>{{ 'jobs.post-job-form.sub-heading' | translate }}</p>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-12">
+            <div class="form-group">
+              <label>
+                {{ 'jobs.post-job-form.title' | translate }}
+              </label>
+              <input
+                type="text"
+                formControlName="title"
+                [class.form-control]="true"
+                [class.invalid]="isControlInvalid('title')"
+                [placeholder]="
+                  'jobs.post-job-form.title-placeholder' | translate
+                "
+              />
+              @if (isControlInvalid('title')) {
+                <span class="error-msg">
+                  {{
+                    getMessage(
+                      'title',
+                      'jobs.post-job-form.error-messages.title'
+                    )
+                  }}
+                </span>
+              }
+            </div>
           </div>
-      </form>
+          <div class="col-lg-6 col-12">
+            <div class="form-group">
+              <label>
+                {{ 'jobs.post-job-form.fee' | translate }}
+              </label>
+              <input
+                #feeInput
+                type="text"
+                formControlName="fee"
+                [class.form-control]="true"
+                [class.invalid]="isControlInvalid('fee')"
+                [value]="form.get('fee')?.value | thousand: lang()"
+                [placeholder]="'jobs.post-job-form.fee-placeholder' | translate"
+                (input)="onInputFee(feeInput.value)"
+              />
+              @if (isControlInvalid('fee')) {
+                <span class="error-msg">
+                  {{
+                    getMessage('fee', 'jobs.post-job-form.error-messages.fee')
+                  }}
+                </span>
+              }
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-group">
+              <label>
+                {{ 'jobs.post-job-form.responsibilities' | translate }}
+              </label>
+              <input
+                type="text"
+                formControlName="responsibilities"
+                [class.form-control]="true"
+                [class.invalid]="isControlInvalid('responsibilities')"
+                [placeholder]="'jobs.post-job-form.res-placeholder' | translate"
+              />
+              @if (isControlInvalid('responsibilities')) {
+                <span class="error-msg">
+                  {{
+                    getMessage(
+                      'responsibilities',
+                      'jobs.post-job-form.error-messages.responsibilities'
+                    )
+                  }}
+                </span>
+              }
+            </div>
+          </div>
+          <div class="col-lg-6 col-12">
+            <div class="form-group">
+              <label>
+                {{ 'jobs.post-job-form.start-date' | translate }}
+              </label>
+              <input
+                type="date"
+                formControlName="startDate"
+                [class.form-control]="true"
+                [class.invalid]="isControlInvalid('startDate')"
+                placeholder="dd-MM-yyyy"
+              />
+              @if (isControlInvalid('startDate')) {
+                <span class="error-msg">
+                  {{
+                    getMessage(
+                      'startDate',
+                      'jobs.post-job-form.error-messages.start-date'
+                    )
+                  }}
+                </span>
+              }
+            </div>
+          </div>
+          <div class="col-lg-6 col-12">
+            <div class="form-group">
+              <label>
+                {{ 'jobs.post-job-form.due-date' | translate }}
+              </label>
+              <input
+                type="date"
+                formControlName="dueDate"
+                [class.form-control]="true"
+                [class.invalid]="isControlInvalid('dueDate')"
+                placeholder="dd-MM-yyyy"
+              />
+              @if (isControlInvalid('dueDate')) {
+                <span class="error-msg">
+                  {{
+                    getMessage(
+                      'dueDate',
+                      'jobs.post-job-form.error-messages.due-date'
+                    )
+                  }}
+                </span>
+              }
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-group">
+              <label>
+                {{ 'jobs.post-job-form.description' | translate }}
+              </label>
+              <textarea
+                class="form-control"
+                style="height: unset; padding: 0.775rem 0.75rem"
+                rows="5"
+                formControlName="description"
+                [placeholder]="
+                  'jobs.post-job-form.desc-placeholder' | translate
+                "
+              >
+              </textarea>
+            </div>
+          </div>
+          <div class="col-lg-6 col-12">
+            <div class="form-group">
+              <label>
+                {{ 'jobs.post-job-form.industry' | translate }}
+              </label>
+              <select style="display: none" formControlName="industryId">
+                @for (industry of industries(); track industry.id) {
+                  <option [value]="industry.id">{{ industry }}</option>
+                }
+              </select>
+              <app-nice-select
+                [listData]="industriesName()"
+                [isInvalid]="isControlInvalid('industryId')"
+                [errorMsg]="
+                  getMessage(
+                    'dueDate',
+                    'jobs.post-job-form.error-messages.industry'
+                  )
+                "
+                (valueChange)="
+                  handleSelectChange('industryId', $event, industries())
+                "
+              />
+            </div>
+          </div>
+          <div class="col-lg-6 col-12">
+            <div class="form-group">
+              <label>
+                {{ 'jobs.post-job-form.category' | translate }}
+              </label>
+              <select style="display: none" formControlName="categoryId">
+                @for (category of categories(); track category.id) {
+                  <option [value]="category.id">{{ category }}</option>
+                }
+              </select>
+              <app-nice-select
+                [listData]="categoriesName()"
+                [isInvalid]="isControlInvalid('categoryId')"
+                [errorMsg]="
+                  getMessage(
+                    'dueDate',
+                    'jobs.post-job-form.error-messages.category'
+                  )
+                "
+                (valueChange)="
+                  handleSelectChange('categoryId', $event, categories())
+                "
+              />
+            </div>
+          </div>
+          <div class="col-lg-6 col-12">
+            <div class="form-group">
+              <label>
+                {{ 'jobs.post-job-form.province' | translate }}
+              </label>
+              <select style="display: none" formControlName="cityId">
+                @for (city of cities(); track city.id) {
+                  <option [value]="city.id">{{ city }}</option>
+                }
+              </select>
+              <app-nice-select
+                [listData]="citiesName()"
+                [isInvalid]="isControlInvalid('cityId')"
+                [errorMsg]="
+                  getMessage(
+                    'dueDate',
+                    'jobs.post-job-form.error-messages.city'
+                  )
+                "
+                (valueChange)="handleSelectChange('cityId', $event, cities())"
+              />
+            </div>
+          </div>
+          <div class="col-lg-6 col-12">
+            <div class="form-group">
+              <label>
+                {{ 'jobs.post-job-form.full-location' | translate }}
+              </label>
+              <select style="display: none" formControlName="wardId">
+                @for (ward of wards(); track ward.id) {
+                  <option [value]="ward.id">{{ ward.fullLocation }}</option>
+                }
+              </select>
+              <app-nice-select
+                [listData]="wardsName()"
+                [isInvalid]="isControlInvalid('wardId')"
+                [errorMsg]="
+                  getMessage(
+                    'dueDate',
+                    'jobs.post-job-form.error-messages.ward'
+                  )
+                "
+                (valueChange)="handleSelectChange('wardId', $event, wards())"
+              />
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn">
+          {{ 'navbar.post-job' | translate }}
+        </button>
+      </div>
+    </form>
   </div>
 </div>
