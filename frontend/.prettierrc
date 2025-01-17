@@ -8,17 +8,13 @@
   "singleQuote": true,
   "jsxSingleQuote": false,
   "singleAttributePerLine": false,
-  "printWidth": 120,
+  "printWidth": 80,
+  "tabWidth": 2,
   "proseWrap": "preserve",
   "quoteProps": "as-needed",
   "requirePragma": false,
   "semi": true,
-  "tabWidth": 4,
   "trailingComma": "all",
   "useTabs": false,
-  "vueIndentScriptAndStyle": false,
-  "plugins": ["@trivago/prettier-plugin-sort-imports"],
-  "importOrder": ["<THIRD_PARTY_MODULES>", "^@/(.*)$", "^./(.*)$"],
-  "importOrderSeparation": true,
-  "importOrderSortSpecifiers": true
+  "vueIndentScriptAndStyle": false
 }
