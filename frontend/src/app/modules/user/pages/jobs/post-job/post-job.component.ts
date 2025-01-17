@@ -1,24 +1,32 @@
 import { Component, DestroyRef, OnInit, computed, inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
 import { forkJoin } from 'rxjs';
 
 import { TranslateModule } from '@ngx-translate/core';
 
-import { BannerComponent } from "../../../../../shared/components/banner/banner.component";
-import { BreadcrumbComponent } from "../../../../../shared/components/breadcrumb/breadcrumb.component";
-import { NiceSelectComponent } from "../../../../../shared/components/nice-select/nice-select.component";
-import { PreLoaderComponent } from "../../../../../shared/components/pre-loader/pre-loader.component";
-import { ToastComponent } from "../../../../../shared/components/toast/toast.component";
+import { BannerComponent } from '../../../../../shared/components/banner/banner.component';
+import { BreadcrumbComponent } from '../../../../../shared/components/breadcrumb/breadcrumb.component';
+import { NiceSelectComponent } from '../../../../../shared/components/nice-select/nice-select.component';
+import { PreLoaderComponent } from '../../../../../shared/components/pre-loader/pre-loader.component';
+import { ToastComponent } from '../../../../../shared/components/toast/toast.component';
 
 import { ThousandPipe } from '../../../../../shared/pipes/thousand.pipe';
 
-import { ENGLISH, VIETNAMESE } from '../../../../../shared/constants/multi-lang-constants';
+import {
+  ENGLISH,
+  VIETNAMESE,
+} from '../../../../../shared/constants/multi-lang-constants';
 
 import { getErrorMessage } from '../../../../../shared/utils/form-validators';
-import { 
-  fetchCategoriesByIndustryId, 
-  fetchWardsByCityId 
+import {
+  fetchCategoriesByIndustryId,
+  fetchWardsByCityId,
 } from '../../../../../shared/utils/util-functions';
 
 import { JobsService } from '../jobs.service';
@@ -40,10 +48,10 @@ import type { PostJobRequestModel } from '../../../../../shared/models/api/reque
     BreadcrumbComponent,
     NiceSelectComponent,
     PreLoaderComponent,
-    ToastComponent
-],
+    ToastComponent,
+  ],
   templateUrl: './post-job.component.html',
-  styleUrl: './post-job.component.css'
+  styleUrl: './post-job.component.css',
 })
 export class PostJobComponent implements OnInit {
   // ? Form Properties
@@ -63,23 +71,33 @@ export class PostJobComponent implements OnInit {
 
   // ? Data For Select Options
   industries = this.industryService.industries;
-  categories = this.categoryService.categories; 
+  categories = this.categoryService.categories;
   cities = this.locationService.cities;
   wards = this.locationService.wards;
 
   // ? Computed Properties
-  lang = computed(() => this.multiLanguageService.language() === VIETNAMESE ? VIETNAMESE : ENGLISH)
-  industriesName = computed(() => this.industries().map(i => i.industryName));
-  citiesName = computed(() => this.cities().map(c => c.name));
-  categoriesName = computed(() => 
-    this.categories().map(c => c.categoryName).length 
-    ? this.categories().map(c => c.categoryName)
-    : [this.multiLanguageService.getTranslatedLang('jobs.post-job-form.no-category')]
+  lang = computed(() =>
+    this.multiLanguageService.language() === VIETNAMESE ? VIETNAMESE : ENGLISH,
   );
-  wardsName = computed(() => 
-    this.wards().map(w => w.fullLocation).length 
-    ? this.wards().map(w => w.fullLocation)
-    : [this.multiLanguageService.getTranslatedLang('jobs.post-job-form.no-ward')]
+  industriesName = computed(() => this.industries().map((i) => i.industryName));
+  citiesName = computed(() => this.cities().map((c) => c.name));
+  categoriesName = computed(() =>
+    this.categories().map((c) => c.categoryName).length
+      ? this.categories().map((c) => c.categoryName)
+      : [
+          this.multiLanguageService.getTranslatedLang(
+            'jobs.post-job-form.no-category',
+          ),
+        ],
+  );
+  wardsName = computed(() =>
+    this.wards().map((w) => w.fullLocation).length
+      ? this.wards().map((w) => w.fullLocation)
+      : [
+          this.multiLanguageService.getTranslatedLang(
+            'jobs.post-job-form.no-ward',
+          ),
+        ],
   );
 
   ngOnInit(): void {
@@ -90,14 +108,11 @@ export class PostJobComponent implements OnInit {
   initialForm() {
     this.form = this.fb.group({
       title: ['', Validators.required],
-      fee: ['', [
-        Validators.required, 
-        Validators.pattern('^[0-9]*$')
-      ]],
-      responsibilities: ['', [
-        Validators.required, 
-        Validators.pattern(/^[^,]+(,[^,]+)*$/)
-      ]],
+      fee: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      responsibilities: [
+        '',
+        [Validators.required, Validators.pattern(/^[^,]+(,[^,]+)*$/)],
+      ],
       description: [''],
       industryId: ['', Validators.required],
       categoryId: ['', Validators.required],
@@ -110,23 +125,26 @@ export class PostJobComponent implements OnInit {
 
   handleSelectChange(field: string, value: string, options: any[]): void {
     const id = this.getOptionId(value, options);
-    
+
     this.form.get(field)?.setValue(id);
 
     if (field === 'industryId' && id) {
-      const subscription = fetchCategoriesByIndustryId(+id, this.categoryService);
+      const subscription = fetchCategoriesByIndustryId(
+        +id,
+        this.categoryService,
+      );
       this.destroyRef.onDestroy(() => subscription.unsubscribe());
     }
 
     if (field === 'cityId' && id) {
-        const subscription = fetchWardsByCityId(id, this.locationService);
-        this.destroyRef.onDestroy(() => subscription.unsubscribe());
+      const subscription = fetchWardsByCityId(id, this.locationService);
+      this.destroyRef.onDestroy(() => subscription.unsubscribe());
     }
   }
 
   onSubmit() {
     if (this.form.invalid) {
-      Object.keys(this.form.controls).forEach(key => {
+      Object.keys(this.form.controls).forEach((key) => {
         const control = this.form.get(key);
         if (control?.invalid) {
           control.markAsTouched();
@@ -137,9 +155,9 @@ export class PostJobComponent implements OnInit {
 
     const req: PostJobRequestModel = {
       ...this.form.value,
-      fee: +(this.form.get('fee')?.value),
+      fee: +this.form.get('fee')?.value,
       startDate: new Date(this.form.get('startDate')?.value).toISOString(),
-      dueDate: new Date(this.form.get('dueDate')?.value).toISOString()
+      dueDate: new Date(this.form.get('dueDate')?.value).toISOString(),
     };
 
     const subscription = this.jobsService.createJob(req).subscribe();
@@ -149,7 +167,7 @@ export class PostJobComponent implements OnInit {
 
   onInputFee(fee: string) {
     const value = fee.replace(/\D/g, '');
-    
+
     if (value !== this.form.get('fee')?.value) {
       this.form.patchValue({ fee: value });
     }
@@ -161,24 +179,35 @@ export class PostJobComponent implements OnInit {
   }
 
   getMessage(controlName: string, nameKey: string) {
-    return getErrorMessage(controlName, nameKey, this.form, this.multiLanguageService);
+    return getErrorMessage(
+      controlName,
+      nameKey,
+      this.form,
+      this.multiLanguageService,
+    );
   }
 
   private initialSelectOptions(): void {
     const subscription = forkJoin([
       this.industryService.getAllIndustries(),
-      this.locationService.getAllCities()
+      this.locationService.getAllCities(),
     ]).subscribe();
 
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
   private getOptionId(value: string, options: any[]): string {
-    return options.find(
-        option => option.name === value || 
-        option.fullLocation === value || 
-        option.industryName === value || 
-        option.categoryName === value
-    )?.id || (options.some(option => option.industryName || option.categoryName) ? '0' : '');
+    return (
+      options.find(
+        (option) =>
+          option.name === value ||
+          option.fullLocation === value ||
+          option.industryName === value ||
+          option.categoryName === value,
+      )?.id ||
+      (options.some((option) => option.industryName || option.categoryName)
+        ? '0'
+        : '')
+    );
   }
 }
