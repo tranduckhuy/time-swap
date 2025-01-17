@@ -40,7 +40,7 @@ export const apiInterceptor: HttpInterceptorFn = (req, next) => {
     return next(req).pipe(
       retry({
         count: MAX_RETRIES,
-        delay: retryStrategy
+        delay: retryStrategy  
       }),
       catchError(handleUnauthorizedError(router))
     );
