@@ -17,7 +17,7 @@ namespace TimeSwap.Application.Location.Handlers
 
         public async Task<IEnumerable<CityResponse>> Handle(GetCitiesQuery request, CancellationToken cancellationToken)
         {
-            var cities = await _cityRepository.GetAllAsync();
+            var cities = await _cityRepository.GetAllCitiesAsync();
 
             return AppMapper<CoreMappingProfile>.Mapper.Map<IEnumerable<CityResponse>>(cities);
         }
