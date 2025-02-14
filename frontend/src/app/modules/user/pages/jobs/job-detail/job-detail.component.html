@@ -1,50 +1,57 @@
 @if (isLoading()) {
-    <app-loader />
+  <app-loader />
 }
 
 <!-- ? Banner -->
 <div class="page-title-area two">
-    <app-banner>
-        <app-banner-detail>
-            <div class="left" ngProjectAs="left-content">
-                <img [src]="job().ownerAvatarUrl" [alt]="job().title" class="owner-avt">
-                <h2>{{ job().title }}</h2>
-                <ul>
-                    <li>
-                        <i class='bx bx-pie-chart-alt-2'></i>
-                        {{ job().industry.industryName }}
-                    </li>
-                    <li>
-                        <i class='bx bx-time'></i>
-                        Posted date: {{ job().createdAt | date: 'fullDate' }}
-                    </li>
-                </ul>
-            </div>
-            <div class="right" ngProjectAs="right-content">
-                <app-button-icon [title]="'navbar.post-job' | translate" icon="bx bx-plus"/>
-                <ul>
-                  <li>
-                      <a href="#">
-                          <i class='bx bx-heart'></i>
-                          {{ 'job-detail.save' | translate }}
-                      </a>
-                  </li>
-                  <li>
-                      <a href="#">
-                          <i class='bx bx-share-alt'></i>
-                          {{ 'job-detail.share' | translate }}
-                      </a>
-                  </li>
-                  <li>
-                      <a href="#">
-                          <i class='bx bxs-report'></i>
-                          {{ 'job-detail.report' | translate }}
-                      </a>
-                  </li>
-                </ul>
-            </div>
-        </app-banner-detail>
-    </app-banner>
+  <app-banner>
+    <app-banner-detail>
+      <div class="left" ngProjectAs="left-content">
+        <img
+          [src]="job().ownerAvatarUrl"
+          [alt]="job().title"
+          class="owner-avt"
+        />
+        <h2>{{ job().title }}</h2>
+        <ul>
+          <li>
+            <i class="bx bx-pie-chart-alt-2"></i>
+            {{ job().industry.industryName }}
+          </li>
+          <li>
+            <i class="bx bx-time"></i>
+            Posted date: {{ job().createdAt | date: 'fullDate' }}
+          </li>
+        </ul>
+      </div>
+      <div class="right" ngProjectAs="right-content">
+        <app-button-icon
+          [title]="'navbar.post-job' | translate"
+          icon="bx bx-plus"
+        />
+        <ul>
+          <li>
+            <a href="#">
+              <i class="bx bx-heart"></i>
+              {{ 'job-detail.save' | translate }}
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="bx bx-share-alt"></i>
+              {{ 'job-detail.share' | translate }}
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="bx bxs-report"></i>
+              {{ 'job-detail.report' | translate }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </app-banner-detail>
+  </app-banner>
 </div>
 <!-- ? End Banner -->
 
@@ -53,104 +60,113 @@
   <app-grid-layout>
     <div ngProjectAs="leftContainer">
       <div class="details-item">
-            <!-- ? Job Description -->
-            <div class="details-inner">
-                <h3>{{ 'job-detail.job-description' | translate }}</h3>
-                <p>{{ job().description }}</p>
-            </div>
-            <!-- ? Job Responsibilities -->
-            <div class="details-inner">
-                <h3>{{ 'job-detail.job-responsibilities' | translate }}</h3>
-                <ul>
-                    @for (responsibility of job().responsibilitiesList; track $index) {
-                        <li>
-                            <i class='bx bx-message-square-check'></i>
-                            {{ responsibility }}
-                        </li>
-                    }
-                </ul>
-            </div>
-            <!-- ? Related Job -->
-            <div class="details-inner">
-                <h3>{{ 'job-detail.related' | translate }}</h3>
-                <ul>
-                    @for (job of job().relatedJobPosts; track job.id) {
-                        <li>
-                            <app-job-post [job]="job"/>
-                        </li>
-                    }
-                </ul>
-            </div>
+        <!-- ? Job Description -->
+        <div class="details-inner">
+          <h3>{{ 'job-detail.job-description' | translate }}</h3>
+          <p>{{ job().description }}</p>
         </div>
+        <!-- ? Job Responsibilities -->
+        <div class="details-inner">
+          <h3>{{ 'job-detail.job-responsibilities' | translate }}</h3>
+          <ul>
+            @for (responsibility of job().responsibilitiesList; track $index) {
+              <li>
+                <i class="bx bx-message-square-check"></i>
+                {{ responsibility }}
+              </li>
+            }
+          </ul>
+        </div>
+        <!-- ? Related Job -->
+        <div class="details-inner">
+          <h3>{{ 'job-detail.related' | translate }}</h3>
+          <ul>
+            @for (job of job().relatedJobPosts; track job.id) {
+              <li>
+                <app-job-post [job]="job" />
+              </li>
+            }
+          </ul>
+        </div>
+      </div>
     </div>
     <div ngProjectAs="rightContainer">
-        <!-- ? Applicants -->
-        <div class="widget-area">
-            <div class="download widget-item">
-                <a [routerLink]="['/applicants', job().id]">{{'job-detail.view-applicants' | translate }}</a>
-            </div>
+      <!-- ? Applicants -->
+      <div class="widget-area" style="margin-bottom: 20px">
+        <div class="download widget-item">
+          <a [routerLink]="['/applicants', job().id]">{{
+            'job-detail.view-applicants' | translate
+          }}</a>
         </div>
-        <!-- ? Job Information -->
-        <div class="widget-area">
-            <div class="information widget-item">
-                <h3>{{ 'job-detail.job-information.title' | translate }}</h3>
-                <ul>
-                    <li>
-                        <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                        <h4>{{ 'job-detail.job-information.fee' | translate }}</h4>
-                        <span>{{ job().fee | customCurrency: lang() }}</span>
-                    </li>
-                    <li>
-                        <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                        <h4>{{ 'job-detail.job-information.industry' | translate }}</h4>
-                        <span>{{ job().industry.industryName }}</span>
-                    </li>
-                    <li>
-                        <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                        <h4>{{ 'job-detail.job-information.category' | translate }}</h4>
-                        <span>{{ job().category.categoryName }}</span>
-                    </li>
-                    <li>
-                        <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                        <h4>{{ 'job-detail.location' | translate }}</h4>
-                        <span>{{ job().ward.fullLocation }}</span>
-                    </li>
-                    <li>
-                        <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                        <h4>{{ 'job-detail.job-information.posted-date' | translate }}</h4>
-                        <span>{{ job().createdAt | date: 'fullDate' }}</span>
-                    </li>
-                    <li>
-                        <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                        <h4>{{ 'job-detail.job-information.applied' | translate }}</h4>
-                        <span>{{ job().totalApplicants }} {{ 'job-detail.job-information.applicants' | translate }}</span>
-                    </li>
-                </ul>
-            </div>
+      </div>
+      <!-- ? Job Information -->
+      <div class="widget-area" style="margin-bottom: 20px">
+        <div class="information widget-item">
+          <h3>{{ 'job-detail.job-information.title' | translate }}</h3>
+          <ul>
+            <li>
+              <img src="assets/imgs/job/job-details-icon.png" alt="Details" />
+              <h4>{{ 'job-detail.job-information.fee' | translate }}</h4>
+              <span>{{ job().fee | customCurrency: lang() }}</span>
+            </li>
+            <li>
+              <img src="assets/imgs/job/job-details-icon.png" alt="Details" />
+              <h4>{{ 'job-detail.job-information.industry' | translate }}</h4>
+              <span>{{ job().industry.industryName }}</span>
+            </li>
+            <li>
+              <img src="assets/imgs/job/job-details-icon.png" alt="Details" />
+              <h4>{{ 'job-detail.job-information.category' | translate }}</h4>
+              <span>{{ job().category.categoryName }}</span>
+            </li>
+            <li>
+              <img src="assets/imgs/job/job-details-icon.png" alt="Details" />
+              <h4>{{ 'job-detail.location' | translate }}</h4>
+              <span>{{ job().ward.fullLocation }}</span>
+            </li>
+            <li>
+              <img src="assets/imgs/job/job-details-icon.png" alt="Details" />
+              <h4>
+                {{ 'job-detail.job-information.posted-date' | translate }}
+              </h4>
+              <span>{{ job().createdAt | date: 'fullDate' }}</span>
+            </li>
+            <li>
+              <img src="assets/imgs/job/job-details-icon.png" alt="Details" />
+              <h4>{{ 'job-detail.job-information.applied' | translate }}</h4>
+              <span
+                >{{ job().totalApplicants }}
+                {{ 'job-detail.job-information.applicants' | translate }}</span
+              >
+            </li>
+          </ul>
         </div>
-        <!-- ? Owner Information -->
-        <div class="widget-area">
-            <div class="information widget-item">
-                <h3>{{ 'job-detail.owner-information.title' | translate }}</h3>
-                <ul>
-                    <li>
-                        <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                        <h4>{{ 'job-detail.owner-information.name' | translate }}</h4>
-                        <p class="paragraph">{{ job().ownerName }}</p>
-                    </li>
-                    <li>
-                        <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                        <h4>{{ 'job-detail.owner-information.email' | translate }}</h4>
-                        <a [href]="'mailto:' + job().ownerEmail" class="anchor">{{ job().ownerEmail }}</a>
-                    </li>
-                    <li>
-                        <img src="assets/imgs/job/job-details-icon.png" alt="Details">
-                        <h4>{{ 'job-detail.location' | translate }}</h4>
-                        <p class="paragraph">{{ job().ownerLocation }}</p>
-                    </li>
-                </ul>
-            </div>
+      </div>
+      <!-- ? Owner Information -->
+      <div class="widget-area">
+        <div class="information widget-item">
+          <h3>{{ 'job-detail.owner-information.title' | translate }}</h3>
+          <ul>
+            <li>
+              <img src="assets/imgs/job/job-details-icon.png" alt="Details" />
+              <h4>{{ 'job-detail.owner-information.name' | translate }}</h4>
+              <p class="paragraph">{{ job().ownerName }}</p>
+            </li>
+            <li>
+              <img src="assets/imgs/job/job-details-icon.png" alt="Details" />
+              <h4>{{ 'job-detail.owner-information.email' | translate }}</h4>
+              <a [href]="'mailto:' + job().ownerEmail" class="anchor">{{
+                job().ownerEmail
+              }}</a>
+            </li>
+            <li>
+              <img src="assets/imgs/job/job-details-icon.png" alt="Details" />
+              <h4>{{ 'job-detail.location' | translate }}</h4>
+              <p class="paragraph">{{ job().ownerLocation }}</p>
+            </li>
+          </ul>
         </div>
+      </div>
     </div>
   </app-grid-layout>
 </div>

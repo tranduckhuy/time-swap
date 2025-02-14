@@ -12,12 +12,14 @@ import { MultiLanguageService } from './shared/services/multi-language.service';
   standalone: true,
   imports: [RouterOutlet, TranslateModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
   private readonly multiLanguageService = inject(MultiLanguageService);
 
   ngOnInit(): void {
-   this.multiLanguageService.updateLanguage(this.multiLanguageService.language() ?? VIETNAMESE);
+    this.multiLanguageService.updateLanguage(
+      this.multiLanguageService.currentLang ?? VIETNAMESE,
+    );
   }
 }

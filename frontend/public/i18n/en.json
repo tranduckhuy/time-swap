@@ -8,12 +8,12 @@
       "search": "Search By Filter"
     },
     "form": {
-        "errors": {
-          "required": "{{ name }} is required.",
-          "email": "Please enter a valid email address.",
-          "min-length": "{{ name }} must be at least {{ requiredLength }} characters long.",
-          "pattern": "{{ name }} is not valid.",
-          "confirmPassword": "Passwords do not match."
+      "errors": {
+        "required": "{{ name }} is required.",
+        "email": "Please enter a valid email address.",
+        "min-length": "{{ name }} must be at least {{ requiredLength }} characters long.",
+        "pattern": "{{ name }} is not valid.",
+        "confirmPassword": "Passwords do not match."
       }
     },
     "notify": {
@@ -63,7 +63,7 @@
       "account": "Account",
       "add-money": "Deposit Money",
       "sign-out": "Sign out"
-    } 
+    }
   },
   "banner": {
     "profile": "Profile",
@@ -102,6 +102,7 @@
     "showing": "Showing",
     "of": "of",
     "results": "results",
+    "see-detail": "See Detail",
     "filter": {
       "title": "Title",
       "min-fee": "Fee From",
@@ -112,7 +113,7 @@
         "yesterday": "Yesterday",
         "last-7-days": "Last 7 Days",
         "last-30-days": "Last 30 Days"
-      }      
+      }
     },
     "post-job-form": {
       "sub-heading": "This form is designed to help employers easily post short-term jobs, connecting with individuals who have free time and are looking to earn extra income. Fill in the job details, duration, and requirements to enable workers to apply quickly and efficiently.",
@@ -136,7 +137,7 @@
         "title": "Title",
         "fee": "Fee",
         "responsibilities": "Responsibilities",
-        "start-date":"Start Date",
+        "start-date": "Start Date",
         "due-date": "Due Date",
         "industry": "Industry",
         "category": "Category",
