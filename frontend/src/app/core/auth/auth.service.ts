@@ -6,7 +6,6 @@ import {
   BehaviorSubject,
   Observable,
   catchError,
-  defer,
   filter,
   finalize,
   map,
