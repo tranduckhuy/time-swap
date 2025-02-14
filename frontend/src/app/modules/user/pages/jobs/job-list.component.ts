@@ -1,4 +1,11 @@
-import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  OnInit,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
 
 import { TranslateModule } from '@ngx-translate/core';
@@ -6,16 +13,16 @@ import { TranslateModule } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
 
 import { JobPostComponent } from '../../../../shared/components/job-post/job-post.component';
-import { BannerComponent } from "../../../../shared/components/banner/banner.component";
-import { BreadcrumbComponent } from "../../../../shared/components/breadcrumb/breadcrumb.component";
-import { PaginationComponent } from "../../../../shared/components/pagination/pagination.component";
-import { NiceSelectComponent } from "../../../../shared/components/nice-select/nice-select.component";
-import { ToastComponent } from "../../../../shared/components/toast/toast.component";
-import { PreLoaderComponent } from "../../../../shared/components/pre-loader/pre-loader.component";
+import { BannerComponent } from '../../../../shared/components/banner/banner.component';
+import { BreadcrumbComponent } from '../../../../shared/components/breadcrumb/breadcrumb.component';
+import { PaginationComponent } from '../../../../shared/components/pagination/pagination.component';
+import { NiceSelectComponent } from '../../../../shared/components/nice-select/nice-select.component';
+import { ToastComponent } from '../../../../shared/components/toast/toast.component';
+import { PreLoaderComponent } from '../../../../shared/components/pre-loader/pre-loader.component';
 
-import { 
-  createPostedDateOptions, 
-  fetchWardsByCityId, 
+import {
+  createPostedDateOptions,
+  fetchWardsByCityId,
 } from '../../../../shared/utils/util-functions';
 
 import { PAGE_SIZE_JOBS } from '../../../../shared/constants/page-constants';
@@ -65,7 +72,7 @@ export class JobListComponent implements OnInit {
 
   // ? Data For Select Options
   industries = this.industryService.industries;
-  categories = this.categoryService.categories; 
+  categories = this.categoryService.categories;
   cities = this.locationService.cities;
   wards = this.locationService.wards;
 
@@ -74,12 +81,16 @@ export class JobListComponent implements OnInit {
   totalJobs = this.jobsService.totalJobs;
 
   // ? Computed Properties
-  industriesName = computed(() => this.industries().map(i => i.industryName));
-  categoriesName = computed(() => this.categories().map(c => c.categoryName));
-  citiesName = computed(() => this.cities().map(c => c.name));
-  wardsName = computed(() => this.wards().map(w => w.fullLocation));
-  start = computed(() => this.totalJobs() === 0 ? 0 : (this.pageIndex() - 1) * this.pageSize() + 1);
-  end = computed(() => Math.min(this.pageIndex() * this.pageSize(), this.totalJobs()));
+  industriesName = computed(() => this.industries().map((i) => i.industryName));
+  categoriesName = computed(() => this.categories().map((c) => c.categoryName));
+  citiesName = computed(() => this.cities().map((c) => c.name));
+  wardsName = computed(() => this.wards().map((w) => w.fullLocation));
+  start = computed(() =>
+    this.totalJobs() === 0 ? 0 : (this.pageIndex() - 1) * this.pageSize() + 1,
+  );
+  end = computed(() =>
+    Math.min(this.pageIndex() * this.pageSize(), this.totalJobs()),
+  );
   postedDate = computed(() => {
     this.multiLanguageService.language();
     return createPostedDateOptions(this.multiLanguageService);
@@ -100,15 +111,18 @@ export class JobListComponent implements OnInit {
   }
 
   handleSelectChange(field: string, value: string, options: any[]): void {
-    const id = field === 'postedDate' ? this.getPostedDateId(value) : this.getOptionId(value, options);
-    
+    const id =
+      field === 'postedDate'
+        ? this.getPostedDateId(value)
+        : this.getOptionId(value, options);
+
     this.form.get(field)?.setValue(id);
 
     if (field === 'cityId' && id) {
-        const subscription = fetchWardsByCityId(id, this.locationService);
-        this.destroyRef.onDestroy(() => subscription.unsubscribe());
+      const subscription = fetchWardsByCityId(id, this.locationService);
+      this.destroyRef.onDestroy(() => subscription.unsubscribe());
     }
-  } 
+  }
 
   private initialForm(): void {
     this.form = this.fb.group({
@@ -147,14 +161,20 @@ export class JobListComponent implements OnInit {
 
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
-  
+
   private getOptionId(value: string, options: any[]): string {
-      return options.find(
-          option => option.name === value || 
-          option.fullLocation === value || 
-          option.industryName === value || 
-          option.categoryName === value
-      )?.id || (options.some(option => option.industryName || option.categoryName) ? '0' : '');
+    return (
+      options.find(
+        (option) =>
+          option.name === value ||
+          option.fullLocation === value ||
+          option.industryName === value ||
+          option.categoryName === value,
+      )?.id ||
+      (options.some((option) => option.industryName || option.categoryName)
+        ? '0'
+        : '')
+    );
   }
 
   private getPostedDateId(value: string): string {
@@ -163,22 +183,22 @@ export class JobListComponent implements OnInit {
       translatedToday,
       translatedYesterday,
       translatedLast7Days,
-      translatedLast30Days
+      translatedLast30Days,
     ] = this.postedDate();
 
     switch (value) {
-        case translatedAllPostedDate:
-            return '';
-        case translatedToday:
-            return '0';
-        case translatedYesterday:
-            return '1';
-        case translatedLast7Days:
-            return '2';
-        case translatedLast30Days:
-            return '3';
-        default:
-            return '';
+      case translatedAllPostedDate:
+        return '';
+      case translatedToday:
+        return '0';
+      case translatedYesterday:
+        return '1';
+      case translatedLast7Days:
+        return '2';
+      case translatedLast30Days:
+        return '3';
+      default:
+        return '';
     }
   }
 }

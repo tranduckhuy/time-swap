@@ -63,7 +63,7 @@
       "account": "Tài khoản",
       "add-money": "Nạp tiền",
       "sign-out": "Đăng xuất"
-    } 
+    }
   },
   "banner": {
     "profile": "Hồ sơ",
@@ -105,6 +105,7 @@
     "showing": "Hiển thị",
     "of": "trên tổng số",
     "results": "kết quả",
+    "see-detail": "Xem chi tiết",
     "filter": {
       "title": "Tiêu đề",
       "min-fee": "Từ mức phí",
@@ -139,7 +140,7 @@
         "title": "Tiêu đề",
         "fee": "Phí",
         "responsibilities": "Trách nhiệm",
-        "start-date":"Ngày bắt đầu",
+        "start-date": "Ngày bắt đầu",
         "due-date": "Ngày hết hạn",
         "industry": "Ngành",
         "category": "Danh mục",
@@ -228,24 +229,24 @@
     }
   },
   "applicant": {
-      "assign-now": "Giao Ngay",
-      "my-profile": "Hồ sơ của tôi",
-      "work-exp": "Kinh nghiệm",
-      "skill": "Kĩ năng",
-      "portfolio": "Portfolio",
-      "add-review": "Thêm đánh giá",
-      "review-msg": "Đánh giá của bạn cho mục này",
-      "review-option": "Lưu tên, email và trang web của tôi trên trình duyệt này để lần sau tôi bình luận.",
-      "name": "Tên",
-      "email": "Email",
-      "write-msg": "Đánh giá của bạn",
-      "submit": "Gửi đánh giá",
-      "job-overview": "Tổng quan công việc",
-      "experience": "Kinh nghiệm:",
-      "age": "Tuổi:",
-      "languages": "Ngôn ngữ:",
-      "qualification": "Bằng cấp:",
-      "gender": "Giới tính:"
+    "assign-now": "Giao Ngay",
+    "my-profile": "Hồ sơ của tôi",
+    "work-exp": "Kinh nghiệm",
+    "skill": "Kĩ năng",
+    "portfolio": "Portfolio",
+    "add-review": "Thêm đánh giá",
+    "review-msg": "Đánh giá của bạn cho mục này",
+    "review-option": "Lưu tên, email và trang web của tôi trên trình duyệt này để lần sau tôi bình luận.",
+    "name": "Tên",
+    "email": "Email",
+    "write-msg": "Đánh giá của bạn",
+    "submit": "Gửi đánh giá",
+    "job-overview": "Tổng quan công việc",
+    "experience": "Kinh nghiệm:",
+    "age": "Tuổi:",
+    "languages": "Ngôn ngữ:",
+    "qualification": "Bằng cấp:",
+    "gender": "Giới tính:"
   },
   "contact": {
     "heading": "Liên hệ với chúng tôi",
