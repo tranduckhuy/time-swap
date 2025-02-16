@@ -1,15 +1,25 @@
-import { Component, DestroyRef, inject, input, OnInit, signal } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  input,
+  OnInit,
+  signal,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
 import { TranslateModule } from '@ngx-translate/core';
 
-import { ToastComponent } from "../../../../shared/components/toast/toast.component";
-import { PreLoaderComponent } from "../../../../shared/components/pre-loader/pre-loader.component";
+import { ToastComponent } from '../../../../shared/components/toast/toast.component';
+import { PreLoaderComponent } from '../../../../shared/components/pre-loader/pre-loader.component';
 
 import { getErrorMessage } from '../../../../shared/utils/form-validators';
-
-import { AUTH_CLIENT_URL } from '../../../../shared/constants/auth-constants';
 
 import { AuthService } from '../../auth.service';
 import { MultiLanguageService } from '../../../../shared/services/multi-language.service';
@@ -19,9 +29,15 @@ import type { LoginRequestModel } from '../../../../shared/models/api/request/lo
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, TranslateModule, RouterLink, ToastComponent, PreLoaderComponent],
+  imports: [
+    ReactiveFormsModule,
+    TranslateModule,
+    RouterLink,
+    ToastComponent,
+    PreLoaderComponent,
+  ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent implements OnInit {
   // ? Form Properties
@@ -41,13 +57,12 @@ export class LoginComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
-    if (this.token() && this.email())
-      this.confirmEmail();
+    if (this.token() && this.email()) this.confirmEmail();
 
     this.initialForm();
 
     const timeOutId = setTimeout(() => this.isLoading.set(false), 800);
-    
+
     this.destroyRef.onDestroy(() => clearTimeout(timeOutId));
   }
 
@@ -57,7 +72,12 @@ export class LoginComponent implements OnInit {
   }
 
   getMessage(controlName: string, nameKey: string) {
-    return getErrorMessage(controlName, nameKey, this.form, this.multiLanguageService);
+    return getErrorMessage(
+      controlName,
+      nameKey,
+      this.form,
+      this.multiLanguageService,
+    );
   }
 
   onSubmit() {
@@ -65,10 +85,10 @@ export class LoginComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-    
+
     const req: LoginRequestModel = this.form.value;
     const subscription = this.authService.signin(req).subscribe();
-      
+
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
@@ -80,13 +100,14 @@ export class LoginComponent implements OnInit {
   }
 
   private confirmEmail() {
-    const clientUrl = AUTH_CLIENT_URL;
     const decodedToken = decodeURIComponent(this.token());
     const req = {
       token: decodedToken,
-      email: this.email()
-    }
-    const subscription = this.authService.confirmEmail(req, this.email(), clientUrl).subscribe();
+      email: this.email(),
+    };
+    const subscription = this.authService
+      .confirmEmail(req, this.email())
+      .subscribe();
 
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }

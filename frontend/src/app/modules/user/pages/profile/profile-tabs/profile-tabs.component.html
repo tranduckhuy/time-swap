@@ -1,24 +1,29 @@
-<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-    <a routerLink="my-profile" routerLinkActive="active" class="nav-link" >
-        <i class="bx bx-user"></i>
-        {{ 'profile.tabs.my-profile' | translate }}
-    </a>
-    <a routerLink="applied-jobs" routerLinkActive="active" class="nav-link" >
-        <div class="profile-list">
-            <i class="bx bxs-inbox"></i>
-            {{ 'profile.tabs.applied-jobs' | translate }}
-        </div>
-    </a>
-    <a routerLink="posted-jobs" routerLinkActive="active" class="nav-link">
-        <div class="profile-list">
-            <i class="bx bx-note"></i>
-            {{ 'profile.tabs.posted-jobs' | translate }}
-        </div>
-    </a>
-    <a href="/">
-        <div class="profile-list">
-            <i class="bx bx-log-out"></i>
-            {{ 'profile.tabs.logout' | translate }}
-        </div>
-    </a>
+<div
+  class="nav flex-column nav-pills"
+  id="v-pills-tab"
+  role="tablist"
+  aria-orientation="vertical"
+>
+  <a routerLink="my-profile" routerLinkActive="active" class="nav-link">
+    <i class="bx bx-user"></i>
+    {{ 'profile.tabs.my-profile' | translate }}
+  </a>
+  <a routerLink="applied-jobs" routerLinkActive="active" class="nav-link">
+    <div class="profile-list">
+      <i class="bx bxs-inbox"></i>
+      {{ 'profile.tabs.applied-jobs' | translate }}
+    </div>
+  </a>
+  <a routerLink="posted-jobs" routerLinkActive="active" class="nav-link">
+    <div class="profile-list">
+      <i class="bx bx-note"></i>
+      {{ 'profile.tabs.posted-jobs' | translate }}
+    </div>
+  </a>
+  <div (click)="onLogout()">
+    <div class="profile-list">
+      <i class="bx bx-log-out"></i>
+      {{ 'profile.tabs.logout' | translate }}
+    </div>
+  </div>
 </div>
