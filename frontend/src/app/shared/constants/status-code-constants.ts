@@ -24,4 +24,8 @@ export const DUE_DATE_START_FAILED = 2024;
 export const DUE_DATE_CURRENT_FAILED = 2025;
 export const FEE_GREATER_THAN_FIFTY = 2026;
 
-
+// ? Payment Code
+export const PAYMENT_TIMEOUT = 2042;
+export const CANCEL_TRANSACTION = 2045;
+export const NOT_ENOUGH_BALANCE = 2046;
+export const UNDEFINED_ERROR = 2050;

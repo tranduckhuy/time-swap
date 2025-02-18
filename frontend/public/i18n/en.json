@@ -353,6 +353,9 @@
     "notify": {
       "success": "Thank you for using our service. Your transaction was completed successfully.",
       "failed": "Unfortunately, your transaction could not be completed. Please try again or contact support for assistance.",
+      "time-out": "Payment timeout. Please try again later.",
+      "cancel-transaction": "This transaction has been canceled successfully.",
+      "not-enough-balance": "Unfortunately, you do not have enough balance to complete this transaction.",
       "not-login": "You need to log in to proceed with the payment."
     }
   }

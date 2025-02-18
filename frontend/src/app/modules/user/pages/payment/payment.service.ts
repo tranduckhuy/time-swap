@@ -5,7 +5,12 @@ import { catchError, Observable, tap, throwError } from 'rxjs';
 
 import { environment } from '../../../../../environments/environment';
 
-import { SUCCESS_CODE } from '../../../../shared/constants/status-code-constants';
+import {
+  CANCEL_TRANSACTION,
+  NOT_ENOUGH_BALANCE,
+  PAYMENT_TIMEOUT,
+  SUCCESS_CODE,
+} from '../../../../shared/constants/status-code-constants';
 
 import { createHttpParams } from '../../../../shared/utils/request-utils';
 
@@ -71,7 +76,25 @@ export class PaymentService {
           if (res.statusCode === SUCCESS_CODE && res.data) {
             this.toastHandlingService.handleSuccess('payment.notify.success');
           } else {
-            this.toastHandlingService.handleError('payment.notify.failed');
+            switch (res.statusCode) {
+              case PAYMENT_TIMEOUT:
+                this.toastHandlingService.handleWarning(
+                  'payment.notify.time-out',
+                );
+                break;
+              case CANCEL_TRANSACTION:
+                this.toastHandlingService.handleInfo(
+                  'payment.notify.cancel-transaction',
+                );
+                break;
+              case NOT_ENOUGH_BALANCE:
+                this.toastHandlingService.handleWarning(
+                  'payment.notify.not-enough-balance',
+                );
+                break;
+              default:
+                this.toastHandlingService.handleError('payment.notify.failed');
+            }
           }
         }),
         catchError((error) => {
