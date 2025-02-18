@@ -52,6 +52,18 @@
         PaymentNotExists = 2035,
         InvalidSignature = 2036,
         PaymentNotFoundByUserId = 2037,
-        CategorySameName = 2038
+        CategorySameName = 2038,
+        TransactionSuspectedOfFraud = 2039,
+        AccountNotRegisteredForInternetBanking = 2040,
+        CardAccountAuthenticationFailedMoreThan3Times = 2041,
+        PaymentTimeout = 2042,
+        CardAccountIsLocked = 2043,
+        IncorrectTransactionAuthenticationPassword = 2044,
+        TransactionCanceledByCustomer = 2045,
+        InsufficientAccountBalance = 2046,
+        TransactionLimitExceeded = 2047,
+        BankIsUnderMaintenance = 2048,
+        IncorrectPaymentPasswordExceeded = 2049,
+        UndefinedError = 2050
     }
 }

@@ -50,7 +50,19 @@ namespace TimeSwap.Shared.Constants
             { StatusCode.InvalidSignature, "Invalid signature." },
             { StatusCode.PaymentNotFoundByUserId, "No payments found for the user." },
             { StatusCode.UserAppliedToOwnJobPost, "You cannot apply to your own job post. Please try with another job post." },
-            { StatusCode.CategorySameName, "Category with the same name already exists." }
+            { StatusCode.CategorySameName, "Category with the same name already exists." },
+            { StatusCode.TransactionSuspectedOfFraud, "Transaction suspected of fraud." },
+            { StatusCode.AccountNotRegisteredForInternetBanking, "Account not registered for Internet Banking." },
+            { StatusCode.CardAccountAuthenticationFailedMoreThan3Times, "Card account authentication failed more than 3 times." },
+            { StatusCode.PaymentTimeout, "Payment timeout." },
+            { StatusCode.CardAccountIsLocked, "Card account is locked." },
+            { StatusCode.IncorrectTransactionAuthenticationPassword, "Incorrect transaction authentication password." },
+            { StatusCode.TransactionCanceledByCustomer, "Transaction canceled by customer." },
+            { StatusCode.InsufficientAccountBalance, "Insufficient account balance." },
+            { StatusCode.TransactionLimitExceeded, "Transaction limit exceeded." },
+            { StatusCode.BankIsUnderMaintenance, "Bank maintenance in progress." },
+            { StatusCode.IncorrectPaymentPasswordExceeded, "Payment password entered incorrectly too many times." },
+            { StatusCode.UndefinedError, "Undefined error." }
         };
 
         public static string GetMessage(StatusCode code) => _messages[code];

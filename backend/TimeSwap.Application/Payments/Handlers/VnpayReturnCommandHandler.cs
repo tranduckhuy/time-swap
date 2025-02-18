@@ -50,6 +50,38 @@ namespace TimeSwap.Application.Payments.Handlers
                 throw new InvalidSignatureException();
             }
 
+            switch (response.vnp_ResponseCode)
+            {
+                case "00":
+                    break;
+                case "07":
+                    throw new TransactionSuspectedOfFraudException();
+                case "09":
+                    throw new AccountNotRegisteredForInternetBankingException();
+                case "10":
+                    throw new CardAccountAuthenticationFailedMoreThan3TimesException();
+                case "11":
+                    throw new PaymentTimeoutException();
+                case "12":
+                    throw new CardAccountIsLockedException();
+                case "13":
+                    throw new IncorrectTransactionAuthenticationPasswordException();
+                case "24":
+                    throw new TransactionCanceledByCustomerException();
+                case "51":
+                    throw new InsufficientAccountBalanceException();
+                case "65":
+                    throw new TransactionLimitExceededException();
+                case "75":
+                    throw new BankIsUnderMaintenanceException();
+                case "79":
+                    throw new IncorrectPaymentPasswordExceededException();
+                case "99":
+                    throw new UndefinedErrorException();
+                default:
+                    throw new PaymentFailedException();
+            }
+
             var payment = await _paymentRepository.GetByIdAsync(Guid.Parse(response.vnp_TxnRef)) ?? throw new PaymentNotExistsException();
 
             payment.PaymentStatus = response.vnp_ResponseCode == "00" ? PaymentStatus.Paid : PaymentStatus.Failed;
