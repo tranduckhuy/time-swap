@@ -52,30 +52,7 @@
                             {{ 'home.banner.categories.other' | translate }}
                           </option>
                         </select>
-                        <div class="nice-select" tabindex="0">
-                          <span class="current">{{
-                            'home.banner.categories.all' | translate
-                          }}</span>
-                          <ul class="list">
-                            <li
-                              data-value="All Categories"
-                              class="option selected"
-                            >
-                              {{ 'home.banner.categories.all' | translate }}
-                            </li>
-                            <li data-value="Another option" class="option">
-                              {{
-                                'home.banner.categories.teaching' | translate
-                              }}
-                            </li>
-                            <li data-value="A option" class="option">
-                              {{ 'home.banner.categories.it' | translate }}
-                            </li>
-                            <li data-value="Potato" class="option">
-                              {{ 'home.banner.categories.other' | translate }}
-                            </li>
-                          </ul>
-                        </div>
+                        <app-nice-select [listData]="industriesSignal()" />
                       </div>
                     </div>
                     <div class="col-lg-4">
@@ -105,29 +82,29 @@
                     <span>{{ 'home.banner.trending' | translate }}</span>
                   </li>
                   <li>
-                    <a href="#">{{
-                      'home.banner.keywords.teaching' | translate
-                    }}</a>
+                    <a href="#">
+                      {{ 'home.banner.keywords.teaching' | translate }},
+                    </a>
                   </li>
                   <li>
-                    <a href="#">{{
-                      'home.banner.keywords.it-support' | translate
-                    }}</a>
+                    <a href="#">
+                      {{ 'home.banner.keywords.it-support' | translate }},
+                    </a>
                   </li>
                   <li>
-                    <a href="#">{{
-                      'home.banner.keywords.programming' | translate
-                    }}</a>
+                    <a href="#">
+                      {{ 'home.banner.keywords.programming' | translate }},
+                    </a>
                   </li>
                   <li>
-                    <a href="#">{{
-                      'home.banner.keywords.education' | translate
-                    }}</a>
+                    <a href="#">
+                      {{ 'home.banner.keywords.education' | translate }},
+                    </a>
                   </li>
                   <li>
-                    <a href="#">{{
-                      'home.banner.keywords.web-development' | translate
-                    }}</a>
+                    <a href="#">
+                      {{ 'home.banner.keywords.web-development' | translate }}
+                    </a>
                   </li>
                 </ul>
               </div>
@@ -165,41 +142,130 @@
 <section class="work-area pb-70">
   <div class="container">
     <div class="section-title">
-      <span class="sub-title">Working Process</span>
-      <h2>See How It Works</h2>
+      <span class="sub-title">
+        {{ 'home.pricing-plans.sub-heading' | translate }}
+      </span>
+      <h2>{{ 'home.pricing-plans.heading' | translate }}</h2>
     </div>
     <div class="row">
-      <div class="col-sm-6 col-lg-4">
-        <div class="work-item">
-          <i class="flaticon-verify"></i>
-          <span>STEP 01</span>
-          <h3>Register An Account</h3>
-          <p>
-            Lorem ipsum dolor sit amet conscu adipiscing elit sed do eusmod
-            tempor incididunt ut into
-          </p>
+      <div class="col-sm-6 col-lg-3">
+        <div class="pricing-item">
+          <div class="top">
+            <h3>{{ 'home.pricing-plans.premium' | translate }}</h3>
+            <span></span>
+          </div>
+          <div class="middle">
+            <h4>
+              <span class="span-left"></span>
+              {{ 500000 | customCurrency: lang() }}/
+              <span class="span-right">
+                {{ 'home.pricing-plans.month' | translate }}
+              </span>
+            </h4>
+          </div>
+          <div class="end">
+            <ul>
+              <li>Unlimited Job Categories</li>
+              <li>Unlimited Job Posting</li>
+              <li>Unlimited proposals</li>
+              <li>Resume database access</li>
+              <li>Individually written job ads</li>
+            </ul>
+            <button class="cmn-btn" (click)="packageSelect(1)">
+              {{ 'home.pricing-plans.get-started' | translate }}
+              <i class="bx bx-plus"></i>
+            </button>
+          </div>
         </div>
       </div>
-      <div class="col-sm-6 col-lg-4">
-        <div class="work-item">
-          <i class="flaticon-file"></i>
-          <span>STEP 02</span>
-          <h3>Search Your Job</h3>
-          <p>
-            Lorem ipsum dolor sit amet conscu adipiscing elit sed do eusmod
-            tempor incididunt ut into
-          </p>
+      <div class="col-sm-6 col-lg-3">
+        <div class="pricing-item">
+          <div class="top">
+            <h3>{{ 'home.pricing-plans.standard' | translate }}</h3>
+            <span></span>
+          </div>
+          <div class="middle">
+            <h4>
+              <span class="span-left"></span>
+              {{ 300000 | customCurrency: lang() }}/
+              <span class="span-right">
+                {{ 'home.pricing-plans.month' | translate }}
+              </span>
+            </h4>
+          </div>
+          <div class="end">
+            <ul>
+              <li>400 Job Posting</li>
+              <li>90 Job Categories</li>
+              <li>Unlimited proposals</li>
+              <li>Resume database access</li>
+              <li>Individually written job ads</li>
+            </ul>
+            <button class="cmn-btn" (click)="packageSelect(2)">
+              {{ 'home.pricing-plans.get-started' | translate }}
+              <i class="bx bx-plus"></i>
+            </button>
+          </div>
         </div>
       </div>
-      <div class="col-sm-6 offset-sm-3 offset-lg-0 col-lg-4">
-        <div class="work-item">
-          <i class="flaticon-comment"></i>
-          <span>STEP 03</span>
-          <h3>Apply For Job</h3>
-          <p>
-            Lorem ipsum dolor sit amet conscu adipiscing elit sed do eusmod
-            tempor incididunt ut into
-          </p>
+      <div class="col-sm-6 col-lg-3">
+        <div class="pricing-item">
+          <div class="top">
+            <h3>{{ 'home.pricing-plans.basic' | translate }}</h3>
+            <span></span>
+          </div>
+          <div class="middle">
+            <h4>
+              <span class="span-left"></span>
+              {{ 100000 | customCurrency: lang() }}/
+              <span class="span-right">
+                {{ 'home.pricing-plans.month' | translate }}
+              </span>
+            </h4>
+          </div>
+          <div class="end">
+            <ul>
+              <li>50 Job Posting</li>
+              <li>20 Job Categories</li>
+              <li>Unlimited proposals</li>
+              <li>Resume database access</li>
+              <li><del>Individually written job ads</del></li>
+            </ul>
+            <button class="cmn-btn" (click)="packageSelect(3)">
+              {{ 'home.pricing-plans.get-started' | translate }}
+              <i class="bx bx-plus"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div class="pricing-item">
+          <div class="top">
+            <h3>{{ 'home.pricing-plans.free' | translate }}</h3>
+            <span></span>
+          </div>
+          <div class="middle">
+            <h4>
+              <span class="span-left"></span>
+              {{ 0 | customCurrency: lang() }}/
+              <span class="span-right">
+                {{ 'home.pricing-plans.month' | translate }}
+              </span>
+            </h4>
+          </div>
+          <div class="end">
+            <ul>
+              <li>10 Job Posting</li>
+              <li>15 Job Categories</li>
+              <li>Unlimited proposals</li>
+              <li><del>Resume database access</del></li>
+              <li><del>Individually written job ads</del></li>
+            </ul>
+            <button class="cmn-btn disabled" (click)="packageSelect(4)">
+              {{ 'home.pricing-plans.get-started' | translate }}
+              <i class="bx bx-plus"></i>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -213,19 +279,27 @@
     <div class="row align-items-center">
       <div class="col-lg-5">
         <div class="section-title">
-          <span class="sub-title">Desire Jobs</span>
-          <h2>Job You Will Love</h2>
+          <span class="sub-title">
+            {{ 'home.jobs.sub-heading' | translate }}
+          </span>
+          <h2>{{ 'home.jobs.heading' | translate }}</h2>
         </div>
       </div>
       <div class="col-lg-7">
         <div class="sorting-menu">
           <ul>
-            <li class="filter" data-filter="all">All</li>
-            <li class="filter" data-filter=".m">Internship</li>
-            <li class="filter" data-filter=".n">Full Time</li>
-            <li class="filter" data-filter=".o">Part Time</li>
-            <li class="filter" data-filter=".p">Remote</li>
-            <li class="filter" data-filter=".u">Freelancer</li>
+            <li class="filter" data-filter="all">
+              {{ 'home.jobs.filter.all' | translate }}
+            </li>
+            <li class="filter" data-filter=".m">
+              {{ 'home.jobs.filter.tech' | translate }}
+            </li>
+            <li class="filter" data-filter=".n">
+              {{ 'home.jobs.filter.service' | translate }}
+            </li>
+            <li class="filter" data-filter=".o">
+              {{ 'home.jobs.filter.tech-support' | translate }}
+            </li>
           </ul>
         </div>
       </div>
@@ -469,8 +543,8 @@
     </div>
     <div class="job-browse">
       <p>
-        A tons of top tech jobs are waiting for you.
-        <a href="jobs.html">Browse all jobs</a>
+        {{ 'home.jobs.support-text' | translate }}
+        <a routerLink="/jobs">{{ 'home.jobs.support-link' | translate }}</a>
       </p>
     </div>
   </div>
@@ -482,8 +556,10 @@
   <div class="container">
     <div class="explore-item">
       <div class="section-title">
-        <span class="sub-title">Explore New Life</span>
-        <h2>Put Your Cv In Front Of Great Employers</h2>
+        <span class="sub-title">
+          {{ 'home.resume.sub-heading' | translate }}
+        </span>
+        <h2>{{ 'home.resume.heading' | translate }}</h2>
       </div>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -492,12 +568,12 @@
       <ul>
         <li>
           <a class="left-btn" href="#">
-            Upload Your Resume
+            {{ 'home.resume.button' | translate }}
             <i class="flaticon-upload"></i>
           </a>
         </li>
         <li>
-          <span>CEO Message</span>
+          <span>{{ 'home.resume.button-video' | translate }}</span>
           <a
             class="right-btn popup-youtube"
             href="https://www.youtube.com/watch?v=07d2dXHYb94&t=88s"
@@ -511,210 +587,23 @@
 </section>
 <!-- End Explore -->
 
-<!-- Counter -->
-<div class="counter-area pt-100">
-  <div class="counter-shape">
-    <img src="assets/imgs/home/banner/shape-bottom.png" alt="Shape" />
-  </div>
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-6 col-lg-3">
-        <div class="counter-item">
-          <i class="flaticon-hiring"></i>
-          <p>CANDIDATES</p>
-          <h3>
-            <span class="odometer" data-count="87,360">00</span>
-          </h3>
-        </div>
-      </div>
-      <div class="col-sm-6 col-lg-3">
-        <div class="counter-item">
-          <i class="flaticon-candidate"></i>
-          <p>TOTAL JOBS</p>
-          <h3>
-            <span class="odometer" data-count="45,257">00</span>
-          </h3>
-        </div>
-      </div>
-      <div class="col-sm-6 col-lg-3">
-        <div class="counter-item">
-          <i class="flaticon-working-at-home"></i>
-          <p>EMPLOYERS</p>
-          <h3>
-            <span class="odometer" data-count="9,650">00</span>
-          </h3>
-        </div>
-      </div>
-      <div class="col-sm-6 col-lg-3">
-        <div class="counter-item">
-          <i class="flaticon-choice"></i>
-          <p>JOB APPLICATIONS</p>
-          <h3>
-            <span class="odometer" data-count="70,299">00</span>
-          </h3>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- End Counter -->
-
-<!-- Location -->
-<section class="location-area pb-70">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-8">
-        <div class="section-title">
-          <span class="sub-title">Wanted Location</span>
-          <h2>The Places Near You</h2>
-        </div>
-      </div>
-      <div class="col-lg-4">
-        <div class="cmn-link">
-          <a href="#">
-            <i class="flaticon-right-arrow one"></i>
-            Browse All Locations
-            <i class="flaticon-right-arrow two"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="container-fluid">
-    <div class="location-slider owl-theme owl-carousel">
-      <div class="location-item">
-        <div class="top">
-          <a href="#">
-            <img src="assets/imgs/home/location1.jpg" alt="Location" />
-          </a>
-        </div>
-        <span>8 Open Job</span>
-        <h3>
-          <a href="#">New York</a>
-        </h3>
-      </div>
-      <div class="location-item">
-        <div class="top">
-          <a href="#">
-            <img src="assets/imgs/home/location2.jpg" alt="Location" />
-          </a>
-        </div>
-        <span>6 Open Job</span>
-        <h3>
-          <a href="#">Austria, Vienna</a>
-        </h3>
-      </div>
-      <div class="location-item">
-        <div class="top">
-          <a href="#">
-            <img src="assets/imgs/home/location3.jpg" alt="Location" />
-          </a>
-        </div>
-        <span>2 Open Job</span>
-        <h3>
-          <a href="#">Tirana, Albania</a>
-        </h3>
-      </div>
-      <div class="location-item">
-        <div class="top">
-          <a href="#">
-            <img src="assets/imgs/home/location4.jpg" alt="Location" />
-          </a>
-        </div>
-        <span>4 Open Job</span>
-        <h3>
-          <a href="#">Kabul, Afghanistan</a>
-        </h3>
-      </div>
-      <div class="location-item">
-        <div class="top">
-          <a href="#">
-            <img src="assets/imgs/home/location5.jpg" alt="Location" />
-          </a>
-        </div>
-        <span>3 Open Job</span>
-        <h3>
-          <a href="#">Cardiff, UK</a>
-        </h3>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End Location -->
-
-<!-- Feedback -->
-<section class="feedback-area pt-100">
-  <div class="feedback-shape">
-    <img src="assets/imgs/home/banner/shape-bottom.png" alt="Shape" />
-  </div>
-  <div class="container">
-    <div class="section-title">
-      <span class="sub-title">Feedbacks</span>
-      <h2>What Users Are Saying</h2>
-    </div>
-    <div class="feedback-slider owl-theme owl-carousel">
-      <div class="feedback-item">
-        <h3>Jubra Ward</h3>
-        <span>CEO at Alfa School</span>
-        <p>
-          “I’m ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniaxn ullamco laboris nisi ut at voluptatem.
-        </p>
-        <h4>
-          <i class="flaticon-left-quote"></i>
-          Just Awesome
-        </h4>
-        <img src="assets/imgs/home/feedback1.jpg" alt="Feedback" />
-      </div>
-      <div class="feedback-item">
-        <h3>Robin William</h3>
-        <span>Manager Support Act It</span>
-        <p>
-          “I’m ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniaxn ullamco laboris nisi ut at voluptatem.
-        </p>
-        <h4>
-          <i class="flaticon-left-quote"></i>
-          Very Reliable
-        </h4>
-        <img src="assets/imgs/home/feedback2.jpg" alt="Feedback" />
-      </div>
-      <div class="feedback-item">
-        <h3>Tom Henry</h3>
-        <span>Director at Alfa School</span>
-        <p>
-          “I’m ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniaxn ullamco laboris nisi ut at voluptatem.
-        </p>
-        <h4>
-          <i class="flaticon-left-quote"></i>
-          Looking Nice
-        </h4>
-        <img src="assets/imgs/home/feedback3.jpg" alt="Feedback" />
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End Feedback -->
-
 <!-- Blog -->
-<section class="blog-area pb-70">
+<section class="blog-area pt-100 pb-70">
   <div class="container">
     <div class="row align-items-center">
       <div class="col-lg-8">
         <div class="section-title">
-          <span class="sub-title">Our Blogs</span>
-          <h2>Recent News Post</h2>
+          <span class="sub-title">{{
+            'home.blog.sub-heading' | translate
+          }}</span>
+          <h2>{{ 'home.blog.heading' | translate }}</h2>
         </div>
       </div>
       <div class="col-lg-4">
         <div class="cmn-link">
           <a href="blog.html">
             <i class="flaticon-right-arrow one"></i>
-            Browse All Blogs
+            {{ 'home.blog.support-link' | translate }}
             <i class="flaticon-right-arrow two"></i>
           </a>
         </div>
@@ -737,7 +626,7 @@
           <div class="cmn-link">
             <a href="blog-details.html">
               <i class="flaticon-right-arrow one"></i>
-              Learn More
+              {{ 'home.blog.link-blog' | translate }}
               <i class="flaticon-right-arrow two"></i>
             </a>
           </div>
@@ -759,7 +648,7 @@
           <div class="cmn-link">
             <a href="blog-details.html">
               <i class="flaticon-right-arrow one"></i>
-              Learn More
+              {{ 'home.blog.link-blog' | translate }}
               <i class="flaticon-right-arrow two"></i>
             </a>
           </div>
@@ -781,7 +670,7 @@
           <div class="cmn-link">
             <a href="blog-details.html">
               <i class="flaticon-right-arrow one"></i>
-              Learn More
+              {{ 'home.blog.link-blog' | translate }}
               <i class="flaticon-right-arrow two"></i>
             </a>
           </div>
@@ -799,8 +688,10 @@
       <div class="col-lg-6">
         <div class="app-content">
           <div class="section-title">
-            <span class="sub-title">Download The App</span>
-            <h2>Get More In Our Application Sit Back And Enjoy</h2>
+            <span class="sub-title">
+              {{ 'home.download.sub-heading' | translate }}
+            </span>
+            <h2>{{ 'home.download.heading' | translate }}</h2>
           </div>
           <ul>
             <li>

@@ -1,0 +1,168 @@
+@if (isLoading()) {
+  <app-loader />
+}
+
+<app-toast />
+
+<app-banner>
+  <app-breadcrumb [title]="'banner.payment' | translate" />
+</app-banner>
+
+<!-- Contact -->
+<div class="contact-form-area pb-100">
+  <div class="container">
+    <div class="form-item">
+      <h2>{{ 'payment.heading' | translate }}</h2>
+      <form id="contactForm" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-sm-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ 'payment.form.label.name' | translate }}</label>
+              <input
+                type="text"
+                name="name"
+                [class.form-control]="true"
+                [class.invalid]="isControlInvalid('name')"
+                formControlName="name"
+              />
+              <div class="help-block with-errors">
+                {{
+                  isControlInvalid('name')
+                    ? getMessage('name', 'payment.form.error-name.name')
+                    : ''
+                }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ 'payment.form.label.email' | translate }}</label>
+              <input
+                type="email"
+                name="email"
+                [class.form-control]="true"
+                [class.invalid]="isControlInvalid('email')"
+                formControlName="email"
+              />
+              <div class="help-block with-errors">
+                {{
+                  isControlInvalid('email')
+                    ? getMessage('email', 'payment.form.error-name.email')
+                    : ''
+                }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ 'payment.form.label.phone' | translate }}</label>
+              <input
+                type="text"
+                name="phone"
+                [class.form-control]="true"
+                [class.invalid]="isControlInvalid('phone')"
+                formControlName="phone"
+              />
+              <div class="help-block with-errors">
+                {{
+                  isControlInvalid('phone')
+                    ? getMessage('phone', 'payment.form.error-name.phone')
+                    : ''
+                }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6 col-lg-6">
+            <div class="form-group">
+              <label>{{ 'payment.form.label.amount' | translate }}</label>
+              <input
+                type="text"
+                name="amount"
+                [class.form-control]="true"
+                [class.invalid]="isControlInvalid('amount')"
+                formControlName="amount"
+              />
+              <div class="help-block with-errors">
+                {{
+                  isControlInvalid('amount')
+                    ? getMessage('amount', 'payment.form.error-name.amount')
+                    : ''
+                }}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12 col-lg-12">
+            <div class="form-group">
+              <label>{{ 'payment.form.label.content' | translate }}</label>
+              <textarea
+                name="paymentContent"
+                cols="30"
+                rows="8"
+                class="form-control"
+                formControlName="paymentContent"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="payment-method-list">
+            <div class="payment-method-item">
+              <input
+                type="radio"
+                class="payment-method-radio"
+                name="paymentMethodId"
+                id="vn-pay"
+                value="1"
+                style="display: none"
+                formControlName="paymentMethodId"
+              />
+              <label class="payment-method-label" for="vn-pay">
+                <img src="assets/imgs/payment/vnpay-logo.svg" />
+              </label>
+            </div>
+            <div class="payment-method-item disabled">
+              <input
+                type="radio"
+                class="payment-method-radio"
+                name="paymentMethodId"
+                id="momo"
+                value="2"
+                style="display: none"
+                formControlName="paymentMethodId"
+              />
+              <label class="payment-method-label momo-label" for="momo">
+                <img src="assets/imgs/payment/momo-logo.svg" />
+              </label>
+            </div>
+            <div class="payment-method-item disabled">
+              <input
+                type="radio"
+                class="payment-method-radio"
+                name="paymentMethodId"
+                id="zalo-pay"
+                value="3"
+                style="display: none"
+                formControlName="paymentMethodId"
+              />
+              <label class="payment-method-label" for="zalo-pay">
+                <img src="assets/imgs/payment/zalopay-logo.svg" />
+              </label>
+            </div>
+          </div>
+
+          <div class="col-md-12 col-lg-12">
+            <button type="submit" class="btn">
+              {{ 'payment.form.button' | translate }}
+            </button>
+            <div id="msgSubmit" class="h3 text-center hidden"></div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- End Contact -->

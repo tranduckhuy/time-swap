@@ -16,7 +16,6 @@ import { MultiLanguageService } from '../../services/multi-language.service';
 })
 export class ToastComponent {
   private toastService = inject(ToastService);
-  private multiLanguageService = inject(MultiLanguageService);
 
   toasts = this.toastService.toasts;
 

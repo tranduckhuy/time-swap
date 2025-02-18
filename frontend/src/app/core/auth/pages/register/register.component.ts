@@ -20,8 +20,6 @@ import {
 import { AuthService } from '../../auth.service';
 import { MultiLanguageService } from '../../../../shared/services/multi-language.service';
 
-import type { RegisterRequestModel } from '../../../../shared/models/api/request/register-request.model';
-
 @Component({
   selector: 'app-register',
   standalone: true,

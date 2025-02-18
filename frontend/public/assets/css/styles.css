@@ -253,7 +253,7 @@ button:focus {
   color: #fff;
   background-color: #fe4a55;
   position: absolute;
-  top: 10px;
+  top: 15px;
   right: 0;
   border-radius: 0 5px 5px 0;
 }
@@ -3634,10 +3634,12 @@ button:focus {
   padding-bottom: 0;
   padding-left: 20px;
   padding-right: 65px;
+  border: none;
   border-radius: 5px;
   line-height: 50px;
   display: inline-block;
   position: relative;
+  transition: background 0.2s linear;
 }
 .cmn-btn i {
   display: inline-block;
