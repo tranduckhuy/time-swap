@@ -72,6 +72,22 @@ namespace TimeSwap.Api.Controllers
             return await ExecuteAsync<VnpayReturnCommand, string>(command);
         }
 
+        [HttpGet]
+        [Route("payos-return")]
+        public async Task<IActionResult> PayOSReturn([FromQuery] PayOSOneTimePaymentCreateLinkResponse response)
+        {
+            var command = new PayOSReturnCommand
+            {
+                status = response.status,
+                code = response.code,
+                id = response.id,
+                orderCode = response.orderCode,
+                cancel = response.cancel,
+            };
+
+            return await ExecuteAsync<PayOSReturnCommand, string>(command);
+        }
+
         [HttpGet("pagination")]
         [Authorize]
         [ProducesResponseType(typeof(ApiResponse<Pagination<PaymentDetailResponse>>), (int)HttpStatusCode.OK)]

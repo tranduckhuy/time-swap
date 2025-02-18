@@ -4,7 +4,6 @@ using TimeSwap.Application.Configurations.Payments;
 using TimeSwap.Application.Configurations.Payments.Responses;
 using TimeSwap.Application.Exceptions.Auth;
 using TimeSwap.Application.Exceptions.Payments;
-using TimeSwap.Application.Mappings;
 using TimeSwap.Application.Payments.Commands;
 using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Interfaces.Repositories;
@@ -19,7 +18,11 @@ namespace TimeSwap.Application.Payments.Handlers
         private readonly IUserRepository _userRepository;
         private readonly VnPayConfig _vnPayConfig;
 
-        public VnpayReturnCommandHandler(IPaymentRepository paymentRepository, IOptions<VnPayConfig> vnPayConfig, ITransactionLogRepository transactionLogRepository, IUserRepository userRepository)
+        public VnpayReturnCommandHandler(
+            IPaymentRepository paymentRepository,
+            IOptions<VnPayConfig> vnPayConfig,
+            ITransactionLogRepository transactionLogRepository,
+            IUserRepository userRepository)
         {
             _paymentRepository = paymentRepository;
             _vnPayConfig = vnPayConfig.Value;
@@ -50,70 +53,58 @@ namespace TimeSwap.Application.Payments.Handlers
                 throw new InvalidSignatureException();
             }
 
-            switch (response.vnp_ResponseCode)
-            {
-                case "00":
-                    break;
-                case "07":
-                    throw new TransactionSuspectedOfFraudException();
-                case "09":
-                    throw new AccountNotRegisteredForInternetBankingException();
-                case "10":
-                    throw new CardAccountAuthenticationFailedMoreThan3TimesException();
-                case "11":
-                    throw new PaymentTimeoutException();
-                case "12":
-                    throw new CardAccountIsLockedException();
-                case "13":
-                    throw new IncorrectTransactionAuthenticationPasswordException();
-                case "24":
-                    throw new TransactionCanceledByCustomerException();
-                case "51":
-                    throw new InsufficientAccountBalanceException();
-                case "65":
-                    throw new TransactionLimitExceededException();
-                case "75":
-                    throw new BankIsUnderMaintenanceException();
-                case "79":
-                    throw new IncorrectPaymentPasswordExceededException();
-                case "99":
-                    throw new UndefinedErrorException();
-                default:
-                    throw new PaymentFailedException();
-            }
+            var payment = await _paymentRepository.GetByIdAsync(Guid.Parse(response.vnp_TxnRef))
+                          ?? throw new PaymentNotExistsException();
 
-            var payment = await _paymentRepository.GetByIdAsync(Guid.Parse(response.vnp_TxnRef)) ?? throw new PaymentNotExistsException();
+            bool isSuccess = response.vnp_ResponseCode == "00";
+            payment.PaymentStatus = isSuccess ? PaymentStatus.Paid : PaymentStatus.Failed;
 
-            payment.PaymentStatus = response.vnp_ResponseCode == "00" ? PaymentStatus.Paid : PaymentStatus.Failed;
             await _paymentRepository.UpdateAsync(payment);
 
-            if (payment.PaymentStatus == PaymentStatus.Paid)
+            if (!isSuccess)
             {
-                var user = await _userRepository.GetByIdAsync(payment.UserId) ?? throw new UserNotExistsException();
-
-                user.Balance += response.vnp_Amount / 100;
-                await _userRepository.UpdateAsync(user);
-
-                var transactionLog = AppMapper<CoreMappingProfile>.Mapper.Map<TransactionLog>(payment);
-                transactionLog.Id = Guid.NewGuid();
-                transactionLog.PaymentId = payment.Id;
-                transactionLog.TransactionEvent = TransactionEvent.PaymentCompleted;
-
-                await _transactionLogRepository.AddAsync(transactionLog);
-            }
-            else
-            {
-                var transactionLog = AppMapper<CoreMappingProfile>.Mapper.Map<TransactionLog>(payment);
-                transactionLog.Id = Guid.NewGuid();
-                transactionLog.PaymentId = payment.Id;
-                transactionLog.TransactionEvent = TransactionEvent.PaymentFailed;
-
-                await _transactionLogRepository.AddAsync(transactionLog);
+                await LogTransaction(payment, TransactionEvent.PaymentFailed);
+                throw GetPaymentException(response.vnp_ResponseCode);
             }
 
-            return payment.PaymentStatus == PaymentStatus.Paid
-                ? ResponseMessages.GetMessage(StatusCode.PaymentSuccess)
-                : ResponseMessages.GetMessage(StatusCode.PaymentFailed);
+            var user = await _userRepository.GetByIdAsync(payment.UserId)
+                       ?? throw new UserNotExistsException();
+
+            user.Balance += response.vnp_Amount / 100;
+            await _userRepository.UpdateAsync(user);
+
+            await LogTransaction(payment, TransactionEvent.PaymentCompleted);
+            return ResponseMessages.GetMessage(StatusCode.PaymentSuccess);
         }
+
+        private async Task LogTransaction(Payment payment, TransactionEvent transactionEvent)
+        {
+            await _transactionLogRepository.AddAsync(new TransactionLog
+            {
+                Id = Guid.NewGuid(),
+                PaymentId = payment.Id,
+                TransactionEvent = transactionEvent,
+                TransactionId = payment.TransactionId,
+                CreatedAt = DateTime.UtcNow
+            });
+        }
+
+        private Exception GetPaymentException(string responseCode) =>
+            responseCode switch
+            {
+                "07" => new TransactionSuspectedOfFraudException(),
+                "09" => new AccountNotRegisteredForInternetBankingException(),
+                "10" => new CardAccountAuthenticationFailedMoreThan3TimesException(),
+                "11" => new PaymentTimeoutException(),
+                "12" => new CardAccountIsLockedException(),
+                "13" => new IncorrectTransactionAuthenticationPasswordException(),
+                "24" => new TransactionCanceledByCustomerException(),
+                "51" => new InsufficientAccountBalanceException(),
+                "65" => new TransactionLimitExceededException(),
+                "75" => new BankIsUnderMaintenanceException(),
+                "79" => new IncorrectPaymentPasswordExceededException(),
+                "99" => new UndefinedErrorException(),
+                _ => new PaymentFailedException(),
+            };
     }
 }

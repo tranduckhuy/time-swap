@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Net.payOS;
 using System.Text;
 using TimeSwap.Application.Authentication.Interfaces;
 using TimeSwap.Application.Configurations.Payments;
@@ -38,6 +40,12 @@ namespace TimeSwap.Infrastructure.Extensions
             services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
             services.AddScoped<ITransactionLogRepository, TransactionLogRepository>();
             services.Configure<VnPayConfig>(configuration.GetSection("Vnpay"));
+            services.Configure<PayOSConfig>(configuration.GetSection("PayOS"));
+            services.AddScoped<PayOS>(provider =>
+            {
+                var config = provider.GetRequiredService<IOptions<PayOSConfig>>().Value;
+                return new PayOS(config.PAYOS_CLIENT_ID, config.PAYOS_API_KEY, config.PAYOS_CHECKSUM_KEY);
+            });
             return services;
         }
 
