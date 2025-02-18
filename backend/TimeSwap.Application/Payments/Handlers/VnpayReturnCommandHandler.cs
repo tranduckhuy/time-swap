@@ -89,7 +89,7 @@ namespace TimeSwap.Application.Payments.Handlers
             });
         }
 
-        private Exception GetPaymentException(string responseCode) =>
+        private static Exception GetPaymentException(string responseCode) =>
             responseCode switch
             {
                 "07" => new TransactionSuspectedOfFraudException(),
