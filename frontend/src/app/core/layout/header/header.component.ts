@@ -1,5 +1,17 @@
-import { Component, DestroyRef, inject, signal, computed, effect } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  signal,
+  computed,
+  effect,
+} from '@angular/core';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  RouterLink,
+} from '@angular/router';
 
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -7,7 +19,10 @@ import { filter } from 'rxjs';
 
 import { CustomCurrencyPipe } from '../../../shared/pipes/custom-currency.pipe';
 
-import { ENGLISH, VIETNAMESE } from '../../../shared/constants/multi-lang-constants';
+import {
+  ENGLISH,
+  VIETNAMESE,
+} from '../../../shared/constants/multi-lang-constants';
 
 import { AuthService } from '../../auth/auth.service';
 import { ProfileService } from '../../../modules/user/pages/profile/profile.service';
@@ -18,7 +33,7 @@ import { MultiLanguageService } from '../../../shared/services/multi-language.se
   standalone: true,
   imports: [RouterLink, TranslateModule, CustomCurrencyPipe],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrl: './header.component.css',
 })
 export class HeaderComponent {
   private readonly authService = inject(AuthService);
@@ -31,17 +46,19 @@ export class HeaderComponent {
   // ? State Management
   currentLanguage = this.multiLanguageService.language;
   user = this.profileService.user;
-  
+
   isHome = signal<boolean>(false);
   currentTheme = signal<string>(localStorage.getItem('theme') ?? 'theme-light');
 
   isLoggedIn = computed<boolean>(() => this.authService.isLoggedIn());
-  lang = computed(() => this.multiLanguageService.language() === VIETNAMESE ? VIETNAMESE : ENGLISH);
+  lang = computed(() =>
+    this.multiLanguageService.language() === VIETNAMESE ? VIETNAMESE : ENGLISH,
+  );
 
   constructor() {
     // ? Subscribe to router events
     const routerSubscription = this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
+      .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         const currentUrl = event.urlAfterRedirects;
         this.isHome.set(currentUrl === '/' || currentUrl.startsWith('/home'));
@@ -63,7 +80,9 @@ export class HeaderComponent {
 
     // ? Get user profile if logged in
     if (this.isLoggedIn()) {
-      const profileSubscription = this.profileService.getUserProfile().subscribe();
+      const profileSubscription = this.profileService
+        .getUserProfile()
+        .subscribe();
       this.destroyRef.onDestroy(() => profileSubscription.unsubscribe());
     }
 
@@ -84,11 +103,11 @@ export class HeaderComponent {
           relativeTo: this.activatedRoute,
           onSameUrlNavigation: 'reload',
         });
-      }
+      },
     });
   }
 
-  shouldShowLogoOne() {
+  shouldShowLogoHome() {
     return this.isHome() && this.currentTheme() === 'theme-light';
   }
 }

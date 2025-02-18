@@ -1,0 +1,61 @@
+.contact-form-area {
+  padding: 100px;
+}
+
+.form-item {
+  background-color: #f5f5f5;
+}
+
+.payment-method-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 65px;
+  border: 1px solid #e5e6e9;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.3s linear;
+}
+
+.payment-method-label img {
+  width: 85px;
+  height: 85px;
+}
+
+.momo-label img {
+  width: 45px;
+  height: 45px;
+}
+
+.payment-method-list {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  padding: 0 15px;
+  margin-bottom: 20px;
+}
+
+.payment-method-item {
+  user-select: none;
+}
+
+.payment-method-item.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+  cursor: none;
+}
+
+.payment-method-radio:checked + .payment-method-label {
+  border: 1px solid #37afe1;
+}
+
+.form-control.invalid {
+  border: 1px solid #fe4a55 !important;
+  background-color: rgba(254, 74, 85, 0.2) !important;
+}
+
+.with-errors {
+  margin-top: 6px;
+  color: #fe4a55;
+}

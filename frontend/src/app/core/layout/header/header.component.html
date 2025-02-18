@@ -1,118 +1,148 @@
 <div class="navbar-area fixed-top">
-    <!-- Menu For Mobile Device -->
-    <div class="mobile-nav">
-        <a href="#!" class="logo">
-            <img src="assets/imgs/logo-three.png" alt="Logo" />
-        </a>
-    </div>
+  <!-- Menu For Mobile Device -->
+  <div class="mobile-nav">
+    <a href="#!" class="logo">
+      <img src="assets/imgs/logo-three.png" alt="Logo" />
+    </a>
+  </div>
 
-    <!-- Menu For Desktop Device -->
-    <div [class.main-nav]="true" [class.three]="!isHome()">
-        <div class="container-fluid">
-            <nav class="navbar navbar-expand-md navbar-light">
-                <a class="navbar-brand" href="#!">
-                    @if (shouldShowLogoOne()) {
-                        <img src="assets/imgs/logo.png" class="logo-one" alt="Logo" />
-                    } @else {
-                        <img src="assets/imgs/logo-three.png" alt="Logo" />
-                    }
-                </a>
-                <div class="navbar-collapse mean-menu" id="navbarSupportedContent">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a routerLink="/home" class="nav-link">
-                                {{ 'navbar.home' | translate }} 
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a routerLink="/about" class="nav-link">{{ 'navbar.about' | translate }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <span class="tooltip-span">Hot</span>
-                            <a routerLink="/jobs" class="nav-link">
-                                {{ 'navbar.jobs' | translate }} 
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <span class="tooltip-span two">{{ 'navbar.new' | translate }}</span>
-                            <a routerLink="/coming-soon" class="nav-link">
-                                {{ 'navbar.blog' | translate }} 
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a routerLink="/contact" class="nav-link">{{ 'navbar.contact' | translate }}</a>
-                        </li>
-                    </ul>
-                    <div [class.side-nav]="true" [class.three]="!isHome()">
-                        <!-- Multi Language -->
-                        <div class="right-nav-item nav-link">
-                            <img class="language-flag" [src]="currentLanguage() === 'vi' ? 'assets/imgs/flag-1.png' : 'assets/imgs/flag-2.png'" alt="language flag"/>
-                            <span class="language-text">{{ currentLanguage() === 'vi' ? "VI" : "EN" }}</span>
-                            <i class='bx bx-chevron-down language-icon'></i>  
-                            <div class="sub-items sub-items--language">
-                                <div class="sub-item" (click)="onChangeLanguage('vi')">
-                                    <img class="language-flag" src="assets/imgs/flag-1.png" alt="VI"/>
-                                    <span>{{ 'navbar.language.vi' | translate }}</span>
-                                </div>
-                                <div class="sub-item" (click)="onChangeLanguage('en')">
-                                    <img class="language-flag" src="assets/imgs/flag-2.png" alt="EN"/>
-                                    <span>{{ 'navbar.language.en' | translate }}</span>
-                                </div>
-                            </div>                          
-                        </div>
-                        
-                        <!-- Profile -->
-                         @if (isLoggedIn()) {
-                             <div class="right-nav-item">
-                                     <div class="profile-wrapper">
-                                         <img class="avatar" [src]="user()?.avatarUrl" alt="Avatar"/>
-                                         <span>{{ user()?.fullName }}</span>
-                                     </div>  
-                                 <div class="sub-items">
-                                    <div class="sub-item profile-item">
-                                        <i class='bx bx-dollar profile-item-icon'></i>
-                                        <div class="profile-item-body">
-                                            <span>{{ 'navbar.profile.account' | translate }}</span>
-                                            <span>{{ user()?.balance | customCurrency: lang()}}</span>
-                                            <span></span>
-                                        </div>
-                                    </div>
-                                     <a routerLink="/profile" class="sub-item profile-item">
-                                         <i class='bx bx-wallet-alt profile-item-icon'></i>
-                                         <div class="profile-item-body">
-                                             <span>{{ 'navbar.profile.add-money' | translate }}</span>
-                                             <span></span>
-                                         </div>
-                                     </a>
-                                     <a routerLink="/profile" class="sub-item profile-item">
-                                         <i class='bx bx-user-pin profile-item-icon'></i>
-                                         <div class="profile-item-body">
-                                             <span>{{ 'navbar.profile.my-profile.title' | translate }}</span>
-                                             <span>{{ 'navbar.profile.my-profile.description' | translate }}</span>
-                                         </div>
-                                     </a>
-                                     <div class="sub-item profile-item">
-                                         <i class='bx bx-log-out profile-item-icon'></i>
-                                         <div class="profile-item-body" (click)="onLogout()">
-                                             <span>{{ 'navbar.profile.sign-out' | translate }}</span>
-                                             <span></span>
-                                         </div>
-                                     </div>
-                                 </div>                          
-                             </div>
-                         } @else {
-                             <a class="login-left" [routerLink]="['auth', 'login']">
-                                <i class="flaticon-enter"></i>
-                                {{ 'navbar.auth' | translate }}
-                            </a>
-                         }
-                        <a routerLink="/post-job" class="job-right">
-                            {{ 'navbar.post-job' | translate }}
-                            <i class="bx bx-plus"></i>
-                        </a>
-                    </div>
+  <!-- Menu For Desktop Device -->
+  <div [class.main-nav]="true" [class.three]="!isHome()">
+    <div class="container-fluid">
+      <nav class="navbar navbar-expand-md navbar-light">
+        <a
+          [class.navbar-brand]="true"
+          [class.home]="shouldShowLogoHome()"
+          href="#!"
+        >
+          <img src="assets/imgs/logo-1.png" class="logo-one" alt="Logo" />
+        </a>
+        <div class="navbar-collapse mean-menu" id="navbarSupportedContent">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a routerLink="/home" class="nav-link">
+                {{ 'navbar.home' | translate }}
+              </a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/about" class="nav-link">{{
+                'navbar.about' | translate
+              }}</a>
+            </li>
+            <li class="nav-item">
+              <span class="tooltip-span">Hot</span>
+              <a routerLink="/jobs" class="nav-link">
+                {{ 'navbar.jobs' | translate }}
+              </a>
+            </li>
+            <li class="nav-item">
+              <span class="tooltip-span two">{{
+                'navbar.new' | translate
+              }}</span>
+              <a routerLink="/coming-soon" class="nav-link">
+                {{ 'navbar.blog' | translate }}
+              </a>
+            </li>
+            <li class="nav-item">
+              <a routerLink="/contact" class="nav-link">{{
+                'navbar.contact' | translate
+              }}</a>
+            </li>
+          </ul>
+          <div [class.side-nav]="true" [class.three]="!isHome()">
+            <!-- Multi Language -->
+            <div class="right-nav-item nav-link">
+              <img
+                class="language-flag"
+                [src]="
+                  currentLanguage() === 'vi'
+                    ? 'assets/imgs/flag-1.png'
+                    : 'assets/imgs/flag-2.png'
+                "
+                alt="language flag"
+              />
+              <span class="language-text">{{
+                currentLanguage() === 'vi' ? 'VI' : 'EN'
+              }}</span>
+              <i class="bx bx-chevron-down language-icon"></i>
+              <div class="sub-items sub-items--language">
+                <div class="sub-item" (click)="onChangeLanguage('vi')">
+                  <img
+                    class="language-flag"
+                    src="assets/imgs/flag-1.png"
+                    alt="VI"
+                  />
+                  <span>{{ 'navbar.language.vi' | translate }}</span>
                 </div>
-            </nav>
+                <div class="sub-item" (click)="onChangeLanguage('en')">
+                  <img
+                    class="language-flag"
+                    src="assets/imgs/flag-2.png"
+                    alt="EN"
+                  />
+                  <span>{{ 'navbar.language.en' | translate }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Profile -->
+            @if (isLoggedIn()) {
+              <div class="right-nav-item">
+                <div class="profile-wrapper">
+                  <img class="avatar" [src]="user()?.avatarUrl" alt="Avatar" />
+                  <span>{{ user()?.fullName }}</span>
+                </div>
+                <div class="sub-items">
+                  <div class="sub-item profile-item">
+                    <i class="bx bx-dollar profile-item-icon"></i>
+                    <div class="profile-item-body">
+                      <span>{{ 'navbar.profile.account' | translate }}</span>
+                      <span>{{
+                        user()?.balance | customCurrency: lang()
+                      }}</span>
+                      <span></span>
+                    </div>
+                  </div>
+                  <a routerLink="/payment" class="sub-item profile-item">
+                    <i class="bx bx-wallet-alt profile-item-icon"></i>
+                    <div class="profile-item-body">
+                      <span>{{ 'navbar.profile.add-money' | translate }}</span>
+                      <span></span>
+                    </div>
+                  </a>
+                  <a routerLink="/profile" class="sub-item profile-item">
+                    <i class="bx bx-user-pin profile-item-icon"></i>
+                    <div class="profile-item-body">
+                      <span>{{
+                        'navbar.profile.my-profile.title' | translate
+                      }}</span>
+                      <span>{{
+                        'navbar.profile.my-profile.description' | translate
+                      }}</span>
+                    </div>
+                  </a>
+                  <div class="sub-item profile-item">
+                    <i class="bx bx-log-out profile-item-icon"></i>
+                    <div class="profile-item-body" (click)="onLogout()">
+                      <span>{{ 'navbar.profile.sign-out' | translate }}</span>
+                      <span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            } @else {
+              <a class="login-left" [routerLink]="['auth', 'login']">
+                <i class="flaticon-enter"></i>
+                {{ 'navbar.auth' | translate }}
+              </a>
+            }
+            <a routerLink="/post-job" class="job-right">
+              {{ 'navbar.post-job' | translate }}
+              <i class="bx bx-plus"></i>
+            </a>
+          </div>
         </div>
+      </nav>
     </div>
+  </div>
 </div>
