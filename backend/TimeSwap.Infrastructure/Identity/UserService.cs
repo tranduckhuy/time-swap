@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 using TimeSwap.Application.Authentication.Interfaces;
 using TimeSwap.Application.Authentication.User;
 using TimeSwap.Application.Exceptions.Auth;
+using TimeSwap.Application.Exceptions.User;
 using TimeSwap.Application.Validators;
 using TimeSwap.Domain.Exceptions;
 using TimeSwap.Domain.Interfaces.Repositories;
@@ -106,5 +108,56 @@ namespace TimeSwap.Infrastructure.Identity
 
             return StatusCode.RequestProcessedSuccessfully;
         }
+
+
+        public async Task<StatusCode> UpdateSubscriptionAsync(UpdateSubscriptionRequestDto dto)
+        {
+            var user = await _userManager.FindByIdAsync(dto.UserId.ToString()) ?? throw new UserNotExistsException();
+            var userProfile = await _userRepository.GetUserProfileAsync(dto.UserId) ?? throw new UserNotExistsException();
+
+            // Swtich case price plan if # basic subscription plan
+            if (dto.SubscriptionPlan != SubscriptionPlan.Basic)
+            {
+                var pricePlan = dto.SubscriptionPlan switch
+                {
+                    // Standard plan 200,000 VND
+                    SubscriptionPlan.Standard => 200000,
+
+                    // Premium plan 300,000 VND
+                    SubscriptionPlan.Premium => 300000,
+                    _ => throw new AppException(StatusCode.RequestProcessingFailed, ["Invalid subscription plan"])
+                };
+
+                if (userProfile.Balance < pricePlan)
+                {
+                    throw new UserNotEnoughBalanceException();
+                }
+
+                userProfile.Balance -= pricePlan;
+                userProfile.SubscriptionExpiryDate = DateTime.UtcNow.AddMonths(1);
+            } else
+            {
+                userProfile.SubscriptionExpiryDate = DateTime.MaxValue;
+            }
+
+            userProfile.CurrentSubscription = dto.SubscriptionPlan;
+
+            // Add user claim, need to check if user already has this claim
+            var claim = new Claim("SubscriptionPlan", dto.SubscriptionPlan.ToString());
+            var claims = await _userManager.GetClaimsAsync(user);
+            var existingClaim = claims.FirstOrDefault(c => c.Type == claim.Type);
+            if (existingClaim != null)
+            {
+                await _userManager.ReplaceClaimAsync(user, existingClaim, claim);
+            }
+            else
+            {
+                await _userManager.AddClaimAsync(user, claim);
+            }
+
+            await _userRepository.UpdateAsync(userProfile);
+            return StatusCode.RequestProcessedSuccessfully;
+        }
+
     }
 }

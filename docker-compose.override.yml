@@ -39,6 +39,11 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:9002
+      - PayOS__PAYOS_CLIENT_ID=${PAYOS_CLIENT_ID}
+      - PayOS__PAYOS_CLIENT_SECRET=${PAYOS_CLIENT_SECRET}
+      - PayOS__PAYOS_CHECKSUM_KEY=${PAYOS_CHECKSUM_KEY}
+      - PayOS__ReturnUrl=${PAYOS_RETURN_URL}
+      - PayOS__CancelUrl=${PAYOS_CANCEL_URL}
     depends_on:
       - timeswapdb
       - redis
