@@ -117,7 +117,7 @@ export class HomeComponent implements OnInit {
         Swal.fire({
           title: 'Cancelled',
           text: this.multiLanguageService.getTranslatedLang(
-            'home.pricing-plans.cancel-message',
+            'home.pricing-plans.confirmation.cancel-message',
           ),
           icon: 'error',
         });
