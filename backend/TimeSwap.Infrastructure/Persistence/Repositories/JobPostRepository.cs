@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Linq.Expressions;
+using System.Text;
 using System.Text.Json;
 using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Interfaces.Repositories;
@@ -27,7 +28,7 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
             string cacheKey = string.Empty;
 
             // Create cache key based on the spec
-            if (param.PageIndex == AppConstant.DEFAULT_PAGE_INDEX && param.PageSize == AppConstant.DEFAULT_PAGE_SIZE)
+            if (IsDefaultCacheKey(param))
             {
                 cacheKey = $"jobpost:spec:{AppConstant.DEFAULT_PAGE_INDEX}:{AppConstant.DEFAULT_PAGE_SIZE}";
 
@@ -54,6 +55,22 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
             }
 
             return result;
+        }
+
+        private static bool IsDefaultCacheKey(JobPostSpecParam param)
+        {
+            return param.CategoryId == 0 &&
+                   param.IndustryId == 0 &&
+                   !param.MinFee.HasValue &&
+                   !param.MaxFee.HasValue &&
+                   string.IsNullOrEmpty(param.Search) &&
+                   string.IsNullOrEmpty(param.Sort) &&
+                   param.PostedDate == null &&
+                   string.IsNullOrEmpty(param.WardId) &&
+                   string.IsNullOrEmpty(param.CityId) &&
+                   param.PageIndex == AppConstant.DEFAULT_PAGE_INDEX &&
+                   param.PageSize == AppConstant.DEFAULT_PAGE_SIZE &&
+                   param.IsActive;
         }
 
         public async Task<JobPost?> GetJobPostByIdAsync(Guid id)
