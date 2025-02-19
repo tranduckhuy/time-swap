@@ -1,11 +1,4 @@
-import {
-  Component,
-  DestroyRef,
-  inject,
-  signal,
-  computed,
-  effect,
-} from '@angular/core';
+import { Component, DestroyRef, inject, signal, computed } from '@angular/core';
 import {
   ActivatedRoute,
   NavigationEnd,
@@ -48,7 +41,6 @@ export class HeaderComponent {
   user = this.profileService.user;
 
   isHome = signal<boolean>(false);
-  currentTheme = signal<string>(localStorage.getItem('theme') ?? 'theme-light');
 
   isLoggedIn = computed<boolean>(() => this.authService.isLoggedIn());
   lang = computed(() =>
@@ -63,20 +55,6 @@ export class HeaderComponent {
         const currentUrl = event.urlAfterRedirects;
         this.isHome.set(currentUrl === '/' || currentUrl.startsWith('/home'));
       });
-
-    // ? Effect: Set up interval to check localStorage
-    effect(() => {
-      const intervalId = setInterval(() => {
-        const theme = localStorage.getItem('theme');
-        if (theme !== this.currentTheme()) {
-          this.currentTheme.set(theme ?? 'theme-light');
-        }
-      }, 100);
-
-      this.destroyRef.onDestroy(() => {
-        clearInterval(intervalId);
-      });
-    });
 
     // ? Get user profile if logged in
     if (this.isLoggedIn()) {
@@ -105,9 +83,5 @@ export class HeaderComponent {
         });
       },
     });
-  }
-
-  shouldShowLogoHome() {
-    return this.isHome() && this.currentTheme() === 'theme-light';
   }
 }
