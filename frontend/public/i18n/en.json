@@ -67,7 +67,8 @@
   },
   "banner": {
     "profile": "Profile",
-    "applicants": "Applicants"
+    "applicants": "Applicants",
+    "payment": "Payment"
   },
   "auth": {
     "email": "Email",
@@ -282,6 +283,80 @@
         "web-development": "Web Development"
       },
       "outsourcing": "Outsourcing time in Teaching & IT can benefit both sides."
+    },
+    "pricing-plans": {
+      "sub-heading": "Pricing Plans",
+      "heading": "Discover Our Offerings",
+      "premium": "Premium",
+      "standard": "Standard",
+      "basic": "Basic",
+      "free": "Free",
+      "month": "Month",
+      "get-started": "Get Started",
+      "payment-content": "Paid for {{ packageName }} package: {{ amount }} USD",
+      "confirmation": {
+        "heading": "Are you sure?",
+        "sub-heading": "Please confirm if you want to proceed with the payment.",
+        "confirm": "Confirm",
+        "cancel": "Cancel",
+        "cancel-message": "The payment process has been canceled. You will not be charged."
+      }
+    },
+    "jobs": {
+      "sub-heading": "Desire Jobs",
+      "heading": "Job You Will Love",
+      "support-text": "A tons of top tech jobs are waiting for you.",
+      "support-link": "Browse All Jobs",
+      "filter": {
+        "all": "All",
+        "tech": "Information Technology (IT)",
+        "service": "Services",
+        "tech-support": "Technical Support"
+      }
+    },
+    "resume": {
+      "sub-heading": "Explore New Life",
+      "heading": "Put Your Cv In Front Of Great Employers",
+      "button": "Upload Your Resume",
+      "button-video": "CEO Message"
+    },
+    "blog": {
+      "sub-heading": "Our Blogs",
+      "heading": "Recent News Post",
+      "support-link": "Browse All Blogs",
+      "link-blog": "Learn More"
+    },
+    "download": {
+      "sub-heading": "Download The App",
+      "heading": "Get More In Our Application Sit Back And Enjoy"
+    }
+  },
+  "payment": {
+    "heading": "Payment Information",
+    "form": {
+      "button": "Checkout",
+      "label": {
+        "name": "Name:",
+        "email": "Email:",
+        "phone": "Phone:",
+        "amount": "Amount:",
+        "content": "Payment Content:"
+      },
+      "error-name": {
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "amount": "Amount",
+        "content": "Payment Content"
+      }
+    },
+    "notify": {
+      "success": "Thank you for using our service. Your transaction was completed successfully.",
+      "failed": "Unfortunately, your transaction could not be completed. Please try again or contact support for assistance.",
+      "time-out": "Payment timeout. Please try again later.",
+      "cancel-transaction": "This transaction has been canceled successfully.",
+      "not-enough-balance": "Unfortunately, you do not have enough balance to complete this transaction.",
+      "not-login": "You need to log in to proceed with the payment."
     }
   }
 }

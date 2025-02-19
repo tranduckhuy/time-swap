@@ -67,7 +67,8 @@
   },
   "banner": {
     "profile": "Hồ sơ",
-    "applicants": "Ứng viên"
+    "applicants": "Ứng viên",
+    "payment": "Thanh toán"
   },
   "auth": {
     "email": "Email",
@@ -285,6 +286,80 @@
         "web-development": "Phát triển Web"
       },
       "outsourcing": "Thuê ngoài thời gian trong Sư phạm & CNTT có thể mang lại lợi ích cho cả hai bên."
+    },
+    "pricing-plans": {
+      "sub-heading": "Gói Giá",
+      "heading": "Khám Phá Gói Của Chúng Tôi",
+      "premium": "Gói cao cấp",
+      "standard": "Gói tiêu chuẩn",
+      "basic": "Gói cơ bản",
+      "free": "Gói miễn phí",
+      "month": "Tháng",
+      "get-started": "Bắt đầu",
+      "payment-content": "Thanh toán cho {{ packageName }}: {{ amount }} VNĐ",
+      "confirmation": {
+        "heading": "Bạn có chắc chắn không?",
+        "sub-heading": "Vui lòng xác nhận nếu bạn muốn tiếp tục thanh toán.",
+        "confirm": "Xác nhận",
+        "cancel": "Hủy",
+        "cancel-message": "Quá trình thanh toán đã bị hủy. Bạn sẽ không bị tính phí."
+      }
+    },
+    "jobs": {
+      "sub-heading": "Việc làm mong muốn",
+      "heading": "Công việc bạn sẽ yêu thích",
+      "support-text": "Rất nhiều công việc công nghệ hàng đầu đang chờ bạn.",
+      "support-link": "Tất cả các công việc",
+      "filter": {
+        "all": "Tất cả",
+        "tech": "Công nghệ thông tin",
+        "service": "Dịch vụ",
+        "tech-support": "Hỗ trợ kỹ thuật"
+      }
+    },
+    "resume": {
+      "sub-heading": "Khám phá cuộc sống mới",
+      "heading": "Đưa CV của bạn đến với các nhà tuyển dụng tuyệt vời",
+      "button": "Tải lên CV của bạn",
+      "button-video": "Lời nhắn của CEO"
+    },
+    "blog": {
+      "sub-heading": "Blog của chúng tôi",
+      "heading": "Bài viết mới nhất",
+      "support-link": "Tất cả các Blog",
+      "link-blog": "Xem thêm"
+    },
+    "download": {
+      "sub-heading": "Tải ứng dụng",
+      "heading": "Nhận thêm thông tin trong ứng dụng của chúng tôi Ngồi lại và tận hưởng"
+    }
+  },
+  "payment": {
+    "heading": "Thông tin thanh toán",
+    "form": {
+      "button": "Thanh toán",
+      "label": {
+        "name": "Tên:",
+        "email": "Địa chỉ email:",
+        "phone": "Số điện thoại:",
+        "amount": "Số tiền:",
+        "content": "Nội dung thanh toán:"
+      },
+      "error-name": {
+        "name": "Tên",
+        "email": "Địa chỉ email",
+        "phone": "Số điện thoại",
+        "amount": "Số tiền",
+        "content": "Nội dung thanh toán"
+      }
+    },
+    "notify": {
+      "success": "Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi. Giao dịch của bạn đã được hoàn tất thành công.",
+      "failed": "Rất tiếc, giao dịch của bạn không thể hoàn tất. Vui lòng thử lại hoặc liên hệ với bộ phận hỗ trợ để được trợ giúp.",
+      "time-out": "Thời gian thanh toán đã hết hạn. Chúng tôi xin lỗi và mong bạn thử lại sau.",
+      "cancel-transaction": "Giao dịch này đã được hủy thành công.",
+      "not-enough-balance": "Rất tiếc, bạn không đủ số dư trong tài khoản để thực hiện giao dịch này.",
+      "not-login": "Bạn cần đăng nhập để thực hiện thanh toán."
     }
   }
 }

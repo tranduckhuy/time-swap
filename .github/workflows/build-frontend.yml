@@ -35,5 +35,5 @@ jobs:
         env:
           API_AUTH_BASE_URL: ${{ secrets.API_AUTH_BASE_URL }}
           API_BASE_URL: ${{ secrets.API_BASE_URL }}
-          AUTH_CLIENT_URL: ${{ secrets.AUTH_CLIENT_URL }}
+          AUTH_CLIENT_URL: ${{ secrets.AUTH_CLIENT_URL }}`
         run: npm run build
