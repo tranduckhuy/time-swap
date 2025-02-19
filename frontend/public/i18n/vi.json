@@ -303,6 +303,24 @@
         "confirm": "Xác nhận",
         "cancel": "Hủy",
         "cancel-message": "Quá trình thanh toán đã bị hủy. Bạn sẽ không bị tính phí."
+      },
+      "benefit": {
+        "unlimited-application-month": "Không giới hạn số lượng đơn xin việc",
+        "unlimited-post-month": "Đăng tin việc làm không giới hạn",
+        "profile-priority": "Ưu tiên hiển thị hồ sơ lên top",
+        "job-listing-priority": "Ưu tiên hiển thị công việc đã đăng lên top",
+        "earn-reward-application": "Nhận điểm thưởng cho các công việc đã hoàn thành",
+        "earn-reward-posting": "Nhận điểm thưởng cho việc tuyển dụng thông qua TimeSwap",
+        "basic": {
+          "3-post-month": "Đăng 3 công việc mỗi tháng"
+        },
+        "standard": {
+          "10-post-month": "Đăng 10 công việc mỗi tháng"
+        },
+        "premium": {
+          "profile-priority-mix": "Ưu tiên hồ sơ + Ứng viên nổi bật",
+          "job-listing-priority-mix": "Ưu tiên công việc đã đăng + Việc làm đang hot"
+        }
       }
     },
     "jobs": {

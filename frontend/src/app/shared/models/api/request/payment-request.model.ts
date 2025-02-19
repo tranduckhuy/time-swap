@@ -4,7 +4,7 @@ export interface PaymentRequestModel {
   paymentMethodId: number;
 }
 
-export interface PaymentReturnRequestModel {
+export interface VnPayReturnRequestModel {
   vnp_Amount: number;
   vnp_BankCode: string;
   vnp_BankTranNo: string;
@@ -17,4 +17,12 @@ export interface PaymentReturnRequestModel {
   vnp_TransactionStatus: string;
   vnp_TxnRef: string;
   vnp_SecureHash: string;
+}
+
+export interface PayOsReturnRequestModel {
+  status: string;
+  code: string;
+  id: string;
+  orderCode: string;
+  cancel: boolean;
 }

@@ -300,6 +300,24 @@
         "confirm": "Confirm",
         "cancel": "Cancel",
         "cancel-message": "The payment process has been canceled. You will not be charged."
+      },
+      "benefit": {
+        "unlimited-application-month": "Unlimited job applications per month",
+        "unlimited-post-month": "Unlimited job postings per month",
+        "profile-priority": "Profile priority",
+        "job-listing-priority": "Job listing priority",
+        "earn-reward-application": "Earn reward points for completed jobs",
+        "earn-reward-posting": "Earn reward points for hiring via TimeSwap",
+        "basic": {
+          "3-post-month": "3 job postings per month"
+        },
+        "standard": {
+          "10-post-month": "10 job postings per month"
+        },
+        "premium": {
+          "profile-priority-mix": "Profile priority + Featured candidates",
+          "job-listing-priority-mix": "Job listing priority + Hot jobs"
+        }
       }
     },
     "jobs": {
