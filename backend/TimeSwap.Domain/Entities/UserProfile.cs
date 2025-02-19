@@ -1,4 +1,5 @@
-﻿using TimeSwap.Shared.Constants;
+﻿using System.Diagnostics.CodeAnalysis;
+using TimeSwap.Shared.Constants;
 
 namespace TimeSwap.Domain.Entities
 {
@@ -24,8 +25,10 @@ namespace TimeSwap.Domain.Entities
 
         public IList<string>? EducationHistory { get; set; }
 
+        [AllowNull]
         public int? MajorCategoryId { get; set; }
 
+        [AllowNull]
         public int? MajorIndustryId { get; set; }
 
         // Navigation properties
