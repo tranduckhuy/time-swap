@@ -122,5 +122,25 @@ namespace TimeSwap.Auth.Controllers
                 Errors = ex.StackTrace?.Split("\n")
             });
         }
+
+        protected IActionResult UnauthorizedUserTokenResponse()
+        {
+            return Unauthorized(new ApiResponse<object>
+            {
+                StatusCode = (int)Shared.Constants.StatusCode.InvalidToken,
+                Message = ResponseMessages.GetMessage(Shared.Constants.StatusCode.InvalidToken),
+                Errors = ["User id does not exist in the claims. Please login again."]
+            });
+        }
+
+        protected IActionResult NullRequestDataResponse()
+        {
+            return BadRequest(new ApiResponse<object>
+            {
+                StatusCode = (int)Shared.Constants.StatusCode.ModelInvalid,
+                Message = ResponseMessages.GetMessage(Shared.Constants.StatusCode.ModelInvalid),
+                Errors = ["The request body does not contain required fields or invalid data"]
+            });
+        }
     }
 }

@@ -5,8 +5,10 @@ using System.Security.Claims;
 using TimeSwap.Application.Authentication.Dtos.Requests;
 using TimeSwap.Application.Authentication.Dtos.Responses;
 using TimeSwap.Application.Authentication.Interfaces;
+using TimeSwap.Application.Authentication.User;
 using TimeSwap.Application.Email;
 using TimeSwap.Application.Exceptions.Auth;
+using TimeSwap.Application.Exceptions.User;
 using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Exceptions;
 using TimeSwap.Domain.Interfaces.Repositories;
@@ -19,6 +21,7 @@ namespace TimeSwap.Infrastructure.Identity
     public class AuthService : IAuthService
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IUserService _userService;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<AuthService> _logger;
         private readonly JwtHandler _jwtHandler;
@@ -27,7 +30,8 @@ namespace TimeSwap.Infrastructure.Identity
         private readonly ITransactionManager _transactionManager;
 
         public AuthService(UserManager<ApplicationUser> userManager, IEmailSender emailSender, ILogger<AuthService> logger,
-            JwtHandler jwtHandler, ITokenBlackListService tokenBlackListService, IUserRepository userRepository, ITransactionManager transactionManager)
+            JwtHandler jwtHandler, ITokenBlackListService tokenBlackListService, IUserRepository userRepository,
+            ITransactionManager transactionManager, IUserService userService)
         {
             _userManager = userManager;
             _emailSender = emailSender;
@@ -36,6 +40,7 @@ namespace TimeSwap.Infrastructure.Identity
             _tokenBlackListService = tokenBlackListService;
             _userRepository = userRepository;
             _transactionManager = transactionManager;
+            _userService = userService;
         }
 
         public async Task<StatusCode> RegisterAsync(RegisterRequestDto request)
@@ -71,6 +76,8 @@ namespace TimeSwap.Infrastructure.Identity
                 }
 
                 await _userManager.AddToRoleAsync(newUser, nameof(Role.User));
+
+                await _userManager.AddClaimAsync(newUser, new Claim("SubscriptionPlan", nameof(SubscriptionPlan.Basic)));
 
                 // Update user profile in core database
                 await _userRepository.AddAsync(
@@ -130,6 +137,25 @@ namespace TimeSwap.Infrastructure.Identity
         {
             var signingCredentials = _jwtHandler.GetSigningCredentials();
             var claims = TokenHelper.GetClaims(user, roles, userClaims);
+
+            // Check if user subscription plan differs from basic plan and expired
+            var subscriptionPlan = userClaims.FirstOrDefault(c => c.Type == "SubscriptionPlan")?.Value;
+
+            if (!string.IsNullOrEmpty(subscriptionPlan) && subscriptionPlan != nameof(SubscriptionPlan.Basic))
+            {
+                var subscriptionExpiryDate = userClaims.FirstOrDefault(c => c.Type == "SubscriptionExpiryDate")?.Value;
+                if (DateTime.TryParse(subscriptionExpiryDate, out var expiryDate) && expiryDate <= DateTime.UtcNow)
+                {
+                    await _userService.UpdateSubscriptionAsync(new UpdateSubscriptionRequestDto
+                    {
+                        UserId = Guid.Parse(user.Id),
+                        SubscriptionPlan = SubscriptionPlan.Basic
+                    });
+
+                    throw new UserSubscriptionExpiredException();
+                }
+            }
+
             var tokenOptions = _jwtHandler.GenerateTokenOptions(signingCredentials, claims);
 
             var refreshToken = TokenHelper.GenerateRefreshToken();

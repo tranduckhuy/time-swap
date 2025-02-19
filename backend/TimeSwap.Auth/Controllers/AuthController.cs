@@ -34,8 +34,7 @@ namespace TimeSwap.Auth.Controllers
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             var dto = AppMapper<AuthMappingProfile>.Mapper.Map<LoginRequestDto>(request);
-            return await HandleRequestWithResponseAsync<LoginRequestDto, AuthenticationResponse>
-                (dto, _authService.LoginAsync);
+            return await HandleRequestWithResponseAsync(dto, _authService.LoginAsync);
         }
 
         [HttpPost("forgot-password")]
@@ -71,8 +70,7 @@ namespace TimeSwap.Auth.Controllers
         public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
         {
             var dto = AppMapper<AuthMappingProfile>.Mapper.Map<RefreshTokenDto>(request);
-            return await HandleRequestWithResponseAsync<RefreshTokenDto, AuthenticationResponse>
-                (dto, _authService.RefreshTokenAsync);
+            return await HandleRequestWithResponseAsync(dto, _authService.RefreshTokenAsync);
         }
 
         [HttpDelete("logout")]

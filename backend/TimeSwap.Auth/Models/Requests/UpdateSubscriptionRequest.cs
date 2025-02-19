@@ -6,9 +6,6 @@ namespace TimeSwap.Auth.Models.Requests
     public class UpdateSubscriptionRequest
     {
         [Required]
-        public Guid UserId { get; set; }
-
-        [Required]
         public SubscriptionPlan SubscriptionPlan { get; set; }
     }
 }

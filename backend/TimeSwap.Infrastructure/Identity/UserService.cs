@@ -135,28 +135,44 @@ namespace TimeSwap.Infrastructure.Identity
 
                 userProfile.Balance -= pricePlan;
                 userProfile.SubscriptionExpiryDate = DateTime.UtcNow.AddMonths(1);
+
+
+                var subscriptionExpiryClaim = new Claim("SubscriptionExpiryDate", userProfile.SubscriptionExpiryDate.ToString()!);
+                await AddOrReplaceClaimAsync(user, subscriptionExpiryClaim);
             } else
             {
+                var claims = await _userManager.GetClaimsAsync(user);
+                var claimToRemove = claims.FirstOrDefault(c => c.Type == "SubscriptionExpiryDate");
+                if (claimToRemove != null)
+                {
+                    await _userManager.RemoveClaimAsync(user, claimToRemove);
+                }
+
                 userProfile.SubscriptionExpiryDate = DateTime.MaxValue;
             }
 
             userProfile.CurrentSubscription = dto.SubscriptionPlan;
+            var subscriptionClaim = new Claim("SubscriptionPlan", dto.SubscriptionPlan.ToString());
 
-            // Add user claim, need to check if user already has this claim
-            var claim = new Claim("SubscriptionPlan", dto.SubscriptionPlan.ToString());
-            var claims = await _userManager.GetClaimsAsync(user);
-            var existingClaim = claims.FirstOrDefault(c => c.Type == claim.Type);
-            if (existingClaim != null)
-            {
-                await _userManager.ReplaceClaimAsync(user, existingClaim, claim);
-            }
-            else
-            {
-                await _userManager.AddClaimAsync(user, claim);
-            }
+            await AddOrReplaceClaimAsync(user, subscriptionClaim);
 
             await _userRepository.UpdateAsync(userProfile);
             return StatusCode.RequestProcessedSuccessfully;
+        }
+
+        private async Task AddOrReplaceClaimAsync(ApplicationUser user, Claim newClaim)
+        {
+            var claims = await _userManager.GetClaimsAsync(user);
+            var existingClaim = claims.FirstOrDefault(c => c.Type == newClaim.Type);
+
+            if (existingClaim != null)
+            {
+                await _userManager.ReplaceClaimAsync(user, existingClaim, newClaim);
+            }
+            else
+            {
+                await _userManager.AddClaimAsync(user, newClaim);
+            }
         }
 
     }
