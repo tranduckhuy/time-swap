@@ -11,6 +11,7 @@
       "errors": {
         "required": "{{ name }} là bắt buộc.",
         "email": "Vui lòng nhập địa chỉ email hợp lệ.",
+        "min-value": "Vui lòng nhập giá trị lớn hơn hoặc bằng {{ minValue }}.",
         "min-length": "{{ name }} phải có ít nhất {{ requiredLength }} ký tự.",
         "pattern": "{{ name }} không hợp lệ.",
         "confirmPassword": "Mật khẩu không khớp."

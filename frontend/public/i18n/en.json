@@ -11,6 +11,7 @@
       "errors": {
         "required": "{{ name }} is required.",
         "email": "Please enter a valid email address.",
+        "min-value": "Please enter a value of at least {{ minValue }}.",
         "min-length": "{{ name }} must be at least {{ requiredLength }} characters long.",
         "pattern": "{{ name }} is not valid.",
         "confirmPassword": "Passwords do not match."
