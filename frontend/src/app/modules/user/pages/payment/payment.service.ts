@@ -14,10 +14,11 @@ import {
 
 import { createHttpParams } from '../../../../shared/utils/request-utils';
 
-import { BaseResponseModel } from '../../../../shared/models/api/base-response.model';
-import {
+import type { BaseResponseModel } from '../../../../shared/models/api/base-response.model';
+import type {
   PaymentRequestModel,
-  PaymentReturnRequestModel,
+  PayOsReturnRequestModel,
+  VnPayReturnRequestModel,
 } from '../../../../shared/models/api/request/payment-request.model';
 
 import { ToastHandlingService } from '../../../../shared/services/toast-handling.service';
@@ -31,7 +32,8 @@ export class PaymentService {
 
   private BASE_API_URL = environment.apiBaseUrl;
   private PAYMENT_API_URL = `${this.BASE_API_URL}/payments`;
-  private PAYMENT_RETURN_API_URL = `${this.BASE_API_URL}/payments/vnpay-return`;
+  private VN_PAY_RETURN_API_URL = `${this.BASE_API_URL}/payments/vnpay-return`;
+  private PAY_OS_RETURN_API_URL = `${this.BASE_API_URL}/payments/payos-return`;
 
   checkoutPayment(
     req: PaymentRequestModel,
@@ -65,12 +67,25 @@ export class PaymentService {
       );
   }
 
-  processReturn(req: PaymentReturnRequestModel): Observable<BaseResponseModel> {
+  processVnPayReturn(
+    req: VnPayReturnRequestModel,
+  ): Observable<BaseResponseModel> {
+    return this.handlePaymentReturn(this.VN_PAY_RETURN_API_URL, req);
+  }
+
+  processPayOsReturn(
+    req: PayOsReturnRequestModel,
+  ): Observable<BaseResponseModel> {
+    return this.handlePaymentReturn(this.PAY_OS_RETURN_API_URL, req);
+  }
+
+  private handlePaymentReturn(
+    apiUrl: string,
+    req: any,
+  ): Observable<BaseResponseModel> {
     const reqParams = createHttpParams(req);
     return this.httpClient
-      .get<BaseResponseModel>(this.PAYMENT_RETURN_API_URL, {
-        params: reqParams,
-      })
+      .get<BaseResponseModel>(apiUrl, { params: reqParams })
       .pipe(
         tap((res) => {
           if (res.statusCode === SUCCESS_CODE && res.data) {

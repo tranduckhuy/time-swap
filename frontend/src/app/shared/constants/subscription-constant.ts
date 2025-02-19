@@ -1,6 +1,6 @@
 export const SUBSCRIPTIONS = ['Basic', 'Standard', 'Premium'];
 
-export const REQUIRED_PARAMS = [
+export const REQUIRED_VN_PAY_PARAMS = [
   'vnp_Amount',
   'vnp_BankCode',
   'vnp_BankTranNo',
@@ -15,6 +15,13 @@ export const REQUIRED_PARAMS = [
   'vnp_SecureHash',
 ];
 
-export const PREMIUM_PRICE = 500000;
-export const STANDARD_PRICE = 300000;
-export const BASIC_PRICE = 100000;
+export const REQUIRED_PAY_OS_PARAMS = [
+  'status',
+  'code',
+  'id',
+  'orderCode',
+  'cancel',
+];
+
+export const PREMIUM_PRICE = 299000;
+export const STANDARD_PRICE = 199000;
