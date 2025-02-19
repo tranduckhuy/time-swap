@@ -102,9 +102,20 @@
                 name="paymentContent"
                 cols="30"
                 rows="8"
-                class="form-control"
+                [class.form-control]="true"
+                [class.invalid]="isControlInvalid('paymentContent')"
                 formControlName="paymentContent"
               ></textarea>
+              <div class="help-block with-errors">
+                {{
+                  isControlInvalid('paymentContent')
+                    ? getMessage(
+                        'paymentContent',
+                        'payment.form.error-name.content'
+                      )
+                    : ''
+                }}
+              </div>
             </div>
           </div>
 
