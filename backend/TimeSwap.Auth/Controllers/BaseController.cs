@@ -119,7 +119,7 @@ namespace TimeSwap.Auth.Controllers
             {
                 StatusCode = (int)Shared.Constants.StatusCode.UserAuthenticationFailed,
                 Message = ex.Message,
-                Errors = ex.StackTrace?.Split("\n")
+                Errors = [ex.InnerException?.Message ?? "The system encountered an unexpected error while processing the request"]
             });
         }
 
