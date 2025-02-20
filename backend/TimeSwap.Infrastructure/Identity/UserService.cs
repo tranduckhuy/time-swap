@@ -5,6 +5,7 @@ using TimeSwap.Application.Authentication.User;
 using TimeSwap.Application.Exceptions.Auth;
 using TimeSwap.Application.Exceptions.User;
 using TimeSwap.Application.Validators;
+using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Exceptions;
 using TimeSwap.Domain.Interfaces.Repositories;
 using TimeSwap.Shared.Constants;
@@ -175,5 +176,18 @@ namespace TimeSwap.Infrastructure.Identity
             }
         }
 
+        public async Task<StatusCode> AddUserProfileAsync(AddUserProfileRequestDto request)
+        {
+            var user = new UserProfile
+            {
+                Id = request.UserId,
+                Email = request.Email,
+                FullName = request.FullName
+            };
+
+            await _userRepository.AddAsync(user);
+
+            return StatusCode.RequestProcessedSuccessfully;
+        }
     }
 }

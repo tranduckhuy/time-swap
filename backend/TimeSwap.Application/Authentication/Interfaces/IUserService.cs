@@ -8,5 +8,6 @@ namespace TimeSwap.Application.Authentication.Interfaces
         Task<(StatusCode, UserResponse)> GetUserProfileAsync(Guid userId);
         Task<StatusCode> UpdateSubscriptionAsync(UpdateSubscriptionRequestDto dto);
         Task<StatusCode> UpdateUserProfileAsync(UpdateUserProfileRequestDto request);
+        Task<StatusCode> AddUserProfileAsync(AddUserProfileRequestDto request);
     }
 }

@@ -1,11 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Text.Json.Serialization;
 using TimeSwap.Shared.Constants;
 
 namespace TimeSwap.Auth.Models.Requests
 {
     public class UpdateSubscriptionRequest
     {
-        [Required]
+        [JsonRequired]
         public SubscriptionPlan SubscriptionPlan { get; set; }
     }
 }
