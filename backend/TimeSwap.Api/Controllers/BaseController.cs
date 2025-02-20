@@ -107,7 +107,7 @@ namespace TimeSwap.Api.Controllers
             {
                 StatusCode = statusCode,
                 Message = ex.Message,
-                Errors = ex.StackTrace?.Split("\n")
+                Errors = [ex.InnerException?.Message ?? "The system encountered an unexpected error while processing the request"]
             });
         }
     }

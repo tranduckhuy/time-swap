@@ -62,7 +62,8 @@ namespace TimeSwap.Shared.Constants
             { StatusCode.TransactionLimitExceeded, "Transaction limit exceeded." },
             { StatusCode.BankIsUnderMaintenance, "Bank maintenance in progress." },
             { StatusCode.IncorrectPaymentPasswordExceeded, "Payment password entered incorrectly too many times." },
-            { StatusCode.UndefinedError, "Undefined error." }
+            { StatusCode.UndefinedError, "Undefined error." },
+            { StatusCode.UserSubscriptionExpired, "Your subscription has expired. Please renew your subscription." }
         };
 
         public static string GetMessage(StatusCode code) => _messages[code];

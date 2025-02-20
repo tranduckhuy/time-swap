@@ -64,6 +64,7 @@
         TransactionLimitExceeded = 2047,
         BankIsUnderMaintenance = 2048,
         IncorrectPaymentPasswordExceeded = 2049,
-        UndefinedError = 2050
+        UndefinedError = 2050,
+        UserSubscriptionExpired = 2051
     }
 }
