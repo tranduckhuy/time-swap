@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { ActivatedRoute, ResolveFn, Routes } from '@angular/router';
+import { ResolveFn, Routes } from '@angular/router';
 
 import { of } from 'rxjs';
 
