@@ -131,19 +131,6 @@ export class HomeComponent implements OnInit {
   }
 
   private processPayment(packagePurchase: number) {
-    let amount: number;
-
-    switch (packagePurchase) {
-      case 1:
-        amount = STANDARD_PRICE;
-        break;
-      case 2:
-        amount = PREMIUM_PRICE;
-        break;
-      default:
-        amount = ZERO;
-    }
-
     const req: SubscriptionPlanRequestModel = {
       subscriptionPlan: packagePurchase,
     };
