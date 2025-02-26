@@ -1,11 +1,11 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -20,20 +20,22 @@ import {
 import { AuthService } from '../../auth.service';
 import { MultiLanguageService } from '../../../../shared/services/multi-language.service';
 
+import type { ResetPasswordRequestModel } from '../../../../shared/models/api/request/reset-password-request.model';
+
 @Component({
-  selector: 'app-register',
+  selector: 'app-reset-password',
   standalone: true,
   imports: [
-    ReactiveFormsModule,
     TranslateModule,
+    ReactiveFormsModule,
     RouterLink,
     PreLoaderComponent,
     ToastComponent,
   ],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.css',
+  templateUrl: './reset-password.component.html',
+  styleUrl: './reset-password.component.css',
 })
-export class RegisterComponent implements OnInit {
+export class ResetPasswordComponent {
   // ? Form Properties
   form!: FormGroup;
 
@@ -45,27 +47,14 @@ export class RegisterComponent implements OnInit {
   private readonly multiLanguageService = inject(MultiLanguageService);
   private readonly fb = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly activatedRoute = inject(ActivatedRoute);
 
   ngOnInit(): void {
-    this.initForm();
+    this.initialForm();
 
     const timeOutId = setTimeout(() => this.isLoading.set(false), 800);
 
     this.destroyRef.onDestroy(() => clearTimeout(timeOutId));
-  }
-
-  isControlInvalid(controlName: string): boolean {
-    const control = this.form.controls[controlName];
-    return control?.invalid && control?.touched;
-  }
-
-  getMessage(controlName: string, name: string) {
-    return getErrorMessage(
-      controlName,
-      name,
-      this.form,
-      this.multiLanguageService,
-    );
   }
 
   onSubmit() {
@@ -74,21 +63,38 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    const subscription = this.authService.register(this.form.value).subscribe();
+    this.activatedRoute.queryParams.subscribe((params) => {
+      const token = params['token'] || '';
+      const email = params['email'] || '';
 
-    this.destroyRef.onDestroy(() => subscription.unsubscribe());
+      const req: ResetPasswordRequestModel = {
+        ...this.form.value,
+        token,
+        email,
+      };
+
+      const subscription = this.authService.resetPassword(req).subscribe();
+      this.destroyRef.onDestroy(() => subscription.unsubscribe());
+    });
   }
 
-  private initForm() {
+  isControlInvalid(controlName: string): boolean {
+    const control = this.form.controls[controlName];
+    return control?.invalid && control?.touched;
+  }
+
+  getMessage(controlName: string, nameKey: string) {
+    return getErrorMessage(
+      controlName,
+      nameKey,
+      this.form,
+      this.multiLanguageService,
+    );
+  }
+
+  private initialForm() {
     this.form = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      phoneNumber: [
-        '',
-        [Validators.required, Validators.pattern(/(84|0[35789])+(\d{8})\b/g)],
-      ],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', Validators.required, Validators.minLength(6)],
       confirmPassword: [
         '',
         [Validators.required, controlValueEqual('password', 'confirmPassword')],

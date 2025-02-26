@@ -27,9 +27,12 @@ import {
 } from '../../shared/constants/auth-constants';
 import {
   EMAIL_EXIST_CODE,
+  FORGOT_PASSWORD_SUCCESS_CODE,
   INVALID_CREDENTIAL_CODE,
+  INVALID_TOKEN,
   NOT_CONFIRM_CODE,
   REGISTER_CONFIRM_SUCCESS_CODE,
+  RESET_PASSWORD_SUCCESS_CODE,
   SUCCESS_CODE,
   TOKEN_EXPIRED_CODE,
   USER_NOT_EXIST_CODE,
@@ -48,6 +51,8 @@ import type {
   ConfirmRequestModel,
   ReConfirmRequestModel,
 } from '../../shared/models/api/request/confirm-request.model';
+import type { ForgotPasswordRequestModel } from '../../shared/models/api/request/forgot-password-request.model';
+import type { ResetPasswordRequestModel } from '../../shared/models/api/request/reset-password-request.model';
 
 @Injectable({
   providedIn: 'root',
@@ -65,6 +70,8 @@ export class AuthService {
   private REFRESH_API_URL = `${this.BASE_API_URL}/auth/refresh-token`;
   private CONFIRM_API_URL = `${this.BASE_API_URL}/auth/confirm-email`;
   private RE_CONFIRM_API_URL = `${this.BASE_API_URL}/auth/resend-confirmation-email`;
+  private FORGOT_PASSWORD_API_URL = `${this.BASE_API_URL}/auth/forgot-password`;
+  private RESET_PASSWORD_API_URL = `${this.BASE_API_URL}/auth/reset-password`;
 
   // ? Signals for state management
   private loginState = signal<boolean>(this.checkLoginState());
@@ -112,7 +119,10 @@ export class AuthService {
   }
 
   register(registerReq: RegisterRequestModel): Observable<void> {
-    registerReq = { ...registerReq, clientUrl: this.AUTH_CLIENT_URL! };
+    registerReq = {
+      ...registerReq,
+      clientUrl: `${this.AUTH_CLIENT_URL!}/login`,
+    };
     return this.sendPostRequest<RegisterRequestModel, BaseResponseModel>(
       this.REGISTER_API_URL,
       registerReq,
@@ -244,6 +254,61 @@ export class AuthService {
           return of(undefined);
         }),
       );
+  }
+
+  forgotPassword(forgotReq: ForgotPasswordRequestModel): Observable<void> {
+    forgotReq = {
+      ...forgotReq,
+      clientUrl: `${this.AUTH_CLIENT_URL!}/reset-password`,
+    };
+    return this.sendPostRequest<ForgotPasswordRequestModel, BaseResponseModel>(
+      this.FORGOT_PASSWORD_API_URL,
+      forgotReq,
+    ).pipe(
+      map((res) => {
+        if (res.statusCode === FORGOT_PASSWORD_SUCCESS_CODE) {
+          this.toastHandlingService.handleSuccess('auth.forgot.success');
+        } else {
+          this.toastHandlingService.handleError('auth.forgot.failure');
+        }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        if (error.error.statusCode === USER_NOT_EXIST_CODE) {
+          this.toastHandlingService.handleWarning(
+            'auth.forgot.email-not-exist',
+          );
+        } else {
+          this.toastHandlingService.handleCommonError();
+        }
+        return of(undefined);
+      }),
+    );
+  }
+
+  resetPassword(resetReq: ResetPasswordRequestModel): Observable<void> {
+    return this.sendPostRequest<ResetPasswordRequestModel, BaseResponseModel>(
+      this.RESET_PASSWORD_API_URL,
+      resetReq,
+    ).pipe(
+      map((res) => {
+        if (res.statusCode === RESET_PASSWORD_SUCCESS_CODE) {
+          this.toastHandlingService.handleSuccess('auth.reset.success');
+          this.router.navigateByUrl('/auth/login', {
+            replaceUrl: true,
+          });
+        } else {
+          this.toastHandlingService.handleError('auth.reset.failure');
+        }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        if (error.error.statusCode === INVALID_TOKEN) {
+          this.toastHandlingService.handleWarning('auth.reset.invalid-token');
+        } else {
+          this.toastHandlingService.handleCommonError();
+        }
+        return of(undefined);
+      }),
+    );
   }
 
   saveLocalData(token: string, refreshToken: string, expiresIn: string) {

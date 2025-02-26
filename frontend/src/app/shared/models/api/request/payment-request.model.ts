@@ -26,3 +26,7 @@ export interface PayOsReturnRequestModel {
   orderCode: string;
   cancel: boolean;
 }
+
+export interface SubscriptionPlanRequestModel {
+  subscriptionPlan: number;
+}
