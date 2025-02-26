@@ -3,7 +3,9 @@
     "buttons": {
       "auth": {
         "login": "Login",
-        "register": "Register"
+        "register": "Register",
+        "forgot": "Continue",
+        "reset": "Reset Password"
       },
       "search": "Search By Filter"
     },
@@ -76,6 +78,8 @@
     "password": "Password",
     "login": {
       "header": "Login",
+      "remember": "Remember Me",
+      "forgot-link": "Forgot Password?",
       "link-message": "Do you have an account?",
       "link": "Register now!",
       "success": "Login successful!",
@@ -98,6 +102,18 @@
       "success": "Registration successful. Please check your inbox to confirm your email.",
       "failure": "Register failed. Please try again.",
       "email-exist": "Registration failed. This email is already in use. Please use a different email."
+    },
+    "forgot": {
+      "header": "Forgot Password",
+      "success": "Successfully. Please check your inbox to confirm your email.",
+      "failure": "Failed. Please try again.",
+      "email-not-exist": "Sorry, the email address you entered does not exist in our system. Please check and try again."
+    },
+    "reset": {
+      "header": "Reset Password",
+      "success": "Reset Password successful!",
+      "failure": "Reset Password failed. Please try again.",
+      "invalid-token": "The password reset link is either expired or invalid. Please request a new link to reset your password."
     }
   },
   "jobs": {
@@ -291,16 +307,20 @@
       "premium": "Premium",
       "standard": "Standard",
       "basic": "Basic",
-      "free": "Free",
       "month": "Month",
       "get-started": "Get Started",
-      "payment-content": "Paid for {{ packageName }} package: {{ amount }} USD",
+      "current-package": "Current Package",
       "confirmation": {
         "heading": "Are you sure?",
         "sub-heading": "Please confirm if you want to proceed with the payment.",
         "confirm": "Confirm",
         "cancel": "Cancel",
         "cancel-message": "The payment process has been canceled. You will not be charged."
+      },
+      "notify": {
+        "success": "Your plan has been upgraded successfully. Your account has been deducted.",
+        "fail": "Plan upgrade failed. Please try again.",
+        "not-enough-balance": "Unfortunately, you do not have enough balance to complete this transaction."
       },
       "benefit": {
         "unlimited-application-month": "Unlimited job applications per month",

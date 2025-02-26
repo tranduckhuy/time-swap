@@ -83,6 +83,7 @@ export const userRoutes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent,
+    canMatch: [authGuard],
     loadChildren: () =>
       import('./pages/profile/profile.routes').then((mod) => mod.profileRoutes),
   },

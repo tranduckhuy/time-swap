@@ -207,7 +207,7 @@
                 </del>
               </li>
             </ul>
-            <button class="cmn-btn disabled" (click)="packageSelect(3)">
+            <button class="cmn-btn disabled">
               {{ 'home.pricing-plans.get-started' | translate }}
               <i class="bx bx-plus"></i>
             </button>
@@ -263,8 +263,18 @@
                 }}
               </li>
             </ul>
-            <button class="cmn-btn" (click)="packageSelect(2)">
-              {{ 'home.pricing-plans.get-started' | translate }}
+            <button
+              [class.cmn-btn]="true"
+              [class.disabled]="
+                user()?.subscriptionPlan === 1 || user()?.subscriptionPlan === 2
+              "
+              (click)="packageSelect(1)"
+            >
+              {{
+                user()?.subscriptionPlan === 1
+                  ? ('home.pricing-plans.current-package' | translate)
+                  : ('home.pricing-plans.get-started' | translate)
+              }}
               <i class="bx bx-plus"></i>
             </button>
           </div>
@@ -322,8 +332,16 @@
                 }}
               </li>
             </ul>
-            <button class="cmn-btn" (click)="packageSelect(1)">
-              {{ 'home.pricing-plans.get-started' | translate }}
+            <button
+              [class.cmn-btn]="true"
+              [class.disabled]="user()?.subscriptionPlan === 2"
+              (click)="packageSelect(2)"
+            >
+              {{
+                user()?.subscriptionPlan === 2
+                  ? ('home.pricing-plans.current-package' | translate)
+                  : ('home.pricing-plans.get-started' | translate)
+              }}
               <i class="bx bx-plus"></i>
             </button>
           </div>

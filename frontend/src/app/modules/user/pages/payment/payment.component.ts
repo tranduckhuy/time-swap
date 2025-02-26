@@ -100,7 +100,9 @@ export class PaymentComponent implements OnInit {
       paymentContent: this.form.value.paymentContent,
       paymentMethodId: this.form.value.paymentMethodId,
     };
-    const subscription = this.paymentService.checkoutPayment(req).subscribe();
+    const subscription = this.paymentService
+      .handlingTransaction(req)
+      .subscribe();
 
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }

@@ -5,6 +5,8 @@ export const SUCCESS_CODE = 1000;
 // ? Auth Code
 export const REGISTER_CONFIRM_SUCCESS_CODE = 1001;
 export const LOGIN_SUCCESS_CODE = 1002;
+export const FORGOT_PASSWORD_SUCCESS_CODE = 1003;
+export const RESET_PASSWORD_SUCCESS_CODE = 1004;
 
 // * =========================== ERROR =========================== */
 // ? Common Code
@@ -16,6 +18,7 @@ export const REGISTER_FAILED_CODE = 2003;
 export const USER_NOT_EXIST_CODE = 2004;
 export const NOT_CONFIRM_CODE = 2005;
 export const INVALID_CREDENTIAL_CODE = 2006;
+export const INVALID_TOKEN = 2007;
 export const TOKEN_EXPIRED_CODE = 2008;
 
 // ? Jobs Code
