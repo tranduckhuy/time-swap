@@ -3,4 +3,5 @@ export const environment = {
   apiAuthBaseUrl: process.env['API_AUTH_BASE_URL'] || '',
   apiBaseUrl: process.env['API_BASE_URL'] || '',
   authClientUrl: process.env['AUTH_CLIENT_URL'],
+  resetClientUrl: process.env['RESET_CLIENT_URL'],
 };

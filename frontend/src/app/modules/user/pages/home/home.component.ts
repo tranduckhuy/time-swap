@@ -19,6 +19,7 @@ import { NiceSelectComponent } from '../../../../shared/components/nice-select/n
 import type {
   PaymentRequestModel,
   PayOsReturnRequestModel,
+  SubscriptionPlanRequestModel,
   VnPayReturnRequestModel,
 } from '../../../../shared/models/api/request/payment-request.model';
 
@@ -36,6 +37,7 @@ import {
 
 import { PaymentService } from '../payment/payment.service';
 import { MultiLanguageService } from '../../../../shared/services/multi-language.service';
+import { ProfileService } from '../profile/profile.service';
 
 @Component({
   selector: 'app-home',
@@ -52,6 +54,7 @@ import { MultiLanguageService } from '../../../../shared/services/multi-language
 })
 export class HomeComponent implements OnInit {
   private readonly paymentService = inject(PaymentService);
+  private readonly profileService = inject(ProfileService);
   private readonly multiLanguageService = inject(MultiLanguageService);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
@@ -65,6 +68,8 @@ export class HomeComponent implements OnInit {
     this.multiLanguageService.getTranslatedLang('home.banner.categories.other'),
   ];
   industriesSignal = signal<string[]>(this.industries);
+
+  user = this.profileService.user;
 
   lang = computed(() =>
     this.multiLanguageService.language() === VIETNAMESE ? VIETNAMESE : ENGLISH,
@@ -127,43 +132,27 @@ export class HomeComponent implements OnInit {
 
   private processPayment(packagePurchase: number) {
     let amount: number;
-    let packageName: string;
 
     switch (packagePurchase) {
       case 1:
-        amount = PREMIUM_PRICE;
-        packageName = this.multiLanguageService.getTranslatedLang(
-          'home.pricing-plans.premium',
-        );
+        amount = STANDARD_PRICE;
         break;
       case 2:
-        amount = STANDARD_PRICE;
-        packageName = this.multiLanguageService.getTranslatedLang(
-          'home.pricing-plans.advanced',
-        );
+        amount = PREMIUM_PRICE;
         break;
       default:
         amount = ZERO;
-        packageName = this.multiLanguageService.getTranslatedLang(
-          'home.pricing-plans.basic',
-        );
-        break;
     }
 
-    const paymentContent: string = this.multiLanguageService.getTranslatedLang(
-      'home.pricing-plans.payment-content',
-      {
-        packageName,
-        amount,
-      },
-    );
-    const req: PaymentRequestModel = {
-      amount: amount,
-      paymentContent: paymentContent,
-      paymentMethodId: 1,
+    const req: SubscriptionPlanRequestModel = {
+      subscriptionPlan: packagePurchase,
     };
 
-    const subscription = this.paymentService.checkoutPayment(req).subscribe();
+    const subscription = this.paymentService
+      .changeSubscriptionPlan(req)
+      .subscribe({
+        next: () => {},
+      });
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
