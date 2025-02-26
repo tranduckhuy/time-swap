@@ -8,7 +8,6 @@ using TimeSwap.Application.Mappings;
 using TimeSwap.Auth.Mappings;
 using TimeSwap.Auth.Models.Requests;
 using TimeSwap.Shared;
-using TimeSwap.Shared.Constants;
 
 namespace TimeSwap.Auth.Controllers
 {
@@ -32,12 +31,7 @@ namespace TimeSwap.Auth.Controllers
 
             if (userId == null)
             {
-                return Unauthorized(new ApiResponse<object>
-                {
-                    StatusCode = (int)Shared.Constants.StatusCode.InvalidToken,
-                    Message = ResponseMessages.GetMessage(Shared.Constants.StatusCode.InvalidToken),
-                    Errors = ["User id does not exist in the claims. Please login again."]
-                });
+                return UnauthorizedUserTokenResponse();
             }
 
             return await HandleRequestWithResponseAsync(Guid.Parse(userId), _userService.GetUserProfileAsync);
@@ -50,24 +44,14 @@ namespace TimeSwap.Auth.Controllers
 
             if (request == null)
             {
-                return BadRequest(new ApiResponse<object>
-                {
-                    StatusCode = (int)Shared.Constants.StatusCode.ModelInvalid,
-                    Message = ResponseMessages.GetMessage(Shared.Constants.StatusCode.ModelInvalid),
-                    Errors = ["The request body does not contain required fields or invalid data"]
-                });
+                return NullRequestDataResponse();
             }
 
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
             if (userId == null)
             {
-                return Unauthorized(new ApiResponse<object>
-                {
-                    StatusCode = (int)Shared.Constants.StatusCode.InvalidToken,
-                    Message = ResponseMessages.GetMessage(Shared.Constants.StatusCode.InvalidToken),
-                    Errors = ["User id does not exist in the claims. Please login again."]
-                });
+                return UnauthorizedUserTokenResponse();
             }
 
             var dto = AppMapper<AuthMappingProfile>.Mapper.Map<UpdateUserProfileRequestDto>(request);
@@ -75,6 +59,32 @@ namespace TimeSwap.Auth.Controllers
             dto.UserId = Guid.Parse(userId);
 
             return await HandleRequestAsync(dto, _userService.UpdateUserProfileAsync);
+        }
+
+        [HttpPut("subscription")]
+        [Authorize]
+        public async Task<IActionResult> UpdateSubscriptionAsync([FromBody] UpdateSubscriptionRequest request)
+        {
+            if (request == null)
+            {
+                return NullRequestDataResponse();
+            }
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+            {
+                return UnauthorizedUserTokenResponse();
+            }
+            var dto = AppMapper<AuthMappingProfile>.Mapper.Map<UpdateSubscriptionRequestDto>(request);
+            dto.UserId = Guid.Parse(userId);
+            return await HandleRequestAsync(dto, _userService.UpdateSubscriptionAsync);
+        }
+
+        // Get user profile by id
+        [HttpGet("{userId}")]
+        [Authorize]
+        public async Task<IActionResult> GetUserProfileByIdAsync(Guid userId)
+        {
+            return await HandleRequestWithResponseAsync(userId, _userService.GetUserProfileAsync);
         }
     }
 }

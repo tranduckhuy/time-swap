@@ -62,8 +62,15 @@ export class PaymentComponent implements OnInit {
         '',
         [Validators.required, Validators.pattern(/(84|0[35789])+(\d{8})\b/g)],
       ],
-      amount: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-      paymentContent: [''],
+      amount: [
+        '',
+        [
+          Validators.required,
+          Validators.min(2000),
+          Validators.pattern('^[0-9]*$'),
+        ],
+      ],
+      paymentContent: ['', Validators.required],
       paymentMethodId: ['1', Validators.required],
     });
   }
@@ -93,7 +100,9 @@ export class PaymentComponent implements OnInit {
       paymentContent: this.form.value.paymentContent,
       paymentMethodId: this.form.value.paymentMethodId,
     };
-    const subscription = this.paymentService.checkoutPayment(req).subscribe();
+    const subscription = this.paymentService
+      .handlingTransaction(req)
+      .subscribe();
 
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }

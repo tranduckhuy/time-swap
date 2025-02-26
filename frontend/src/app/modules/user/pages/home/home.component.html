@@ -147,101 +147,11 @@
       </span>
       <h2>{{ 'home.pricing-plans.heading' | translate }}</h2>
     </div>
-    <div class="row">
-      <div class="col-sm-6 col-lg-3">
-        <div class="pricing-item">
-          <div class="top">
-            <h3>{{ 'home.pricing-plans.premium' | translate }}</h3>
-            <span></span>
-          </div>
-          <div class="middle">
-            <h4>
-              <span class="span-left"></span>
-              {{ 500000 | customCurrency: lang() }}/
-              <span class="span-right">
-                {{ 'home.pricing-plans.month' | translate }}
-              </span>
-            </h4>
-          </div>
-          <div class="end">
-            <ul>
-              <li>Unlimited Job Categories</li>
-              <li>Unlimited Job Posting</li>
-              <li>Unlimited proposals</li>
-              <li>Resume database access</li>
-              <li>Individually written job ads</li>
-            </ul>
-            <button class="cmn-btn" (click)="packageSelect(1)">
-              {{ 'home.pricing-plans.get-started' | translate }}
-              <i class="bx bx-plus"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6 col-lg-3">
-        <div class="pricing-item">
-          <div class="top">
-            <h3>{{ 'home.pricing-plans.standard' | translate }}</h3>
-            <span></span>
-          </div>
-          <div class="middle">
-            <h4>
-              <span class="span-left"></span>
-              {{ 300000 | customCurrency: lang() }}/
-              <span class="span-right">
-                {{ 'home.pricing-plans.month' | translate }}
-              </span>
-            </h4>
-          </div>
-          <div class="end">
-            <ul>
-              <li>400 Job Posting</li>
-              <li>90 Job Categories</li>
-              <li>Unlimited proposals</li>
-              <li>Resume database access</li>
-              <li>Individually written job ads</li>
-            </ul>
-            <button class="cmn-btn" (click)="packageSelect(2)">
-              {{ 'home.pricing-plans.get-started' | translate }}
-              <i class="bx bx-plus"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6 col-lg-3">
+    <div class="row" style="padding: 0 130px">
+      <div class="col-sm-6 col-lg-4">
         <div class="pricing-item">
           <div class="top">
             <h3>{{ 'home.pricing-plans.basic' | translate }}</h3>
-            <span></span>
-          </div>
-          <div class="middle">
-            <h4>
-              <span class="span-left"></span>
-              {{ 100000 | customCurrency: lang() }}/
-              <span class="span-right">
-                {{ 'home.pricing-plans.month' | translate }}
-              </span>
-            </h4>
-          </div>
-          <div class="end">
-            <ul>
-              <li>50 Job Posting</li>
-              <li>20 Job Categories</li>
-              <li>Unlimited proposals</li>
-              <li>Resume database access</li>
-              <li><del>Individually written job ads</del></li>
-            </ul>
-            <button class="cmn-btn" (click)="packageSelect(3)">
-              {{ 'home.pricing-plans.get-started' | translate }}
-              <i class="bx bx-plus"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-6 col-lg-3">
-        <div class="pricing-item">
-          <div class="top">
-            <h3>{{ 'home.pricing-plans.free' | translate }}</h3>
             <span></span>
           </div>
           <div class="middle">
@@ -255,14 +165,183 @@
           </div>
           <div class="end">
             <ul>
-              <li>10 Job Posting</li>
-              <li>15 Job Categories</li>
-              <li>Unlimited proposals</li>
-              <li><del>Resume database access</del></li>
-              <li><del>Individually written job ads</del></li>
+              <li>
+                {{
+                  'home.pricing-plans.benefit.unlimited-application-month'
+                    | translate
+                }}
+              </li>
+              <li>
+                {{
+                  'home.pricing-plans.benefit.basic.3-post-month' | translate
+                }}
+              </li>
+              <li>
+                <del>
+                  {{
+                    'home.pricing-plans.benefit.profile-priority' | translate
+                  }}
+                </del>
+              </li>
+              <li>
+                <del>
+                  {{
+                    'home.pricing-plans.benefit.job-listing-priority'
+                      | translate
+                  }}
+                </del>
+              </li>
+              <li>
+                <del>
+                  {{
+                    'home.pricing-plans.benefit.earn-reward-application'
+                      | translate
+                  }}
+                </del>
+              </li>
+              <li>
+                <del>
+                  {{
+                    'home.pricing-plans.benefit.earn-reward-posting' | translate
+                  }}
+                </del>
+              </li>
             </ul>
-            <button class="cmn-btn disabled" (click)="packageSelect(4)">
+            <button class="cmn-btn disabled">
               {{ 'home.pricing-plans.get-started' | translate }}
+              <i class="bx bx-plus"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <div class="pricing-item">
+          <div class="top">
+            <h3>{{ 'home.pricing-plans.standard' | translate }}</h3>
+            <span></span>
+          </div>
+          <div class="middle">
+            <h4>
+              <span class="span-left"></span>
+              {{ 199000 | customCurrency: lang() }}/
+              <span class="span-right">
+                {{ 'home.pricing-plans.month' | translate }}
+              </span>
+            </h4>
+          </div>
+          <div class="end">
+            <ul>
+              <li>
+                {{
+                  'home.pricing-plans.benefit.unlimited-application-month'
+                    | translate
+                }}
+              </li>
+              <li>
+                {{
+                  'home.pricing-plans.benefit.standard.10-post-month'
+                    | translate
+                }}
+              </li>
+              <li>
+                {{ 'home.pricing-plans.benefit.profile-priority' | translate }}
+              </li>
+              <li>
+                {{
+                  'home.pricing-plans.benefit.job-listing-priority' | translate
+                }}
+              </li>
+              <li>
+                {{
+                  'home.pricing-plans.benefit.earn-reward-application'
+                    | translate
+                }}
+              </li>
+              <li>
+                {{
+                  'home.pricing-plans.benefit.earn-reward-posting' | translate
+                }}
+              </li>
+            </ul>
+            <button
+              [class.cmn-btn]="true"
+              [class.disabled]="
+                user()?.subscriptionPlan === 1 || user()?.subscriptionPlan === 2
+              "
+              (click)="packageSelect(1)"
+            >
+              {{
+                user()?.subscriptionPlan === 1
+                  ? ('home.pricing-plans.current-package' | translate)
+                  : ('home.pricing-plans.get-started' | translate)
+              }}
+              <i class="bx bx-plus"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <div class="pricing-item">
+          <div class="top">
+            <h3>{{ 'home.pricing-plans.premium' | translate }}</h3>
+            <span></span>
+          </div>
+          <div class="middle">
+            <h4>
+              <span class="span-left"></span>
+              {{ 299000 | customCurrency: lang() }}/
+              <span class="span-right">
+                {{ 'home.pricing-plans.month' | translate }}
+              </span>
+            </h4>
+          </div>
+          <div class="end">
+            <ul>
+              <li>
+                {{
+                  'home.pricing-plans.benefit.unlimited-application-month'
+                    | translate
+                }}
+              </li>
+              <li>
+                {{
+                  'home.pricing-plans.benefit.unlimited-post-month' | translate
+                }}
+              </li>
+              <li>
+                {{
+                  'home.pricing-plans.benefit.premium.profile-priority-mix'
+                    | translate
+                }}
+              </li>
+              <li>
+                {{
+                  'home.pricing-plans.benefit.premium.job-listing-priority-mix'
+                    | translate
+                }}
+              </li>
+              <li>
+                {{
+                  'home.pricing-plans.benefit.earn-reward-application'
+                    | translate
+                }}
+              </li>
+              <li>
+                {{
+                  'home.pricing-plans.benefit.earn-reward-posting' | translate
+                }}
+              </li>
+            </ul>
+            <button
+              [class.cmn-btn]="true"
+              [class.disabled]="user()?.subscriptionPlan === 2"
+              (click)="packageSelect(2)"
+            >
+              {{
+                user()?.subscriptionPlan === 2
+                  ? ('home.pricing-plans.current-package' | translate)
+                  : ('home.pricing-plans.get-started' | translate)
+              }}
               <i class="bx bx-plus"></i>
             </button>
           </div>

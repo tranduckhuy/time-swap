@@ -10,11 +10,7 @@
   <div [class.main-nav]="true" [class.three]="!isHome()">
     <div class="container-fluid">
       <nav class="navbar navbar-expand-md navbar-light">
-        <a
-          [class.navbar-brand]="true"
-          [class.home]="shouldShowLogoHome()"
-          href="#!"
-        >
+        <a [class.navbar-brand]="true" [class.home]="isHome()" href="#!">
           <img src="assets/imgs/logo-1.png" class="logo-one" alt="Logo" />
         </a>
         <div class="navbar-collapse mean-menu" id="navbarSupportedContent">

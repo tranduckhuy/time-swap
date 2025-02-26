@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 using TimeSwap.Application.Authentication.Interfaces;
 using TimeSwap.Application.Authentication.User;
 using TimeSwap.Application.Exceptions.Auth;
+using TimeSwap.Application.Exceptions.User;
 using TimeSwap.Application.Validators;
+using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Exceptions;
 using TimeSwap.Domain.Interfaces.Repositories;
 using TimeSwap.Shared.Constants;
@@ -103,6 +106,86 @@ namespace TimeSwap.Infrastructure.Identity
 
                 await _userRepository.UpdateAsync(userProfile);
             });
+
+            return StatusCode.RequestProcessedSuccessfully;
+        }
+
+
+        public async Task<StatusCode> UpdateSubscriptionAsync(UpdateSubscriptionRequestDto dto)
+        {
+            var user = await _userManager.FindByIdAsync(dto.UserId.ToString()) ?? throw new UserNotExistsException();
+            var userProfile = await _userRepository.GetUserProfileAsync(dto.UserId) ?? throw new UserNotExistsException();
+
+            // Swtich case price plan if # basic subscription plan
+            if (dto.SubscriptionPlan != SubscriptionPlan.Basic)
+            {
+                var pricePlan = dto.SubscriptionPlan switch
+                {
+                    // Standard plan 200,000 VND
+                    SubscriptionPlan.Standard => 200000,
+
+                    // Premium plan 300,000 VND
+                    SubscriptionPlan.Premium => 300000,
+                    _ => throw new AppException(StatusCode.RequestProcessingFailed, ["Invalid subscription plan"])
+                };
+
+                if (userProfile.Balance < pricePlan)
+                {
+                    throw new UserNotEnoughBalanceException();
+                }
+
+                userProfile.Balance -= pricePlan;
+                userProfile.SubscriptionExpiryDate = DateTime.UtcNow.AddMonths(1);
+
+
+                var subscriptionExpiryClaim = new Claim("SubscriptionExpiryDate", userProfile.SubscriptionExpiryDate.ToString()!);
+                await AddOrReplaceClaimAsync(user, subscriptionExpiryClaim);
+            } else
+            {
+                var claims = await _userManager.GetClaimsAsync(user);
+                var claimToRemove = claims.FirstOrDefault(c => c.Type == "SubscriptionExpiryDate");
+                if (claimToRemove != null)
+                {
+                    await _userManager.RemoveClaimAsync(user, claimToRemove);
+                }
+
+                userProfile.SubscriptionExpiryDate = DateTime.MaxValue;
+            }
+
+            userProfile.CurrentSubscription = dto.SubscriptionPlan;
+            var subscriptionClaim = new Claim("SubscriptionPlan", dto.SubscriptionPlan.ToString());
+
+            await AddOrReplaceClaimAsync(user, subscriptionClaim);
+
+            await _userRepository.UpdateAsync(userProfile);
+            return StatusCode.RequestProcessedSuccessfully;
+        }
+
+        private async Task AddOrReplaceClaimAsync(ApplicationUser user, Claim newClaim)
+        {
+            var claims = await _userManager.GetClaimsAsync(user);
+            var existingClaim = claims.FirstOrDefault(c => c.Type == newClaim.Type);
+
+            if (existingClaim != null)
+            {
+                await _userManager.ReplaceClaimAsync(user, existingClaim, newClaim);
+            }
+            else
+            {
+                await _userManager.AddClaimAsync(user, newClaim);
+            }
+        }
+
+        public async Task<StatusCode> AddUserProfileAsync(AddUserProfileRequestDto request)
+        {
+            var user = new UserProfile
+            {
+                Id = request.UserId,
+                Email = request.Email,
+                FullName = request.FullName
+            };
+
+            await _userRepository.AddAsync(user);
 
             return StatusCode.RequestProcessedSuccessfully;
         }

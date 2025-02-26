@@ -16,9 +16,11 @@ import { CustomCurrencyPipe } from '../../../../shared/pipes/custom-currency.pip
 import { ToastComponent } from '../../../../shared/components/toast/toast.component';
 import { NiceSelectComponent } from '../../../../shared/components/nice-select/nice-select.component';
 
-import {
+import type {
   PaymentRequestModel,
-  PaymentReturnRequestModel,
+  PayOsReturnRequestModel,
+  SubscriptionPlanRequestModel,
+  VnPayReturnRequestModel,
 } from '../../../../shared/models/api/request/payment-request.model';
 
 import { ZERO } from '../../../../shared/constants/common-constants';
@@ -28,13 +30,14 @@ import {
 } from '../../../../shared/constants/multi-lang-constants';
 import {
   STANDARD_PRICE,
-  BASIC_PRICE,
   PREMIUM_PRICE,
-  REQUIRED_PARAMS,
+  REQUIRED_VN_PAY_PARAMS,
+  REQUIRED_PAY_OS_PARAMS,
 } from '../../../../shared/constants/subscription-constant';
 
 import { PaymentService } from '../payment/payment.service';
 import { MultiLanguageService } from '../../../../shared/services/multi-language.service';
+import { ProfileService } from '../profile/profile.service';
 
 @Component({
   selector: 'app-home',
@@ -51,6 +54,7 @@ import { MultiLanguageService } from '../../../../shared/services/multi-language
 })
 export class HomeComponent implements OnInit {
   private readonly paymentService = inject(PaymentService);
+  private readonly profileService = inject(ProfileService);
   private readonly multiLanguageService = inject(MultiLanguageService);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
@@ -65,14 +69,30 @@ export class HomeComponent implements OnInit {
   ];
   industriesSignal = signal<string[]>(this.industries);
 
+  user = this.profileService.user;
+
   lang = computed(() =>
     this.multiLanguageService.language() === VIETNAMESE ? VIETNAMESE : ENGLISH,
   );
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params) => {
-      if (this.hasRequiredParams(params)) {
-        this.processPaymentFromUrl(params);
+      if (this.hasRequiredParams(params, REQUIRED_VN_PAY_PARAMS)) {
+        this.processPaymentFromUrl(params, REQUIRED_VN_PAY_PARAMS, (req) => {
+          const subscription = this.paymentService
+            .processVnPayReturn(req as VnPayReturnRequestModel)
+            .subscribe();
+          this.destroyRef.onDestroy(() => subscription.unsubscribe());
+        });
+      }
+
+      if (this.hasRequiredParams(params, REQUIRED_PAY_OS_PARAMS)) {
+        this.processPaymentFromUrl(params, REQUIRED_PAY_OS_PARAMS, (req) => {
+          const subscription = this.paymentService
+            .processPayOsReturn(req as PayOsReturnRequestModel)
+            .subscribe();
+          this.destroyRef.onDestroy(() => subscription.unsubscribe());
+        });
       }
     });
   }
@@ -102,7 +122,7 @@ export class HomeComponent implements OnInit {
         Swal.fire({
           title: 'Cancelled',
           text: this.multiLanguageService.getTranslatedLang(
-            'home.pricing-plans.cancel-message',
+            'home.pricing-plans.confirmation.cancel-message',
           ),
           icon: 'error',
         });
@@ -111,68 +131,34 @@ export class HomeComponent implements OnInit {
   }
 
   private processPayment(packagePurchase: number) {
-    let amount: number;
-    let packageName: string;
-
-    switch (packagePurchase) {
-      case 1:
-        amount = PREMIUM_PRICE;
-        packageName = this.multiLanguageService.getTranslatedLang(
-          'home.pricing-plans.premium',
-        );
-        break;
-      case 2:
-        amount = STANDARD_PRICE;
-        packageName = this.multiLanguageService.getTranslatedLang(
-          'home.pricing-plans.advanced',
-        );
-        break;
-      case 3:
-        amount = BASIC_PRICE;
-        packageName = this.multiLanguageService.getTranslatedLang(
-          'home.pricing-plans.basic',
-        );
-        break;
-      default:
-        amount = ZERO;
-        packageName = this.multiLanguageService.getTranslatedLang(
-          'home.pricing-plans.free',
-        );
-        break;
-    }
-
-    const paymentContent: string = this.multiLanguageService.getTranslatedLang(
-      'home.pricing-plans.payment-content',
-      {
-        packageName,
-        amount,
-      },
-    );
-    const req: PaymentRequestModel = {
-      amount: amount,
-      paymentContent: paymentContent,
-      paymentMethodId: 1,
+    const req: SubscriptionPlanRequestModel = {
+      subscriptionPlan: packagePurchase,
     };
 
-    const subscription = this.paymentService.checkoutPayment(req).subscribe();
+    const subscription = this.paymentService
+      .changeSubscriptionPlan(req)
+      .subscribe({
+        next: () => {},
+      });
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
-  private hasRequiredParams(params: any): boolean {
-    return REQUIRED_PARAMS.some((param) => params[param] !== undefined);
+  private hasRequiredParams(params: any, requiredParams: string[]): boolean {
+    return requiredParams.some((param) => params[param] !== undefined);
   }
 
-  private processPaymentFromUrl(params: any) {
+  private processPaymentFromUrl(
+    params: any,
+    requiredParams: string[],
+    processFunction: (req: any) => void,
+  ) {
     const req: Record<string, any> = {};
-    REQUIRED_PARAMS.forEach((param) => {
+    requiredParams.forEach((param) => {
       if (params[param] !== undefined) {
         req[param] = params[param];
       }
     });
 
-    const subscription = this.paymentService
-      .processReturn(req as PaymentReturnRequestModel)
-      .subscribe();
-    this.destroyRef.onDestroy(() => subscription.unsubscribe());
+    processFunction(req);
   }
 }

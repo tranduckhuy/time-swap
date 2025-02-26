@@ -3,7 +3,9 @@
     "buttons": {
       "auth": {
         "login": "Đăng nhập",
-        "register": "Đăng ký"
+        "register": "Đăng ký",
+        "forgot": "Tiếp tục",
+        "reset": "Thay đổi mật khẩu"
       },
       "search": "Tìm kiếm theo bộ lọc"
     },
@@ -11,6 +13,7 @@
       "errors": {
         "required": "{{ name }} là bắt buộc.",
         "email": "Vui lòng nhập địa chỉ email hợp lệ.",
+        "min-value": "Vui lòng nhập giá trị lớn hơn hoặc bằng {{ minValue }}.",
         "min-length": "{{ name }} phải có ít nhất {{ requiredLength }} ký tự.",
         "pattern": "{{ name }} không hợp lệ.",
         "confirmPassword": "Mật khẩu không khớp."
@@ -75,6 +78,8 @@
     "password": "Mật khẩu",
     "login": {
       "header": "Đăng nhập",
+      "remember": "Ghi nhớ tôi",
+      "forgot-link": "Quên mật khẩu?",
       "link-message": "Bạn đã có tài khoản chưa?",
       "link": "Đăng ký ngay!",
       "success": "Bạn đã đăng nhập thành công!",
@@ -98,8 +103,17 @@
       "failure": "Đăng ký không thành công. Vui lòng thử lại.",
       "email-exist": "Đăng ký không thành công. Email này đã được sử dụng. Vui lòng sử dụng email khác."
     },
-    "logout": {
-      "success": "Bạn đã đăng xuất thành công!"
+    "forgot": {
+      "header": "Quên Mật Khẩu",
+      "success": "Thành công. Hãy kiểm tra hộp thư đến để xác nhận email.",
+      "failure": "Không thành công. Vui lòng thử lại.",
+      "email-not-exist": "Xin lỗi, địa chỉ email bạn nhập không tồn tại trong hệ thống. Vui lòng kiểm tra và thử lại."
+    },
+    "reset": {
+      "header": "Thay Đổi Mật Khẩu",
+      "success": "Thay Đổi Mật Khẩu Thành công!",
+      "failure": "Thay Đổi Mật Khẩu Không thành công. Vui lòng thử lại.",
+      "invalid-token": "Liên kết thay đổi mật khẩu đã hết hạn hoặc không hợp lệ. Vui lòng yêu cầu một liên kết mới để đặt lại mật khẩu."
     }
   },
   "jobs": {
@@ -293,16 +307,38 @@
       "premium": "Gói cao cấp",
       "standard": "Gói tiêu chuẩn",
       "basic": "Gói cơ bản",
-      "free": "Gói miễn phí",
       "month": "Tháng",
       "get-started": "Bắt đầu",
-      "payment-content": "Thanh toán cho {{ packageName }}: {{ amount }} VNĐ",
+      "current-package": "Gói hiện tại",
       "confirmation": {
         "heading": "Bạn có chắc chắn không?",
         "sub-heading": "Vui lòng xác nhận nếu bạn muốn tiếp tục thanh toán.",
         "confirm": "Xác nhận",
         "cancel": "Hủy",
         "cancel-message": "Quá trình thanh toán đã bị hủy. Bạn sẽ không bị tính phí."
+      },
+      "notify": {
+        "success": "Gói của bạn đã nâng cấp thành công. Tài khoản của bạn đã bị trừ tiền.",
+        "fail": "Nâng cấp gói không thành công. Vui lòng thử lại.",
+        "not-enough-balance": "Rất tiếc, bạn không đủ số dư trong tài khoản để thực hiện giao dịch này."
+      },
+      "benefit": {
+        "unlimited-application-month": "Không giới hạn số lượng đơn xin việc",
+        "unlimited-post-month": "Đăng tin việc làm không giới hạn",
+        "profile-priority": "Ưu tiên hiển thị hồ sơ lên top",
+        "job-listing-priority": "Ưu tiên hiển thị công việc đã đăng lên top",
+        "earn-reward-application": "Nhận điểm thưởng cho các công việc đã hoàn thành",
+        "earn-reward-posting": "Nhận điểm thưởng cho việc tuyển dụng thông qua TimeSwap",
+        "basic": {
+          "3-post-month": "Đăng 3 công việc mỗi tháng"
+        },
+        "standard": {
+          "10-post-month": "Đăng 10 công việc mỗi tháng"
+        },
+        "premium": {
+          "profile-priority-mix": "Ưu tiên hồ sơ + Ứng viên nổi bật",
+          "job-listing-priority-mix": "Ưu tiên công việc đã đăng + Việc làm đang hot"
+        }
       }
     },
     "jobs": {

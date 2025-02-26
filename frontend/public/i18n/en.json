@@ -3,7 +3,9 @@
     "buttons": {
       "auth": {
         "login": "Login",
-        "register": "Register"
+        "register": "Register",
+        "forgot": "Continue",
+        "reset": "Reset Password"
       },
       "search": "Search By Filter"
     },
@@ -11,6 +13,7 @@
       "errors": {
         "required": "{{ name }} is required.",
         "email": "Please enter a valid email address.",
+        "min-value": "Please enter a value of at least {{ minValue }}.",
         "min-length": "{{ name }} must be at least {{ requiredLength }} characters long.",
         "pattern": "{{ name }} is not valid.",
         "confirmPassword": "Passwords do not match."
@@ -75,6 +78,8 @@
     "password": "Password",
     "login": {
       "header": "Login",
+      "remember": "Remember Me",
+      "forgot-link": "Forgot Password?",
       "link-message": "Do you have an account?",
       "link": "Register now!",
       "success": "Login successful!",
@@ -97,6 +102,18 @@
       "success": "Registration successful. Please check your inbox to confirm your email.",
       "failure": "Register failed. Please try again.",
       "email-exist": "Registration failed. This email is already in use. Please use a different email."
+    },
+    "forgot": {
+      "header": "Forgot Password",
+      "success": "Successfully. Please check your inbox to confirm your email.",
+      "failure": "Failed. Please try again.",
+      "email-not-exist": "Sorry, the email address you entered does not exist in our system. Please check and try again."
+    },
+    "reset": {
+      "header": "Reset Password",
+      "success": "Reset Password successful!",
+      "failure": "Reset Password failed. Please try again.",
+      "invalid-token": "The password reset link is either expired or invalid. Please request a new link to reset your password."
     }
   },
   "jobs": {
@@ -290,16 +307,38 @@
       "premium": "Premium",
       "standard": "Standard",
       "basic": "Basic",
-      "free": "Free",
       "month": "Month",
       "get-started": "Get Started",
-      "payment-content": "Paid for {{ packageName }} package: {{ amount }} USD",
+      "current-package": "Current Package",
       "confirmation": {
         "heading": "Are you sure?",
         "sub-heading": "Please confirm if you want to proceed with the payment.",
         "confirm": "Confirm",
         "cancel": "Cancel",
         "cancel-message": "The payment process has been canceled. You will not be charged."
+      },
+      "notify": {
+        "success": "Your plan has been upgraded successfully. Your account has been deducted.",
+        "fail": "Plan upgrade failed. Please try again.",
+        "not-enough-balance": "Unfortunately, you do not have enough balance to complete this transaction."
+      },
+      "benefit": {
+        "unlimited-application-month": "Unlimited job applications per month",
+        "unlimited-post-month": "Unlimited job postings per month",
+        "profile-priority": "Profile priority",
+        "job-listing-priority": "Job listing priority",
+        "earn-reward-application": "Earn reward points for completed jobs",
+        "earn-reward-posting": "Earn reward points for hiring via TimeSwap",
+        "basic": {
+          "3-post-month": "3 job postings per month"
+        },
+        "standard": {
+          "10-post-month": "10 job postings per month"
+        },
+        "premium": {
+          "profile-priority-mix": "Profile priority + Featured candidates",
+          "job-listing-priority-mix": "Job listing priority + Hot jobs"
+        }
       }
     },
     "jobs": {

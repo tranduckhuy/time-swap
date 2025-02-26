@@ -102,9 +102,20 @@
                 name="paymentContent"
                 cols="30"
                 rows="8"
-                class="form-control"
+                [class.form-control]="true"
+                [class.invalid]="isControlInvalid('paymentContent')"
                 formControlName="paymentContent"
               ></textarea>
+              <div class="help-block with-errors">
+                {{
+                  isControlInvalid('paymentContent')
+                    ? getMessage(
+                        'paymentContent',
+                        'payment.form.error-name.content'
+                      )
+                    : ''
+                }}
+              </div>
             </div>
           </div>
 
@@ -114,12 +125,29 @@
                 type="radio"
                 class="payment-method-radio"
                 name="paymentMethodId"
-                id="vn-pay"
+                id="payos"
                 value="1"
                 style="display: none"
                 formControlName="paymentMethodId"
               />
-              <label class="payment-method-label" for="vn-pay">
+              <label class="payment-method-label" for="payos">
+                <img
+                  src="assets/imgs/payment/payos-logo.svg"
+                  alt="Payment Method: PayOS"
+                />
+              </label>
+            </div>
+            <div class="payment-method-item">
+              <input
+                type="radio"
+                class="payment-method-radio"
+                name="paymentMethodId"
+                id="vnpay"
+                value="2"
+                style="display: none"
+                formControlName="paymentMethodId"
+              />
+              <label class="payment-method-label" for="vnpay">
                 <img
                   src="assets/imgs/payment/vnpay-logo.svg"
                   alt="Payment Method: VNPay"
@@ -132,7 +160,7 @@
                 class="payment-method-radio"
                 name="paymentMethodId"
                 id="momo"
-                value="2"
+                value="3"
                 style="display: none"
                 formControlName="paymentMethodId"
               />
@@ -149,7 +177,7 @@
                 class="payment-method-radio"
                 name="paymentMethodId"
                 id="zalo-pay"
-                value="3"
+                value="4"
                 style="display: none"
                 formControlName="paymentMethodId"
               />
