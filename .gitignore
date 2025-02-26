@@ -185,3 +185,5 @@ frontend/.env
 backend/TimeSwap.Api/appsettings.json
 
 backend/TimeSwap.Auth/appsettings.json
+backend/TimeSwap.Api/appsettings.Development.json
+backend/TimeSwap.Auth/appsettings.Development.json
