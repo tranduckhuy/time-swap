@@ -30,9 +30,10 @@ namespace TimeSwap.Api.Controllers
         [HttpGet("{jobPostId}")]
         [Authorize]
         [ProducesResponseType(typeof(ApiResponse<IEnumerable<JobApplicantResponse>>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetApplicantsByJobPostId([FromQuery] JobApplicantSpecParam jobApplicantSpecParam)
+        public async Task<IActionResult> GetApplicantsByJobPostId(Guid jobPostId, [FromQuery] JobApplicantSpecParam jobApplicantSpecParam)
         {
             var query = new GetJobApplicantsQuery(jobApplicantSpecParam);
+            query.JobApplicantSpecParam.JobPostId = jobPostId;
 
             return await ExecuteAsync<GetJobApplicantsQuery, Pagination<JobApplicantResponse>>(query);
         }
