@@ -1,8 +1,12 @@
-﻿namespace TimeSwap.Domain.Specs.Job
+﻿using System.Text.Json.Serialization;
+
+namespace TimeSwap.Domain.Specs.Job
 {
     public class JobApplicantSpecParam : BaseSpecParam
     {
+        [JsonIgnore]
         public Guid JobPostId { get; set; }
+
         public string? Search { get; set; }
         public string Sort { get; set; } = "AppliedAt";
         public int CategoryId { get; set; }
