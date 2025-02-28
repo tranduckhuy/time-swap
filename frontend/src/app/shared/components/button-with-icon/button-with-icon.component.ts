@@ -1,13 +1,19 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'app-button-icon',
   standalone: true,
   imports: [],
   templateUrl: './button-with-icon.component.html',
-  styleUrl: './button-with-icon.component.css'
+  styleUrl: './button-with-icon.component.css',
 })
 export class ButtonWithIconComponent {
   title = input.required<string>();
   icon = input.required<string>();
+
+  clickBtn = output();
+
+  onClick() {
+    this.clickBtn.emit();
+  }
 }

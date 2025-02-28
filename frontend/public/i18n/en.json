@@ -177,6 +177,7 @@
     }
   },
   "job-detail": {
+    "apply": "Apply",
     "save": "Save",
     "share": "Share",
     "report": "Report",
@@ -192,6 +193,7 @@
       "industry": "Industry",
       "category": "Category",
       "posted-date": "Posted Date",
+      "due-date": "Due Date",
       "applied": "Applied",
       "applicants": "Applicant(s)"
     },
@@ -199,6 +201,11 @@
       "title": "Poster Information",
       "name": "Poster Name",
       "email": "Email"
+    },
+    "notify": {
+      "success": "Application successful! Please wait for the employer to confirm your job.",
+      "failed": "Application failed! Please try again later.",
+      "apply-own-job": "You cannot apply for your own job posting."
     }
   },
   "profile": {

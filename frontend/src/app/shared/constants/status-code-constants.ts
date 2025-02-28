@@ -26,6 +26,7 @@ export const USER_NOT_ENOUGH_BALANCE = 2023;
 export const DUE_DATE_START_FAILED = 2024;
 export const DUE_DATE_CURRENT_FAILED = 2025;
 export const FEE_GREATER_THAN_FIFTY = 2026;
+export const USER_APPLIED_TO_OWN_JOB_POST = 2031;
 
 // ? Payment Code
 export const PAYMENT_TIMEOUT = 2042;

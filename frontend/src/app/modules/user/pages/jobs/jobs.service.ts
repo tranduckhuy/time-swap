@@ -7,12 +7,12 @@ import { environment } from '../../../../../environments/environment';
 
 import { createHttpParams } from '../../../../shared/utils/request-utils';
 
-import { 
-  SUCCESS_CODE, 
-  DUE_DATE_CURRENT_FAILED, 
-  FEE_GREATER_THAN_FIFTY, 
-  DUE_DATE_START_FAILED, 
-  USER_NOT_ENOUGH_BALANCE 
+import {
+  SUCCESS_CODE,
+  DUE_DATE_CURRENT_FAILED,
+  FEE_GREATER_THAN_FIFTY,
+  DUE_DATE_START_FAILED,
+  USER_NOT_ENOUGH_BALANCE,
 } from '../../../../shared/constants/status-code-constants';
 
 import { ToastHandlingService } from '../../../../shared/services/toast-handling.service';
@@ -20,12 +20,15 @@ import { MultiLanguageService } from '../../../../shared/services/multi-language
 
 import type { BaseResponseModel } from '../../../../shared/models/api/base-response.model';
 import type { JobListRequestModel } from '../../../../shared/models/api/request/job-list-request.model';
-import type { JobDetailResponseModel, JobsResponseModel } from '../../../../shared/models/api/response/jobs-response.model';
+import type {
+  JobDetailResponseModel,
+  JobsResponseModel,
+} from '../../../../shared/models/api/response/jobs-response.model';
 import type { JobPostModel } from '../../../../shared/models/entities/job.model';
 import type { PostJobRequestModel } from '../../../../shared/models/api/request/post-job-request.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class JobsService {
   private httpClient = inject(HttpClient);
@@ -49,82 +52,109 @@ export class JobsService {
   getAllJobs(req: JobListRequestModel): Observable<void> {
     this.isLoadingSignal.set(true);
 
-    return this.httpClient.get<BaseResponseModel<JobsResponseModel>>(this.JOBS_API_URL, { 
-      params: createHttpParams(req) 
-    }).pipe(
-      map(res => {
-        if (res.statusCode === SUCCESS_CODE && res.data) {
-          const { data, count } = res.data;
-          this.jobsSignal.set(data);
-          this.totalJobsSignal.set(count);
-        } else {
+    return this.httpClient
+      .get<BaseResponseModel<JobsResponseModel>>(this.JOBS_API_URL, {
+        params: createHttpParams(req),
+      })
+      .pipe(
+        map((res) => {
+          if (res.statusCode === SUCCESS_CODE && res.data) {
+            const { data, count } = res.data;
+            this.jobsSignal.set(data);
+            this.totalJobsSignal.set(count);
+          } else {
+            this.resetJobs();
+          }
+        }),
+        catchError(() => {
           this.resetJobs();
-        }
-      }),
-      catchError(() => {
-        this.resetJobs();
-        this.toastHandlingService.handleError('jobs.notify.fetch-jobs-failed');
-        return of(void 0);
-      }),
-      finalize(() => this.isLoadingSignal.set(false))
-    );
+          this.toastHandlingService.handleError(
+            'jobs.notify.fetch-jobs-failed',
+          );
+          return of(void 0);
+        }),
+        finalize(() => this.isLoadingSignal.set(false)),
+      );
   }
 
   createJob(req: PostJobRequestModel): Observable<void> {
     this.isLoadingSignal.set(true);
 
-    return this.httpClient.post<BaseResponseModel>(this.JOBS_API_URL, JSON.stringify(req), { 
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).pipe(
-      map(res => {
-        switch (res.statusCode) {
-          case SUCCESS_CODE:
-            this.toastHandlingService.handleSuccess('jobs.notify.create-job.success');
-            break;
-          case USER_NOT_ENOUGH_BALANCE:
-            this.toastHandlingService.handleError('jobs.notify.create-job.due-date-start-failed');
-            break;
-          case DUE_DATE_START_FAILED:
-            this.toastHandlingService.handleError('jobs.notify.create-job.due-date-start-failed');
-            break;
-          case DUE_DATE_CURRENT_FAILED: 
-            this.toastHandlingService.handleError('jobs.notify.create-job.due-date-current-failed');
-            break;
-          case FEE_GREATER_THAN_FIFTY:
-            this.toastHandlingService.handleError('jobs.notify.create-job.fee-greater-than-fifty-thousand');
-            break;
-          default:
-            this.toastHandlingService.handleError('jobs.notify.create-job.failed');
-        }
-      }),
-      catchError((error: HttpErrorResponse) => {
-        if (error.status === 401) {
+    return this.httpClient
+      .post<BaseResponseModel>(this.JOBS_API_URL, JSON.stringify(req), {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .pipe(
+        map((res) => {
+          switch (res.statusCode) {
+            case SUCCESS_CODE:
+              this.toastHandlingService.handleSuccess(
+                'jobs.notify.create-job.success',
+              );
+              break;
+            case USER_NOT_ENOUGH_BALANCE:
+              this.toastHandlingService.handleError(
+                'jobs.notify.create-job.user-not-enough-balance',
+              );
+              break;
+            case DUE_DATE_START_FAILED:
+              this.toastHandlingService.handleError(
+                'jobs.notify.create-job.due-date-start-failed',
+              );
+              break;
+            case DUE_DATE_CURRENT_FAILED:
+              this.toastHandlingService.handleError(
+                'jobs.notify.create-job.due-date-current-failed',
+              );
+              break;
+            case FEE_GREATER_THAN_FIFTY:
+              this.toastHandlingService.handleError(
+                'jobs.notify.create-job.fee-greater-than-fifty-thousand',
+              );
+              break;
+            default:
+              this.toastHandlingService.handleError(
+                'jobs.notify.create-job.failed',
+              );
+          }
+        }),
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 401) {
+            return of(void 0);
+          }
+          this.toastHandlingService.handleError(
+            'jobs.notify.create-job.failed',
+          );
           return of(void 0);
-        }
-        this.toastHandlingService.handleError('jobs.notify.create-job.failed');
-        return of(void 0);
-      }),
-      finalize(() => this.isLoadingSignal.set(false))
-    );
+        }),
+        finalize(() => this.isLoadingSignal.set(false)),
+      );
   }
 
   getJobDetailById(jobId: string): Observable<JobDetailResponseModel | null> {
-    return this.httpClient.get<BaseResponseModel<JobDetailResponseModel>>(`${this.JOBS_API_URL}/${jobId}`)
+    return this.httpClient
+      .get<
+        BaseResponseModel<JobDetailResponseModel>
+      >(`${this.JOBS_API_URL}/${jobId}`)
       .pipe(
         map((res) => {
           if (res.statusCode === SUCCESS_CODE && res.data) {
-            res.data.responsibilitiesList = res.data.responsibilities 
+            res.data.responsibilitiesList = res.data.responsibilities
               ? res.data.responsibilities
-                .split(/,\s*/)
-                .map(responsibility => `${responsibility.trim()}.`)
-              : [this.multiLanguageService.getTranslatedLang('job-detail.no-responsibilities')];
+                  .split(/,\s*/)
+                  .map((responsibility) => `${responsibility.trim()}.`)
+              : [
+                  this.multiLanguageService.getTranslatedLang(
+                    'job-detail.no-responsibilities',
+                  ),
+                ];
             return res.data;
           }
           return null;
         }),
-        catchError(() => of(null))
+        catchError(() => of(null)),
       );
   }
 
