@@ -2,6 +2,8 @@
   <app-loader />
 }
 
+<app-toast></app-toast>
+
 <!-- ? Banner -->
 <div class="page-title-area two">
   <app-banner>
@@ -20,14 +22,16 @@
           </li>
           <li>
             <i class="bx bx-time"></i>
-            Posted date: {{ job().createdAt | date: 'fullDate' }}
+            {{ 'job-detail.job-information.posted-date' | translate }}:
+            {{ job().createdAt | date: 'fullDate' }}
           </li>
         </ul>
       </div>
       <div class="right" ngProjectAs="right-content">
         <app-button-icon
-          [title]="'navbar.post-job' | translate"
           icon="bx bx-plus"
+          [title]="'job-detail.apply' | translate"
+          (clickBtn)="applyJob(job().id)"
         />
         <ul>
           <li>
@@ -127,9 +131,9 @@
             <li>
               <img src="assets/imgs/job/job-details-icon.png" alt="Details" />
               <h4>
-                {{ 'job-detail.job-information.posted-date' | translate }}
+                {{ 'job-detail.job-information.due-date' | translate }}
               </h4>
-              <span>{{ job().createdAt | date: 'fullDate' }}</span>
+              <span>{{ job().dueDate | date: 'fullDate' }}</span>
             </li>
             <li>
               <img src="assets/imgs/job/job-details-icon.png" alt="Details" />

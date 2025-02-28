@@ -1,4 +1,10 @@
-import { Injectable, inject, signal, computed } from '@angular/core';
+import {
+  Injectable,
+  inject,
+  signal,
+  computed,
+  DestroyRef,
+} from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -60,6 +66,7 @@ import type { ResetPasswordRequestModel } from '../../shared/models/api/request/
 export class AuthService {
   private httpClient = inject(HttpClient);
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
   private toastHandlingService = inject(ToastHandlingService);
 
   // ? All API base url
@@ -244,10 +251,11 @@ export class AuthService {
           if (error.error.statusCode === TOKEN_EXPIRED_CODE) {
             const resendReq: ReConfirmRequestModel = {
               email,
-              clientUrl: this.AUTH_CLIENT_URL!,
+              clientUrl: `${this.AUTH_CLIENT_URL!}/login`,
             };
             this.toastHandlingService.handleWarning('auth.login.token-expired');
-            this.resendConfirmEmail(resendReq);
+            const subscription = this.resendConfirmEmail(resendReq).subscribe();
+            this.destroyRef.onDestroy(() => subscription.unsubscribe());
           } else {
             this.toastHandlingService.handleCommonError();
           }

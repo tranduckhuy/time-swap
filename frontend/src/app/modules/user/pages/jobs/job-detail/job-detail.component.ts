@@ -1,21 +1,34 @@
-import { Component, computed, DestroyRef, inject, input, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  DestroyRef,
+  inject,
+  input,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 
 import { TranslateModule } from '@ngx-translate/core';
 
-import { GridLayoutComponent } from "../../../../../core/layout/grid-layout/grid-layout.component";
-import { BannerDetailComponent } from "../../../../../shared/components/banner/banner-detail/banner-detail.component";
-import { BannerComponent } from "../../../../../shared/components/banner/banner.component";
-import { ButtonWithIconComponent } from "../../../../../shared/components/button-with-icon/button-with-icon.component";
-import { JobPostComponent } from "../../../../../shared/components/job-post/job-post.component";
-import { PreLoaderComponent } from "../../../../../shared/components/pre-loader/pre-loader.component";
+import { GridLayoutComponent } from '../../../../../core/layout/grid-layout/grid-layout.component';
+import { BannerDetailComponent } from '../../../../../shared/components/banner/banner-detail/banner-detail.component';
+import { BannerComponent } from '../../../../../shared/components/banner/banner.component';
+import { ButtonWithIconComponent } from '../../../../../shared/components/button-with-icon/button-with-icon.component';
+import { JobPostComponent } from '../../../../../shared/components/job-post/job-post.component';
+import { PreLoaderComponent } from '../../../../../shared/components/pre-loader/pre-loader.component';
+import { ToastComponent } from '../../../../../shared/components/toast/toast.component';
 
-import { CustomCurrencyPipe } from "../../../../../shared/pipes/custom-currency.pipe";
+import { CustomCurrencyPipe } from '../../../../../shared/pipes/custom-currency.pipe';
 
-import { ENGLISH, VIETNAMESE } from '../../../../../shared/constants/multi-lang-constants';
+import {
+  ENGLISH,
+  VIETNAMESE,
+} from '../../../../../shared/constants/multi-lang-constants';
 
 import { MultiLanguageService } from '../../../../../shared/services/multi-language.service';
+import { ApplicantsService } from '../../applicant/applicants.service';
 
 import type { JobDetailResponseModel } from '../../../../../shared/models/api/response/jobs-response.model';
 
@@ -33,9 +46,10 @@ import type { JobDetailResponseModel } from '../../../../../shared/models/api/re
     BannerComponent,
     JobPostComponent,
     PreLoaderComponent,
-],
+    ToastComponent,
+  ],
   templateUrl: './job-detail.component.html',
-  styleUrl: './job-detail.component.css'
+  styleUrl: './job-detail.component.css',
 })
 export class JobDetailComponent implements OnInit {
   // ? Data Resolver
@@ -43,12 +57,15 @@ export class JobDetailComponent implements OnInit {
 
   // ? Dependency Injection
   private multiLanguageService = inject(MultiLanguageService);
+  private applicantService = inject(ApplicantsService);
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
 
   // ? State management
   isLoading = signal<boolean>(true);
-  lang = computed(() => this.multiLanguageService.language() === VIETNAMESE ? VIETNAMESE : ENGLISH);
+  lang = computed(() =>
+    this.multiLanguageService.language() === VIETNAMESE ? VIETNAMESE : ENGLISH,
+  );
 
   ngOnInit(): void {
     if (!this.job()) {
@@ -58,5 +75,10 @@ export class JobDetailComponent implements OnInit {
     const timeOutId = setTimeout(() => this.isLoading.set(false), 800);
 
     this.destroyRef.onDestroy(() => clearTimeout(timeOutId));
+  }
+
+  applyJob(jobId: string) {
+    const subscription = this.applicantService.applyJobById(jobId).subscribe();
+    this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 }
