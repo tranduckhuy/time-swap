@@ -281,5 +281,21 @@ namespace TimeSwap.Infrastructure.Identity
                 await _tokenBlackListService.BlacklistTokenAsync(accessToken, expiry);
             }
         }
+
+        public async Task<StatusCode> ChangePasswordAsync(ChangePasswordRequestDto dto)
+        {
+            var user = await _userManager.FindByIdAsync(dto.UserId.ToString()) ?? throw new UserNotExistsException();
+
+            var result = await _userManager.ChangePasswordAsync(user, dto.CurrentPassword, dto.NewPassword);
+
+            if (!result.Succeeded)
+            {
+                var errors = result.Errors.Select(e => e.Description).ToList();
+                _logger.LogError("Failed to change password. Errors: {errors}", string.Join(", ", errors));
+                throw new AuthException(StatusCode.UserAuthenticationFailed, errors);
+            }
+
+            return StatusCode.PasswordChangedSuccessfully;
+        }
     }
 }

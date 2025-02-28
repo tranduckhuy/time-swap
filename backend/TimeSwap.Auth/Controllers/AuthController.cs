@@ -59,6 +59,25 @@ namespace TimeSwap.Auth.Controllers
             return await HandleRequestAsync(dto, _authService.ConfirmEmailAsync);
         }
 
+        // change password
+        [HttpPost("change-password")]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequest request)
+        {
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            if (userId != null)
+            {
+                var dto = AppMapper<AuthMappingProfile>.Mapper.Map<ChangePasswordRequestDto>(request);
+                dto.UserId = Guid.Parse(userId);
+                return await HandleRequestAsync(dto, _authService.ChangePasswordAsync);
+            }
+            return BadRequest(new ApiResponse<object>
+            {
+                StatusCode = (int)Shared.Constants.StatusCode.UserNotExists,
+                Message = ResponseMessages.GetMessage(Shared.Constants.StatusCode.UserNotExists)
+            });
+        }
+
         [HttpPost("resend-confirmation-email")]
         public async Task<IActionResult> ResendConfirmationEmail([FromBody] ResendConfirmationEmailRequest request)
         {
