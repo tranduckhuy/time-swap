@@ -1,4 +1,4 @@
-import { ApplicantModel } from "../../entities/applicant.model";
+import { ApplicantModel } from '../../entities/applicant.model';
 
 export interface ApplicantResponseModel {
   count: number;

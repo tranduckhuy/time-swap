@@ -6,8 +6,5 @@ namespace TimeSwap.Api.Models
     {
         [JsonRequired]
         public Guid JobPostId { get; set; }
-
-        [JsonRequired]
-        public Guid UserAppliedId { get; set; }
     }
 }

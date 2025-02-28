@@ -177,6 +177,7 @@
     }
   },
   "job-detail": {
+    "apply": "Ứng tuyển",
     "save": "Lưu",
     "share": "Chia sẻ",
     "report": "Báo cáo",
@@ -192,6 +193,7 @@
       "industry": "Ngành",
       "category": "Danh mục",
       "posted-date": "Ngày đăng",
+      "due-date": "Ngày hết hạn",
       "applied": "Đã nộp đơn",
       "applicants": "Người xin việc"
     },
@@ -199,6 +201,11 @@
       "title": "Thông tin người đăng",
       "name": "Tên người đăng",
       "email": "Địa chỉ email"
+    },
+    "notify": {
+      "success": "Ứng tuyển thành công! Chờ người đăng xác nhận công việc cho bạn.",
+      "failed": "Ứng tuyển thất bại! Vui lòng thử lại sau.",
+      "apply-own-job": "Bạn không thể ứng tuyển cho công việc mà bạn đã đăng."
     }
   },
   "profile": {
@@ -261,7 +268,13 @@
     "age": "Tuổi:",
     "languages": "Ngôn ngữ:",
     "qualification": "Bằng cấp:",
-    "gender": "Giới tính:"
+    "gender": "Giới tính",
+    "education": "Giáo dục",
+    "category": "Danh mục",
+    "industry": "Ngành",
+    "location": "Địa chỉ",
+    "evaluation": "Đánh giá",
+    "user-overview": "Tổng quan người dùng"
   },
   "contact": {
     "heading": "Liên hệ với chúng tôi",
