@@ -10,6 +10,7 @@ namespace TimeSwap.Shared.Constants
             { StatusCode.LoginSuccessful, "Login successful." },
             { StatusCode.ResetPasswordEmailSent, "Reset password email sent." },
             { StatusCode.PasswordResetSuccessful, "Password reset successful." },
+            { StatusCode.PasswordChangedSuccessfully, "Password changed successfully." },
 
             // Error messages
             { StatusCode.ModelInvalid, "Model is invalid. Please check the request body." },

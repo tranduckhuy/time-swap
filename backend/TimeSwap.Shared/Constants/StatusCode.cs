@@ -10,6 +10,7 @@
         LoginSuccessful = 1002,
         ResetPasswordEmailSent = 1003,
         PasswordResetSuccessful = 1004,
+        PasswordChangedSuccessfully = 1005,
 
         /// <summary>
         /// Error Codes 2xxx
