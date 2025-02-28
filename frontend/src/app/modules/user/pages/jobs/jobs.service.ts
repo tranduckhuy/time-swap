@@ -96,7 +96,7 @@ export class JobsService {
               break;
             case USER_NOT_ENOUGH_BALANCE:
               this.toastHandlingService.handleError(
-                'jobs.notify.create-job.due-date-start-failed',
+                'jobs.notify.create-job.user-not-enough-balance',
               );
               break;
             case DUE_DATE_START_FAILED:
