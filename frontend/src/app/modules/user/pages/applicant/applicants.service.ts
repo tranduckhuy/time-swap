@@ -17,6 +17,7 @@ import { ToastHandlingService } from '../../../../shared/services/toast-handling
 import type { BaseResponseModel } from '../../../../shared/models/api/base-response.model';
 import type { ApplicantResponseModel } from '../../../../shared/models/api/response/applicant-response.model';
 import type { ApplicantsRequestModel } from '../../../../shared/models/api/request/applicants-request.model';
+import type { UserModel } from '../../../../shared/models/entities/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +27,9 @@ export class ApplicantsService {
   private toastHandlingService = inject(ToastHandlingService);
 
   private BASE_API_URL = environment.apiBaseUrl;
+  private BASE_AUTH_API_URL = environment.apiAuthBaseUrl;
   private APPLICANTS_API_URL = `${this.BASE_API_URL}/applicants`;
+  private USERS_API_URL = `${this.BASE_AUTH_API_URL}/users`;
 
   getAllApplicantsByJobId(
     applicantId: string,
@@ -37,6 +40,25 @@ export class ApplicantsService {
       `${this.APPLICANTS_API_URL}/${applicantId}`,
       { params: reqParams },
     );
+  }
+
+  getApplicantDetailById(applicantId: string): Observable<UserModel | null> {
+    return this.httpClient
+      .get<
+        BaseResponseModel<UserModel | null>
+      >(`${this.USERS_API_URL}/${applicantId}`)
+      .pipe(
+        map((res) => {
+          if (res.statusCode === SUCCESS_CODE && res.data) {
+            return res.data;
+          }
+          return null;
+        }),
+        catchError(() => {
+          this.toastHandlingService.handleCommonError(); // Handle common error
+          return of(null); // Return null if error
+        }),
+      );
   }
 
   applyJobById(jobId: string): Observable<void> {

@@ -268,7 +268,13 @@
     "age": "Tuổi:",
     "languages": "Ngôn ngữ:",
     "qualification": "Bằng cấp:",
-    "gender": "Giới tính:"
+    "gender": "Giới tính",
+    "education": "Giáo dục",
+    "category": "Danh mục",
+    "industry": "Ngành",
+    "location": "Địa chỉ",
+    "evaluation": "Đánh giá",
+    "user-overview": "Tổng quan người dùng"
   },
   "contact": {
     "heading": "Liên hệ với chúng tôi",

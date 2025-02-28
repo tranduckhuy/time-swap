@@ -268,7 +268,13 @@
     "age": "Age:",
     "languages": "Language:",
     "qualification": "Qualification:",
-    "gender": "Gender:"
+    "gender": "Gender:",
+    "education": "Education",
+    "industry": "Industry",
+    "category": "Category",
+    "location": "Location",
+    "evaluation": "Evaluation",
+    "user-overview": "User Overview"
   },
   "contact": {
     "heading": "Contact Us",
