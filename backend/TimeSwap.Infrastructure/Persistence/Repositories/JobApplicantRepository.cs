@@ -29,5 +29,10 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
         {
             return await _context.JobApplicants.AnyAsync(x => x.JobPostId == jobPostId && x.UserAppliedId == userId);
         }
+
+        public Task<bool> JobApplicantExistsAsync(Guid jobPostId, Guid userId)
+        {
+            return _context.JobApplicants.AnyAsync(x => x.JobPostId == jobPostId && x.UserAppliedId == userId);
+        }
     }
 }

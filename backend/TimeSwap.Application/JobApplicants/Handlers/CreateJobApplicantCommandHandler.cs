@@ -29,6 +29,13 @@ namespace TimeSwap.Application.JobApplicants.Handlers
                 throw new UserAppliedToOwnJobPostException();
             }
 
+            // check if user already applied to this job post
+            var jobApplicantExists = await _jobApplicantRepository.JobApplicantExistsAsync(request.JobPostId, request.UserId);
+            if (jobApplicantExists)
+            {
+                throw new JobApplicantAlreadyExistsException();
+            }
+
             var jobApplicant = new JobApplicant
             {
                 JobPostId = request.JobPostId,
