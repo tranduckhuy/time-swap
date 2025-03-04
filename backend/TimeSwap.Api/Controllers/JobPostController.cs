@@ -37,7 +37,13 @@ namespace TimeSwap.Api.Controllers
         [ProducesResponseType(typeof(ApiResponse<JobPostDetailResponse>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetJobPostById(Guid jobPostId)
         {
-            var query = new GetJobPostByIdQuery(jobPostId);
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            var query = new GetJobPostByIdQuery(
+                jobPostId,
+                Guid.TryParse(userId, out var userIdGuid) ? userIdGuid : Guid.Empty
+            );
+
             return await ExecuteAsync<GetJobPostByIdQuery, JobPostDetailResponse>(query);
         }
 

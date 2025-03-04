@@ -6,5 +6,6 @@
         public const int MAX_PAGE_SIZE = 70;
         public const int DEFAULT_PAGE_SIZE = 12;
         public const int DEFAULT_PAGE_INDEX = 1;
+        public const int RELATED_JOB_POSTS = 3;
     }
 }

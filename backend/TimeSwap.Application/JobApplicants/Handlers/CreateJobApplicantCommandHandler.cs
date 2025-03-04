@@ -30,7 +30,7 @@ namespace TimeSwap.Application.JobApplicants.Handlers
             }
 
             // check if user already applied to this job post
-            var jobApplicantExists = await _jobApplicantRepository.JobApplicantExistsAsync(request.JobPostId, request.UserId);
+            var jobApplicantExists = await _jobApplicantRepository.JobApplicantExistsAsync(request.JobPostId, request.UserId, cancellationToken);
             if (jobApplicantExists)
             {
                 throw new JobApplicantAlreadyExistsException();
