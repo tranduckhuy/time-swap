@@ -1,4 +1,4 @@
-import { JobPostModel } from "../../entities/job.model";
+import { JobPostModel } from '../../entities/job.model';
 
 export interface JobsResponseModel {
   count: number;
@@ -8,6 +8,7 @@ export interface JobsResponseModel {
 }
 
 export interface JobDetailResponseModel extends JobPostModel {
+  isCurrentUserApplied: boolean;
   totalApplicants: number;
   relatedJobPosts: JobPostModel[];
 }
