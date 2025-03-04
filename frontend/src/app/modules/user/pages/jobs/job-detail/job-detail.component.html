@@ -31,22 +31,23 @@
         <app-button-icon
           icon="bx bx-plus"
           [title]="'job-detail.apply' | translate"
+          [disabled]="job().isCurrentUserApplied"
           (clickBtn)="applyJob(job().id)"
         />
         <ul>
-          <li>
+          <li style="user-select: none">
             <a href="#">
               <i class="bx bx-heart"></i>
               {{ 'job-detail.save' | translate }}
             </a>
           </li>
-          <li>
+          <li style="user-select: none">
             <a href="#">
               <i class="bx bx-share-alt"></i>
               {{ 'job-detail.share' | translate }}
             </a>
           </li>
-          <li>
+          <li style="user-select: none">
             <a href="#">
               <i class="bx bxs-report"></i>
               {{ 'job-detail.report' | translate }}
