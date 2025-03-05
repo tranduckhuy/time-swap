@@ -66,6 +66,7 @@
         BankIsUnderMaintenance = 2048,
         IncorrectPaymentPasswordExceeded = 2049,
         UndefinedError = 2050,
-        UserSubscriptionExpired = 2051
+        UserSubscriptionExpired = 2051,
+        JobApplicantAlreadyExists = 2052,
     }
 }
