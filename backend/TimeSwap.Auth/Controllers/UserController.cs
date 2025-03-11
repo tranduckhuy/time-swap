@@ -7,6 +7,7 @@ using TimeSwap.Application.Authentication.User;
 using TimeSwap.Application.Mappings;
 using TimeSwap.Auth.Mappings;
 using TimeSwap.Auth.Models.Requests;
+using TimeSwap.Domain.Specs.User;
 using TimeSwap.Shared;
 
 namespace TimeSwap.Auth.Controllers
@@ -85,6 +86,18 @@ namespace TimeSwap.Auth.Controllers
         public async Task<IActionResult> GetUserProfileByIdAsync(Guid userId)
         {
             return await HandleRequestWithResponseAsync(userId, _userService.GetUserProfileAsync);
+        }
+
+        // Get user list with pagination
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetUserListAsync([FromQuery] UserSpecParam request)
+        {
+            if (request == null)
+            {
+                return NullRequestDataResponse();
+            }
+            return await HandleRequestWithResponseAsync(request, _userService.GetUserListAsync);
         }
     }
 }

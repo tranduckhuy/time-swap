@@ -44,6 +44,13 @@ services:
       - PayOS__PAYOS_CHECKSUM_KEY=${PAYOS_CHECKSUM_KEY}
       - PayOS__ReturnUrl=${PAYOS_RETURN_URL}
       - PayOS__CancelUrl=${PAYOS_CANCEL_URL}
+      - Vnpay__ReturnUrl=${VNPAY_RETURN_URL}
+      - Vnpay__PaymentUrl=${VNPAY_PAYMENT_URL}
+      - Vnpay__RedirectWebUrl=${FRONTEND_URL}
+      - Vnpay__IpnUrl=${VNPAY_IPN_URL}
+      - Vnpay__tmnCode=${VNPAY_TMN_CODE}
+      - Vnpay__HashSecret=${VNPAY_HASH_SECRET}
+      - Vnpay__Version=${VNPAY_VERSION}
     depends_on:
       - timeswapdb
       - redis
