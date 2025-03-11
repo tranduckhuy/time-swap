@@ -1,4 +1,5 @@
 using AutoMapper;
+using TimeSwap.Application.Authentication.User;
 using TimeSwap.Application.Categories.Responses;
 using TimeSwap.Application.Industries.Responses;
 using TimeSwap.Application.JobApplicants.Responses;
@@ -66,6 +67,13 @@ namespace TimeSwap.Application.Mappings
                 .ForMember(dest => dest.OwnerName, opt => opt.MapFrom(src => src.User.FullName))
                 .ForMember(dest => dest.OwnerEmail, opt => opt.MapFrom(src => src.User.Email))
                 .ForMember(dest => dest.OwnerLocation, opt => opt.MapFrom(src => src.User.Ward != null ? src.User.Ward.FullLocation : string.Empty));
+
+            CreateMap<UserProfile, UserResponse>()
+                .ForMember(dest => dest.MajorCategory, opt => opt.MapFrom(src => src.MajorCategory != null ? src.MajorCategory.CategoryName : string.Empty))
+                .ForMember(dest => dest.MajorIndustry, opt => opt.MapFrom(src => src.MajorIndustry != null ? src.MajorIndustry.IndustryName : string.Empty));
+
+
+            CreateMap<Pagination<UserProfile>, Pagination<UserResponse>>();
         }
     }
 }
