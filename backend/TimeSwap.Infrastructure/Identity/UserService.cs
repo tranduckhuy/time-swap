@@ -4,10 +4,13 @@ using TimeSwap.Application.Authentication.Interfaces;
 using TimeSwap.Application.Authentication.User;
 using TimeSwap.Application.Exceptions.Auth;
 using TimeSwap.Application.Exceptions.User;
+using TimeSwap.Application.Mappings;
 using TimeSwap.Application.Validators;
 using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Exceptions;
 using TimeSwap.Domain.Interfaces.Repositories;
+using TimeSwap.Domain.Specs;
+using TimeSwap.Domain.Specs.User;
 using TimeSwap.Shared.Constants;
 
 namespace TimeSwap.Infrastructure.Identity
@@ -188,6 +191,15 @@ namespace TimeSwap.Infrastructure.Identity
             await _userRepository.AddAsync(user);
 
             return StatusCode.RequestProcessedSuccessfully;
+        }
+
+        public async Task<(StatusCode, Pagination<UserResponse>)> GetUserListAsync(UserSpecParam request)
+        {
+            var users = await _userRepository.GetUserWithSpecAsync(request);
+
+            var userResponse = AppMapper<CoreMappingProfile>.Mapper.Map<Pagination<UserResponse>>(users);
+
+            return (StatusCode.RequestProcessedSuccessfully, userResponse);
         }
     }
 }
