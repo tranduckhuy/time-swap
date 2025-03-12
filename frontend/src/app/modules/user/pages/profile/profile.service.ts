@@ -12,6 +12,7 @@ import { IndustryModel } from '../../../../shared/models/entities/industry.model
 import { WardModel } from '../../../../shared/models/entities/location.model';
 import { JobPostModel } from '../../../../shared/models/entities/job.model';
 import { createHttpParams } from '../../../../shared/utils/request-utils';
+import { CategoryModel } from '../../../../shared/models/entities/category.model';
 
 @Injectable({
   providedIn: 'root',
@@ -58,6 +59,7 @@ export class ProfileService {
   updateUserProfile(
     updatedProfile: Partial<UserUpdateModel>,
     industries: IndustryModel[],
+    categories: CategoryModel[],
     wards: WardModel[],
     user: UserModel
   ): Observable<boolean> {
@@ -69,7 +71,7 @@ export class ProfileService {
       .pipe(
         map((res) => {
           if (res.statusCode === SUCCESS_CODE) {
-            this.updateUserSignal(filteredProfile, industries, wards, user);
+            this.updateUserSignal(filteredProfile, industries, categories, wards, user);
             return true;
           }
           return false;
@@ -113,36 +115,41 @@ export class ProfileService {
   private updateUserSignal(
     updatedProfile: Partial<UserUpdateModel>,
     industries: IndustryModel[],
+    categories: CategoryModel[],
     wards: WardModel[],
     user: UserModel
   ): void {
-    const transformedData = this.transformData(updatedProfile, industries, wards, user);
+    const transformedData = this.transformData(updatedProfile, industries, categories, wards, user);
     const currentUser = this.userSignal();
-    this.userSignal.update((current) => ({
-      ...current!,
-      ...transformedData,
-    }));
-  
+    if (currentUser) {
+      this.userSignal.set({ ...currentUser, ...transformedData });
+    }  
   }
 
   private transformData(
     input: Partial<UserUpdateModel>,
     industries: IndustryModel[],
+    categories: CategoryModel[],
     wards: WardModel[],
     user: UserModel
   ): Partial<UserModel> {
-    const { majorIndustryId, wardId, cityId, ...rest } = input;
+    const { majorIndustryId, majorCategoryId, wardId, cityId, ...rest } = input;
 
     const majorIndustry =
       majorIndustryId !== undefined
         ? industries.find((ind) => ind.id === majorIndustryId)?.industryName ?? 'Unknown'
         : user.majorIndustry;
 
+    const majorCategory =
+      majorCategoryId !== undefined
+        ? categories.find((cat) => cat.id === majorCategoryId)?.categoryName ?? 'Unknown'
+        : user.majorCategory;
+  
     const fullLocation =
       cityId && wardId
         ? wards.find((ward) => ward.id === wardId)?.fullLocation ?? 'Unknown Location'
         : user.fullLocation;
 
-    return { ...rest, majorIndustry, fullLocation };
+    return { ...rest, majorIndustry, majorCategory, fullLocation };
   }
 }

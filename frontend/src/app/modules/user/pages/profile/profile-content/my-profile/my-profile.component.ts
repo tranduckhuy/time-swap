@@ -25,6 +25,7 @@ import { ProfileService } from '../../profile.service';
 import { ToastHandlingService } from '../../../../../../shared/services/toast-handling.service';
 import { LocationService } from '../../../../../../shared/services/location.service';
 import { IndustryService } from '../../../../../../shared/services/industry.service';
+import { CategoryService } from '../../../../../../shared/services/category.service';
 
 @Component({
   selector: 'app-my-profile',
@@ -45,6 +46,7 @@ export class MyProfileComponent implements OnInit {
   private readonly profileService = inject(ProfileService);
   private readonly locationService = inject(LocationService);
   private readonly industryService = inject(IndustryService);
+  private readonly categoryService = inject(CategoryService)
   private readonly fb = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
   private readonly toastHandlingService = inject(ToastHandlingService);
@@ -56,6 +58,7 @@ export class MyProfileComponent implements OnInit {
   user = this.profileService.user;
   subscription = this.profileService.subscription;
   industries = this.industryService.industries;
+  categories = this.categoryService.categories;
   cities = this.locationService.cities;
   wards = this.locationService.wards;
   isLoading = this.profileService.isLoading;
@@ -65,6 +68,7 @@ export class MyProfileComponent implements OnInit {
   citiesName = computed(() => this.cities().map((c) => c.name));
   wardsName = computed(() => this.wards().map((w) => w.fullLocation));
   industriesName = computed(() => this.industries().map((i) => i.industryName));
+  categoriesName = computed(() => this.categories().map((i) => i.categoryName));
 
   ngOnInit(): void {
     this.initializeForm();
@@ -92,17 +96,8 @@ export class MyProfileComponent implements OnInit {
       const user = this.user();
       if (user) {
         this.profileService
-        .updateUserProfile(this.form.value, this.industries(), this.wards(), user)
-        .subscribe({
-          next: () => {
-            const updatedUser = this.profileService.user();
-            if (updatedUser) {
-              this.form.patchValue(updatedUser);
-            }
-            this.showSuccessToast();
-          },
-          error: () => this.showErrorToast(),
-        });
+        .updateUserProfile(this.form.value, this.industries(), this.categories(), this.wards(), user)
+        .subscribe();
       }
     } else {
       this.toggleEditing(true);

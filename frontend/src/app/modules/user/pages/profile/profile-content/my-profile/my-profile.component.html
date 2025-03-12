@@ -18,21 +18,21 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label>{{ 'profile.form.info.email' | translate }}</label>
-                                <input type="email" class="form-control" placeholder="hello@jecto.com" [value]="user()?.email" disabled>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
                                 <label><i class='bx bx-edit-alt'></i> {{ 'profile.form.info.phone' | translate }}</label>
                                 <input type="text" class="form-control" placeholder="+123 - 456 - 789" [value]="user()?.phoneNumber" formControlName="phoneNumber">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>{{ 'profile.form.info.email' | translate }}</label>
+                                <input type="email" class="form-control" placeholder="hello@jecto.com" [value]="user()?.email" disabled>
                             </div>
                         </div>
                         
                         @if (isEditing()) {
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label>Major Industry:</label>
+                                    <label><i class='bx bx-edit-alt'></i> {{ 'profile.form.info.industry' | translate }}</label>
                                     <select style="display: none;" formControlName="majorIndustryId">
                                         @for (industry of industries(); track industry.id) {
                                             <option [value]="industry.id">{{ industry }}</option>
@@ -41,6 +41,20 @@
                                     <app-nice-select 
                                         [listData]="industriesName()" 
                                         (valueChange)="handleSelectChange('majorIndustryId', $event, industries())"
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label><i class='bx bx-edit-alt'></i> {{ 'profile.form.info.category' | translate }}</label>
+                                    <select style="display: none;" formControlName="majorCategoryId">
+                                        @for (category of categories(); track category.id) {
+                                            <option [value]="category.id">{{ category }}</option>
+                                        }
+                                    </select>
+                                    <app-nice-select 
+                                        [listData]="categoriesName()" 
+                                        (valueChange)="handleSelectChange('majorCategoryId', $event, categories())"
                                     />
                                 </div>
                             </div>
@@ -75,8 +89,14 @@
                         } @else {
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label><i class='bx bx-edit-alt'></i> {{ 'profile.form.info.industry' | translate }} </label>
+                                    <label><i class='bx bx-edit-alt'></i> {{ 'profile.form.info.industry' | translate }}</label>
                                     <input type="text" class="form-control" placeholder="Web Developer" [value]="user()?.majorIndustry" disabled >
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label><i class='bx bx-edit-alt'></i> {{ 'profile.form.info.category' | translate }}</label>
+                                    <input type="text" class="form-control" placeholder="Web Developer" [value]="user()?.majorCategory" disabled >
                                 </div>
                             </div>
                             <div class="col-lg-12">
