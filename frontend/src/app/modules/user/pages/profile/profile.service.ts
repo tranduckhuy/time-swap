@@ -118,9 +118,11 @@ export class ProfileService {
   ): void {
     const transformedData = this.transformData(updatedProfile, industries, wards, user);
     const currentUser = this.userSignal();
-    if (currentUser) {
-      this.userSignal.set({ ...currentUser, ...transformedData });
-    }
+    this.userSignal.update((current) => ({
+      ...current!,
+      ...transformedData,
+    }));
+  
   }
 
   private transformData(

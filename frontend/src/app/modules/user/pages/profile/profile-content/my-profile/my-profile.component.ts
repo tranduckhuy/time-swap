@@ -94,7 +94,13 @@ export class MyProfileComponent implements OnInit {
         this.profileService
         .updateUserProfile(this.form.value, this.industries(), this.wards(), user)
         .subscribe({
-          next: () => this.showSuccessToast(),
+          next: () => {
+            const updatedUser = this.profileService.user();
+            if (updatedUser) {
+              this.form.patchValue(updatedUser);
+            }
+            this.showSuccessToast();
+          },
           error: () => this.showErrorToast(),
         });
       }
