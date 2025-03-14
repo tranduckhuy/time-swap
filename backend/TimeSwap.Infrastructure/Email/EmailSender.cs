@@ -1,6 +1,8 @@
 ﻿using MailKit.Net.Smtp;
 using Microsoft.Extensions.Logging;
 using MimeKit;
+using sib_api_v3_sdk.Api;
+using sib_api_v3_sdk.Client;
 using TimeSwap.Application.Email;
 using TimeSwap.Infrastructure.Configurations;
 
@@ -72,6 +74,33 @@ namespace TimeSwap.Infrastructure.Email
             {
                 await client.DisconnectAsync(true);
                 _logger.LogInformation("Disconnected from SMTP server.");
+            }
+        }
+
+        public async Task SendEmailBrevoAsync(string receiverEmail, string receiverName, string subject, string message)
+        {
+            Configuration.Default.AddApiKey("api-key", _emailConfiguration.ApiKey);
+
+            var apiInstance = new TransactionalEmailsApi();
+
+            var sender = new sib_api_v3_sdk.Model.SendSmtpEmailSender(_emailConfiguration.UserName, _emailConfiguration.From);
+
+            var receiver1 = new sib_api_v3_sdk.Model.SendSmtpEmailTo(receiverEmail, receiverName);
+
+            var to = new List<sib_api_v3_sdk.Model.SendSmtpEmailTo> { receiver1 };
+
+            try
+            {
+                var htmlContent = string.Format("<h2 style='color: blue;'>{0}</h2>", message);
+                var sendSmtpEmail = new sib_api_v3_sdk.Model.SendSmtpEmail(sender, to, null, null, htmlContent, null, subject);
+                
+                await apiInstance.SendTransacEmailAsync(sendSmtpEmail);
+
+                _logger.LogInformation("Email sent successfully to {email}", receiverEmail);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while sending email to `{email}`", receiverEmail);
             }
         }
     }
