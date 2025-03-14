@@ -6,6 +6,7 @@ services:
       JWTSettings__ValidAudience: ${JWT_AUDIENCE}
       JWTSettings__ValidIssuer: ${JWT_ISSUER}
       JWTSettings__ExpiryInSecond: ${JWT_EXPIRY}
+      EmailConfiguration__ApiKey: ${BREVO_API_KEY}
       EmailConfiguration__From: ${EMAIL_FROM}
       EmailConfiguration__SmtpServer: ${EMAIL_SMTP_SERVER}
       EmailConfiguration__Port: ${EMAIL_PORT}
