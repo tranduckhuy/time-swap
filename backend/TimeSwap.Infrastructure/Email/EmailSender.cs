@@ -93,7 +93,8 @@ namespace TimeSwap.Infrastructure.Email
             {
                 var htmlContent = string.Format("<h2 style='color: blue;'>{0}</h2>", message);
                 var sendSmtpEmail = new sib_api_v3_sdk.Model.SendSmtpEmail(sender, to, null, null, htmlContent, null, subject);
-                var result = await apiInstance.SendTransacEmailAsync(sendSmtpEmail);
+                
+                await apiInstance.SendTransacEmailAsync(sendSmtpEmail);
 
                 _logger.LogInformation("Email sent successfully to {email}", receiverEmail);
             }
