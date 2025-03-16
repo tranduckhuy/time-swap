@@ -8,7 +8,11 @@
   @if (isChatOpen()) {
     <div class="chat-box" [@fadeInOut]>
       <div class="chat-header">
-        <img src="assets/imgs/logo-chat.png" class="avatar" />
+        <img
+          src="assets/imgs/logo-chat.png"
+          alt="Chat bot logo"
+          class="avatar"
+        />
         <div class="chat-info">
           <div class="chat-title">TimeSwap Bot</div>
           <div class="chat-status">🟢 Online</div>
@@ -18,18 +22,18 @@
 
       <!-- Chat Bubbles -->
       <div class="chat-body" #chatBody>
-        <div
-          *ngFor="let msg of messages()"
-          class="message"
-          [ngClass]="msg.sender"
-        >
-          <img
-            *ngIf="msg.sender === 'bot'"
-            src="assets/imgs/logo-chat.png"
-            class="msg-avatar"
-          />
-          <div class="text">{{ msg.text }}</div>
-        </div>
+        @for (msg of messages(); track $index) {
+          <div class="message" [ngClass]="msg.sender">
+            @if (msg.sender === 'bot') {
+              <img
+                src="assets/imgs/logo-chat.png"
+                alt="Chat bot logo"
+                class="msg-avatar"
+              />
+            }
+            <div class="text">{{ msg.text }}</div>
+          </div>
+        }
       </div>
 
       <!-- Input chat -->
