@@ -6,11 +6,7 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
 import { forkJoin } from 'rxjs';
@@ -46,7 +42,7 @@ export class MyProfileComponent implements OnInit {
   private readonly profileService = inject(ProfileService);
   private readonly locationService = inject(LocationService);
   private readonly industryService = inject(IndustryService);
-  private readonly categoryService = inject(CategoryService)
+  private readonly categoryService = inject(CategoryService);
   private readonly fb = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
   private readonly toastHandlingService = inject(ToastHandlingService);
@@ -79,13 +75,23 @@ export class MyProfileComponent implements OnInit {
     this.form = this.fb.group({
       fullName: [{ value: this.user()?.fullName || '', disabled: true }],
       phoneNumber: [{ value: this.user()?.phoneNumber || '', disabled: true }],
-      fullLocation: [{ value: this.user()?.fullLocation || '', disabled: true }],
+      fullLocation: [
+        { value: this.user()?.fullLocation || '', disabled: true },
+      ],
       cityId: [{ value: '', disabled: true }],
       wardId: [{ value: '', disabled: true }],
-      majorIndustryId: [{
-        value: this.user()?.majorIndustry || '',
-        disabled: true,
-      }],
+      majorIndustryId: [
+        {
+          value: this.user()?.majorIndustry || '',
+          disabled: true,
+        },
+      ],
+      majorCategoryId: [
+        {
+          value: this.user()?.majorCategory || '',
+          disabled: true,
+        },
+      ],
       description: [{ value: this.user()?.description || '', disabled: true }],
     });
   }
@@ -96,8 +102,14 @@ export class MyProfileComponent implements OnInit {
       const user = this.user();
       if (user) {
         this.profileService
-        .updateUserProfile(this.form.value, this.industries(), this.categories(), this.wards(), user)
-        .subscribe();
+          .updateUserProfile(
+            this.form.value,
+            this.industries(),
+            this.categories(),
+            this.wards(),
+            user,
+          )
+          .subscribe();
       }
     } else {
       this.toggleEditing(true);
@@ -134,9 +146,13 @@ export class MyProfileComponent implements OnInit {
 
   private getOptionId(value: string, options: any[]): string {
     return (
-      options.find(
-        (option) =>
-          [option.name, option.industryName, option.categoryName, option.fullLocation].includes(value)
+      options.find((option) =>
+        [
+          option.name,
+          option.industryName,
+          option.categoryName,
+          option.fullLocation,
+        ].includes(value),
       )?.id || ''
     );
   }
@@ -144,13 +160,5 @@ export class MyProfileComponent implements OnInit {
   private toggleEditing(state: boolean): void {
     this.isEditing.set(state);
     state ? this.form.enable() : this.form.disable();
-  }
-
-  private showSuccessToast(): void {
-    this.toastHandlingService.handleSuccess('profile.notify.update-success');
-  }
-
-  private showErrorToast(): void {
-    this.toastHandlingService.handleError('profile.notify.update-fail');
   }
 }

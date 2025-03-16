@@ -3833,9 +3833,9 @@ button:focus {
 }
 .nice-select .nice-select-search {
   box-sizing: border-box;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 3px;
+  background-color: #fff !important;
+  border: 1px solid #ddd !important;
+  border-radius: 3px !important;
   box-shadow: none;
   color: #333;
   display: inline-block;
@@ -3844,8 +3844,8 @@ button:focus {
   margin: 0 10px 0 0;
   width: 100% !important;
   min-height: 36px;
-  line-height: 22px;
-  height: auto;
+  line-height: 22px !important;
+  height: auto !important;
   outline: 0 !important;
 }
 .nice-select.open .nice-select-search-box {
