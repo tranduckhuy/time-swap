@@ -410,5 +410,9 @@
       "not-enough-balance": "Unfortunately, you do not have enough balance to complete this transaction.",
       "not-login": "You need to log in to proceed with the payment."
     }
+  },
+  "chat-widget": {
+    "empty-message": "Please enter a message before sending.",
+    "do-not-understand": "Sorry, I don't understand your question."
   }
 }
