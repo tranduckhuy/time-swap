@@ -108,10 +108,19 @@ export class MyProfileComponent implements OnInit {
 
   handleSelectChange(field: string, value: string, options: any[]): void {
     const id = this.getOptionId(value, options);
-    this.form.get(field)?.setValue(id);
+    
+    const formattedId = field === 'majorIndustryId' || field === 'majorCategoryId'
+      ? Number(id) || null
+      : id; 
+
+    this.form.get(field)?.setValue(formattedId);
+
+    if (field === 'majorIndustryId' && id) {
+      this.loadCategories(formattedId as number);
+    }
 
     if (field === 'cityId' && id) {
-      this.fetchWardsByCityId(id);
+      this.fetchWardsByCityId(formattedId as string);
     }
   }
 
@@ -134,7 +143,11 @@ export class MyProfileComponent implements OnInit {
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
-  private getOptionId(value: string, options: any[]): string {
+  private loadCategories(industryId: number): void {
+    this.categoryService.getCategoriesByIndustryId(industryId).subscribe();
+  }
+
+  private getOptionId(value: string, options: any[]): string | number {
     return (
       options.find((option) =>
         [

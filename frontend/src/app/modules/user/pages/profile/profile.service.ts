@@ -148,11 +148,6 @@ export class ProfileService {
         ? categories.find((cat) => cat.id === majorCategoryId)?.categoryName ?? 'Unknown'
         : user.majorCategory;
   
-        const cityName =
-        cityId !== undefined
-          ? cities.find((city) => city.id === cityId)?.name ?? 'Unknown Location'
-          : user.city;
-
     const fullLocation =
       cityId && wardId
         ? wards.find((ward) => ward.id === wardId)?.fullLocation ?? 'Unknown Location'
