@@ -20,6 +20,7 @@ export const NOT_CONFIRM_CODE = 2005;
 export const INVALID_CREDENTIAL_CODE = 2006;
 export const INVALID_TOKEN = 2007;
 export const TOKEN_EXPIRED_CODE = 2008;
+export const USER_ALREADY_CONFIRMED = 2009;
 
 // ? Jobs Code
 export const USER_NOT_ENOUGH_BALANCE = 2023;

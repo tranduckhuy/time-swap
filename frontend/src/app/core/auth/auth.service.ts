@@ -41,6 +41,7 @@ import {
   RESET_PASSWORD_SUCCESS_CODE,
   SUCCESS_CODE,
   TOKEN_EXPIRED_CODE,
+  USER_ALREADY_CONFIRMED,
   USER_NOT_EXIST_CODE,
 } from '../../shared/constants/status-code-constants';
 
@@ -223,7 +224,12 @@ export class AuthService {
           this.toastHandlingService.handleCommonError();
         }
       }),
-      catchError(() => {
+      catchError((error: HttpErrorResponse) => {
+        if (error.error.statusCode === USER_ALREADY_CONFIRMED) {
+          this.toastHandlingService.handleWarning(
+            'auth.login.user-already-confirmed',
+          );
+        }
         this.toastHandlingService.handleCommonError();
         return of(undefined);
       }),
