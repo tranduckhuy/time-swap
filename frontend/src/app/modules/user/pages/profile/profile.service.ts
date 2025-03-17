@@ -9,7 +9,7 @@ import type { BaseResponseModel } from '../../../../shared/models/api/base-respo
 import type { UserModel, UserUpdateModel } from '../../../../shared/models/entities/user.model';
 import { SUBSCRIPTIONS } from '../../../../shared/constants/subscription-constant';
 import { IndustryModel } from '../../../../shared/models/entities/industry.model';
-import { WardModel } from '../../../../shared/models/entities/location.model';
+import { CityModel, WardModel } from '../../../../shared/models/entities/location.model';
 import { JobPostModel } from '../../../../shared/models/entities/job.model';
 import { createHttpParams } from '../../../../shared/utils/request-utils';
 import { CategoryModel } from '../../../../shared/models/entities/category.model';
@@ -60,6 +60,7 @@ export class ProfileService {
     updatedProfile: Partial<UserUpdateModel>,
     industries: IndustryModel[],
     categories: CategoryModel[],
+    cities: CityModel[],
     wards: WardModel[],
     user: UserModel
   ): Observable<boolean> {
@@ -71,7 +72,7 @@ export class ProfileService {
       .pipe(
         map((res) => {
           if (res.statusCode === SUCCESS_CODE) {
-            this.updateUserSignal(filteredProfile, industries, categories, wards, user);
+            this.updateUserSignal(filteredProfile, industries, categories, cities, wards, user);
             return true;
           }
           return false;
@@ -116,10 +117,11 @@ export class ProfileService {
     updatedProfile: Partial<UserUpdateModel>,
     industries: IndustryModel[],
     categories: CategoryModel[],
+    cities: CityModel[],
     wards: WardModel[],
     user: UserModel
   ): void {
-    const transformedData = this.transformData(updatedProfile, industries, categories, wards, user);
+    const transformedData = this.transformData(updatedProfile, industries, categories, cities, wards, user);
     const currentUser = this.userSignal();
     if (currentUser) {
       this.userSignal.set({ ...currentUser, ...transformedData });
@@ -130,6 +132,7 @@ export class ProfileService {
     input: Partial<UserUpdateModel>,
     industries: IndustryModel[],
     categories: CategoryModel[],
+    cities: CityModel[],
     wards: WardModel[],
     user: UserModel
   ): Partial<UserModel> {
@@ -145,6 +148,11 @@ export class ProfileService {
         ? categories.find((cat) => cat.id === majorCategoryId)?.categoryName ?? 'Unknown'
         : user.majorCategory;
   
+        const cityName =
+        cityId !== undefined
+          ? cities.find((city) => city.id === cityId)?.name ?? 'Unknown Location'
+          : user.city;
+
     const fullLocation =
       cityId && wardId
         ? wards.find((ward) => ward.id === wardId)?.fullLocation ?? 'Unknown Location'

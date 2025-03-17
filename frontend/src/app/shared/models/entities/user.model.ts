@@ -4,6 +4,8 @@ export interface UserModel {
   email: string;
   phoneNumber?: string;
   fullLocation?: string;
+  city?: string;
+  ward?: string;
   avatarUrl: string;
   description?: string;
   balance: number ;

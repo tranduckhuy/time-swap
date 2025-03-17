@@ -75,23 +75,11 @@ export class MyProfileComponent implements OnInit {
     this.form = this.fb.group({
       fullName: [{ value: this.user()?.fullName || '', disabled: true }],
       phoneNumber: [{ value: this.user()?.phoneNumber || '', disabled: true }],
-      fullLocation: [
-        { value: this.user()?.fullLocation || '', disabled: true },
-      ],
-      cityId: [{ value: '', disabled: true }],
-      wardId: [{ value: '', disabled: true }],
-      majorIndustryId: [
-        {
-          value: this.user()?.majorIndustry || '',
-          disabled: true,
-        },
-      ],
-      majorCategoryId: [
-        {
-          value: this.user()?.majorCategory || '',
-          disabled: true,
-        },
-      ],
+      fullLocation: [{value: this.user()?.fullLocation || '', disabled: true },],
+      cityId: [{ value: this.user()?.city || '', disabled: true }],
+      wardId: [{ value: this.user()?.ward || '', disabled: true }],
+      majorIndustryId: [{value: this.user()?.majorIndustry || '', disabled: true,},],
+      majorCategoryId: [{value: this.user()?.majorCategory || '', disabled: true,},],
       description: [{ value: this.user()?.description || '', disabled: true }],
     });
   }
@@ -106,6 +94,7 @@ export class MyProfileComponent implements OnInit {
             this.form.value,
             this.industries(),
             this.categories(),
+            this.cities(),
             this.wards(),
             user,
           )
@@ -131,6 +120,7 @@ export class MyProfileComponent implements OnInit {
       this.locationService.getAllCities(),
       this.locationService.getWardByCityId('0'),
       this.industryService.getAllIndustries(),
+      this.categoryService.getAllCategories(),
     ]).subscribe();
 
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
