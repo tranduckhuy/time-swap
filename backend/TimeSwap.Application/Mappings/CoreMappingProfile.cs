@@ -69,6 +69,7 @@ namespace TimeSwap.Application.Mappings
                 .ForMember(dest => dest.OwnerLocation, opt => opt.MapFrom(src => src.User.Ward != null ? src.User.Ward.FullLocation : string.Empty));
 
             CreateMap<UserProfile, UserResponse>()
+                .ForMember(dest => dest.FullLocation, opt => opt.MapFrom(src => src.Ward != null ? src.Ward.FullLocation : string.Empty))
                 .ForMember(dest => dest.MajorCategory, opt => opt.MapFrom(src => src.MajorCategory != null ? src.MajorCategory.CategoryName : string.Empty))
                 .ForMember(dest => dest.MajorIndustry, opt => opt.MapFrom(src => src.MajorIndustry != null ? src.MajorIndustry.IndustryName : string.Empty));
 
