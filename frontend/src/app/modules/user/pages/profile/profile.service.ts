@@ -125,7 +125,12 @@ export class ProfileService {
     wards: WardModel[],
     user: UserModel,
   ): void {
-    const transformedData = this.transformData(updatedProfile, industries, wards, user);
+    const transformedData = this.transformData(
+      updatedProfile,
+      industries,
+      wards,
+      user,
+    );
     const currentUser = this.userSignal();
     if (currentUser) {
       this.userSignal.set({ ...currentUser, ...transformedData });
@@ -145,12 +150,6 @@ export class ProfileService {
         ? (industries.find((ind) => ind.id === majorIndustryId)?.industryName ??
           'Unknown')
         : user.majorIndustry;
-
-    const cityName =
-      cityId !== undefined
-        ? (cities.find((city) => city.id === cityId)?.name ??
-          'Unknown Location')
-        : user.city;
 
     const fullLocation =
       cityId && wardId
