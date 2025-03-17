@@ -103,7 +103,7 @@ namespace TimeSwap.Infrastructure.Identity
 
             _logger.LogInformation("Sending email to '{email}' to confirm email.", newUser.Email);
 
-            _ = _emailSender.SendEmailAsync(message);
+            _ = _emailSender.SendEmailBrevoAsync(newUser.Email!, newUser.FirstName + " " + newUser.LastName, message.Subject, message.Content);
         }
 
         public async Task<(StatusCode, AuthenticationResponse)> LoginAsync(LoginRequestDto request)
@@ -190,7 +190,7 @@ namespace TimeSwap.Infrastructure.Identity
 
             var message = MailMessageHelper.CreateMessage(user, token, request.ClientUrl, "Reset Password", "reset your password");
 
-            _ = _emailSender.SendEmailAsync(message);
+            _ = _emailSender.SendEmailBrevoAsync(user.Email!, user.FirstName + " " + user.LastName, message.Subject, message.Content);
 
             return StatusCode.ResetPasswordEmailSent;
         }

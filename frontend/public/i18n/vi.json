@@ -410,5 +410,9 @@
       "not-enough-balance": "Rất tiếc, bạn không đủ số dư trong tài khoản để thực hiện giao dịch này.",
       "not-login": "Bạn cần đăng nhập để thực hiện thanh toán."
     }
+  },
+  "chat-widget": {
+    "empty-message": "Vui lòng nhập nội dung tin nhắn trước khi gửi.",
+    "do-not-understand": "Xin lỗi, tôi không hiểu câu hỏi của bạn."
   }
 }
