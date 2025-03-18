@@ -1,6 +1,7 @@
 .owner-avt {
   width: 150px;
   height: 150px;
+  border-radius: 50%;
 }
 
 .paragraph {
@@ -17,5 +18,9 @@
 
 .paragraph:hover,
 .anchor:hover {
+  color: #fe4a55;
+}
+
+.icon-red {
   color: #fe4a55;
 }

@@ -4244,12 +4244,12 @@ button:focus {
   margin-bottom: 0;
 }
 .job-details-area .details-item .details-inner h3 {
-  font-size: 22px;
+  font-size: 18px;
   color: #221668;
-  margin-bottom: 10px;
+  margin-bottom: 0;
 }
 .job-details-area .details-item .details-inner p {
-  margin-bottom: 0;
+  margin-bottom: 8px;
 }
 .job-details-area .details-item .details-inner .job-details-slider {
   margin-top: 20px;
@@ -4360,23 +4360,19 @@ button:focus {
 .job-details-area .details-item .details-inner ul {
   margin: 0;
   padding: 0;
-  margin-top: 20px;
 }
 .job-details-area .details-item .details-inner ul li {
   list-style-type: none;
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 .job-details-area .details-item .details-inner ul li:last-child {
   margin-bottom: 0;
 }
 .job-details-area .details-item .details-inner ul li i {
   display: inline-block;
-  color: #fe4a55;
-  font-size: 18px;
-  position: relative;
-  top: 2px;
-  margin-right: 3px;
+  margin-right: 4px;
+  font-size: 16px;
 }
 
 .video-wrap {

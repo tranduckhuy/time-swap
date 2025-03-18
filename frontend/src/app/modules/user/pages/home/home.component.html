@@ -266,12 +266,13 @@
             <button
               [class.cmn-btn]="true"
               [class.disabled]="
-                user()?.subscriptionPlan === 1 || user()?.subscriptionPlan === 2
+                user()?.currentSubscription === 1 ||
+                user()?.currentSubscription === 2
               "
               (click)="packageSelect(1)"
             >
               {{
-                user()?.subscriptionPlan === 1
+                user()?.currentSubscription === 1
                   ? ('home.pricing-plans.current-package' | translate)
                   : ('home.pricing-plans.get-started' | translate)
               }}
@@ -334,11 +335,11 @@
             </ul>
             <button
               [class.cmn-btn]="true"
-              [class.disabled]="user()?.subscriptionPlan === 2"
+              [class.disabled]="user()?.currentSubscription === 2"
               (click)="packageSelect(2)"
             >
               {{
-                user()?.subscriptionPlan === 2
+                user()?.currentSubscription === 2
                   ? ('home.pricing-plans.current-package' | translate)
                   : ('home.pricing-plans.get-started' | translate)
               }}
