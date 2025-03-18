@@ -107,6 +107,8 @@ namespace TimeSwap.Infrastructure.Identity
                     userProfile.MajorIndustryId = request.MajorIndustryId;
                 }
 
+                userProfile.ModifiedAt = DateTime.UtcNow;
+
                 await _userRepository.UpdateAsync(userProfile);
             });
 
@@ -160,6 +162,7 @@ namespace TimeSwap.Infrastructure.Identity
 
             await AddOrReplaceClaimAsync(user, subscriptionClaim);
 
+            userProfile.ModifiedAt = DateTime.UtcNow;
             await _userRepository.UpdateAsync(userProfile);
             return StatusCode.RequestProcessedSuccessfully;
         }
