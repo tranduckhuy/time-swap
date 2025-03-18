@@ -89,7 +89,9 @@
       "not-confirm": "Email not confirmed. Please check your inbox.",
       "user-not-exist": "This email address does not exist in the system. Please check your email or register for a new account.",
       "invalid-credentials": "The email address or password you entered is incorrect. Please check and try again.",
-      "token-expired": "The link has expired. A new one has been sent to your email."
+      "token-expired": "The link has expired. A new one has been sent to your email.",
+      "user-already-confirmed": "This account is already confirmed. Please log in to continue.",
+      "still-have-session": "You have an active session. Please log out to access a new account."
     },
     "register": {
       "header": "Register",

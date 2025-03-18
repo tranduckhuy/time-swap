@@ -1,15 +1,17 @@
 import { Routes } from '@angular/router';
 
-import { resetPasswordGuard } from './auth.guard';
+import { loggedInGuard, resetPasswordGuard } from './auth.guard';
 
 export const authRoutes: Routes = [
   {
     path: 'login',
+    canMatch: [loggedInGuard],
     loadComponent: () =>
       import('./pages/login/login.component').then((mod) => mod.LoginComponent),
   },
   {
     path: 'register',
+    canMatch: [loggedInGuard],
     loadComponent: () =>
       import('./pages/register/register.component').then(
         (mod) => mod.RegisterComponent,
@@ -17,6 +19,7 @@ export const authRoutes: Routes = [
   },
   {
     path: 'forgot-password',
+    canMatch: [loggedInGuard],
     loadComponent: () =>
       import('./pages/forgot-password/forgot-password.component').then(
         (mod) => mod.ForgotPasswordComponent,

@@ -7,6 +7,7 @@ using TimeSwap.Application.Authentication.User;
 using TimeSwap.Application.Mappings;
 using TimeSwap.Auth.Mappings;
 using TimeSwap.Auth.Models.Requests;
+using TimeSwap.Domain.Specs;
 using TimeSwap.Domain.Specs.User;
 using TimeSwap.Shared;
 
@@ -91,6 +92,7 @@ namespace TimeSwap.Auth.Controllers
         // Get user list with pagination
         [HttpGet]
         [Authorize(Roles = "Admin")]
+        [ProducesResponseType(typeof(ApiResponse<Pagination<UserResponse>>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetUserListAsync([FromQuery] UserSpecParam request)
         {
             if (request == null)

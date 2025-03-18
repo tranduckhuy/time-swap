@@ -6,7 +6,10 @@ import { environment } from '../../../../../environments/environment';
 import { SUCCESS_CODE } from '../../../../shared/constants/status-code-constants';
 
 import type { BaseResponseModel } from '../../../../shared/models/api/base-response.model';
-import type { UserModel, UserUpdateModel } from '../../../../shared/models/entities/user.model';
+import type {
+  UserModel,
+  UserUpdateModel,
+} from '../../../../shared/models/entities/user.model';
 import { SUBSCRIPTIONS } from '../../../../shared/constants/subscription-constant';
 import { IndustryModel } from '../../../../shared/models/entities/industry.model';
 import { CityModel, WardModel } from '../../../../shared/models/entities/location.model';
@@ -46,13 +49,15 @@ export class ProfileService {
         map((res) => {
           if (res.statusCode === SUCCESS_CODE && res.data) {
             this.userSignal.set(res.data);
-            this.subscriptionSignal.set(SUBSCRIPTIONS[res.data.subscriptionPlan]);
+            this.subscriptionSignal.set(
+              SUBSCRIPTIONS[res.data.subscriptionPlan],
+            );
           } else {
             this.userSignal.set(null);
           }
         }),
         catchError(() => of(undefined)),
-        finalize(() => this.loadingSignal.set(false))
+        finalize(() => this.loadingSignal.set(false)),
       );
   }
 
@@ -62,7 +67,7 @@ export class ProfileService {
     categories: CategoryModel[],
     cities: CityModel[],
     wards: WardModel[],
-    user: UserModel
+    user: UserModel,
   ): Observable<boolean> {
     this.loadingSignal.set(true);
     const filteredProfile = this.filterEmptyValues(updatedProfile);
@@ -78,16 +83,19 @@ export class ProfileService {
           return false;
         }),
         catchError(() => of(false)),
-        finalize(() => this.loadingSignal.set(false))
+        finalize(() => this.loadingSignal.set(false)),
       );
   }
 
   getJobPostsByUserId(isOwner: boolean, userId: string): Observable<void> {
     this.loadingSignal.set(true);
     return this.httpClient
-      .get<BaseResponseModel<JobPostModel | JobPostModel[]>>(`${this.JOB_POSTS_API_URL}/${userId}`, {
-        params: createHttpParams({ isOwner }),
-      })
+      .get<BaseResponseModel<JobPostModel | JobPostModel[]>>(
+        `${this.JOB_POSTS_API_URL}/${userId}`,
+        {
+          params: createHttpParams({ isOwner }),
+        },
+      )
       .pipe(
         map((res) => {
           if (res.statusCode === SUCCESS_CODE && res.data) {
@@ -95,21 +103,22 @@ export class ProfileService {
             const jobPosts = Array.isArray(res.data) ? res.data : [res.data];
             this.jobsSignal.set(jobPosts);
           } else {
-            this.jobsSignal.set([]); 
+            this.jobsSignal.set([]);
           }
         }),
         catchError(() => {
           this.jobsSignal.set([]);
           return of(undefined);
         }),
-        finalize(() => this.loadingSignal.set(false))
+        finalize(() => this.loadingSignal.set(false)),
       );
   }
-  
 
-  private filterEmptyValues(profile: Partial<UserUpdateModel>): Partial<UserUpdateModel> {
+  private filterEmptyValues(
+    profile: Partial<UserUpdateModel>,
+  ): Partial<UserUpdateModel> {
     return Object.fromEntries(
-      Object.entries(profile).filter(([, value]) => value !== '')
+      Object.entries(profile).filter(([, value]) => value !== ''),
     );
   }
 
@@ -119,9 +128,14 @@ export class ProfileService {
     categories: CategoryModel[],
     cities: CityModel[],
     wards: WardModel[],
-    user: UserModel
+    user: UserModel,
   ): void {
-    const transformedData = this.transformData(updatedProfile, industries, categories, cities, wards, user);
+    const transformedData = this.transformData(
+      updatedProfile,
+      industries,
+      wards,
+      user,
+    );
     const currentUser = this.userSignal();
     if (currentUser) {
       this.userSignal.set({ ...currentUser, ...transformedData });
@@ -134,13 +148,14 @@ export class ProfileService {
     categories: CategoryModel[],
     cities: CityModel[],
     wards: WardModel[],
-    user: UserModel
+    user: UserModel,
   ): Partial<UserModel> {
     const { majorIndustryId, majorCategoryId, wardId, cityId, ...rest } = input;
 
     const majorIndustry =
       majorIndustryId !== undefined
-        ? industries.find((ind) => ind.id === majorIndustryId)?.industryName ?? 'Unknown'
+        ? (industries.find((ind) => ind.id === majorIndustryId)?.industryName ??
+          'Unknown')
         : user.majorIndustry;
 
     const majorCategory =
@@ -150,7 +165,8 @@ export class ProfileService {
   
     const fullLocation =
       cityId && wardId
-        ? wards.find((ward) => ward.id === wardId)?.fullLocation ?? 'Unknown Location'
+        ? (wards.find((ward) => ward.id === wardId)?.fullLocation ??
+          'Unknown Location')
         : user.fullLocation;
 
     return { ...rest, majorIndustry, majorCategory, fullLocation };
