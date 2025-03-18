@@ -1,24 +1,27 @@
-
 <!-- Page Title -->
 <app-banner>
-    <app-breadcrumb [title]="'banner.profile' | translate"/>
- </app-banner>
+  <app-breadcrumb [title]="'banner.profile' | translate" />
+</app-banner>
 <!-- End Page Title -->
 
 <div class="dashboard-area ptb-100">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4">
-                <div class="profile-item">
-                    <img [src]="user()?.avatarUrl" alt="Dashboard">
-                    <h2>{{ user()?.fullName }}</h2>
-                    <span></span>
-                </div>
-                <app-profile-tabs />
-            </div>
-            <div class="col-lg-8">
-                <app-profile-content />
-            </div>
-          </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="profile-item">
+          <img
+            [src]="user()?.avatarUrl"
+            alt="Dashboard"
+            style="width: 250px; height: 250px"
+          />
+          <h2>{{ user()?.fullName }}</h2>
+          <span></span>
+        </div>
+        <app-profile-tabs />
+      </div>
+      <div class="col-lg-8">
+        <app-profile-content />
+      </div>
     </div>
+  </div>
 </div>

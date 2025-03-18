@@ -16,7 +16,7 @@ export interface UserModel {
   educationHistory: string[];
   majorCategory: CategoryModel;
   majorIndustry: IndustryModel;
-  subscriptionPlan: number;
+  currentSubscription: number;
   subscriptionExpiryDate?: string;
   role: string[];
 }

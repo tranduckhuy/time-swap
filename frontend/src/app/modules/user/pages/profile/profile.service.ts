@@ -54,7 +54,7 @@ export class ProfileService {
           if (res.statusCode === SUCCESS_CODE && res.data) {
             this.userSignal.set(res.data);
             this.subscriptionSignal.set(
-              SUBSCRIPTIONS[res.data.subscriptionPlan],
+              SUBSCRIPTIONS[res.data.currentSubscription],
             );
           } else {
             this.userSignal.set(null);

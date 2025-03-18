@@ -75,7 +75,7 @@ export class MyProfileComponent implements OnInit {
 
   sortedCities = computed(() => {
     const allCities = this.cities();
-    const userCity = this.user()?.city.id;
+    const userCity = this.user()?.city?.id;
     return this.prioritizeSelected(allCities, userCity).map((c) => c.name);
   });
 
@@ -89,7 +89,9 @@ export class MyProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm();
-    this.profileService.getUserProfile().subscribe();
+    this.profileService.getUserProfile().subscribe(() => {
+      this.fetchInitialData();
+    });
   }
 
   private initializeForm(): void {
@@ -163,19 +165,24 @@ export class MyProfileComponent implements OnInit {
       .getAllIndustries()
       .pipe(
         switchMap(() => {
-          const industryId = this.user()?.majorIndustry.id;
+          const industryId = this.user()?.majorIndustry?.id ?? 1;
           const categoryObservable = industryId
             ? this.categoryService.getCategoriesByIndustryId(industryId)
             : of(void 0);
 
           return forkJoin([
-            this.locationService.getAllCities(),
-            this.locationService.getWardByCityId(this.user()?.city.id ?? '0'),
+            this.locationService.getAllCities().pipe(
+              switchMap(() => {
+                const cityId = this.user()?.city?.id ?? '0';
+                return this.locationService.getWardByCityId(cityId);
+              }),
+            ),
             categoryObservable,
           ]);
         }),
       )
       .subscribe();
+
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
