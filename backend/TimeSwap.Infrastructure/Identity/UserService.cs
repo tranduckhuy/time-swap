@@ -43,25 +43,11 @@ namespace TimeSwap.Infrastructure.Identity
             var userProfile = await _userRepository.GetUserProfileAsync(userId) ?? throw new UserNotExistsException();
             var userRoles = await _userManager.GetRolesAsync(user);
 
-            var userResponse = new UserResponse
-            {
-                Id = userProfile.Id,
-                Email = userProfile.Email,
-                FullName = userProfile.FullName,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                PhoneNumber = user.PhoneNumber!,
-                Role = userRoles.ToList(),
-                FullLocation = userProfile.Ward?.FullLocation,
-                AvatarUrl = userProfile.AvatarUrl,
-                Description = userProfile.Description,
-                Balance = userProfile.Balance,
-                SubscriptionPlan = userProfile.CurrentSubscription,
-                SubscriptionExpiryDate = userProfile.SubscriptionExpiryDate,
-                EducationHistory = userProfile.EducationHistory,
-                MajorCategory = userProfile.MajorCategory?.CategoryName,
-                MajorIndustry = userProfile.MajorIndustry?.IndustryName
-            };
+            var userResponse = AppMapper<CoreMappingProfile>.Mapper.Map<UserResponse>(userProfile);
+            userResponse.FirstName = user.FirstName;
+            userResponse.LastName = user.LastName;
+            userResponse.PhoneNumber = user.PhoneNumber!;
+            userResponse.Role = userRoles.ToList();
 
             return (StatusCode.RequestProcessedSuccessfully, userResponse);
         }
@@ -145,7 +131,8 @@ namespace TimeSwap.Infrastructure.Identity
 
                 var subscriptionExpiryClaim = new Claim("SubscriptionExpiryDate", userProfile.SubscriptionExpiryDate.ToString()!);
                 await AddOrReplaceClaimAsync(user, subscriptionExpiryClaim);
-            } else
+            }
+            else
             {
                 var claims = await _userManager.GetClaimsAsync(user);
                 var claimToRemove = claims.FirstOrDefault(c => c.Type == "SubscriptionExpiryDate");
