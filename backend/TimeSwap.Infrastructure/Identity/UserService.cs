@@ -189,6 +189,12 @@ namespace TimeSwap.Infrastructure.Identity
 
             var userResponse = AppMapper<CoreMappingProfile>.Mapper.Map<Pagination<UserResponse>>(users);
 
+            foreach (var user in userResponse.Data)
+            {
+                var identityUser = await _userManager.FindByIdAsync(user.Id.ToString());
+                user.IsLocked = identityUser?.LockoutEnd > DateTime.UtcNow;
+            }
+
             return (StatusCode.RequestProcessedSuccessfully, userResponse);
         }
     }
