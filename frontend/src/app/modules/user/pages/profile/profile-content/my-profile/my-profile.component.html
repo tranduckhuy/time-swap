@@ -71,7 +71,7 @@
                   }
                 </select>
                 <app-nice-select
-                  [listData]="industriesName()"
+                  [listData]="sortedIndustries()"
                   (valueChange)="
                     handleSelectChange('majorIndustryId', $event, industries())
                   "
@@ -99,14 +99,17 @@
             </div>
             <div class="col-lg-6">
               <div class="form-group select-box">
-                <label>{{ 'profile.form.info.city' | translate }}</label>
+                <label>
+                  <i class="bx bx-edit-alt"></i>
+                  {{ 'profile.form.info.city' | translate }}
+                </label>
                 <select style="display: none" formControlName="cityId">
                   @for (city of cities(); track city.id) {
                     <option [value]="city.id">{{ city }}</option>
                   }
                 </select>
                 <app-nice-select
-                  [listData]="citiesName()"
+                  [listData]="sortedCities()"
                   (valueChange)="handleSelectChange('cityId', $event, cities())"
                 />
               </div>
@@ -123,7 +126,7 @@
                   }
                 </select>
                 <app-nice-select
-                  [listData]="wardsName()"
+                  [listData]="sortedWards()"
                   (valueChange)="handleSelectChange('wardId', $event, wards())"
                 />
               </div>
@@ -139,7 +142,7 @@
                   type="text"
                   class="form-control"
                   placeholder="Web Developer"
-                  [value]="user()?.majorIndustry"
+                  [value]="user()?.majorIndustry?.industryName"
                   disabled
                 />
               </div>
@@ -154,7 +157,7 @@
                   type="text"
                   class="form-control"
                   placeholder="Web Developer"
-                  [value]="user()?.majorCategory"
+                  [value]="user()?.majorCategory?.categoryName"
                   disabled
                 />
               </div>
@@ -168,7 +171,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  [value]="user()?.fullLocation"
+                  [value]="user()?.ward?.fullLocation"
                   disabled
                 />
               </div>
