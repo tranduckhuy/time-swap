@@ -19,8 +19,8 @@
             <div class="form-group">
               <label>
                 <i class="bx bx-edit-alt"></i>
-                {{ 'profile.form.info.name' | translate }}</label
-              >
+                {{ 'profile.form.info.name' | translate }}
+              </label>
               <input
                 type="text"
                 class="form-control"
@@ -34,8 +34,8 @@
             <div class="form-group">
               <label>
                 <i class="bx bx-edit-alt"></i>
-                {{ 'profile.form.info.phone' | translate }}</label
-              >
+                {{ 'profile.form.info.phone' | translate }}
+              </label>
               <input
                 type="text"
                 class="form-control"
@@ -61,11 +61,15 @@
           @if (isEditing()) {
             <div class="col-lg-6">
               <div class="form-group select-box">
-                <label>
+                <label for="industrySelect">
                   <i class="bx bx-edit-alt"></i>
                   {{ 'profile.form.info.industry' | translate }}</label
                 >
-                <select style="display: none" formControlName="majorIndustryId">
+                <select
+                  id="industrySelect"
+                  style="display: none"
+                  formControlName="majorIndustryId"
+                >
                   @for (industry of industries(); track industry.id) {
                     <option [value]="industry.id">{{ industry }}</option>
                   }
@@ -80,11 +84,15 @@
             </div>
             <div class="col-lg-6">
               <div class="form-group select-box">
-                <label>
+                <label for="categorySelect">
                   <i class="bx bx-edit-alt"></i>
-                  {{ 'profile.form.info.category' | translate }}</label
+                  {{ 'profile.form.info.category' | translate }}
+                </label>
+                <select
+                  id="categorySelect"
+                  style="display: none"
+                  formControlName="majorCategoryId"
                 >
-                <select style="display: none" formControlName="majorCategoryId">
                   @for (category of categories(); track category.id) {
                     <option [value]="category.id">{{ category }}</option>
                   }
@@ -99,11 +107,15 @@
             </div>
             <div class="col-lg-6">
               <div class="form-group select-box">
-                <label>
+                <label for="citySelect">
                   <i class="bx bx-edit-alt"></i>
                   {{ 'profile.form.info.city' | translate }}
                 </label>
-                <select style="display: none" formControlName="cityId">
+                <select
+                  id="citySelect"
+                  style="display: none"
+                  formControlName="cityId"
+                >
                   @for (city of cities(); track city.id) {
                     <option [value]="city.id">{{ city }}</option>
                   }
@@ -116,11 +128,15 @@
             </div>
             <div class="col-lg-6">
               <div class="form-group select-box">
-                <label>
+                <label for="wardSelect">
                   <i class="bx bx-edit-alt"></i>
                   {{ 'profile.form.info.full-location' | translate }}
                 </label>
-                <select style="display: none" formControlName="wardId">
+                <select
+                  id="wardSelect"
+                  style="display: none"
+                  formControlName="wardId"
+                >
                   @for (ward of wards(); track ward.id) {
                     <option [value]="ward.id">{{ ward.fullLocation }}</option>
                   }

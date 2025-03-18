@@ -76,9 +76,9 @@ export class ProfileService {
     this.loadingSignal.set(true);
 
     // Keep old industryId if just categoryId change
-    updatedProfile.majorIndustryId ||= user.majorIndustry.id;
+    updatedProfile.majorIndustryId ??= user.majorIndustry.id;
     // Keep old cityId if just wardId change
-    updatedProfile.cityId ||= user.city.id;
+    updatedProfile.cityId ??= user.city.id;
 
     const filteredProfile = this.filterEmptyValues(updatedProfile);
 
