@@ -68,6 +68,7 @@ namespace TimeSwap.Application.Mappings
                 .ForMember(dest => dest.OwnerEmail, opt => opt.MapFrom(src => src.User.Email))
                 .ForMember(dest => dest.OwnerLocation, opt => opt.MapFrom(src => src.User.Ward != null ? src.User.Ward.FullLocation : string.Empty));
 
+
             CreateMap<UserProfile, UserResponse>();
 
             CreateMap<Pagination<UserProfile>, Pagination<UserResponse>>();

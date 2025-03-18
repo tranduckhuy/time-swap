@@ -225,6 +225,7 @@
         "phone": "Phone:",
         "dob": "Date Of Birth:",
         "industry": "Major Industry:",
+        "category": "Category",
         "desc": "Description:",
         "address": "Address:",
         "salary": "Salary",

@@ -1,20 +1,25 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, finalize, Observable, of } from 'rxjs';
+import { catchError, map, finalize, Observable, of, switchMap } from 'rxjs';
 
 import { environment } from '../../../../../environments/environment';
 import { SUCCESS_CODE } from '../../../../shared/constants/status-code-constants';
+import { SUBSCRIPTIONS } from '../../../../shared/constants/subscription-constant';
+
+import { createHttpParams } from '../../../../shared/utils/request-utils';
 
 import type { BaseResponseModel } from '../../../../shared/models/api/base-response.model';
+import type { JobPostModel } from '../../../../shared/models/entities/job.model';
+import type {
+  CityModel,
+  WardModel,
+} from '../../../../shared/models/entities/location.model';
 import type {
   UserModel,
   UserUpdateModel,
 } from '../../../../shared/models/entities/user.model';
-import { SUBSCRIPTIONS } from '../../../../shared/constants/subscription-constant';
 import { IndustryModel } from '../../../../shared/models/entities/industry.model';
-import { WardModel } from '../../../../shared/models/entities/location.model';
-import { JobPostModel } from '../../../../shared/models/entities/job.model';
-import { createHttpParams } from '../../../../shared/utils/request-utils';
+import { CategoryModel } from '../../../../shared/models/entities/category.model';
 
 @Injectable({
   providedIn: 'root',
@@ -63,21 +68,36 @@ export class ProfileService {
   updateUserProfile(
     updatedProfile: Partial<UserUpdateModel>,
     industries: IndustryModel[],
+    categories: CategoryModel[],
+    cities: CityModel[],
     wards: WardModel[],
     user: UserModel,
   ): Observable<boolean> {
     this.loadingSignal.set(true);
+
+    // Keep old industryId if just categoryId change
+    updatedProfile.majorIndustryId ??= user.majorIndustry.id;
+    // Keep old cityId if just wardId change
+    updatedProfile.cityId ??= user.city.id;
+
     const filteredProfile = this.filterEmptyValues(updatedProfile);
 
     return this.httpClient
       .put<BaseResponseModel<null>>(this.PROFILE_API_URL, filteredProfile)
       .pipe(
-        map((res) => {
+        switchMap((res) => {
           if (res.statusCode === SUCCESS_CODE) {
-            this.updateUserSignal(filteredProfile, industries, wards, user);
-            return true;
+            this.updateUserSignal(
+              filteredProfile,
+              industries,
+              categories,
+              cities,
+              wards,
+              user,
+            );
+            return this.getUserProfile().pipe(map(() => true));
           }
-          return false;
+          return of(false);
         }),
         catchError(() => of(false)),
         finalize(() => this.loadingSignal.set(false)),
@@ -122,41 +142,40 @@ export class ProfileService {
   private updateUserSignal(
     updatedProfile: Partial<UserUpdateModel>,
     industries: IndustryModel[],
+    categories: CategoryModel[],
+    cities: CityModel[],
     wards: WardModel[],
     user: UserModel,
   ): void {
     const transformedData = this.transformData(
       updatedProfile,
       industries,
+      categories,
+      cities,
       wards,
       user,
     );
-    const currentUser = this.userSignal();
-    if (currentUser) {
-      this.userSignal.set({ ...currentUser, ...transformedData });
-    }
+    this.userSignal.set({ ...this.userSignal()!, ...transformedData });
   }
 
   private transformData(
     input: Partial<UserUpdateModel>,
     industries: IndustryModel[],
+    categories: CategoryModel[],
+    cities: CityModel[],
     wards: WardModel[],
     user: UserModel,
   ): Partial<UserModel> {
-    const { majorIndustryId, wardId, cityId, ...rest } = input;
+    const { cityId, wardId, majorIndustryId, majorCategoryId, ...rest } = input;
 
-    const majorIndustry =
-      majorIndustryId !== undefined
-        ? (industries.find((ind) => ind.id === majorIndustryId)?.industryName ??
-          'Unknown')
-        : user.majorIndustry;
-
-    const fullLocation =
-      cityId && wardId
-        ? (wards.find((ward) => ward.id === wardId)?.fullLocation ??
-          'Unknown Location')
-        : user.fullLocation;
-
-    return { ...rest, majorIndustry, fullLocation };
+    return {
+      ...rest,
+      city: cities.find((c) => c.id === cityId) ?? user.city,
+      ward: wards.find((w) => w.id === wardId) ?? user.ward,
+      majorIndustry:
+        industries.find((i) => i.id === majorIndustryId) ?? user.majorIndustry,
+      majorCategory:
+        categories.find((c) => c.id === majorCategoryId) ?? user.majorCategory,
+    };
   }
 }
