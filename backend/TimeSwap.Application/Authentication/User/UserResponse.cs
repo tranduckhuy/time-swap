@@ -19,10 +19,13 @@ namespace TimeSwap.Application.Authentication.User
         public string AvatarUrl { get; set; } = string.Empty;
         public string? Description { get; set; } = string.Empty;
         public decimal Balance { get; set; }
-        public SubscriptionPlan SubscriptionPlan { get; set; }
+        public SubscriptionPlan CurrentSubscription { get; set; }
         public DateTime? SubscriptionExpiryDate { get; set; }
         public IEnumerable<string>? EducationHistory { get; set; }
         public CategoryResponse? MajorCategory { get; set; }
         public IndustryResponse? MajorIndustry { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime ModifiedAt { get; set; }
+        public bool IsLocked { get; set; }
     }
 }
