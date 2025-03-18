@@ -213,9 +213,11 @@ export class MyProfileComponent implements OnInit {
     selectedId: any,
   ): T[] {
     if (!selectedId) return list;
-    return [...list].sort((a, b) =>
-      a.id === selectedId ? -1 : b.id === selectedId ? 1 : 0,
-    );
+    return [...list].sort((a, b) => {
+      if (a.id === selectedId) return -1;
+      if (b.id === selectedId) return 1;
+      return 0;
+    });
   }
 
   private toggleEditing(state: boolean): void {
