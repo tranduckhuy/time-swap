@@ -99,19 +99,19 @@ export class MyProfileComponent implements OnInit {
       fullName: [{ value: this.user()?.fullName || '', disabled: true }],
       phoneNumber: [{ value: this.user()?.phoneNumber || '', disabled: true }],
       fullLocation: [
-        { value: this.user()?.ward.fullLocation || '', disabled: true },
+        { value: this.user()?.ward?.fullLocation || '', disabled: true },
       ],
-      cityId: [{ value: this.user()?.city.id, disabled: true }],
-      wardId: [{ value: this.user()?.ward.id, disabled: true }],
+      cityId: [{ value: this.user()?.city?.id, disabled: true }],
+      wardId: [{ value: this.user()?.ward?.id, disabled: true }],
       majorIndustryId: [
         {
-          value: this.user()?.majorIndustry.industryName || '',
+          value: this.user()?.majorIndustry?.industryName || '',
           disabled: true,
         },
       ],
       majorCategoryId: [
         {
-          value: this.user()?.majorCategory.categoryName || '',
+          value: this.user()?.majorCategory?.categoryName || '',
           disabled: true,
         },
       ],
