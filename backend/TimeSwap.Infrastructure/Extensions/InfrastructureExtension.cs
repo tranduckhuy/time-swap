@@ -9,13 +9,16 @@ using System.Text;
 using TimeSwap.Application.Authentication.Interfaces;
 using TimeSwap.Application.Configurations.Payments;
 using TimeSwap.Application.Email;
+using TimeSwap.Application.Visistor;
 using TimeSwap.Domain.Interfaces.Repositories;
 using TimeSwap.Infrastructure.Authentication;
 using TimeSwap.Infrastructure.Configurations;
 using TimeSwap.Infrastructure.Email;
+using TimeSwap.Infrastructure.Filters;
 using TimeSwap.Infrastructure.Identity;
 using TimeSwap.Infrastructure.Persistence.DbContexts;
 using TimeSwap.Infrastructure.Persistence.Repositories;
+using TimeSwap.Infrastructure.Visistor;
 
 namespace TimeSwap.Infrastructure.Extensions
 {
@@ -27,6 +30,8 @@ namespace TimeSwap.Infrastructure.Extensions
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITransactionManager, TransactionManager>();
+            services.AddScoped<IVisitorService, VisitorService>();
+            services.AddScoped<VisitorTrackingFilter>();
             return services;
         }
 

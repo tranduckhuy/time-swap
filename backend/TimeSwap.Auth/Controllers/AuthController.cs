@@ -6,12 +6,14 @@ using TimeSwap.Application.Authentication.Interfaces;
 using TimeSwap.Application.Mappings;
 using TimeSwap.Auth.Mappings;
 using TimeSwap.Auth.Models.Requests;
+using TimeSwap.Infrastructure.Filters;
 using TimeSwap.Shared;
 using TimeSwap.Shared.Constants;
 
 namespace TimeSwap.Auth.Controllers
 {
     [Route("api/auth")]
+    [ServiceFilter(typeof(VisitorTrackingFilter))]
     public class AuthController : BaseController<AuthController>
     {
         private readonly IAuthService _authService;
