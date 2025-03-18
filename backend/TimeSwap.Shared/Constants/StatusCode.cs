@@ -68,5 +68,7 @@
         UndefinedError = 2050,
         UserSubscriptionExpired = 2051,
         JobApplicantAlreadyExists = 2052,
+        UserAccountLocked = 2053,
+        LockYourOwnAccount = 2054,
     }
 }

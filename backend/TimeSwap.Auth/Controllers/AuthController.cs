@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TimeSwap.Application.Authentication.Dtos.Requests;
-using TimeSwap.Application.Authentication.Dtos.Responses;
 using TimeSwap.Application.Authentication.Interfaces;
 using TimeSwap.Application.Mappings;
 using TimeSwap.Auth.Mappings;
@@ -118,6 +117,38 @@ namespace TimeSwap.Auth.Controllers
                 StatusCode = (int)Shared.Constants.StatusCode.UserNotExists,
                 Message = ResponseMessages.GetMessage(Shared.Constants.StatusCode.UserNotExists)
             });
+        }
+
+        [HttpPost("lock-account")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> LockAccount([FromBody] LockUnlockAccountRequest request)
+        {
+            var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            if (request.UserId.ToString().Equals(userId))
+            {
+
+                var statusCode = Shared.Constants.StatusCode.LockYourOwnAccount;
+
+                return BadRequest(new ApiResponse<object>
+                {
+                    StatusCode = (int)statusCode,
+                    Message = ResponseMessages.GetMessage(statusCode)
+                });
+            }
+
+            var dto = AppMapper<AuthMappingProfile>.Mapper.Map<LockUnlockAccountRequestDto>(request);
+            dto.IsLocked = true;
+            return await HandleRequestAsync(dto, _authService.LockUnlockAccountAsync);
+        }
+
+        [HttpPost("unlock-account")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UnlockAccount([FromBody] LockUnlockAccountRequest request)
+        {
+            var dto = AppMapper<AuthMappingProfile>.Mapper.Map<LockUnlockAccountRequestDto>(request);
+            dto.IsLocked = false;
+            return await HandleRequestAsync(dto, _authService.LockUnlockAccountAsync);
         }
     }
 }
