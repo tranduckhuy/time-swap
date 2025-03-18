@@ -17,8 +17,14 @@
   -webkit-box-orient: vertical;
 }
 
-.nice-select, .list {
-  width: 100%
+.nice-select {
+  height: 50px !important;
+  line-height: 50px !important;
+}
+
+.nice-select,
+.list {
+  width: 100%;
 }
 
 .nice-select.invalid {

@@ -95,6 +95,7 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
 
         public async Task UpdateJobPostAsync(JobPost jobPost)
         {
+            jobPost.ModifiedAt = DateTime.UtcNow;
             await UpdateAsync(jobPost);
 
             await InvalidateCacheAsync();

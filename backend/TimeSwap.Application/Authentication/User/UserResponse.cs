@@ -1,4 +1,7 @@
-﻿using TimeSwap.Shared.Constants;
+﻿using TimeSwap.Application.Categories.Responses;
+using TimeSwap.Application.Industries.Responses;
+using TimeSwap.Application.Location.Responses;
+using TimeSwap.Shared.Constants;
 
 namespace TimeSwap.Application.Authentication.User
 {
@@ -11,14 +14,18 @@ namespace TimeSwap.Application.Authentication.User
         public string LastName { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
         public List<string> Role { get; set; } = [];
-        public string? FullLocation { get; set; } = string.Empty;
+        public CityResponse? City { get; set; } 
+        public WardResponse? Ward { get; set; }
         public string AvatarUrl { get; set; } = string.Empty;
         public string? Description { get; set; } = string.Empty;
         public decimal Balance { get; set; }
-        public SubscriptionPlan SubscriptionPlan { get; set; }
+        public SubscriptionPlan CurrentSubscription { get; set; }
         public DateTime? SubscriptionExpiryDate { get; set; }
         public IEnumerable<string>? EducationHistory { get; set; }
-        public string? MajorCategory { get; set; } = string.Empty;
-        public string? MajorIndustry { get; set; } = string.Empty;
+        public CategoryResponse? MajorCategory { get; set; }
+        public IndustryResponse? MajorIndustry { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime ModifiedAt { get; set; }
+        public bool IsLocked { get; set; }
     }
 }

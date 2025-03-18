@@ -1,112 +1,251 @@
-    @if (isLoading()) {
-        <app-loader />
-    }
+@if (isLoading()) {
+  <app-loader />
+}
 
-    <app-toast/>
-    
-    <div class="tab-pane fade active show" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-        <div class="profile-content">
-            <form [formGroup]="form">
-                <div class="profile-content-inner">
-                    <h2>{{ 'profile.form.info.heading' | translate }}</h2>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label><i class='bx bx-edit-alt'></i> {{ 'profile.form.info.name' | translate }}</label>
-                                <input type="text" class="form-control" placeholder="Tom Henry" [value]="user()?.fullName" formControlName="fullName">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label>{{ 'profile.form.info.email' | translate }}</label>
-                                <input type="email" class="form-control" placeholder="hello@jecto.com" [value]="user()?.email" disabled>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label><i class='bx bx-edit-alt'></i> {{ 'profile.form.info.phone' | translate }}</label>
-                                <input type="text" class="form-control" placeholder="+123 - 456 - 789" [value]="user()?.phoneNumber" formControlName="phoneNumber">
-                            </div>
-                        </div>
-                        
-                        @if (isEditing()) {
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>Major Industry:</label>
-                                    <select style="display: none;" formControlName="majorIndustryId">
-                                        @for (industry of industries(); track industry.id) {
-                                            <option [value]="industry.id">{{ industry }}</option>
-                                        }
-                                    </select>
-                                    <app-nice-select 
-                                        [listData]="industriesName()" 
-                                        (valueChange)="handleSelectChange('majorIndustryId', $event, industries())"
-                                    />
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label>{{ 'profile.form.info.city' | translate }}</label>
-                                    <select style="display: none;" formControlName="cityId">
-                                        @for (city of cities(); track city.id) {
-                                            <option [value]="city.id">{{ city }}</option>
-                                        }
-                                    </select>
-                                    <app-nice-select 
-                                    [listData]="citiesName()" 
-                                    (valueChange)="handleSelectChange('cityId', $event, cities())"
-                                    />
-                                </div>
-                            </div>
-                            <div class="col-lg-6" style="margin-bottom: 30px;">
-                                <div class="form-group">
-                                    <label>{{ 'profile.form.info.full-location' | translate }}</label>
-                                    <select style="display: none;" formControlName="wardId">
-                                        @for (ward of wards(); track ward.id) {
-                                            <option [value]="ward.id">{{ ward.fullLocation }}</option>
-                                        }
-                                    </select>
-                                    <app-nice-select 
-                                        [listData]="wardsName()" 
-                                        (valueChange)="handleSelectChange('wardId', $event, wards())"
-                                    />
-                                </div>
-                            </div>
-                        } @else {
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <label><i class='bx bx-edit-alt'></i> {{ 'profile.form.info.industry' | translate }} </label>
-                                    <input type="text" class="form-control" placeholder="Web Developer" [value]="user()?.majorIndustry" disabled >
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label><i class='bx bx-edit-alt'></i> {{ 'profile.form.info.address' | translate }}</label>
-                                    <input type="text" class="form-control" [value]="user()?.fullLocation" disabled>
-                                </div>
-                            </div>
-                        }
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label><i class='bx bx-edit-alt'></i> {{ 'profile.form.info.desc' | translate }}</label>
-                                <textarea style="height: 150px;" formControlName="description" type="text" class="form-control" placeholder="Basic" [value]="user()?.description"></textarea>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label>{{ 'profile.form.info.subscription-plan' | translate }}</label>
-                                <input type="text" class="form-control" placeholder="Basic" [value]="subscription()" disabled>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label>{{ 'profile.form.info.subscription-expired' | translate }}</label>
-                                <input type="text" class="form-control" placeholder="Basic" [value]="user()?.subscriptionExpiryDate | date:'medium'" disabled>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button type="submit" class="btn dashboard-btn" (click)="onSubmit()">{{ isEditing() ? ('profile.form.save' | translate) : ('profile.form.edit' | translate) }}</button>
-            </form>
+<app-toast />
+
+<div
+  class="tab-pane fade active show"
+  id="v-pills-home"
+  role="tabpanel"
+  aria-labelledby="v-pills-home-tab"
+>
+  <div class="profile-content">
+    <form [formGroup]="form">
+      <div class="profile-content-inner">
+        <h2>{{ 'profile.form.info.heading' | translate }}</h2>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label>
+                <i class="bx bx-edit-alt"></i>
+                {{ 'profile.form.info.name' | translate }}
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Tom Henry"
+                [value]="user()?.fullName"
+                formControlName="fullName"
+              />
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label>
+                <i class="bx bx-edit-alt"></i>
+                {{ 'profile.form.info.phone' | translate }}
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="+123 - 456 - 789"
+                [value]="user()?.phoneNumber"
+                formControlName="phoneNumber"
+              />
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label>{{ 'profile.form.info.email' | translate }}</label>
+              <input
+                type="email"
+                class="form-control"
+                placeholder="hello@jecto.com"
+                [value]="user()?.email"
+                disabled
+              />
+            </div>
+          </div>
+
+          @if (isEditing()) {
+            <div class="col-lg-6">
+              <div class="form-group select-box">
+                <label for="industrySelect">
+                  <i class="bx bx-edit-alt"></i>
+                  {{ 'profile.form.info.industry' | translate }}</label
+                >
+                <select
+                  id="industrySelect"
+                  style="display: none"
+                  formControlName="majorIndustryId"
+                >
+                  @for (industry of industries(); track industry.id) {
+                    <option [value]="industry.id">{{ industry }}</option>
+                  }
+                </select>
+                <app-nice-select
+                  [listData]="sortedIndustries()"
+                  (valueChange)="
+                    handleSelectChange('majorIndustryId', $event, industries())
+                  "
+                />
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group select-box">
+                <label for="categorySelect">
+                  <i class="bx bx-edit-alt"></i>
+                  {{ 'profile.form.info.category' | translate }}
+                </label>
+                <select
+                  id="categorySelect"
+                  style="display: none"
+                  formControlName="majorCategoryId"
+                >
+                  @for (category of categories(); track category.id) {
+                    <option [value]="category.id">{{ category }}</option>
+                  }
+                </select>
+                <app-nice-select
+                  [listData]="categoriesName()"
+                  (valueChange)="
+                    handleSelectChange('majorCategoryId', $event, categories())
+                  "
+                />
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group select-box">
+                <label for="citySelect">
+                  <i class="bx bx-edit-alt"></i>
+                  {{ 'profile.form.info.city' | translate }}
+                </label>
+                <select
+                  id="citySelect"
+                  style="display: none"
+                  formControlName="cityId"
+                >
+                  @for (city of cities(); track city.id) {
+                    <option [value]="city.id">{{ city }}</option>
+                  }
+                </select>
+                <app-nice-select
+                  [listData]="sortedCities()"
+                  (valueChange)="handleSelectChange('cityId', $event, cities())"
+                />
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group select-box">
+                <label for="wardSelect">
+                  <i class="bx bx-edit-alt"></i>
+                  {{ 'profile.form.info.full-location' | translate }}
+                </label>
+                <select
+                  id="wardSelect"
+                  style="display: none"
+                  formControlName="wardId"
+                >
+                  @for (ward of wards(); track ward.id) {
+                    <option [value]="ward.id">{{ ward.fullLocation }}</option>
+                  }
+                </select>
+                <app-nice-select
+                  [listData]="sortedWards()"
+                  (valueChange)="handleSelectChange('wardId', $event, wards())"
+                />
+              </div>
+            </div>
+          } @else {
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>
+                  <i class="bx bx-edit-alt"></i>
+                  {{ 'profile.form.info.industry' | translate }}</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Web Developer"
+                  [value]="user()?.majorIndustry?.industryName"
+                  disabled
+                />
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>
+                  <i class="bx bx-edit-alt"></i>
+                  {{ 'profile.form.info.category' | translate }}</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Web Developer"
+                  [value]="user()?.majorCategory?.categoryName"
+                  disabled
+                />
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="form-group">
+                <label>
+                  <i class="bx bx-edit-alt"></i>
+                  {{ 'profile.form.info.address' | translate }}</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  [value]="user()?.ward?.fullLocation"
+                  disabled
+                />
+              </div>
+            </div>
+          }
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label>
+                <i class="bx bx-edit-alt"></i>
+                {{ 'profile.form.info.desc' | translate }}</label
+              >
+              <textarea
+                style="height: 150px"
+                formControlName="description"
+                type="text"
+                class="form-control"
+                placeholder="Basic"
+                [value]="user()?.description"
+              ></textarea>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label>{{
+                'profile.form.info.subscription-plan' | translate
+              }}</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Basic"
+                [value]="subscription()"
+                disabled
+              />
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label>{{
+                'profile.form.info.subscription-expired' | translate
+              }}</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Basic"
+                [value]="user()?.subscriptionExpiryDate | date: 'medium'"
+                disabled
+              />
+            </div>
+          </div>
         </div>
-    </div>
+      </div>
+      <button type="submit" class="btn dashboard-btn" (click)="onSubmit()">
+        {{
+          isEditing()
+            ? ('profile.form.save' | translate)
+            : ('profile.form.edit' | translate)
+        }}
+      </button>
+    </form>
+  </div>
+</div>

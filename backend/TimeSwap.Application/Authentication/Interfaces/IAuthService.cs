@@ -15,5 +15,6 @@ namespace TimeSwap.Application.Authentication.Interfaces
         Task<(StatusCode, AuthenticationResponse)> RefreshTokenAsync(RefreshTokenDto request);
         Task Logout(string userId, string accessToken);
         Task<StatusCode> ChangePasswordAsync(ChangePasswordRequestDto dto);
+        Task<StatusCode> LockUnlockAccountAsync(LockUnlockAccountRequestDto request);
     }
 }

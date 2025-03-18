@@ -21,6 +21,7 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
                 .Include(u => u.MajorCategory)
                 .Include(u => u.MajorIndustry)
                 .Include(u => u.Ward)
+                .Include(u => u.City)
                 .FirstOrDefaultAsync(u => u.Id == userId);
         }
 

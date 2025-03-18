@@ -45,6 +45,7 @@ namespace TimeSwap.Infrastructure.Specifications.User
             Includes.Add(x => x.MajorCategory);
             Includes.Add(x => x.MajorIndustry);
             Includes.Add(x => x.Ward);
+            Includes.Add(x => x.City);
 
             // Pagination
             Skip = param.PageSize * (param.PageIndex - 1);

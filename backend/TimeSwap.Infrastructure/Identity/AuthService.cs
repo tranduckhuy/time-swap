@@ -122,6 +122,13 @@ namespace TimeSwap.Infrastructure.Identity
                 throw new InvalidCredentialsException();
             }
 
+            // Check if user account is locked
+            if (await _userManager.IsLockedOutAsync(user))
+            {
+                _logger.LogWarning("Attempt to login with locked account for email: {email}.", request.Email);
+                throw new UserAccountLockedException();
+            }
+
             var userRoles = await _userManager.GetRolesAsync(user);
 
             var userClaims = await _userManager.GetClaimsAsync(user);
@@ -254,6 +261,13 @@ namespace TimeSwap.Infrastructure.Identity
                 throw new InvalidTokenException(["Refresh token is invalid or expired."]);
             }
 
+            // Check if user account is locked
+            if (await _userManager.IsLockedOutAsync(user))
+            {
+                _logger.LogWarning("Attempt to login with locked account for email: {email}.", user.Email);
+                throw new UserAccountLockedException();
+            }
+
             var userRoles = await _userManager.GetRolesAsync(user);
 
             var userClaims = await _userManager.GetClaimsAsync(user);
@@ -296,6 +310,26 @@ namespace TimeSwap.Infrastructure.Identity
             }
 
             return StatusCode.PasswordChangedSuccessfully;
+        }
+
+        public async Task<StatusCode> LockUnlockAccountAsync(LockUnlockAccountRequestDto request)
+        {
+            var user = await _userManager.FindByIdAsync(request.UserId.ToString()) ?? throw new UserNotExistsException();
+
+            if (request.IsLocked)
+            {
+                await _userManager.SetLockoutEndDateAsync(user, DateTimeOffset.MaxValue);
+
+                MailMessageHelper.CreateLockAccountMessage(request, user, out string userName, out string emailSubject, out string emailBody);
+
+                _ = _emailSender.SendEmailBrevoAsync(user.Email!, userName, emailSubject, emailBody);
+            }
+            else
+            {
+                await _userManager.SetLockoutEndDateAsync(user, null);
+            }
+
+            return StatusCode.RequestProcessedSuccessfully;
         }
     }
 }

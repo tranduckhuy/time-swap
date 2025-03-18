@@ -1,0 +1,60 @@
+<div class="chat-container">
+  <!-- Open chat button -->
+  <button class="chat-button" (click)="toggleChat()">
+    <img src="assets/imgs/icon-chat.svg" alt="Chat with us" class="icon-chat" />
+  </button>
+
+  <!-- Chat Box -->
+  @if (isChatOpen()) {
+    <div class="chat-box" [@fadeInOut]>
+      <div class="chat-header">
+        <img
+          src="assets/imgs/logo-chat.png"
+          alt="Chat bot logo"
+          class="avatar"
+        />
+        <div class="chat-info">
+          <div class="chat-title">TimeSwap Bot</div>
+          <div class="chat-status">🟢 Online</div>
+        </div>
+        <button class="close-button" (click)="toggleChat()">✖</button>
+      </div>
+
+      <!-- Chat Bubbles -->
+      <div class="chat-body" #chatBody>
+        @for (msg of messages(); track $index) {
+          <div class="message" [ngClass]="msg.sender">
+            @if (msg.sender === 'bot') {
+              <img
+                src="assets/imgs/logo-chat.png"
+                alt="Chat bot logo"
+                class="msg-avatar"
+              />
+            }
+            <div class="text">{{ msg.text }}</div>
+          </div>
+        }
+      </div>
+
+      <!-- Input chat -->
+      <form
+        class="chat-footer"
+        [formGroup]="chatForm"
+        (ngSubmit)="sendMessage()"
+      >
+        <input
+          type="text"
+          formControlName="message"
+          placeholder="Write a message..."
+        />
+        <button type="submit" class="send">
+          <img
+            src="assets/imgs/icon-send.svg"
+            alt="Send Message"
+            class="icon-send"
+          />
+        </button>
+      </form>
+    </div>
+  }
+</div>

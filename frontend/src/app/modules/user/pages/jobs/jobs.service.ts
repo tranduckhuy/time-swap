@@ -144,7 +144,12 @@ export class JobsService {
             res.data.responsibilitiesList = res.data.responsibilities
               ? res.data.responsibilities
                   .split(/,\s*/)
-                  .map((responsibility) => `${responsibility.trim()}.`)
+                  .map((responsibility) => {
+                    const trimmed = responsibility.trim().replace(/\.$/, '');
+                    const capitalized =
+                      trimmed.charAt(0).toUpperCase() + trimmed.slice(1);
+                    return `${capitalized}.`;
+                  })
               : [
                   this.multiLanguageService.getTranslatedLang(
                     'job-detail.no-responsibilities',

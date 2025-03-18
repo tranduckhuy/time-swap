@@ -89,7 +89,9 @@
       "not-confirm": "Email chưa được xác nhận. Vui lòng kiểm tra hộp thư.",
       "user-not-exist": "Địa chỉ email này không tồn tại trong hệ thống. Vui lòng kiểm tra lại email hoặc đăng ký tài khoản mới.",
       "invalid-credentials": "Email hoặc mật khẩu bạn nhập không đúng. Vui lòng kiểm tra và thử lại.",
-      "token-expired": "Liên kết đã hết hạn. Một liên kết mới đã được gửi đến email của bạn."
+      "token-expired": "Liên kết đã hết hạn. Một liên kết mới đã được gửi đến email của bạn.",
+      "user-already-confirmed": "Người dùng này đã được xác nhận. Vui lòng đăng nhập vào tài khoản của bạn.",
+      "still-have-session": "Bạn đang có phiên đăng nhập. Vui lòng đăng xuất để truy cập tài khoản mới."
     },
     "register": {
       "header": "Đăng ký",
@@ -223,6 +225,7 @@
         "phone": "Số điện thoại:",
         "dob": "Ngày sinh:",
         "industry": "Ngành nghề chính:",
+        "category":"Danh mục",
         "desc": "Giới thiệu:",
         "address": "Địa chỉ:",
         "salary": "Lương:",
@@ -410,5 +413,9 @@
       "not-enough-balance": "Rất tiếc, bạn không đủ số dư trong tài khoản để thực hiện giao dịch này.",
       "not-login": "Bạn cần đăng nhập để thực hiện thanh toán."
     }
+  },
+  "chat-widget": {
+    "empty-message": "Vui lòng nhập nội dung tin nhắn trước khi gửi.",
+    "do-not-understand": "Xin lỗi, tôi không hiểu câu hỏi của bạn."
   }
 }

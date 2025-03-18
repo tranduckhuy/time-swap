@@ -12,11 +12,11 @@ import type { BaseResponseModel } from '../models/api/base-response.model';
 import type { CityModel, WardModel } from '../models/entities/location.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LocationService {
   private httpClient = inject(HttpClient);
-    private toastHandlingService = inject(ToastHandlingService);
+  private toastHandlingService = inject(ToastHandlingService);
 
   // ? All API base url
   private BASE_API_URL = environment.apiBaseUrl;
@@ -31,9 +31,10 @@ export class LocationService {
   wards = this.wardsSignal.asReadonly();
 
   getAllCities(): Observable<void> {
-    return this.httpClient.get<BaseResponseModel<CityModel[]>>(this.CITIES_API_URL)
+    return this.httpClient
+      .get<BaseResponseModel<CityModel[]>>(this.CITIES_API_URL)
       .pipe(
-        map(res => {
+        map((res) => {
           if (res.statusCode === SUCCESS_CODE) {
             this.citiesSignal.set(res.data || []);
           } else {
@@ -45,14 +46,17 @@ export class LocationService {
           this.citiesSignal.set([]);
           this.toastHandlingService.handleCommonError();
           return of(void 0);
-        })
+        }),
       );
   }
 
   getWardByCityId(cityId: string): Observable<void> {
-    return this.httpClient.get<BaseResponseModel<WardModel[]>>(`${this.CITIES_API_URL}/${cityId}/wards`)
+    return this.httpClient
+      .get<
+        BaseResponseModel<WardModel[]>
+      >(`${this.CITIES_API_URL}/${cityId}/wards`)
       .pipe(
-        map(res => {
+        map((res) => {
           if (res.statusCode === SUCCESS_CODE) {
             this.wardsSignal.set(res.data || []);
           } else {
@@ -64,7 +68,7 @@ export class LocationService {
           this.wardsSignal.set([]);
           this.toastHandlingService.handleCommonError();
           return of(void 0);
-        })
+        }),
       );
   }
 }
