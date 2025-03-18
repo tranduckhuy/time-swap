@@ -123,7 +123,14 @@ export class MyProfileComponent implements OnInit {
       const user = this.user();
       if (user) {
         this.profileService
-          .updateUserProfile(this.form.value, this.cities(), this.wards(), user)
+          .updateUserProfile(
+            this.form.value,
+            this.industries(),
+            this.categories(),
+            this.cities(),
+            this.wards(),
+            user,
+          )
           .subscribe();
       }
     } else {

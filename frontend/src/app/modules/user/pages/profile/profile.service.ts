@@ -18,6 +18,8 @@ import type {
   UserModel,
   UserUpdateModel,
 } from '../../../../shared/models/entities/user.model';
+import { IndustryModel } from '../../../../shared/models/entities/industry.model';
+import { CategoryModel } from '../../../../shared/models/entities/category.model';
 
 @Injectable({
   providedIn: 'root',
@@ -65,6 +67,8 @@ export class ProfileService {
 
   updateUserProfile(
     updatedProfile: Partial<UserUpdateModel>,
+    industries: IndustryModel[],
+    categories: CategoryModel[],
     cities: CityModel[],
     wards: WardModel[],
     user: UserModel,
@@ -83,7 +87,14 @@ export class ProfileService {
       .pipe(
         switchMap((res) => {
           if (res.statusCode === SUCCESS_CODE) {
-            this.updateUserSignal(filteredProfile, cities, wards, user);
+            this.updateUserSignal(
+              filteredProfile,
+              industries,
+              categories,
+              cities,
+              wards,
+              user,
+            );
             return this.getUserProfile().pipe(map(() => true));
           }
           return of(false);
@@ -130,12 +141,16 @@ export class ProfileService {
 
   private updateUserSignal(
     updatedProfile: Partial<UserUpdateModel>,
+    industries: IndustryModel[],
+    categories: CategoryModel[],
     cities: CityModel[],
     wards: WardModel[],
     user: UserModel,
   ): void {
     const transformedData = this.transformData(
       updatedProfile,
+      industries,
+      categories,
       cities,
       wards,
       user,
@@ -145,6 +160,8 @@ export class ProfileService {
 
   private transformData(
     input: Partial<UserUpdateModel>,
+    industries: IndustryModel[],
+    categories: CategoryModel[],
     cities: CityModel[],
     wards: WardModel[],
     user: UserModel,
@@ -153,14 +170,12 @@ export class ProfileService {
 
     return {
       ...rest,
-      city: cityId
-        ? cities.find((c) => c.id === cityId) || user.city
-        : user.city,
-      ward: wardId
-        ? wards.find((w) => w.id === wardId) || user.ward
-        : user.ward,
-      majorIndustry: majorIndustryId ? user.majorIndustry : user.majorIndustry,
-      majorCategory: majorCategoryId ? user.majorCategory : user.majorCategory,
+      city: cities.find((c) => c.id === cityId) ?? user.city,
+      ward: wards.find((w) => w.id === wardId) ?? user.ward,
+      majorIndustry:
+        industries.find((i) => i.id === majorIndustryId) ?? user.majorIndustry,
+      majorCategory:
+        categories.find((c) => c.id === majorCategoryId) ?? user.majorCategory,
     };
   }
 }
