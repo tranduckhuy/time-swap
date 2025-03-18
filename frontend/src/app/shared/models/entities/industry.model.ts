@@ -1,4 +1,4 @@
 export interface IndustryModel {
   id: number;
-  industryName?: string;
+  industryName: string;
 }
