@@ -1,7 +1,15 @@
 <div class="candidate-item two">
   <div class="left">
     <h3>
-      <a href="candidate-details.html">{{ applicant().fullName }}</a>
+      <a
+        [routerLink]="[
+          '/applicants',
+          applicant().jobPostId,
+          applicant().userId,
+        ]"
+      >
+        {{ applicant().fullName }}
+      </a>
     </h3>
     <ul class="experience">
       <li>

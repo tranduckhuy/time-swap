@@ -417,5 +417,24 @@
   "chat-widget": {
     "empty-message": "Please enter a message before sending.",
     "do-not-understand": "Sorry, I don't understand your question."
+  },
+  "footer": {
+    "privacy": "Privacy Policy",
+    "header": {
+      "our-services": "Our Services",
+      "useful-links": "Useful Links",
+      "contact": {
+        "title": "Contact",
+        "sub-title": "Get updates and special offers directly in your inbox.",
+        "placeholder": "Your email*"
+      }
+    },
+    "information": {
+      "address": "Address: ",
+      "message": "Message: ",
+      "phone": "Phone: ",
+      "open": "Open: ",
+      "mon-fri": "Mon - Fri"
+    }
   }
 }
