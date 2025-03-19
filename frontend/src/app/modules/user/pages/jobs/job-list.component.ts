@@ -122,6 +122,13 @@ export class JobListComponent implements OnInit {
       const subscription = fetchWardsByCityId(id, this.locationService);
       this.destroyRef.onDestroy(() => subscription.unsubscribe());
     }
+
+    if (field === 'industryId' && id) {
+      const subscription = this.categoryService
+        .getCategoriesByIndustryId(+id)
+        .subscribe();
+      this.destroyRef.onDestroy(() => subscription.unsubscribe());
+    }
   }
 
   private initialForm(): void {
