@@ -6,6 +6,8 @@ import {
 import { Router } from '@angular/router';
 import { Observable, throwError, timer } from 'rxjs';
 
+import { environment } from '../../../environments/environment';
+
 /**
  * Converts an object of key-value pairs into an HttpParams instance.
  * This is useful when adding query parameters to an HTTP request in Angular.
@@ -82,6 +84,8 @@ export function retryStrategy(error: any, retryCount: number): Observable<any> {
  * @returns A boolean indicating whether the URL is public.
  */
 export function isPublicPath(url: string): boolean {
+  const API_GPT_URL = environment.apiGptUrl;
+
   const publicPaths = new Set<string>([
     '/auth/login',
     '/auth/register',
@@ -89,5 +93,8 @@ export function isPublicPath(url: string): boolean {
     // ? Can add more endpoints here
   ]);
 
-  return Array.from(publicPaths).some((path) => url.includes(path));
+  return (
+    url.startsWith(API_GPT_URL) ||
+    Array.from(publicPaths).some((path) => url.includes(path))
+  );
 }
