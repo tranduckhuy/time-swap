@@ -34,7 +34,7 @@ export class PostedJobsComponent implements OnInit {
       const currentUser = this.user();
       if (currentUser) {
         this.profileService
-          .getJobPostsByUserId(false, currentUser.id)
+          .getJobPostsByUserId(true, currentUser.id)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe();
       }
