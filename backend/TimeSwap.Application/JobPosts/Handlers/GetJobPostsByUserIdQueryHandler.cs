@@ -20,8 +20,8 @@ namespace TimeSwap.Application.JobPosts.Handlers
         public async Task<IEnumerable<JobPostResponse>> Handle(GetJobPostsByUserIdQuery request, CancellationToken cancellationToken)
         {
             Expression<Func<JobPost, bool>> expression = request.IsOwner
-                ? x => x.UserId == request.UserId && (x.IsOwnerCompleted || x.IsAssigneeCompleted)
-                : x => x.AssignedTo == request.UserId && (x.IsOwnerCompleted || x.IsAssigneeCompleted);
+                ? x => x.UserId == request.UserId
+                : x => x.AssignedTo == request.UserId;
 
 
             var jobPosts = await _jobPostRepository.GetJobPostsByUserIdAsync(expression);
