@@ -66,7 +66,7 @@ builder.Services.AddAuthorization();
 
 builder.Services.Configure<DataProtectionTokenProviderOptions>(opt =>
 {
-    opt.TokenLifespan = TimeSpan.FromMinutes(1);
+    opt.TokenLifespan = TimeSpan.FromMinutes(5);
 });
 
 builder.Services.AddDatabase<AppDbContext>(builder.Configuration.GetConnectionString("CoreDbConnection")
