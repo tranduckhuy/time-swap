@@ -41,6 +41,8 @@ namespace TimeSwap.Application.JobPosts.Handlers
             }
 
             jobPost.AssignedTo = request.UserAppliedId;
+            jobPost.IsAssigneeCompleted = true;
+            jobPost.IsOwnerCompleted = true;
             jobPost.IsActive = false;
 
             await _jobPostRepository.UpdateJobPostAsync(jobPost);
