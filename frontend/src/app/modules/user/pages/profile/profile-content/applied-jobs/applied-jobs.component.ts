@@ -1,18 +1,22 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { JobPostComponent } from "../../../../../../shared/components/job-post/job-post.component";
+import { Component, DestroyRef, effect, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
+import { JobPostComponent } from '../../../../../../shared/components/job-post/job-post.component';
+import { PreLoaderComponent } from '../../../../../../shared/components/pre-loader/pre-loader.component';
+import { EmptyJobComponent } from '../../../../../../shared/components/empty-job/empty-job.component';
+
 import { ProfileService } from '../../profile.service';
-import { PreLoaderComponent } from "../../../../../../shared/components/pre-loader/pre-loader.component";
-import { EmptyJobComponent } from "../../../../../../shared/components/empty-job/empty-job.component";
 
 @Component({
   selector: 'app-applied-jobs',
   standalone: true,
   imports: [JobPostComponent, PreLoaderComponent, EmptyJobComponent],
   templateUrl: './applied-jobs.component.html',
-  styleUrl: './applied-jobs.component.css'
+  styleUrl: './applied-jobs.component.css',
 })
 export class AppliedJobsComponent implements OnInit {
   // Dependency Injection
+  private readonly destroyRef = inject(DestroyRef);
   private readonly profileService = inject(ProfileService);
 
   // State Management
@@ -21,6 +25,19 @@ export class AppliedJobsComponent implements OnInit {
   isLoading = this.profileService.isLoading;
 
   ngOnInit(): void {
-    this.profileService.getJobPostsByUserId(false, this.user()!.id).subscribe()
+    this.profileService
+      .getUserProfile()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
+
+    effect(() => {
+      const currentUser = this.user();
+      if (currentUser) {
+        this.profileService
+          .getJobPostsByUserId(false, currentUser.id)
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe();
+      }
+    });
   }
 }

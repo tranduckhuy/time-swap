@@ -225,7 +225,7 @@
         "phone": "Số điện thoại:",
         "dob": "Ngày sinh:",
         "industry": "Ngành nghề chính:",
-        "category":"Danh mục",
+        "category": "Danh mục",
         "desc": "Giới thiệu:",
         "address": "Địa chỉ:",
         "salary": "Lương:",
@@ -417,5 +417,24 @@
   "chat-widget": {
     "empty-message": "Vui lòng nhập nội dung tin nhắn trước khi gửi.",
     "do-not-understand": "Xin lỗi, tôi không hiểu câu hỏi của bạn."
+  },
+  "footer": {
+    "privacy": "Chính sách bảo mật",
+    "header": {
+      "our-services": "Dịch vụ của chúng tôi",
+      "useful-links": "Đường dẫn hữu ích",
+      "contact": {
+        "title": "Liên hệ",
+        "sub-title": "Nhận thông tin cập nhật và ưu đãi đặc biệt trực tiếp trong hộp thư đến của bạn.",
+        "placeholder": "Địa chỉ email của bạn*"
+      }
+    },
+    "information": {
+      "address": "Địa chỉ: ",
+      "message": "Kết nối: ",
+      "phone": "Số điện thoại: ",
+      "open": "Giờ mở cửa: ",
+      "mon-fri": "Thứ hai - Thứ sáu"
+    }
   }
 }
