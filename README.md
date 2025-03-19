@@ -58,8 +58,8 @@ $ git clone https://github.com/tranduckhuy/time-swap/
 > **Note**
 > If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
 
-* [Frontend Installation Guide](https://github.com/tranduckhuy)
-* [Backend Installation Guide](https://github.com/tranduckhuy)
+* [Frontend Installation Guide](/documents/FEInstallationGuide.md)
+* [Backend Installation Guide](/documents/BEInstallationGuide.md)
 
 ## Emailware
 
