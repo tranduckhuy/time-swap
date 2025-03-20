@@ -67,8 +67,10 @@ export class JobListComponent implements OnInit {
 
   // ? State Management
   isLoading = this.jobsService.isLoading;
-  pageIndex = signal(1);
-  pageSize = signal(PAGE_SIZE_JOBS);
+
+  // ? Pagination
+  pageIndex = signal<number>(1);
+  pageSize = signal<number>(PAGE_SIZE_JOBS);
 
   // ? Data For Select Options
   industries = this.industryService.industries;

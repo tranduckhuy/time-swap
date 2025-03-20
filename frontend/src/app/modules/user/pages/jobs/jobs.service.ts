@@ -13,6 +13,10 @@ import {
   FEE_GREATER_THAN_FIFTY,
   DUE_DATE_START_FAILED,
   USER_NOT_ENOUGH_BALANCE,
+  USER_NOT_APPLIED_TO_JOB_POST,
+  JOB_POST_ALREADY_ASSIGNED,
+  ASSIGN_TO_OWNER,
+  OWNER_JOB_POST_MISMATCH,
 } from '../../../../shared/constants/status-code-constants';
 
 import { ToastHandlingService } from '../../../../shared/services/toast-handling.service';
@@ -26,6 +30,7 @@ import type {
 } from '../../../../shared/models/api/response/jobs-response.model';
 import type { JobPostModel } from '../../../../shared/models/entities/job.model';
 import type { PostJobRequestModel } from '../../../../shared/models/api/request/post-job-request.model';
+import type { AssignJobRequestModel } from '../../../../shared/models/api/request/assign-job-request.model';
 
 @Injectable({
   providedIn: 'root',
@@ -38,6 +43,7 @@ export class JobsService {
   // ? All API base url
   private BASE_API_URL = environment.apiBaseUrl;
   private JOBS_API_URL = `${this.BASE_API_URL}/jobposts`;
+  private ASSIGN_JOB_API_URL = `${this.BASE_API_URL}/jobposts`;
 
   // ? Signals for state management
   private jobsSignal = signal<JobPostModel[]>([]);
@@ -160,6 +166,59 @@ export class JobsService {
           return null;
         }),
         catchError(() => of(null)),
+      );
+  }
+
+  assignJob(req: AssignJobRequestModel): Observable<void> {
+    return this.httpClient
+      .post<BaseResponseModel<void>>(
+        `${this.ASSIGN_JOB_API_URL}/${req.jobPostId}/apply`,
+        JSON.stringify(req),
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+      .pipe(
+        map((res) => {
+          switch (res.statusCode) {
+            case SUCCESS_CODE:
+              this.toastHandlingService.handleSuccess(
+                'jobs.notify.assign-job.success',
+              );
+              break;
+            case USER_NOT_APPLIED_TO_JOB_POST:
+              this.toastHandlingService.handleWarning(
+                'jobs.notify.assign-job.not-applied',
+              );
+              break;
+            case JOB_POST_ALREADY_ASSIGNED:
+              this.toastHandlingService.handleWarning(
+                'jobs.notify.assign-job.already-assigned',
+              );
+              break;
+            case ASSIGN_TO_OWNER:
+              this.toastHandlingService.handleWarning(
+                'jobs.notify.assign-job.assign-to-owner',
+              );
+              break;
+            case OWNER_JOB_POST_MISMATCH:
+              this.toastHandlingService.handleWarning(
+                'jobs.notify.assign-job.owner-mismatch',
+              );
+              break;
+            default:
+              this.toastHandlingService.handleError(
+                'jobs.notify.assign-job.failed',
+              );
+              break;
+          }
+        }),
+        catchError(() => {
+          this.toastHandlingService.handleError('common.notify.error-message');
+          return of(void 0);
+        }),
       );
   }
 

@@ -175,11 +175,20 @@
         "due-date-start-failed": "Ngày bắt đầu không được muộn hơn hoặc bằng ngày hết hạn.",
         "due-date-current-failed": "Ngày hiện tại không được muộn hơn hoặc bằng ngày hết hạn.",
         "fee-greater-than-fifty-thousand": "Phí luôn phải lớn hơn 50,000."
+      },
+      "assign-job": {
+        "success": "Ứng viên đã được chọn cho công việc thành công.",
+        "not-applied": "Ứng viên này chưa ứng tuyển vào công việc.",
+        "already-assigned": "Công việc này đã được ứng viên khác tiếp nhận.",
+        "assign-to-owner": "Bạn không thể chọn chính mình cho công việc này.",
+        "owner-mismatch": "Bạn không có quyền chọn ứng viên cho công việc này.",
+        "failed": "Chọn ứng viên cho công việc thất bại. Vui lòng thử lại."
       }
     }
   },
   "job-detail": {
     "apply": "Ứng tuyển",
+    "applied": "Đã ứng tuyển",
     "save": "Lưu",
     "share": "Chia sẻ",
     "report": "Báo cáo",
@@ -188,6 +197,7 @@
     "no-responsibilities": "Công việc này không yêu cầu trách nhiệm cụ thể.",
     "related": "Công việc liên quan",
     "view-applicants": "Xem danh sách ứng viên",
+    "job-applied": "Công việc đã được nhận",
     "location": "Vị trí",
     "job-information": {
       "title": "Thông tin công việc",
@@ -253,8 +263,13 @@
       "update-fail": "Cập nhật thông tin thất bại, vui lòng thử lại sau!"
     }
   },
+  "applicant-list": {
+    "filter": {
+      "name": "Tên người ứng tuyển"
+    }
+  },
   "applicant": {
-    "assign-now": "Giao Ngay",
+    "assign-now": "Giao Việc Ngay",
     "my-profile": "Hồ sơ của tôi",
     "work-exp": "Kinh nghiệm",
     "skill": "Kĩ năng",
