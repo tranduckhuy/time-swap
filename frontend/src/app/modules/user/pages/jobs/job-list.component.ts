@@ -10,8 +10,6 @@ import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
 
 import { TranslateModule } from '@ngx-translate/core';
 
-import { forkJoin } from 'rxjs';
-
 import { JobPostComponent } from '../../../../shared/components/job-post/job-post.component';
 import { BannerComponent } from '../../../../shared/components/banner/banner.component';
 import { BreadcrumbComponent } from '../../../../shared/components/breadcrumb/breadcrumb.component';
@@ -20,10 +18,7 @@ import { NiceSelectComponent } from '../../../../shared/components/nice-select/n
 import { ToastComponent } from '../../../../shared/components/toast/toast.component';
 import { PreLoaderComponent } from '../../../../shared/components/pre-loader/pre-loader.component';
 
-import {
-  createPostedDateOptions,
-  fetchWardsByCityId,
-} from '../../../../shared/utils/util-functions';
+import { createPostedDateOptions } from '../../../../shared/utils/util-functions';
 
 import { PAGE_SIZE_JOBS } from '../../../../shared/constants/page-constants';
 

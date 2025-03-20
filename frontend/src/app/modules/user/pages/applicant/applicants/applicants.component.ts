@@ -9,8 +9,6 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
-import { forkJoin } from 'rxjs';
-
 import { TranslateModule } from '@ngx-translate/core';
 
 import { ApplicantCardComponent } from './applicant-card/applicant-card.component';
