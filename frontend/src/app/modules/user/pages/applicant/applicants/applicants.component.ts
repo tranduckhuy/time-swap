@@ -28,6 +28,7 @@ import { ApplicantsService } from '../applicants.service';
 import { IndustryService } from '../../../../../shared/services/industry.service';
 import { CategoryService } from '../../../../../shared/services/category.service';
 import { LocationService } from '../../../../../shared/services/location.service';
+import { FilterService } from '../../../../../shared/services/filter.service';
 import { ToastHandlingService } from '../../../../../shared/services/toast-handling.service';
 
 import type { ApplicantModel } from '../../../../../shared/models/entities/applicant.model';
@@ -56,9 +57,8 @@ export class ApplicantsComponent implements OnInit {
   private readonly industryService = inject(IndustryService);
   private readonly categoryService = inject(CategoryService);
   private readonly locationService = inject(LocationService);
+  private readonly filterService = inject(FilterService);
   private readonly toastHandlingService = inject(ToastHandlingService);
-
-  // ? Dependency Injection
   private readonly fb = inject(FormBuilder);
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
@@ -104,8 +104,10 @@ export class ApplicantsComponent implements OnInit {
       return;
     }
 
+    const subscription = this.filterService.loadSelectOptions().subscribe();
+    this.destroyRef.onDestroy(() => subscription.unsubscribe());
+
     this.initForm();
-    this.initialSelectOptions();
 
     this.jobId.set(jobId);
     this.search(this.jobId());
@@ -120,16 +122,8 @@ export class ApplicantsComponent implements OnInit {
   }
 
   handleSelectChange(field: string, value: string, options: any[]): void {
-    const id = this.getOptionId(value, options);
-
+    const id = this.filterService.getOptionId(value, options);
     this.form.get(field)?.setValue(id);
-
-    if (field === 'industryId' && id) {
-      const subscription = this.categoryService
-        .getCategoriesByIndustryId(+id)
-        .subscribe();
-      this.destroyRef.onDestroy(() => subscription.unsubscribe());
-    }
   }
 
   private initForm() {
@@ -175,32 +169,6 @@ export class ApplicantsComponent implements OnInit {
         complete: () => this.isLoading.set(false),
       });
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
-  }
-
-  private initialSelectOptions(): void {
-    const subscription = forkJoin([
-      this.industryService.getAllIndustries(),
-      this.categoryService.getAllCategories(),
-      this.locationService.getAllCities(),
-      this.locationService.getWardByCityId('0'),
-    ]).subscribe();
-
-    this.destroyRef.onDestroy(() => subscription.unsubscribe());
-  }
-
-  private getOptionId(value: string, options: any[]): string {
-    return (
-      options.find(
-        (option) =>
-          option.name === value ||
-          option.fullLocation === value ||
-          option.industryName === value ||
-          option.categoryName === value,
-      )?.id ||
-      (options.some((option) => option.industryName || option.categoryName)
-        ? '0'
-        : '')
-    );
   }
 
   private showFetchErrorToast(): void {
