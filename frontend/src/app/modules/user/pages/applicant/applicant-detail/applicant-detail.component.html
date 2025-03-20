@@ -1,3 +1,9 @@
+@if (isLoading()) {
+  <app-loader />
+}
+
+<app-toast />
+
 <!-- Banner -->
 <div class="page-title-area two three">
   <app-banner>
@@ -18,8 +24,9 @@
       </div>
       <div class="right" ngProjectAs="right-content">
         <app-button-icon
-          [title]="'applicant.assign-now' | translate"
           icon="bx bx-plus"
+          [title]="'applicant.assign-now' | translate"
+          (clickBtn)="assignJob(user().id)"
         />
         <ul>
           <li>
@@ -165,22 +172,22 @@
           <li>
             <img src="assets/imgs/job-details-icon.png" alt="Details" />
             <h4>{{ 'applicant.education' | translate }}</h4>
-            <span>{{ user().educationHistory }}</span>
-          </li>
-          <li>
-            <img src="assets/imgs/job-details-icon.png" alt="Details" />
-            <h4>{{ 'applicant.category' | translate }}</h4>
-            <span>{{ user().majorCategory }}</span>
+            <span>{{ user().educationHistory[0] }}</span>
           </li>
           <li>
             <img src="assets/imgs/job-details-icon.png" alt="Details" />
             <h4>{{ 'applicant.industry' | translate }}</h4>
-            <span>{{ user().majorIndustry }}</span>
+            <span>{{ user().majorIndustry.industryName }}</span>
+          </li>
+          <li>
+            <img src="assets/imgs/job-details-icon.png" alt="Details" />
+            <h4>{{ 'applicant.category' | translate }}</h4>
+            <span>{{ user().majorCategory.categoryName }}</span>
           </li>
           <li>
             <img src="assets/imgs/job-details-icon.png" alt="Details" />
             <h4>{{ 'applicant.location' | translate }}</h4>
-            <span>{{ user().fullLocation }}</span>
+            <span>{{ user().ward.fullLocation }}</span>
           </li>
         </ul>
       </div>
