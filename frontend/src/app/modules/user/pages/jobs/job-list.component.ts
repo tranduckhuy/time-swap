@@ -10,8 +10,6 @@ import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
 
 import { TranslateModule } from '@ngx-translate/core';
 
-import { forkJoin } from 'rxjs';
-
 import { JobPostComponent } from '../../../../shared/components/job-post/job-post.component';
 import { BannerComponent } from '../../../../shared/components/banner/banner.component';
 import { BreadcrumbComponent } from '../../../../shared/components/breadcrumb/breadcrumb.component';
@@ -20,10 +18,7 @@ import { NiceSelectComponent } from '../../../../shared/components/nice-select/n
 import { ToastComponent } from '../../../../shared/components/toast/toast.component';
 import { PreLoaderComponent } from '../../../../shared/components/pre-loader/pre-loader.component';
 
-import {
-  createPostedDateOptions,
-  fetchWardsByCityId,
-} from '../../../../shared/utils/util-functions';
+import { createPostedDateOptions } from '../../../../shared/utils/util-functions';
 
 import { PAGE_SIZE_JOBS } from '../../../../shared/constants/page-constants';
 
@@ -31,6 +26,7 @@ import { JobsService } from './jobs.service';
 import { IndustryService } from '../../../../shared/services/industry.service';
 import { CategoryService } from '../../../../shared/services/category.service';
 import { LocationService } from '../../../../shared/services/location.service';
+import { FilterService } from '../../../../shared/services/filter.service';
 import { MultiLanguageService } from '../../../../shared/services/multi-language.service';
 
 import type { JobListRequestModel } from '../../../../shared/models/api/request/job-list-request.model';
@@ -61,14 +57,17 @@ export class JobListComponent implements OnInit {
   private readonly industryService = inject(IndustryService);
   private readonly categoryService = inject(CategoryService);
   private readonly locationService = inject(LocationService);
+  private readonly filterService = inject(FilterService);
   private readonly multiLanguageService = inject(MultiLanguageService);
   private readonly fb = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
 
   // ? State Management
   isLoading = this.jobsService.isLoading;
-  pageIndex = signal(1);
-  pageSize = signal(PAGE_SIZE_JOBS);
+
+  // ? Pagination
+  pageIndex = signal<number>(1);
+  pageSize = signal<number>(PAGE_SIZE_JOBS);
 
   // ? Data For Select Options
   industries = this.industryService.industries;
@@ -97,8 +96,10 @@ export class JobListComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    const subscription = this.filterService.loadSelectOptions().subscribe();
+    this.destroyRef.onDestroy(() => subscription.unsubscribe());
+
     this.initialForm();
-    this.initialSelectOptions();
     this.search();
   }
 
@@ -111,24 +112,8 @@ export class JobListComponent implements OnInit {
   }
 
   handleSelectChange(field: string, value: string, options: any[]): void {
-    const id =
-      field === 'postedDate'
-        ? this.getPostedDateId(value)
-        : this.getOptionId(value, options);
-
+    const id = this.filterService.getOptionId(value, options);
     this.form.get(field)?.setValue(id);
-
-    if (field === 'cityId' && id) {
-      const subscription = fetchWardsByCityId(id, this.locationService);
-      this.destroyRef.onDestroy(() => subscription.unsubscribe());
-    }
-
-    if (field === 'industryId' && id) {
-      const subscription = this.categoryService
-        .getCategoriesByIndustryId(+id)
-        .subscribe();
-      this.destroyRef.onDestroy(() => subscription.unsubscribe());
-    }
   }
 
   private initialForm(): void {
@@ -144,17 +129,6 @@ export class JobListComponent implements OnInit {
     });
   }
 
-  private initialSelectOptions(): void {
-    const subscription = forkJoin([
-      this.industryService.getAllIndustries(),
-      this.categoryService.getAllCategories(),
-      this.locationService.getAllCities(),
-      this.locationService.getWardByCityId('0'),
-    ]).subscribe();
-
-    this.destroyRef.onDestroy(() => subscription.unsubscribe());
-  }
-
   private search(page: number = 1): void {
     this.pageIndex.set(page);
 
@@ -167,45 +141,5 @@ export class JobListComponent implements OnInit {
     const subscription = this.jobsService.getAllJobs(req).subscribe();
 
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
-  }
-
-  private getOptionId(value: string, options: any[]): string {
-    return (
-      options.find(
-        (option) =>
-          option.name === value ||
-          option.fullLocation === value ||
-          option.industryName === value ||
-          option.categoryName === value,
-      )?.id ||
-      (options.some((option) => option.industryName || option.categoryName)
-        ? '0'
-        : '')
-    );
-  }
-
-  private getPostedDateId(value: string): string {
-    const [
-      translatedAllPostedDate,
-      translatedToday,
-      translatedYesterday,
-      translatedLast7Days,
-      translatedLast30Days,
-    ] = this.postedDate();
-
-    switch (value) {
-      case translatedAllPostedDate:
-        return '';
-      case translatedToday:
-        return '0';
-      case translatedYesterday:
-        return '1';
-      case translatedLast7Days:
-        return '2';
-      case translatedLast30Days:
-        return '3';
-      default:
-        return '';
-    }
   }
 }
