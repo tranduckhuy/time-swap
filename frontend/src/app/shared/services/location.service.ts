@@ -71,4 +71,8 @@ export class LocationService {
         }),
       );
   }
+
+  clearWards() {
+    this.wardsSignal.set([]);
+  }
 }

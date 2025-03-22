@@ -37,6 +37,7 @@
     },
     "nice-select": {
       "filter-by": "Filter by",
+      "choose": "Choose",
       "filter": {
         "industry": "Industry",
         "category": "Category",
@@ -151,8 +152,6 @@
       "category": "Category:",
       "province": "Province/City:",
       "full-location": "Full Location:",
-      "no-category": "Select a industry to view all categories",
-      "no-ward": "Select a province/city to view full location",
       "error-messages": {
         "title": "Title",
         "fee": "Fee",

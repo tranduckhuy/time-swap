@@ -18,7 +18,10 @@ import { NiceSelectComponent } from '../../../../shared/components/nice-select/n
 import { ToastComponent } from '../../../../shared/components/toast/toast.component';
 import { PreLoaderComponent } from '../../../../shared/components/pre-loader/pre-loader.component';
 
-import { createPostedDateOptions } from '../../../../shared/utils/util-functions';
+import {
+  createPostedDateOptions,
+  handleSelectChange,
+} from '../../../../shared/utils/util-functions';
 
 import { PAGE_SIZE_JOBS } from '../../../../shared/constants/page-constants';
 
@@ -111,9 +114,16 @@ export class JobListComponent implements OnInit {
     this.search(page);
   }
 
-  handleSelectChange(field: string, value: string, options: any[]): void {
-    const id = this.filterService.getOptionId(value, options);
-    this.form.get(field)?.setValue(id);
+  onSelectChange(field: string, value: string, options: any[]): void {
+    handleSelectChange(
+      field,
+      value,
+      options,
+      this.form,
+      this.filterService,
+      this.categoryService,
+      this.locationService,
+    );
   }
 
   private initialForm(): void {
