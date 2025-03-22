@@ -19,6 +19,8 @@ import { PreLoaderComponent } from '../../../../../shared/components/pre-loader/
 import { ToastComponent } from '../../../../../shared/components/toast/toast.component';
 import { NiceSelectComponent } from '../../../../../shared/components/nice-select/nice-select.component';
 
+import { handleSelectChange } from '../../../../../shared/utils/util-functions';
+
 import { SUCCESS_CODE } from '../../../../../shared/constants/status-code-constants';
 import { PAGE_SIZE_APPLICANTS } from '../../../../../shared/constants/page-constants';
 
@@ -119,9 +121,15 @@ export class ApplicantsComponent implements OnInit {
     this.search(this.jobId(), page);
   }
 
-  handleSelectChange(field: string, value: string, options: any[]): void {
-    const id = this.filterService.getOptionId(value, options);
-    this.form.get(field)?.setValue(id);
+  onSelectChange(field: string, value: string, options: any[]): void {
+    handleSelectChange(
+      field,
+      value,
+      options,
+      this.form,
+      this.filterService,
+      this.categoryService,
+    );
   }
 
   private initForm() {
