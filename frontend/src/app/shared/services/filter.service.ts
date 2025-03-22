@@ -3,7 +3,6 @@ import { inject, Injectable } from '@angular/core';
 import { forkJoin } from 'rxjs';
 
 import { IndustryService } from './industry.service';
-import { CategoryService } from './category.service';
 import { LocationService } from './location.service';
 
 @Injectable({
@@ -11,15 +10,12 @@ import { LocationService } from './location.service';
 })
 export class FilterService {
   private readonly industryService = inject(IndustryService);
-  private readonly categoryService = inject(CategoryService);
   private readonly locationService = inject(LocationService);
 
   loadSelectOptions() {
     return forkJoin([
       this.industryService.getAllIndustries(),
-      this.categoryService.getAllCategories(),
       this.locationService.getAllCities(),
-      this.locationService.getWardByCityId('0'),
     ]);
   }
 

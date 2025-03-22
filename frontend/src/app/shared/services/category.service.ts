@@ -67,4 +67,8 @@ export class CategoryService {
         }),
       );
   }
+
+  clearCategories() {
+    this.categoriesSignal.set([]);
+  }
 }

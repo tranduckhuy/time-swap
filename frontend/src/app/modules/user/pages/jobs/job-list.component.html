@@ -56,9 +56,7 @@
               [listData]="industriesName()"
               [title]="'common.nice-select.filter.industry' | translate"
               [isFilter]="true"
-              (valueChange)="
-                handleSelectChange('industryId', $event, industries())
-              "
+              (valueChange)="onSelectChange('industryId', $event, industries())"
             />
           </div>
         </div>
@@ -73,9 +71,7 @@
               [listData]="categoriesName()"
               [title]="'common.nice-select.filter.category' | translate"
               [isFilter]="true"
-              (valueChange)="
-                handleSelectChange('categoryId', $event, categories())
-              "
+              (valueChange)="onSelectChange('categoryId', $event, categories())"
             />
           </div>
         </div>
@@ -90,7 +86,7 @@
               [listData]="citiesName()"
               [title]="'common.nice-select.filter.city' | translate"
               [isFilter]="true"
-              (valueChange)="handleSelectChange('cityId', $event, cities())"
+              (valueChange)="onSelectChange('cityId', $event, cities())"
             />
           </div>
         </div>
@@ -105,7 +101,7 @@
               [listData]="wardsName()"
               [title]="'common.nice-select.filter.ward' | translate"
               [isFilter]="true"
-              (valueChange)="handleSelectChange('wardId', $event, wards())"
+              (valueChange)="onSelectChange('wardId', $event, wards())"
             />
           </div>
         </div>
@@ -144,7 +140,7 @@
                 <app-nice-select
                   [listData]="postedDate()"
                   (valueChange)="
-                    handleSelectChange('postedDate', $event, postedDate())
+                    onSelectChange('postedDate', $event, postedDate())
                   "
                 />
               </div>

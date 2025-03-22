@@ -36,9 +36,7 @@
               [listData]="industriesName()"
               [title]="'common.nice-select.filter.industry' | translate"
               [isFilter]="true"
-              (valueChange)="
-                handleSelectChange('industryId', $event, industries())
-              "
+              (valueChange)="onSelectChange('industryId', $event, industries())"
             />
           </div>
         </div>
@@ -53,9 +51,7 @@
               [listData]="categoriesName()"
               [title]="'common.nice-select.filter.category' | translate"
               [isFilter]="true"
-              (valueChange)="
-                handleSelectChange('categoryId', $event, categories())
-              "
+              (valueChange)="onSelectChange('categoryId', $event, categories())"
             />
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import { Observable, catchError, finalize, map, of } from 'rxjs';
 
@@ -36,14 +37,15 @@ import type { AssignJobRequestModel } from '../../../../shared/models/api/reques
   providedIn: 'root',
 })
 export class JobsService {
-  private httpClient = inject(HttpClient);
-  private toastHandlingService = inject(ToastHandlingService);
-  private multiLanguageService = inject(MultiLanguageService);
+  private readonly httpClient = inject(HttpClient);
+  private readonly router = inject(Router);
+  private readonly toastHandlingService = inject(ToastHandlingService);
+  private readonly multiLanguageService = inject(MultiLanguageService);
 
   // ? All API base url
-  private BASE_API_URL = environment.apiBaseUrl;
-  private JOBS_API_URL = `${this.BASE_API_URL}/jobposts`;
-  private ASSIGN_JOB_API_URL = `${this.BASE_API_URL}/jobposts`;
+  private readonly BASE_API_URL = environment.apiBaseUrl;
+  private readonly JOBS_API_URL = `${this.BASE_API_URL}/jobposts`;
+  private readonly ASSIGN_JOB_API_URL = `${this.BASE_API_URL}/jobposts`;
 
   // ? Signals for state management
   private jobsSignal = signal<JobPostModel[]>([]);
@@ -96,6 +98,7 @@ export class JobsService {
         map((res) => {
           switch (res.statusCode) {
             case SUCCESS_CODE:
+              this.router.navigateByUrl('jobs');
               this.toastHandlingService.handleSuccess(
                 'jobs.notify.create-job.success',
               );
