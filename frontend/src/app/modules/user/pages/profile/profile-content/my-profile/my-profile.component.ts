@@ -7,7 +7,7 @@ import {
   signal,
 } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { forkJoin, of, switchMap } from 'rxjs';
 
@@ -21,11 +21,13 @@ import { ProfileService } from '../../profile.service';
 import { LocationService } from '../../../../../../shared/services/location.service';
 import { IndustryService } from '../../../../../../shared/services/industry.service';
 import { CategoryService } from '../../../../../../shared/services/category.service';
+import { FilterService } from '../../../../../../shared/services/filter.service';
 
 @Component({
   selector: 'app-my-profile',
   standalone: true,
   imports: [
+    CommonModule,
     TranslateModule,
     DatePipe,
     ReactiveFormsModule,
@@ -42,6 +44,7 @@ export class MyProfileComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
 
   private readonly profileService = inject(ProfileService);
+  private readonly filterService = inject(FilterService);
   private readonly locationService = inject(LocationService);
   private readonly industryService = inject(IndustryService);
   private readonly categoryService = inject(CategoryService);
@@ -90,32 +93,23 @@ export class MyProfileComponent implements OnInit {
   ngOnInit(): void {
     this.initializeForm();
     this.profileService.getUserProfile().subscribe(() => {
+      this.patchForm();
       this.fetchInitialData();
     });
   }
 
   private initializeForm(): void {
     this.form = this.fb.group({
-      fullName: [{ value: this.user()?.fullName || '', disabled: true }],
-      phoneNumber: [{ value: this.user()?.phoneNumber || '', disabled: true }],
-      fullLocation: [
-        { value: this.user()?.ward?.fullLocation || '', disabled: true },
-      ],
-      cityId: [{ value: this.user()?.city?.id, disabled: true }],
-      wardId: [{ value: this.user()?.ward?.id, disabled: true }],
-      majorIndustryId: [
-        {
-          value: this.user()?.majorIndustry?.industryName || '',
-          disabled: true,
-        },
-      ],
-      majorCategoryId: [
-        {
-          value: this.user()?.majorCategory?.categoryName || '',
-          disabled: true,
-        },
-      ],
-      description: [{ value: this.user()?.description || '', disabled: true }],
+      fullName: [{ value: '', disabled: true }],
+      firstName: [{ value: '', disabled: true }],
+      lastName: [{ value: '', disabled: true }],
+      phoneNumber: [{ value: '', disabled: true }],
+      fullLocation: [{ value: '', disabled: true }],
+      cityId: [{ value: '', disabled: true }],
+      wardId: [{ value: '', disabled: true }],
+      majorIndustryId: [{ value: '', disabled: true }],
+      majorCategoryId: [{ value: '', disabled: true }],
+      description: [{ value: '', disabled: true }],
     });
   }
 
@@ -141,8 +135,8 @@ export class MyProfileComponent implements OnInit {
     }
   }
 
-  handleSelectChange(field: string, value: string, options: any[]): void {
-    const id = this.getOptionId(value, options);
+  onSelectChange(field: string, value: string, options: any[]): void {
+    const id = this.filterService.getOptionId(value, options);
 
     const formattedId =
       field === 'majorIndustryId' || field === 'majorCategoryId'
@@ -160,28 +154,32 @@ export class MyProfileComponent implements OnInit {
     }
   }
 
-  private fetchInitialData(): void {
-    const subscription = this.industryService
-      .getAllIndustries()
-      .pipe(
-        switchMap(() => {
-          const industryId = this.user()?.majorIndustry?.id ?? 1;
-          const categoryObservable = industryId
-            ? this.categoryService.getCategoriesByIndustryId(industryId)
-            : of(void 0);
+  private patchForm(): void {
+    if (this.user()) {
+      this.form.patchValue({
+        fullName: this.user()?.fullName || '',
+        firstName: this.user()?.firstName || '',
+        lastName: this.user()?.lastName || '',
+        phoneNumber: this.user()?.phoneNumber || '',
+        fullLocation: this.user()?.ward?.fullLocation || '',
+        cityId: this.user()?.city?.id || '',
+        wardId: this.user()?.ward?.id || '',
+        majorIndustryId: this.user()?.majorIndustry?.id || '',
+        majorCategoryId: this.user()?.majorCategory?.id || '',
+        description: this.user()?.description || '',
+      });
+    }
+  }
 
-          return forkJoin([
-            this.locationService.getAllCities().pipe(
-              switchMap(() => {
-                const cityId = this.user()?.city?.id ?? '0';
-                return this.locationService.getWardByCityId(cityId);
-              }),
-            ),
-            categoryObservable,
-          ]);
-        }),
-      )
-      .subscribe();
+  private fetchInitialData(): void {
+    const subscription = this.filterService
+      .loadSelectOptions()
+      .subscribe(() => {
+        const cityId = this.user()?.city?.id ?? '0';
+        this.fetchWardsByCityId(cityId);
+        const industryId = this.user()?.majorIndustry?.id ?? 1;
+        this.loadCategories(industryId);
+      });
 
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
@@ -190,6 +188,7 @@ export class MyProfileComponent implements OnInit {
     const subscription = this.locationService
       .getWardByCityId(cityId)
       .subscribe();
+
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
@@ -199,20 +198,8 @@ export class MyProfileComponent implements OnInit {
     const subscription = this.categoryService
       .getCategoriesByIndustryId(industryId)
       .subscribe();
-    this.destroyRef.onDestroy(() => subscription.unsubscribe());
-  }
 
-  private getOptionId(value: string, options: any[]): string | number {
-    return (
-      options.find((option) =>
-        [
-          option.name,
-          option.industryName,
-          option.categoryName,
-          option.fullLocation,
-        ].includes(value),
-      )?.id || ''
-    );
+    this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
   private prioritizeSelected<T extends { id: any }>(

@@ -8,6 +8,8 @@ import { SUBSCRIPTIONS } from '../../../../shared/constants/subscription-constan
 
 import { createHttpParams } from '../../../../shared/utils/request-utils';
 
+import { ToastHandlingService } from '../../../../shared/services/toast-handling.service';
+
 import type { BaseResponseModel } from '../../../../shared/models/api/base-response.model';
 import type { JobPostModel } from '../../../../shared/models/entities/job.model';
 import type {
@@ -18,14 +20,15 @@ import type {
   UserModel,
   UserUpdateModel,
 } from '../../../../shared/models/entities/user.model';
-import { IndustryModel } from '../../../../shared/models/entities/industry.model';
-import { CategoryModel } from '../../../../shared/models/entities/category.model';
+import type { IndustryModel } from '../../../../shared/models/entities/industry.model';
+import type { CategoryModel } from '../../../../shared/models/entities/category.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileService {
   private readonly httpClient = inject(HttpClient);
+  private readonly toastHandlingService = inject(ToastHandlingService);
 
   // ? API Base URLs
   private readonly BASE_AUTH_API_URL = environment.apiAuthBaseUrl;
@@ -95,11 +98,18 @@ export class ProfileService {
               wards,
               user,
             );
+            this.toastHandlingService.handleSuccess(
+              'profile.notify.update-success',
+            );
             return this.getUserProfile().pipe(map(() => true));
           }
+          this.toastHandlingService.handleError('profile.notify.update-fail');
           return of(false);
         }),
-        catchError(() => of(false)),
+        catchError(() => {
+          this.toastHandlingService.handleCommonError();
+          return of(false);
+        }),
         finalize(() => this.loadingSignal.set(false)),
       );
   }

@@ -15,21 +15,55 @@
       <div class="profile-content-inner">
         <h2>{{ 'profile.form.info.heading' | translate }}</h2>
         <div class="row">
-          <div class="col-lg-6">
-            <div class="form-group">
-              <label>
-                <i class="bx bx-edit-alt"></i>
-                {{ 'profile.form.info.name' | translate }}
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Tom Henry"
-                [value]="user()?.fullName"
-                formControlName="fullName"
-              />
+          @if (!isEditing()) {
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>
+                  <i class="bx bx-edit-alt"></i>
+                  {{ 'profile.form.info.name' | translate }}
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Tom Henry"
+                  [value]="user()?.fullName"
+                  formControlName="fullName"
+                />
+              </div>
             </div>
-          </div>
+          }
+          @if (isEditing()) {
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>
+                  <i class="bx bx-edit-alt"></i>
+                  {{ 'auth.register.first-name' | translate }}:
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Tom"
+                  [value]="user()?.firstName"
+                  formControlName="firstName"
+                />
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>
+                  <i class="bx bx-edit-alt"></i>
+                  {{ 'auth.register.last-name' | translate }}:
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Henry"
+                  [value]="user()?.lastName"
+                  formControlName="lastName"
+                />
+              </div>
+            </div>
+          }
           <div class="col-lg-6">
             <div class="form-group">
               <label>
@@ -45,7 +79,7 @@
               />
             </div>
           </div>
-          <div class="col-lg-12">
+          <div [ngClass]="isEditing() ? 'col-lg-6' : 'col-lg-12'">
             <div class="form-group">
               <label>{{ 'profile.form.info.email' | translate }}</label>
               <input
@@ -77,7 +111,7 @@
                 <app-nice-select
                   [listData]="sortedIndustries()"
                   (valueChange)="
-                    handleSelectChange('majorIndustryId', $event, industries())
+                    onSelectChange('majorIndustryId', $event, industries())
                   "
                 />
               </div>
@@ -100,7 +134,7 @@
                 <app-nice-select
                   [listData]="categoriesName()"
                   (valueChange)="
-                    handleSelectChange('majorCategoryId', $event, categories())
+                    onSelectChange('majorCategoryId', $event, categories())
                   "
                 />
               </div>
@@ -122,7 +156,7 @@
                 </select>
                 <app-nice-select
                   [listData]="sortedCities()"
-                  (valueChange)="handleSelectChange('cityId', $event, cities())"
+                  (valueChange)="onSelectChange('cityId', $event, cities())"
                 />
               </div>
             </div>
@@ -143,7 +177,7 @@
                 </select>
                 <app-nice-select
                   [listData]="sortedWards()"
-                  (valueChange)="handleSelectChange('wardId', $event, wards())"
+                  (valueChange)="onSelectChange('wardId', $event, wards())"
                 />
               </div>
             </div>

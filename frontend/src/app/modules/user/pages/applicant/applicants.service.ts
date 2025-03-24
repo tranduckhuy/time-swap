@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { catchError, map, Observable, of } from 'rxjs';
 
@@ -10,26 +11,28 @@ import { createHttpParams } from '../../../../shared/utils/request-utils';
 import {
   SUCCESS_CODE,
   USER_APPLIED_TO_OWN_JOB_POST,
+  NOT_UPDATE_PROFILE_YET,
 } from '../../../../shared/constants/status-code-constants';
 
 import { ToastHandlingService } from '../../../../shared/services/toast-handling.service';
 
 import type { BaseResponseModel } from '../../../../shared/models/api/base-response.model';
+import type { UserModel } from '../../../../shared/models/entities/user.model';
 import type { ApplicantResponseModel } from '../../../../shared/models/api/response/applicant-response.model';
 import type { ApplicantsRequestModel } from '../../../../shared/models/api/request/applicants-request.model';
-import type { UserModel } from '../../../../shared/models/entities/user.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApplicantsService {
-  private httpClient = inject(HttpClient);
-  private toastHandlingService = inject(ToastHandlingService);
+  private readonly httpClient = inject(HttpClient);
+  private readonly router = inject(Router);
+  private readonly toastHandlingService = inject(ToastHandlingService);
 
-  private BASE_API_URL = environment.apiBaseUrl;
-  private BASE_AUTH_API_URL = environment.apiAuthBaseUrl;
-  private APPLICANTS_API_URL = `${this.BASE_API_URL}/applicants`;
-  private USERS_API_URL = `${this.BASE_AUTH_API_URL}/users`;
+  private readonly BASE_API_URL = environment.apiBaseUrl;
+  private readonly BASE_AUTH_API_URL = environment.apiAuthBaseUrl;
+  private readonly APPLICANTS_API_URL = `${this.BASE_API_URL}/applicants`;
+  private readonly USERS_API_URL = `${this.BASE_AUTH_API_URL}/users`;
 
   getAllApplicantsByJobId(
     applicantId: string,
@@ -62,6 +65,7 @@ export class ApplicantsService {
   }
 
   applyJobById(jobId: string): Observable<void> {
+    const currentUrl = this.router.url;
     const req = {
       jobPostId: jobId,
     };
@@ -77,16 +81,27 @@ export class ApplicantsService {
       )
       .pipe(
         map((res) => {
-          if (res.statusCode === SUCCESS_CODE) {
-            this.toastHandlingService.handleSuccess(
-              'job-detail.notify.success',
-            );
-          } else if (res.statusCode === USER_APPLIED_TO_OWN_JOB_POST) {
-            this.toastHandlingService.handleWarning(
-              'job-detail.notify.apply-own-job',
-            );
-          } else {
-            this.toastHandlingService.handleError('job-detail.notify.failed');
+          switch (res.statusCode) {
+            case SUCCESS_CODE:
+              this.toastHandlingService.handleSuccess(
+                'job-detail.notify.success',
+              );
+              this.router
+                .navigateByUrl('/dummy', { skipLocationChange: true })
+                .then(() => this.router.navigateByUrl(currentUrl));
+              break;
+            case USER_APPLIED_TO_OWN_JOB_POST:
+              this.toastHandlingService.handleWarning(
+                'job-detail.notify.apply-own-job',
+              );
+              break;
+            case NOT_UPDATE_PROFILE_YET:
+              this.toastHandlingService.handleWarning(
+                'jobs.notify.not-update-profile',
+              );
+              break;
+            default:
+              this.toastHandlingService.handleError('job-detail.notify.failed');
           }
         }),
         catchError(() => {

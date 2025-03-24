@@ -5,6 +5,8 @@ import { CityModel, WardModel } from './location.model';
 export interface UserModel {
   id: string;
   fullName: string;
+  firstName: string;
+  lastName: string;
   email: string;
   phoneNumber?: string;
   city: CityModel;
