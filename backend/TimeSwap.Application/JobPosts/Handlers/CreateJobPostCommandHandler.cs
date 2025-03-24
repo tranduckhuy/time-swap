@@ -13,20 +13,25 @@ namespace TimeSwap.Application.JobPosts.Handlers
         private readonly IJobPostRepository _jobPostRepository;
         private readonly JobPostValidatorService _jobPostValidatorService;
         private readonly IUserRepository _userRepository;
+        private readonly UserProfileValidatorService _userProfileValidatorService;
 
         public CreateJobPostCommandHandler(
             IJobPostRepository jobPostRepository,
             JobPostValidatorService jobPostValidatorService,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            UserProfileValidatorService userProfileValidatorService)
         {
             _jobPostRepository = jobPostRepository;
             _jobPostValidatorService = jobPostValidatorService;
             _userRepository = userRepository;
+            _userProfileValidatorService = userProfileValidatorService;
         }
 
         public async Task<JobPostResponse> Handle(CreateJobPostCommand request, CancellationToken cancellationToken)
         {
             await _jobPostValidatorService.ValidateCreateJobPostAsync(request);
+
+            await _userProfileValidatorService.ValidateUserProfileAsync(request.UserId);
 
             var jobPost = AppMapper<CoreMappingProfile>.Mapper.Map<JobPost>(request);
 
