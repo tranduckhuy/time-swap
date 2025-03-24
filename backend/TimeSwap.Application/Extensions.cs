@@ -22,6 +22,7 @@ namespace TimeSwap.Application
             services.AddScoped<CategoryIndustryValidatorService>();
             services.AddScoped<JobPostValidatorService>();
             services.AddScoped<LocationValidatorService>();
+            services.AddScoped<UserProfileValidatorService>();
 
             return services;
         }

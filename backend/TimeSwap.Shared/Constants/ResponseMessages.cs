@@ -67,7 +67,8 @@ namespace TimeSwap.Shared.Constants
             { StatusCode.UserSubscriptionExpired, "Your subscription has expired. Please renew your subscription." },
             { StatusCode.JobApplicantAlreadyExists, "You have already applied to this job post." },
             { StatusCode.UserAccountLocked, "Your account has been locked. Please contact the administrator." },
-            { StatusCode.LockYourOwnAccount, "You cannot lock your own account!" }
+            { StatusCode.LockYourOwnAccount, "You cannot lock your own account!" },
+            { StatusCode.UserProfileNotCompleted, "Your user profile is not completed. Please complete your user profile first" }
         };
 
         public static string GetMessage(StatusCode code) => _messages[code];
