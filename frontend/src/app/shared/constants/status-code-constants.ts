@@ -32,6 +32,7 @@ export const JOB_POST_ALREADY_ASSIGNED = 2028;
 export const ASSIGN_TO_OWNER = 2029;
 export const OWNER_JOB_POST_MISMATCH = 2030;
 export const USER_APPLIED_TO_OWN_JOB_POST = 2031;
+export const NOT_UPDATE_PROFILE_YET = 2055;
 
 // ? Payment Code
 export const PAYMENT_TIMEOUT = 2042;

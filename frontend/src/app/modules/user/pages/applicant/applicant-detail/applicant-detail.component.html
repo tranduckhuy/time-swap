@@ -60,7 +60,7 @@
     <div class="details-item" ngProjectAs="leftContainer">
       <div class="profile">
         <h3>{{ 'applicant.my-profile' | translate }}</h3>
-        <p>{{ user().description }}</p>
+        <p>{{ user().description || ('applicant.no-info' | translate) }}</p>
       </div>
 
       <h3>{{ 'applicant.evaluation' | translate }}</h3>
@@ -172,22 +172,44 @@
           <li>
             <img src="assets/imgs/job-details-icon.png" alt="Details" />
             <h4>{{ 'applicant.education' | translate }}</h4>
-            <span>{{ user().educationHistory[0] }}</span>
+            <span>
+              {{
+                user().educationHistory[0] || ('applicant.no-info' | translate)
+              }}
+            </span>
           </li>
           <li>
             <img src="assets/imgs/job-details-icon.png" alt="Details" />
             <h4>{{ 'applicant.industry' | translate }}</h4>
-            <span>{{ user().majorIndustry.industryName }}</span>
+            <span>
+              {{
+                user().majorIndustry
+                  ? user().majorIndustry.industryName
+                  : ('applicant.no-info' | translate)
+              }}
+            </span>
           </li>
           <li>
             <img src="assets/imgs/job-details-icon.png" alt="Details" />
             <h4>{{ 'applicant.category' | translate }}</h4>
-            <span>{{ user().majorCategory.categoryName }}</span>
+            <span>
+              {{
+                user().majorCategory
+                  ? user().majorCategory.categoryName
+                  : ('applicant.no-info' | translate)
+              }}
+            </span>
           </li>
           <li>
             <img src="assets/imgs/job-details-icon.png" alt="Details" />
             <h4>{{ 'applicant.location' | translate }}</h4>
-            <span>{{ user().ward.fullLocation }}</span>
+            <span>
+              {{
+                user().ward
+                  ? user().fullLocation
+                  : ('applicant.no-info' | translate)
+              }}
+            </span>
           </li>
         </ul>
       </div>
