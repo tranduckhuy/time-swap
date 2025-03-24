@@ -106,7 +106,7 @@ export class JobsService {
                 'jobs.notify.create-job.success',
               );
               break;
-            case USER_NOT_ENOUGH_BALANCE:
+            case USER_NOT_ENOUGH_BALANCE: {
               const formattedFee = formatCustomCurrency(
                 req.fee,
                 this.multiLanguageService.currentLang as 'vi' | 'en',
@@ -118,6 +118,7 @@ export class JobsService {
                 },
               );
               break;
+            }
             case DUE_DATE_START_FAILED:
               this.toastHandlingService.handleWarning(
                 'jobs.notify.create-job.due-date-start-failed',
