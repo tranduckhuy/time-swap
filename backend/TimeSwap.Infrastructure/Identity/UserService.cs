@@ -112,11 +112,11 @@ namespace TimeSwap.Infrastructure.Identity
             {
                 var pricePlan = dto.SubscriptionPlan switch
                 {
-                    // Standard plan 200,000 VND
-                    SubscriptionPlan.Standard => 200000,
+                    // Standard plan 49,000 VND
+                    SubscriptionPlan.Standard => 49000,
 
-                    // Premium plan 300,000 VND
-                    SubscriptionPlan.Premium => 300000,
+                    // Premium plan 99,000 VND
+                    SubscriptionPlan.Premium => 99000,
                     _ => throw new AppException(StatusCode.RequestProcessingFailed, ["Invalid subscription plan"])
                 };
 
