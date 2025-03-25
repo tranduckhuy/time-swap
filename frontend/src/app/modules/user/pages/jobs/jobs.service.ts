@@ -18,6 +18,7 @@ import {
   JOB_POST_ALREADY_ASSIGNED,
   ASSIGN_TO_OWNER,
   OWNER_JOB_POST_MISMATCH,
+  NOT_UPDATE_PROFILE_YET,
 } from '../../../../shared/constants/status-code-constants';
 
 import { ToastHandlingService } from '../../../../shared/services/toast-handling.service';
@@ -32,11 +33,13 @@ import type {
 import type { JobPostModel } from '../../../../shared/models/entities/job.model';
 import type { PostJobRequestModel } from '../../../../shared/models/api/request/post-job-request.model';
 import type { AssignJobRequestModel } from '../../../../shared/models/api/request/assign-job-request.model';
+import { formatCustomCurrency } from '../../../../shared/utils/util-functions';
 
 @Injectable({
   providedIn: 'root',
 })
 export class JobsService {
+  // ? Dependency Inject
   private readonly httpClient = inject(HttpClient);
   private readonly router = inject(Router);
   private readonly toastHandlingService = inject(ToastHandlingService);
@@ -103,24 +106,37 @@ export class JobsService {
                 'jobs.notify.create-job.success',
               );
               break;
-            case USER_NOT_ENOUGH_BALANCE:
-              this.toastHandlingService.handleError(
+            case USER_NOT_ENOUGH_BALANCE: {
+              const formattedFee = formatCustomCurrency(
+                req.fee,
+                this.multiLanguageService.currentLang as 'vi' | 'en',
+              );
+              this.toastHandlingService.handleWarning(
                 'jobs.notify.create-job.user-not-enough-balance',
+                {
+                  fee: formattedFee,
+                },
               );
               break;
+            }
             case DUE_DATE_START_FAILED:
-              this.toastHandlingService.handleError(
+              this.toastHandlingService.handleWarning(
                 'jobs.notify.create-job.due-date-start-failed',
               );
               break;
             case DUE_DATE_CURRENT_FAILED:
-              this.toastHandlingService.handleError(
+              this.toastHandlingService.handleWarning(
                 'jobs.notify.create-job.due-date-current-failed',
               );
               break;
             case FEE_GREATER_THAN_FIFTY:
-              this.toastHandlingService.handleError(
+              this.toastHandlingService.handleWarning(
                 'jobs.notify.create-job.fee-greater-than-fifty-thousand',
+              );
+              break;
+            case NOT_UPDATE_PROFILE_YET:
+              this.toastHandlingService.handleWarning(
+                'jobs.notify.not-update-profile',
               );
               break;
             default:
@@ -133,9 +149,7 @@ export class JobsService {
           if (error.status === 401) {
             return of(void 0);
           }
-          this.toastHandlingService.handleError(
-            'jobs.notify.create-job.failed',
-          );
+          this.toastHandlingService.handleCommonError();
           return of(void 0);
         }),
         finalize(() => this.isLoadingSignal.set(false)),
@@ -173,6 +187,7 @@ export class JobsService {
   }
 
   assignJob(req: AssignJobRequestModel): Observable<void> {
+    const currentUrl = this.router.url;
     return this.httpClient
       .post<BaseResponseModel<void>>(
         `${this.ASSIGN_JOB_API_URL}/${req.jobPostId}/apply`,
@@ -190,6 +205,9 @@ export class JobsService {
               this.toastHandlingService.handleSuccess(
                 'jobs.notify.assign-job.success',
               );
+              this.router
+                .navigateByUrl('/dummy', { skipLocationChange: true })
+                .then(() => this.router.navigateByUrl(currentUrl));
               break;
             case USER_NOT_APPLIED_TO_JOB_POST:
               this.toastHandlingService.handleWarning(
@@ -219,7 +237,7 @@ export class JobsService {
           }
         }),
         catchError(() => {
-          this.toastHandlingService.handleError('common.notify.error-message');
+          this.toastHandlingService.handleCommonError();
           return of(void 0);
         }),
       );

@@ -167,10 +167,11 @@
     "notify": {
       "fetch-jobs-failed": "Oops! We encountered an issue while fetching jobs. Please reach out to the administrator for further assistance.",
       "fetch-wards-failed": "Oops! We encountered an issue while fetching wards. Please reach out to the administrator for further assistance.",
+      "not-update-profile": "You need to update your profile before posting or applying for a job.",
       "create-job": {
         "success": "Job created successfully!",
         "failed": "Job creation failed. Please try again or contact the administrator.",
-        "user-not-enough-balance": "Your account is not enough {{fee}} for create this job. Please top up your account.",
+        "user-not-enough-balance": "Your account is not enough {{ fee }} for create this job. Please top up your account.",
         "due-date-start-failed": "Start date can not be later than or equal to the due date.",
         "due-date-current-failed": "Current date can not be later than or equal to the due date.",
         "fee-greater-than-fifty-thousand": "Fee must be greater than fifty thousand."
@@ -291,7 +292,8 @@
     "category": "Category",
     "location": "Location",
     "evaluation": "Evaluation",
-    "user-overview": "User Overview"
+    "user-overview": "User Overview",
+    "no-info": "Profile not updated yet"
   },
   "contact": {
     "heading": "Contact Us",

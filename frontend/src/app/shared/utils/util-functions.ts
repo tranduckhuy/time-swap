@@ -75,11 +75,11 @@ export function handleSelectChange(
   if (field === 'industryId') {
     if (id) {
       categoryService.getCategoriesByIndustryId(Number(id)).subscribe(() => {
-        form.get('categoryId')?.setValue('');
+        form.get('categoryId')?.setValue(0);
       });
     } else {
       categoryService.clearCategories();
-      form.get('categoryId')?.setValue('');
+      form.get('categoryId')?.setValue(0);
     }
   }
 
@@ -93,4 +93,43 @@ export function handleSelectChange(
       form.get('wardId')?.setValue('');
     }
   }
+
+  if (field === 'postedDate') {
+    const index = options.findIndex((option) => option === value);
+    const postedDateValue = index === 0 ? '' : String(index - 1);
+    form.get('postedDate')?.setValue(postedDateValue);
+  }
+}
+
+/**
+ * Formats a numeric value into a custom currency string based on the given language.
+ *
+ * @param value - The numeric value to be formatted. It can be a number, string, or null/undefined.
+ * @param lang - The language code ('vi' for Vietnamese, 'en' for English). Default is 'vi'.
+ * @returns A formatted currency string with appropriate locale and currency symbol.
+ */
+export function formatCustomCurrency(
+  value: number | string | null | undefined,
+  lang: 'vi' | 'en' = 'vi',
+): string {
+  const EXCHANGE_RATE = 25383;
+
+  const CURRENCIES = {
+    vi: '₫',
+    en: 'USD',
+  };
+
+  if (!value) return `0 ${CURRENCIES[lang]}`;
+
+  const numericValue = typeof value === 'string' ? parseFloat(value) : value;
+
+  if (isNaN(numericValue)) return `0 ${CURRENCIES[lang]}`;
+
+  if (lang === 'vi') {
+    return `${numericValue.toLocaleString('vi-VN')}${CURRENCIES.vi}`;
+  }
+
+  const amount = (numericValue / EXCHANGE_RATE).toFixed(4);
+
+  return `${parseFloat(amount).toLocaleString('en-US')} ${CURRENCIES.en}`;
 }

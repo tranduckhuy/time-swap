@@ -70,5 +70,6 @@
         JobApplicantAlreadyExists = 2052,
         UserAccountLocked = 2053,
         LockYourOwnAccount = 2054,
+        UserProfileNotCompleted = 2055,
     }
 }

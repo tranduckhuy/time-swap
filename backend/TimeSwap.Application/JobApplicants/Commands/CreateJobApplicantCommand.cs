@@ -7,6 +7,5 @@ namespace TimeSwap.Application.JobApplicants.Commands
     {
         public Guid UserId { get; set; }
         public Guid JobPostId { get; set; }
-        public Guid UserAppliedId { get; set; }
     }
 }

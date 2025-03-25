@@ -167,10 +167,11 @@
     "notify": {
       "fetch-jobs-failed": "Rất tiếc! Chúng tôi gặp sự cố khi lấy thông tin công việc. Vui lòng liên hệ với quản trị viên để được hỗ trợ thêm.",
       "fetch-wards-failed": "Rất tiếc! Chúng tôi gặp sự cố khi lấy thông tin huyện/xã. Vui lòng liên hệ với quản trị viên để được hỗ trợ thêm.",
+      "not-update-profile": "Bạn cần cập nhật thông tin cá nhân trước khi đăng việc hoặc ứng tuyển một công việc.",
       "create-job": {
         "success": "Tạo công việc thành công!",
         "failed": "Tạo công việc thất bại. Vui lòng thử lại hoặc liên hệ quản trị viên.",
-        "user-not-enough-balance": "Tài khoản của bạn không đủ {{fee}} để đăng công việc này. Vui lòng nạp thêm tiền vào tài khoản.",
+        "user-not-enough-balance": "Tài khoản của bạn không đủ {{ fee }} để đăng công việc này. Vui lòng nạp thêm tiền vào tài khoản.",
         "due-date-start-failed": "Ngày bắt đầu không được muộn hơn hoặc bằng ngày hết hạn.",
         "due-date-current-failed": "Ngày hiện tại không được muộn hơn hoặc bằng ngày hết hạn.",
         "fee-greater-than-fifty-thousand": "Phí luôn phải lớn hơn 50,000."
@@ -291,7 +292,8 @@
     "industry": "Ngành",
     "location": "Địa chỉ",
     "evaluation": "Đánh giá",
-    "user-overview": "Tổng quan người dùng"
+    "user-overview": "Tổng quan người dùng",
+    "no-info": "Hồ sơ chưa được cập nhật"
   },
   "contact": {
     "heading": "Liên hệ với chúng tôi",
