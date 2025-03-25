@@ -86,7 +86,7 @@ export class AuthService {
   readonly isLoggedIn = computed(() => this.loginState());
 
   // ? Refresh statement
-  private isRefreshingSubject = new BehaviorSubject<boolean>(false);
+  private isRefreshing = signal<boolean>(false);
   private refreshTokenSubject = new BehaviorSubject<string | null>(null);
 
   // ? Constant for redirect after confirm mail
@@ -167,13 +167,13 @@ export class AuthService {
   refreshTokenApi(
     refreshReq: RefreshRequestModel,
   ): Observable<BaseResponseModel<LoginResponseModel>> {
-    if (this.isRefreshingSubject.value) {
+    if (this.isRefreshing()) {
       return this.refreshTokenSubject.asObservable().pipe(
-        filter((token) => !!token), // Ensure the token is not null
-        take(1), // Take only one value and complete
+        filter((token) => !!token),
+        take(1),
         switchMap((token) =>
           of({
-            statusCode: 200, // Mock API response
+            statusCode: 200,
             message: 'Token refreshed successfully',
             data: {
               accessToken: token!,
@@ -185,8 +185,7 @@ export class AuthService {
       );
     }
 
-    // Mark that a refresh is in progress
-    this.isRefreshingSubject.next(true);
+    this.isRefreshing.set(true);
 
     return this.sendPostRequest<
       RefreshRequestModel,
@@ -199,14 +198,13 @@ export class AuthService {
 
         const { accessToken, refreshToken, expiresIn } = response.data;
         this.saveLocalData(accessToken, refreshToken, expiresIn);
-
-        this.refreshTokenSubject.next(accessToken); // Publish new token
+        this.refreshTokenSubject.next(accessToken);
       }),
       catchError((error) => {
-        this.refreshTokenSubject.next(null); // Reset on failure
+        this.refreshTokenSubject.next(null);
         return throwError(() => error);
       }),
-      finalize(() => this.isRefreshingSubject.next(false)), // Reset refresh state
+      finalize(() => this.isRefreshing.set(false)),
     );
   }
 
