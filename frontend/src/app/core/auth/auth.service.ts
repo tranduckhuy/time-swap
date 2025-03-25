@@ -9,7 +9,6 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import {
-  BehaviorSubject,
   Observable,
   catchError,
   filter,
@@ -60,6 +59,7 @@ import type {
 } from '../../shared/models/api/request/confirm-request.model';
 import type { ForgotPasswordRequestModel } from '../../shared/models/api/request/forgot-password-request.model';
 import type { ResetPasswordRequestModel } from '../../shared/models/api/request/reset-password-request.model';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root',
@@ -86,11 +86,19 @@ export class AuthService {
   readonly isLoggedIn = computed(() => this.loginState());
 
   // ? Refresh statement
-  private isRefreshing = signal<boolean>(false);
-  private refreshTokenSubject = new BehaviorSubject<string | null>(null);
+  private isRefreshing = signal(false);
+  private currentRefreshToken = signal<string | null>(null);
+
+  // ? Computed property
+  readonly isRefreshingState = computed(() => this.isRefreshing());
+  readonly currentToken = computed(() => this.currentRefreshToken());
 
   // ? Constant for redirect after confirm mail
   private AUTH_CLIENT_URL = environment.authClientUrl;
+
+  get currentToken$(): Observable<string | null> {
+    return toObservable(this.currentRefreshToken);
+  }
 
   signin(loginReq: LoginRequestModel): Observable<void> {
     return this.sendPostRequest<
@@ -167,43 +175,23 @@ export class AuthService {
   refreshTokenApi(
     refreshReq: RefreshRequestModel,
   ): Observable<BaseResponseModel<LoginResponseModel>> {
-    if (this.isRefreshing()) {
-      return this.refreshTokenSubject.asObservable().pipe(
+    if (this.isRefreshingState()) {
+      return this.currentToken$.pipe(
         filter((token) => !!token),
         take(1),
-        switchMap((token) =>
-          of({
-            statusCode: 200,
-            message: 'Token refreshed successfully',
-            data: {
-              accessToken: token!,
-              refreshToken: '',
-              expiresIn: '3600',
-            },
-          } as BaseResponseModel<LoginResponseModel>),
-        ),
+        switchMap((token) => this.createMockResponse(token ?? '')),
       );
     }
 
     this.isRefreshing.set(true);
+    this.currentRefreshToken.set(null);
 
     return this.sendPostRequest<
       RefreshRequestModel,
       BaseResponseModel<LoginResponseModel>
     >(this.REFRESH_API_URL, refreshReq).pipe(
-      tap((response) => {
-        if (!response.data) {
-          throw new Error(response.message || 'Invalid refresh token response');
-        }
-
-        const { accessToken, refreshToken, expiresIn } = response.data;
-        this.saveLocalData(accessToken, refreshToken, expiresIn);
-        this.refreshTokenSubject.next(accessToken);
-      }),
-      catchError((error) => {
-        this.refreshTokenSubject.next(null);
-        return throwError(() => error);
-      }),
+      tap((response) => this.handleRefreshSuccess(response)),
+      catchError((error) => this.handleRefreshError(error)),
       finalize(() => this.isRefreshing.set(false)),
     );
   }
@@ -372,5 +360,36 @@ export class AuthService {
         'Content-Type': 'application/json',
       },
     });
+  }
+
+  private createMockResponse(
+    token: string,
+  ): Observable<BaseResponseModel<LoginResponseModel>> {
+    return of({
+      statusCode: 200,
+      message: 'Token refreshed successfully',
+      data: {
+        accessToken: token,
+        refreshToken: '',
+        expiresIn: '3600',
+      },
+    } as BaseResponseModel<LoginResponseModel>);
+  }
+
+  private handleRefreshSuccess(
+    response: BaseResponseModel<LoginResponseModel>,
+  ): void {
+    if (!response.data) {
+      throw new Error(response.message ?? 'Invalid refresh token response');
+    }
+
+    const { accessToken, refreshToken, expiresIn } = response.data;
+    this.saveLocalData(accessToken, refreshToken, expiresIn);
+    this.currentRefreshToken.set(accessToken);
+  }
+
+  private handleRefreshError(error: any): Observable<never> {
+    this.currentRefreshToken.set(null);
+    return throwError(() => error);
   }
 }
