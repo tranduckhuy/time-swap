@@ -25,7 +25,7 @@ namespace TimeSwap.Application.Validators
                 throw new UserNotExistsException();
             }
 
-            if (string.IsNullOrEmpty(userProfile.CityId) || string.IsNullOrEmpty(userProfile.WardId) || userProfile.EducationHistory == null
+            if (string.IsNullOrEmpty(userProfile.CityId) || string.IsNullOrEmpty(userProfile.WardId)
                 || string.IsNullOrEmpty(userProfile.Description) || userProfile.MajorCategoryId == null || userProfile.MajorIndustryId == null)
             {
                 _logger.LogWarning("[UserProfileValidatorService] - User profile with user id {UserId} is not completed", userId);
