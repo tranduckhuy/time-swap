@@ -9,7 +9,6 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import {
-  BehaviorSubject,
   Observable,
   catchError,
   filter,
@@ -180,7 +179,7 @@ export class AuthService {
       return this.currentToken$.pipe(
         filter((token) => !!token),
         take(1),
-        switchMap((token) => this.createMockResponse(token!)),
+        switchMap((token) => this.createMockResponse(token ?? '')),
       );
     }
 
@@ -381,7 +380,7 @@ export class AuthService {
     response: BaseResponseModel<LoginResponseModel>,
   ): void {
     if (!response.data) {
-      throw new Error(response.message || 'Invalid refresh token response');
+      throw new Error(response.message ?? 'Invalid refresh token response');
     }
 
     const { accessToken, refreshToken, expiresIn } = response.data;

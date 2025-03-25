@@ -56,7 +56,7 @@ export const apiInterceptor: HttpInterceptorFn = (req, next) => {
     return authService.currentToken$.pipe(
       filter((token) => token !== null),
       take(1),
-      switchMap((token) => next(addAuthHeader(req, token!))),
+      switchMap((token) => next(addAuthHeader(req, token))),
     );
   }
 
