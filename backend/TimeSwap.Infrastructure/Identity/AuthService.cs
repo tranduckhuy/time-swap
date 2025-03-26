@@ -103,7 +103,9 @@ namespace TimeSwap.Infrastructure.Identity
 
             _logger.LogInformation("Sending email to '{email}' to confirm email.", newUser.Email);
 
-            _ = _emailSender.SendEmailBrevoAsync(newUser.Email!, newUser.FirstName + " " + newUser.LastName, message.Subject, message.Content);
+            //_ = _emailSender.SendEmailBrevoAsync(newUser.Email!, newUser.FirstName + " " + newUser.LastName, message.Subject, message.Content);
+
+            _ = _emailSender.SendEmailAsync(message);
         }
 
         public async Task<(StatusCode, AuthenticationResponse)> LoginAsync(LoginRequestDto request)
@@ -197,7 +199,9 @@ namespace TimeSwap.Infrastructure.Identity
 
             var message = MailMessageHelper.CreateMessage(user, token, request.ClientUrl, "Reset Password", "reset your password");
 
-            _ = _emailSender.SendEmailBrevoAsync(user.Email!, user.FirstName + " " + user.LastName, message.Subject, message.Content);
+            //_ = _emailSender.SendEmailBrevoAsync(user.Email!, user.FirstName + " " + user.LastName, message.Subject, message.Content);
+
+            _ = _emailSender.SendEmailAsync(message);
 
             return StatusCode.ResetPasswordEmailSent;
         }
@@ -320,9 +324,11 @@ namespace TimeSwap.Infrastructure.Identity
             {
                 await _userManager.SetLockoutEndDateAsync(user, DateTimeOffset.MaxValue);
 
-                MailMessageHelper.CreateLockAccountMessage(request, user, out string userName, out string emailSubject, out string emailBody);
+                var message = MailMessageHelper.CreateLockAccountMessage(request, user, out var userName, out var emailSubject, out var emailBody);
 
-                _ = _emailSender.SendEmailBrevoAsync(user.Email!, userName, emailSubject, emailBody);
+                //_ = _emailSender.SendEmailBrevoAsync(user.Email!, userName, emailSubject, emailBody);
+
+                _ = _emailSender.SendEmailAsync(message);
             }
             else
             {

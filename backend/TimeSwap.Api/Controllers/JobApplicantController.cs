@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using System.Net;
 using System.Security.Claims;
 using TimeSwap.Api.Mapping;
@@ -37,6 +38,17 @@ namespace TimeSwap.Api.Controllers
 
             return await ExecuteAsync<GetJobApplicantsQuery, Pagination<JobApplicantResponse>>(query);
         }
+
+        [HttpGet("odata")]
+        [EnableQuery]
+        public async Task<IActionResult> GetApplicants()
+        {
+            var jobApplicantSpecParam = new JobApplicantSpecParam();
+            var query = new GetJobApplicantsQuery(jobApplicantSpecParam);
+            var result = await _mediator.Send(query);
+            return Ok(result.Data);
+        }
+
 
         [HttpPost]
         [Authorize]

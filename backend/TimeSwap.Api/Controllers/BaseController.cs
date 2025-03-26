@@ -10,7 +10,7 @@ namespace TimeSwap.Api.Controllers
     [ApiController]
     public class BaseController<TController> : ControllerBase
     {
-        private readonly IMediator _mediator;
+        protected readonly IMediator _mediator;
         private readonly ILogger<BaseController<TController>> _logger;
 
         protected BaseController(IMediator mediator, ILogger<BaseController<TController>> logger)
@@ -75,6 +75,42 @@ namespace TimeSwap.Api.Controllers
                 return HandleError<TResponse>(ex);
             }
         }
+
+        protected async Task<IActionResult> ExecuteOdataAsync<TRequest, TResponse>(TRequest request)
+    where TRequest : class, IRequest<TResponse>
+        {
+            var validationResult = ValidateRequest<TRequest, TResponse>();
+            if (validationResult != null)
+            {
+                return validationResult;
+            }
+
+            try
+            {
+                var response = await _mediator.Send(request);
+
+                if (response is IEnumerable<object> enumerableResponse)
+                {
+                    return Ok(enumerableResponse.AsQueryable());
+                }
+
+                var successCode = Shared.Constants.StatusCode.RequestProcessedSuccessfully;
+
+                return Ok(
+                    new ApiResponse<TResponse>
+                    {
+                        StatusCode = (int)successCode,
+                        Data = response,
+                        Message = ResponseMessages.GetMessage(successCode)
+                    }
+                );
+            }
+            catch (Exception ex)
+            {
+                return HandleError<TResponse>(ex);
+            }
+        }
+
 
         private IActionResult HandleError<TResponse>(Exception ex)
         {

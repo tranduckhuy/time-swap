@@ -28,7 +28,7 @@ namespace TimeSwap.Infrastructure.Email
             return message;
         }
 
-        public static void CreateLockAccountMessage(LockUnlockAccountRequestDto request,
+        public static Message CreateLockAccountMessage(LockUnlockAccountRequestDto request,
             ApplicationUser user, out string userName, out string emailSubject, out string emailBody)
         {
             var reason = request.Reason ?? "suspicious activity";
@@ -38,6 +38,15 @@ namespace TimeSwap.Infrastructure.Email
                             $"Your account has been locked at {DateTime.UtcNow}. " +
                             $"The reason for this action is: {reason}. \n\n" +
                             "If you believe this is an error or need further assistance, please contact our support team.";
+
+            var message = new Message(
+                [(user.UserName!, user.Email!)],
+                emailSubject,
+                emailBody,
+                null
+            );
+
+            return message;
         }
     }
 }

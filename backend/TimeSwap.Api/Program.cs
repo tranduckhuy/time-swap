@@ -2,6 +2,8 @@ using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData;
+using Microsoft.OData.ModelBuilder;
 using Microsoft.OpenApi.Models;
 using TimeSwap.Application;
 using TimeSwap.Infrastructure.Extensions;
@@ -66,6 +68,15 @@ builder.Services.AddApplication(builder.Configuration);
 
 builder.Services.AddApplicationJwtAuth(builder.Configuration);
 builder.Services.AddAuthorization();
+
+builder.Services.AddControllers()
+    .AddOData(options =>
+    {
+        var build = new ODataConventionModelBuilder();
+        options.Select().Filter().Count().OrderBy().Expand().SetMaxTop(null)
+       .AddRouteComponents("odata", build.GetEdmModel());
+
+    });
 
 var app = builder.Build();
 
