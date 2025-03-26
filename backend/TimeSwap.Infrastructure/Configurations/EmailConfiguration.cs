@@ -2,6 +2,7 @@
 {
     public class EmailConfiguration
     {
+        public string ApiKey { get; set; } = string.Empty;
         public string From { get; set; } = string.Empty;
         public string SmtpServer { get; set; } = string.Empty;
         public int Port { get; set; }

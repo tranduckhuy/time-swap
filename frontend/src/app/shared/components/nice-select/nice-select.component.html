@@ -1,41 +1,50 @@
 <div [class.nice-select]="true" [class.invalid]="isInvalid()" tabindex="0">
   <span class="current" [title]="current()">{{ current() }}</span>
   <div class="nice-select-search-box" appStopPropagation>
-      <input 
-        #searchBox
-        type="text" 
-        class="nice-select-search" 
-        placeholder="Search..." 
-        (input)="onSearch(searchBox.value)"
-      />
+    <input
+      #searchBox
+      type="text"
+      class="nice-select-search"
+      placeholder="Search..."
+      (input)="onSearch(searchBox.value)"
+    />
   </div>
   <ul class="list">
-      @if (isFilter()) {
-        <li
-          class="option selected" 
-          [attr.data-value]="''"
-          (click)="onValueChange('')"  
-        >
-          {{ 'common.nice-select.filter-by' | translate }} {{ title() }}
-        </li>
-      }
-      @for(data of filteredList(); track $index) {
-        <li 
-          [title]="data"
-          [attr.data-value]="data" 
-          [ngClass]="data === current() ? 'selected': ''"
-          [class.option]="true" 
-          (click)="onValueChange(data)"
-        >
-          {{ data }}
-        </li>
-      } @empty {
-        <div class="select-empty-box">
-          <p class="select-empty-text">No Results Found</p>
-        </div>
-      }
+    @if (isFilter()) {
+      <li
+        class="option selected"
+        [attr.data-value]="''"
+        (click)="onValueChange('')"
+      >
+        {{ 'common.nice-select.filter-by' | translate }} {{ title() }}
+      </li>
+    }
+    @if (isChoose()) {
+      <li
+        class="option selected"
+        [attr.data-value]="''"
+        (click)="onValueChange('')"
+      >
+        {{ 'common.nice-select.choose' | translate }} {{ title() }}
+      </li>
+    }
+    @for (data of filteredList(); track $index) {
+      <li
+        [title]="data"
+        [attr.data-value]="data"
+        [ngClass]="data === current() ? 'selected' : ''"
+        [class.option]="true"
+        (click)="onValueChange(data)"
+      >
+        {{ data }}
+      </li>
+    } @empty {
+      <div class="select-empty-box">
+        <p class="select-empty-text">No Results Found</p>
+      </div>
+    }
   </ul>
-  @if(isInvalid()) {
+  @if (isInvalid()) {
     <span class="error-msg">{{ errorMsg() }}</span>
   }
 </div>

@@ -4,6 +4,7 @@
   position: relative;
   color: #221668;
 }
+
 .side-nav.three .right-nav-item {
   color: #fff;
 }
@@ -13,6 +14,7 @@
   color: #fe4a55;
   cursor: pointer;
 }
+
 .right-nav-item::after {
   content: '';
   position: absolute;
@@ -22,6 +24,7 @@
   top: 100%;
   left: 0;
 }
+
 .language-flag {
   width: 24px;
   height: 20px;
@@ -93,9 +96,9 @@
 .avatar {
   width: 40px;
   height: 40px;
+  border-radius: 50%;
   margin-right: 8px;
   object-fit: cover;
-  border-radius: 2px;
 }
 
 .profile-item-icon {

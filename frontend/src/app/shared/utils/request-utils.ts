@@ -1,6 +1,12 @@
-import { HttpErrorResponse, HttpParams, HttpRequest } from "@angular/common/http";
-import { Router } from "@angular/router";
-import { Observable, throwError, timer } from "rxjs";
+import {
+  HttpErrorResponse,
+  HttpParams,
+  HttpRequest,
+} from '@angular/common/http';
+import { Router } from '@angular/router';
+import { Observable, throwError, timer } from 'rxjs';
+
+import { environment } from '../../../environments/environment';
 
 /**
  * Converts an object of key-value pairs into an HttpParams instance.
@@ -10,14 +16,14 @@ import { Observable, throwError, timer } from "rxjs";
  * @returns An instance of HttpParams with the provided key-value pairs.
  */
 export function createHttpParams(params: Record<string, any>): HttpParams {
-    let httpParams = new HttpParams();
-    Object.keys(params).forEach(key => {
-        const value = params[key];
-        if (value !== null && value !== undefined) {
-        httpParams = httpParams.append(key, value.toString());
-        }
-    });
-    return httpParams;
+  let httpParams = new HttpParams();
+  Object.keys(params).forEach((key) => {
+    const value = params[key];
+    if (value !== null && value !== undefined) {
+      httpParams = httpParams.append(key, value.toString());
+    }
+  });
+  return httpParams;
 }
 
 /**
@@ -27,11 +33,14 @@ export function createHttpParams(params: Record<string, any>): HttpParams {
  * @param token - The access token to include in the Authorization header.
  * @returns A new HTTP request with the Authorization header added.
  */
-export function addAuthHeader(req: HttpRequest<unknown>, token: string | null): HttpRequest<unknown> {
-    return req.clone({
-      headers: req.headers.set('Authorization', `Bearer ${token ?? ''}`)
-    });
-};
+export function addAuthHeader(
+  req: HttpRequest<unknown>,
+  token: string | null,
+): HttpRequest<unknown> {
+  return req.clone({
+    headers: req.headers.set('Authorization', `Bearer ${token ?? ''}`),
+  });
+}
 
 /**
  * Handles unauthorized HTTP errors (401) by redirecting the user to the login page.
@@ -40,14 +49,14 @@ export function addAuthHeader(req: HttpRequest<unknown>, token: string | null): 
  * @returns A function that processes the error and navigates to the login page if the status is 401.
  */
 export function handleUnauthorizedError(router: Router) {
-    return (error: HttpErrorResponse) => {
-        if (error.status === 401) {
-        router.navigate(['/auth/login']);
-        }
-        return throwError(() => error);
-    };
-};
-  
+  return (error: HttpErrorResponse) => {
+    if (error.status === 401) {
+      router.navigate(['/auth/login']);
+    }
+    return throwError(() => error);
+  };
+}
+
 /**
  * A retry strategy that implements exponential backoff for network errors or 5xx server errors.
  *
@@ -56,18 +65,18 @@ export function handleUnauthorizedError(router: Router) {
  * @returns An Observable that delays the retry based on the retry strategy or throws the error.
  */
 export function retryStrategy(error: any, retryCount: number): Observable<any> {
-    const delayMs = Math.min(1000 * Math.pow(2, retryCount), 10000);
+  const delayMs = Math.min(1000 * Math.pow(2, retryCount), 10000);
 
-    // ? Only retry on network errors or 5xx internal server errors
-    if (error instanceof HttpErrorResponse) {
-        if (error.status === 0 || (error.status >= 500 && error.status < 600)) {
-            return timer(delayMs);
-        }
+  // ? Only retry on network errors or 5xx internal server errors
+  if (error instanceof HttpErrorResponse) {
+    if (error.status === 0 || (error.status >= 500 && error.status < 600)) {
+      return timer(delayMs);
     }
+  }
 
-    return throwError(() => error);
-};
-  
+  return throwError(() => error);
+}
+
 /**
  * Checks if a URL is public and does not require authentication.
  *
@@ -75,12 +84,17 @@ export function retryStrategy(error: any, retryCount: number): Observable<any> {
  * @returns A boolean indicating whether the URL is public.
  */
 export function isPublicPath(url: string): boolean {
-    const publicPaths = new Set<string>([
-        '/auth/login',
-        '/auth/register',
-        '/jobs',
-        // ? Can add more endpoints here
-    ]);
+  const API_GPT_URL = environment.apiGptUrl;
 
-    return Array.from(publicPaths).some(path => url.includes(path));
-};
+  const publicPaths = new Set<string>([
+    '/auth/login',
+    '/auth/register',
+    '/jobs',
+    // ? Can add more endpoints here
+  ]);
+
+  return (
+    url.startsWith(API_GPT_URL) ||
+    Array.from(publicPaths).some((path) => url.includes(path))
+  );
+}

@@ -1,7 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Interfaces.Repositories;
+using TimeSwap.Domain.Specs;
+using TimeSwap.Domain.Specs.User;
 using TimeSwap.Infrastructure.Persistence.DbContexts;
+using TimeSwap.Infrastructure.Specifications.JobPosts;
+using TimeSwap.Infrastructure.Specifications.User;
 
 namespace TimeSwap.Infrastructure.Persistence.Repositories
 {
@@ -17,7 +21,14 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
                 .Include(u => u.MajorCategory)
                 .Include(u => u.MajorIndustry)
                 .Include(u => u.Ward)
+                .Include(u => u.City)
                 .FirstOrDefaultAsync(u => u.Id == userId);
+        }
+
+        public async Task<Pagination<UserProfile>?> GetUserWithSpecAsync(UserSpecParam param)
+        {
+            var spec = new UserSpecification(param);
+            return await GetWithSpecAsync(spec);
         }
     }
 }

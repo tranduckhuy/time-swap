@@ -4,10 +4,13 @@ using TimeSwap.Application.Authentication.Interfaces;
 using TimeSwap.Application.Authentication.User;
 using TimeSwap.Application.Exceptions.Auth;
 using TimeSwap.Application.Exceptions.User;
+using TimeSwap.Application.Mappings;
 using TimeSwap.Application.Validators;
 using TimeSwap.Domain.Entities;
 using TimeSwap.Domain.Exceptions;
 using TimeSwap.Domain.Interfaces.Repositories;
+using TimeSwap.Domain.Specs;
+using TimeSwap.Domain.Specs.User;
 using TimeSwap.Shared.Constants;
 
 namespace TimeSwap.Infrastructure.Identity
@@ -40,25 +43,11 @@ namespace TimeSwap.Infrastructure.Identity
             var userProfile = await _userRepository.GetUserProfileAsync(userId) ?? throw new UserNotExistsException();
             var userRoles = await _userManager.GetRolesAsync(user);
 
-            var userResponse = new UserResponse
-            {
-                Id = userProfile.Id,
-                Email = userProfile.Email,
-                FullName = userProfile.FullName,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                PhoneNumber = user.PhoneNumber!,
-                Role = userRoles.ToList(),
-                FullLocation = userProfile.Ward?.FullLocation,
-                AvatarUrl = userProfile.AvatarUrl,
-                Description = userProfile.Description,
-                Balance = userProfile.Balance,
-                SubscriptionPlan = userProfile.CurrentSubscription,
-                SubscriptionExpiryDate = userProfile.SubscriptionExpiryDate,
-                EducationHistory = userProfile.EducationHistory,
-                MajorCategory = userProfile.MajorCategory?.CategoryName,
-                MajorIndustry = userProfile.MajorIndustry?.IndustryName
-            };
+            var userResponse = AppMapper<CoreMappingProfile>.Mapper.Map<UserResponse>(userProfile);
+            userResponse.FirstName = user.FirstName;
+            userResponse.LastName = user.LastName;
+            userResponse.PhoneNumber = user.PhoneNumber!;
+            userResponse.Role = userRoles.ToList();
 
             return (StatusCode.RequestProcessedSuccessfully, userResponse);
         }
@@ -104,6 +93,8 @@ namespace TimeSwap.Infrastructure.Identity
                     userProfile.MajorIndustryId = request.MajorIndustryId;
                 }
 
+                userProfile.ModifiedAt = DateTime.UtcNow;
+
                 await _userRepository.UpdateAsync(userProfile);
             });
 
@@ -121,11 +112,11 @@ namespace TimeSwap.Infrastructure.Identity
             {
                 var pricePlan = dto.SubscriptionPlan switch
                 {
-                    // Standard plan 200,000 VND
-                    SubscriptionPlan.Standard => 200000,
+                    // Standard plan 49,000 VND
+                    SubscriptionPlan.Standard => 49000,
 
-                    // Premium plan 300,000 VND
-                    SubscriptionPlan.Premium => 300000,
+                    // Premium plan 99,000 VND
+                    SubscriptionPlan.Premium => 99000,
                     _ => throw new AppException(StatusCode.RequestProcessingFailed, ["Invalid subscription plan"])
                 };
 
@@ -140,7 +131,8 @@ namespace TimeSwap.Infrastructure.Identity
 
                 var subscriptionExpiryClaim = new Claim("SubscriptionExpiryDate", userProfile.SubscriptionExpiryDate.ToString()!);
                 await AddOrReplaceClaimAsync(user, subscriptionExpiryClaim);
-            } else
+            }
+            else
             {
                 var claims = await _userManager.GetClaimsAsync(user);
                 var claimToRemove = claims.FirstOrDefault(c => c.Type == "SubscriptionExpiryDate");
@@ -157,6 +149,7 @@ namespace TimeSwap.Infrastructure.Identity
 
             await AddOrReplaceClaimAsync(user, subscriptionClaim);
 
+            userProfile.ModifiedAt = DateTime.UtcNow;
             await _userRepository.UpdateAsync(userProfile);
             return StatusCode.RequestProcessedSuccessfully;
         }
@@ -188,6 +181,21 @@ namespace TimeSwap.Infrastructure.Identity
             await _userRepository.AddAsync(user);
 
             return StatusCode.RequestProcessedSuccessfully;
+        }
+
+        public async Task<(StatusCode, Pagination<UserResponse>)> GetUserListAsync(UserSpecParam request)
+        {
+            var users = await _userRepository.GetUserWithSpecAsync(request);
+
+            var userResponse = AppMapper<CoreMappingProfile>.Mapper.Map<Pagination<UserResponse>>(users);
+
+            foreach (var user in userResponse.Data)
+            {
+                var identityUser = await _userManager.FindByIdAsync(user.Id.ToString());
+                user.IsLocked = identityUser?.LockoutEnd > DateTime.UtcNow;
+            }
+
+            return (StatusCode.RequestProcessedSuccessfully, userResponse);
         }
     }
 }

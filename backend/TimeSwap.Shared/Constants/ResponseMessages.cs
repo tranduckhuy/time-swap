@@ -64,7 +64,11 @@ namespace TimeSwap.Shared.Constants
             { StatusCode.BankIsUnderMaintenance, "Bank maintenance in progress." },
             { StatusCode.IncorrectPaymentPasswordExceeded, "Payment password entered incorrectly too many times." },
             { StatusCode.UndefinedError, "Undefined error." },
-            { StatusCode.UserSubscriptionExpired, "Your subscription has expired. Please renew your subscription." }
+            { StatusCode.UserSubscriptionExpired, "Your subscription has expired. Please renew your subscription." },
+            { StatusCode.JobApplicantAlreadyExists, "You have already applied to this job post." },
+            { StatusCode.UserAccountLocked, "Your account has been locked. Please contact the administrator." },
+            { StatusCode.LockYourOwnAccount, "You cannot lock your own account!" },
+            { StatusCode.UserProfileNotCompleted, "Your user profile is not completed. Please complete your user profile first" }
         };
 
         public static string GetMessage(StatusCode code) => _messages[code];

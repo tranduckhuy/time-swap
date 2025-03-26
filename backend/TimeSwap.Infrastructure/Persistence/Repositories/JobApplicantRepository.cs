@@ -20,14 +20,19 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
             return await GetWithSpecAsync(spec);
         }
 
-        public async Task<int> GetTotalApplicantsByJobPostIdAsync(Guid jobPostId)
+        public async Task<int> GetTotalApplicantsByJobPostIdAsync(Guid jobPostId, CancellationToken cancellationToken)
         {
-            return await _context.JobApplicants.CountAsync(x => x.JobPostId == jobPostId);
+            return await _context.JobApplicants.CountAsync(x => x.JobPostId == jobPostId, cancellationToken);
         }
 
         public async Task<bool> IsUserAppliedToJobPostAsync(Guid jobPostId, Guid userId)
         {
             return await _context.JobApplicants.AnyAsync(x => x.JobPostId == jobPostId && x.UserAppliedId == userId);
+        }
+
+        public Task<bool> JobApplicantExistsAsync(Guid jobPostId, Guid userId, CancellationToken cancellationToken)
+        {
+            return _context.JobApplicants.AnyAsync(x => x.JobPostId == jobPostId && x.UserAppliedId == userId, cancellationToken);
         }
     }
 }

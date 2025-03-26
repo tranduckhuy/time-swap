@@ -1,8 +1,9 @@
-import { Subscription } from 'rxjs';
+import { FormGroup } from '@angular/forms';
 
-import { MultiLanguageService } from '../services/multi-language.service';
-import { LocationService } from '../services/location.service';
 import { CategoryService } from '../services/category.service';
+import { LocationService } from '../services/location.service';
+import { FilterService } from '../services/filter.service';
+import { MultiLanguageService } from '../services/multi-language.service';
 
 /**
  * Creates default options for the "Date Posted" filter with translated values.
@@ -34,42 +35,6 @@ export function createPostedDateOptions(
 }
 
 /**
- * Fetches wards for a specific city by its ID.
- *
- * This function retrieves a list of wards corresponding to a given city ID.
- * The resulting data is typically used to populate a dropdown or a list of options
- * for the user to select a ward within the specified city.
- *
- * @param cityId - A string representing the ID of the city for which wards are fetched.
- * @param locationService - An instance of `LocationService` used to fetch ward data.
- * @returns A `Subscription` object representing the ongoing data-fetching operation.
- */
-export function fetchWardsByCityId(
-  cityId: string,
-  locationService: LocationService,
-): Subscription {
-  return locationService.getWardByCityId(cityId).subscribe();
-}
-
-/**
- * Fetches categories for a specific industry by its ID.
- *
- * This function retrieves a list of categories corresponding to a given industry ID.
- * The resulting data is typically used to populate a dropdown or a list of options
- * for the user to select a category within the specified industry.
- *
- * @param industryId - A number representing the ID of the industry for which categories are fetched.
- * @param categoryService - An instance of `CategoryService` used to fetch category data.
- * @returns A `Subscription` object representing the ongoing data-fetching operation.
- */
-export function fetchCategoriesByIndustryId(
-  industryId: number,
-  categoryService: CategoryService,
-): Subscription {
-  return categoryService.getCategoriesByIndustryId(industryId).subscribe();
-}
-
-/**
  * Formats a numeric value according to the specified locale.
  * Ideal for converting a number into a localized, human-readable format with thousands separators.
  *
@@ -82,4 +47,89 @@ export function formatNumberValue(value: number, locale: string): string {
     maximumFractionDigits: 2,
     minimumFractionDigits: 0,
   }).format(value);
+}
+
+/**
+ * Handles the selection change for dynamic form fields.
+ *
+ * @param {string} field - The name of the form field.
+ * @param {string} value - The selected value from the dropdown.
+ * @param {any[]} options - The list of available options for the dropdown.
+ * @param {FormGroup} form - The reactive form group to update.
+ * @param {FilterService} filterService - Service to handle filtering logic.
+ * @param {CategoryService} categoryService - Service to fetch categories.
+ * @param {LocationService} [locationService] - Service to fetch locations (optional).
+ */
+export function handleSelectChange(
+  field: string,
+  value: string,
+  options: any[],
+  form: FormGroup,
+  filterService: FilterService,
+  categoryService: CategoryService,
+  locationService?: LocationService,
+): void {
+  const id = filterService.getOptionId(value, options);
+  form.get(field)?.setValue(id);
+
+  if (field === 'industryId') {
+    if (id) {
+      categoryService.getCategoriesByIndustryId(Number(id)).subscribe(() => {
+        form.get('categoryId')?.setValue(0);
+      });
+    } else {
+      categoryService.clearCategories();
+      form.get('categoryId')?.setValue(0);
+    }
+  }
+
+  if (field === 'cityId' && locationService) {
+    if (id) {
+      locationService.getWardByCityId(id).subscribe(() => {
+        form.get('wardId')?.setValue('');
+      });
+    } else {
+      locationService.clearWards();
+      form.get('wardId')?.setValue('');
+    }
+  }
+
+  if (field === 'postedDate') {
+    const index = options.findIndex((option) => option === value);
+    const postedDateValue = index === 0 ? '' : String(index - 1);
+    form.get('postedDate')?.setValue(postedDateValue);
+  }
+}
+
+/**
+ * Formats a numeric value into a custom currency string based on the given language.
+ *
+ * @param value - The numeric value to be formatted. It can be a number, string, or null/undefined.
+ * @param lang - The language code ('vi' for Vietnamese, 'en' for English). Default is 'vi'.
+ * @returns A formatted currency string with appropriate locale and currency symbol.
+ */
+export function formatCustomCurrency(
+  value: number | string | null | undefined,
+  lang: 'vi' | 'en' = 'vi',
+): string {
+  const EXCHANGE_RATE = 25383;
+
+  const CURRENCIES = {
+    vi: '₫',
+    en: 'USD',
+  };
+
+  if (!value) return `0 ${CURRENCIES[lang]}`;
+
+  const numericValue = typeof value === 'string' ? parseFloat(value) : value;
+
+  if (isNaN(numericValue)) return `0 ${CURRENCIES[lang]}`;
+
+  if (lang === 'vi') {
+    return `${numericValue.toLocaleString('vi-VN')}${CURRENCIES.vi}`;
+  }
+
+  const amount = (numericValue / EXCHANGE_RATE).toFixed(4);
+
+  return `${parseFloat(amount).toLocaleString('en-US')} ${CURRENCIES.en}`;
 }

@@ -37,6 +37,7 @@
     },
     "nice-select": {
       "filter-by": "Filter by",
+      "choose": "Choose",
       "filter": {
         "industry": "Industry",
         "category": "Category",
@@ -89,7 +90,9 @@
       "not-confirm": "Email not confirmed. Please check your inbox.",
       "user-not-exist": "This email address does not exist in the system. Please check your email or register for a new account.",
       "invalid-credentials": "The email address or password you entered is incorrect. Please check and try again.",
-      "token-expired": "The link has expired. A new one has been sent to your email."
+      "token-expired": "The link has expired. A new one has been sent to your email.",
+      "user-already-confirmed": "This account is already confirmed. Please log in to continue.",
+      "still-have-session": "You have an active session. Please log out to access a new account."
     },
     "register": {
       "header": "Register",
@@ -149,8 +152,6 @@
       "category": "Category:",
       "province": "Province/City:",
       "full-location": "Full Location:",
-      "no-category": "Select a industry to view all categories",
-      "no-ward": "Select a province/city to view full location",
       "error-messages": {
         "title": "Title",
         "fee": "Fee",
@@ -166,18 +167,28 @@
     "notify": {
       "fetch-jobs-failed": "Oops! We encountered an issue while fetching jobs. Please reach out to the administrator for further assistance.",
       "fetch-wards-failed": "Oops! We encountered an issue while fetching wards. Please reach out to the administrator for further assistance.",
+      "not-update-profile": "You need to update your profile before posting or applying for a job.",
       "create-job": {
         "success": "Job created successfully!",
         "failed": "Job creation failed. Please try again or contact the administrator.",
-        "user-not-enough-balance": "Your account is not enough {{fee}} for create this job. Please top up your account.",
+        "user-not-enough-balance": "Your account is not enough {{ fee }} for create this job. Please top up your account.",
         "due-date-start-failed": "Start date can not be later than or equal to the due date.",
         "due-date-current-failed": "Current date can not be later than or equal to the due date.",
         "fee-greater-than-fifty-thousand": "Fee must be greater than fifty thousand."
+      },
+      "assign-job": {
+        "success": "Successfully assigned the applicant to the job.",
+        "not-applied": "This applicant has not applied for the job.",
+        "already-assigned": "This job has already been assigned by another.",
+        "assign-to-owner": "You cannot assign the job to yourself.",
+        "owner-mismatch": "You do not have permission to assign applicants to this job.",
+        "failed": "Failed to assign the applicant to the job. Please try again."
       }
     }
   },
   "job-detail": {
     "apply": "Apply",
+    "applied": "Applied",
     "save": "Save",
     "share": "Share",
     "report": "Report",
@@ -186,6 +197,7 @@
     "no-responsibilities": "This job does not have specific responsibilities.",
     "related": "Related Jobs",
     "view-applicants": "View Applicants",
+    "job-applied": "Job Assigned",
     "location": "Location",
     "job-information": {
       "title": "Job Information",
@@ -223,6 +235,7 @@
         "phone": "Phone:",
         "dob": "Date Of Birth:",
         "industry": "Major Industry:",
+        "category": "Category",
         "desc": "Description:",
         "address": "Address:",
         "salary": "Salary",
@@ -250,6 +263,11 @@
       "update-fail": "There are something wrong, please try again later!"
     }
   },
+  "applicant-list": {
+    "filter": {
+      "name": "Name"
+    }
+  },
   "applicant": {
     "assign-now": "Assign Now",
     "my-profile": "My Profile",
@@ -268,7 +286,14 @@
     "age": "Age:",
     "languages": "Language:",
     "qualification": "Qualification:",
-    "gender": "Gender:"
+    "gender": "Gender:",
+    "education": "Education",
+    "industry": "Industry",
+    "category": "Category",
+    "location": "Location",
+    "evaluation": "Evaluation",
+    "user-overview": "User Overview",
+    "no-info": "Profile not updated yet"
   },
   "contact": {
     "heading": "Contact Us",
@@ -403,6 +428,29 @@
       "cancel-transaction": "This transaction has been canceled successfully.",
       "not-enough-balance": "Unfortunately, you do not have enough balance to complete this transaction.",
       "not-login": "You need to log in to proceed with the payment."
+    }
+  },
+  "chat-widget": {
+    "empty-message": "Please enter a message before sending.",
+    "do-not-understand": "Sorry, I don't understand your question."
+  },
+  "footer": {
+    "privacy": "Privacy Policy",
+    "header": {
+      "our-services": "Our Services",
+      "useful-links": "Useful Links",
+      "contact": {
+        "title": "Contact",
+        "sub-title": "Get updates and special offers directly in your inbox.",
+        "placeholder": "Your email*"
+      }
+    },
+    "information": {
+      "address": "Address: ",
+      "message": "Message: ",
+      "phone": "Phone: ",
+      "open": "Open: ",
+      "mon-fri": "Mon - Fri"
     }
   }
 }

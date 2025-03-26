@@ -13,8 +13,8 @@ using TimeSwap.Infrastructure.Persistence.DbContexts;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
+// Add services to the container.
 builder.Services.AddControllers();
 
 // SuppressModelStateInvalidFilter can be used to disable the automatic 400 response for invalid models.
@@ -66,7 +66,7 @@ builder.Services.AddAuthorization();
 
 builder.Services.Configure<DataProtectionTokenProviderOptions>(opt =>
 {
-    opt.TokenLifespan = TimeSpan.FromMinutes(1);
+    opt.TokenLifespan = TimeSpan.FromMinutes(5);
 });
 
 builder.Services.AddDatabase<AppDbContext>(builder.Configuration.GetConnectionString("CoreDbConnection")

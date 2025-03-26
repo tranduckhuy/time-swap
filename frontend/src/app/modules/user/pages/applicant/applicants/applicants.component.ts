@@ -1,18 +1,34 @@
-import { Component, DestroyRef, inject, OnInit, signal, computed } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+  computed,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { TranslateModule } from '@ngx-translate/core';
 
+import { ApplicantCardComponent } from './applicant-card/applicant-card.component';
 import { BannerComponent } from '../../../../../shared/components/banner/banner.component';
 import { BreadcrumbComponent } from '../../../../../shared/components/breadcrumb/breadcrumb.component';
 import { PaginationComponent } from '../../../../../shared/components/pagination/pagination.component';
-import { ApplicantCardComponent } from './applicant-card/applicant-card.component';
-import { PreLoaderComponent } from "../../../../../shared/components/pre-loader/pre-loader.component";
+import { PreLoaderComponent } from '../../../../../shared/components/pre-loader/pre-loader.component';
+import { ToastComponent } from '../../../../../shared/components/toast/toast.component';
+import { NiceSelectComponent } from '../../../../../shared/components/nice-select/nice-select.component';
+
+import { handleSelectChange } from '../../../../../shared/utils/util-functions';
 
 import { SUCCESS_CODE } from '../../../../../shared/constants/status-code-constants';
 import { PAGE_SIZE_APPLICANTS } from '../../../../../shared/constants/page-constants';
 
 import { ApplicantsService } from '../applicants.service';
+import { IndustryService } from '../../../../../shared/services/industry.service';
+import { CategoryService } from '../../../../../shared/services/category.service';
+import { LocationService } from '../../../../../shared/services/location.service';
+import { FilterService } from '../../../../../shared/services/filter.service';
 import { ToastHandlingService } from '../../../../../shared/services/toast-handling.service';
 
 import type { ApplicantModel } from '../../../../../shared/models/entities/applicant.model';
@@ -21,11 +37,36 @@ import type { ApplicantsRequestModel } from '../../../../../shared/models/api/re
 @Component({
   selector: 'app-applicants',
   standalone: true,
-  imports: [BannerComponent, BreadcrumbComponent, ApplicantCardComponent, PaginationComponent, TranslateModule, PreLoaderComponent],
+  imports: [
+    ReactiveFormsModule,
+    TranslateModule,
+    BannerComponent,
+    BreadcrumbComponent,
+    ApplicantCardComponent,
+    PaginationComponent,
+    PreLoaderComponent,
+    NiceSelectComponent,
+    ToastComponent,
+  ],
   templateUrl: './applicants.component.html',
-  styleUrl: './applicants.component.css'
+  styleUrl: './applicants.component.css',
 })
 export class ApplicantsComponent implements OnInit {
+  // ? Dependency Injection
+  private readonly applicantService = inject(ApplicantsService);
+  private readonly industryService = inject(IndustryService);
+  private readonly categoryService = inject(CategoryService);
+  private readonly locationService = inject(LocationService);
+  private readonly filterService = inject(FilterService);
+  private readonly toastHandlingService = inject(ToastHandlingService);
+  private readonly fb = inject(FormBuilder);
+  private readonly router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly destroyRef = inject(DestroyRef);
+
+  // ? Form
+  form!: FormGroup;
+
   // ? State Management
   isLoading = signal(false);
   jobId = signal<string>('');
@@ -33,21 +74,28 @@ export class ApplicantsComponent implements OnInit {
   // ? Data Response
   applicants = signal<ApplicantModel[]>([]);
   totalApplicants = signal<number>(0);
+  industries = this.industryService.industries;
+  categories = this.categoryService.categories;
+  cities = this.locationService.cities;
+  wards = this.locationService.wards;
+
+  // ? Pagination
   pageIndex = signal<number>(1);
-  pageSize = signal<number>(PAGE_SIZE_APPLICANTS)
+  pageSize = signal<number>(PAGE_SIZE_APPLICANTS);
 
   // ? Computed Properties
-  start = computed(() => this.totalApplicants() === 0 ? 0 : (this.pageIndex() - 1) * this.pageSize() + 1);
-  end = computed(() => Math.min(this.pageIndex() * this.pageSize(), this.totalApplicants()));
-
-  // ? Dependency Injection
-  private readonly applicantService = inject(ApplicantsService);
-  private readonly destroyRef = inject(DestroyRef);
-  private readonly toastHandlingService = inject(ToastHandlingService);
-
-  // ? Dependency Injection
-  private readonly activatedRoute = inject(ActivatedRoute);
-  private readonly router = inject(Router);
+  industriesName = computed(() => this.industries().map((i) => i.industryName));
+  categoriesName = computed(() => this.categories().map((c) => c.categoryName));
+  citiesName = computed(() => this.cities().map((c) => c.name));
+  wardsName = computed(() => this.wards().map((w) => w.fullLocation));
+  start = computed(() =>
+    this.totalApplicants() === 0
+      ? 0
+      : (this.pageIndex() - 1) * this.pageSize() + 1,
+  );
+  end = computed(() =>
+    Math.min(this.pageIndex() * this.pageSize(), this.totalApplicants()),
+  );
 
   ngOnInit(): void {
     const jobId = this.activatedRoute.snapshot.paramMap.get('jobId');
@@ -55,37 +103,78 @@ export class ApplicantsComponent implements OnInit {
       this.router.navigateByUrl('/not-found');
       return;
     }
+
+    const subscription = this.filterService.loadSelectOptions().subscribe();
+    this.destroyRef.onDestroy(() => subscription.unsubscribe());
+
+    this.initForm();
+
     this.jobId.set(jobId);
     this.search(this.jobId());
   }
 
-  private search(jobId: string): void {
+  onSearch() {
+    this.search(this.jobId());
+  }
+
+  onPageChange(page: number) {
+    this.search(this.jobId(), page);
+  }
+
+  onSelectChange(field: string, value: string, options: any[]): void {
+    handleSelectChange(
+      field,
+      value,
+      options,
+      this.form,
+      this.filterService,
+      this.categoryService,
+    );
+  }
+
+  private initForm() {
+    this.form = this.fb.group({
+      search: '',
+      industryId: 0,
+      categoryId: 0,
+      cityId: '',
+      wardId: '',
+    });
+  }
+
+  private search(jobId: string, page: number = 1): void {
     this.isLoading.set(true);
+    this.pageIndex.set(page);
 
     const req: ApplicantsRequestModel = {
+      ...this.form.value,
       pageIndex: this.pageIndex(),
       pageSize: this.pageSize(),
       isActive: true,
     };
 
-    const subscription = this.applicantService.getAllApplicantsByJobId(jobId, req).subscribe({
-      next: (res) => {
-        if (res.statusCode === SUCCESS_CODE && res.data && Array.isArray(res.data)) {
-          const {data} = res
-          this.applicants.set(data)
-          this.totalApplicants.set(data.length)
-        } else {
+    const subscription = this.applicantService
+      .getAllApplicantsByJobId(jobId, req)
+      .subscribe({
+        next: (res) => {
+          if (
+            res.statusCode === SUCCESS_CODE &&
+            res.data &&
+            Array.isArray(res.data.data)
+          ) {
+            this.applicants.set(res.data.data);
+            this.totalApplicants.set(res.data.count);
+          } else {
+            this.showFetchErrorToast();
+          }
+        },
+        error: () => {
+          this.isLoading.set(false);
           this.showFetchErrorToast();
-        }
-      },
-      error: () => {
-        this.isLoading.set(false);
-        this.showFetchErrorToast();
-      },
-      complete: () => this.isLoading.set(false),
-    }
-  )
-  this.destroyRef.onDestroy(() => subscription.unsubscribe())
+        },
+        complete: () => this.isLoading.set(false),
+      });
+    this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
   private showFetchErrorToast(): void {

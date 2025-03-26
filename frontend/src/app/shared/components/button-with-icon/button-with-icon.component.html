@@ -1,4 +1,4 @@
-<div class="cmn-btn" href="#" style="cursor: pointer" (click)="onClick()">
+<div [class.cmn-btn]="true" [class.disabled]="disabled()" (click)="onClick()">
   {{ title() }}
   <i [class]="icon()"></i>
 </div>

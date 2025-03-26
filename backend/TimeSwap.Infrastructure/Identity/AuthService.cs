@@ -103,7 +103,7 @@ namespace TimeSwap.Infrastructure.Identity
 
             _logger.LogInformation("Sending email to '{email}' to confirm email.", newUser.Email);
 
-            _ = _emailSender.SendEmailAsync(message);
+            _ = _emailSender.SendEmailBrevoAsync(newUser.Email!, newUser.FirstName + " " + newUser.LastName, message.Subject, message.Content);
         }
 
         public async Task<(StatusCode, AuthenticationResponse)> LoginAsync(LoginRequestDto request)
@@ -120,6 +120,13 @@ namespace TimeSwap.Infrastructure.Identity
             {
                 _logger.LogWarning("Attempt to login with invalid password for email: {email}.", request.Email);
                 throw new InvalidCredentialsException();
+            }
+
+            // Check if user account is locked
+            if (await _userManager.IsLockedOutAsync(user))
+            {
+                _logger.LogWarning("Attempt to login with locked account for email: {email}.", request.Email);
+                throw new UserAccountLockedException();
             }
 
             var userRoles = await _userManager.GetRolesAsync(user);
@@ -190,7 +197,7 @@ namespace TimeSwap.Infrastructure.Identity
 
             var message = MailMessageHelper.CreateMessage(user, token, request.ClientUrl, "Reset Password", "reset your password");
 
-            _ = _emailSender.SendEmailAsync(message);
+            _ = _emailSender.SendEmailBrevoAsync(user.Email!, user.FirstName + " " + user.LastName, message.Subject, message.Content);
 
             return StatusCode.ResetPasswordEmailSent;
         }
@@ -254,6 +261,13 @@ namespace TimeSwap.Infrastructure.Identity
                 throw new InvalidTokenException(["Refresh token is invalid or expired."]);
             }
 
+            // Check if user account is locked
+            if (await _userManager.IsLockedOutAsync(user))
+            {
+                _logger.LogWarning("Attempt to login with locked account for email: {email}.", user.Email);
+                throw new UserAccountLockedException();
+            }
+
             var userRoles = await _userManager.GetRolesAsync(user);
 
             var userClaims = await _userManager.GetClaimsAsync(user);
@@ -296,6 +310,26 @@ namespace TimeSwap.Infrastructure.Identity
             }
 
             return StatusCode.PasswordChangedSuccessfully;
+        }
+
+        public async Task<StatusCode> LockUnlockAccountAsync(LockUnlockAccountRequestDto request)
+        {
+            var user = await _userManager.FindByIdAsync(request.UserId.ToString()) ?? throw new UserNotExistsException();
+
+            if (request.IsLocked)
+            {
+                await _userManager.SetLockoutEndDateAsync(user, DateTimeOffset.MaxValue);
+
+                MailMessageHelper.CreateLockAccountMessage(request, user, out string userName, out string emailSubject, out string emailBody);
+
+                _ = _emailSender.SendEmailBrevoAsync(user.Email!, userName, emailSubject, emailBody);
+            }
+            else
+            {
+                await _userManager.SetLockoutEndDateAsync(user, null);
+            }
+
+            return StatusCode.RequestProcessedSuccessfully;
         }
     }
 }

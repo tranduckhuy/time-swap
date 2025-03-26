@@ -18,7 +18,7 @@ namespace TimeSwap.Application.JobPosts.Handlers
 
         public async Task<Unit> Handle(AssignJobCommand request, CancellationToken cancellationToken)
         {
-            var jobPost = await _jobPostRepository.GetJobPostByIdAsync(request.JobPostId) ?? throw new JobPostNotFoundException();
+            var jobPost = await _jobPostRepository.GetJobPostByIdAsync(request.JobPostId, cancellationToken) ?? throw new JobPostNotFoundException();
 
             if (jobPost.UserId != request.OwnerId)
             {
@@ -41,6 +41,8 @@ namespace TimeSwap.Application.JobPosts.Handlers
             }
 
             jobPost.AssignedTo = request.UserAppliedId;
+            jobPost.IsAssigneeCompleted = true;
+            jobPost.IsOwnerCompleted = true;
             jobPost.IsActive = false;
 
             await _jobPostRepository.UpdateJobPostAsync(jobPost);

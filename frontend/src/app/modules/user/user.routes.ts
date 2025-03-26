@@ -16,10 +16,13 @@ import { authGuard } from '../../core/auth/auth.guard';
 
 import { JobsService } from './pages/jobs/jobs.service';
 
-import type { JobDetailResponseModel } from '../../shared/models/api/response/jobs-response.model';
-
 import { ApplicantsComponent } from './pages/applicant/applicants/applicants.component';
 import { ApplicantDetailComponent } from './pages/applicant/applicant-detail/applicant-detail.component';
+
+import { ApplicantsService } from './pages/applicant/applicants.service';
+
+import type { JobDetailResponseModel } from '../../shared/models/api/response/jobs-response.model';
+import { UserModel } from '../../shared/models/entities/user.model';
 
 const jobDetailResolver: ResolveFn<JobDetailResponseModel | null> = (
   activatedRoute,
@@ -32,6 +35,19 @@ const jobDetailResolver: ResolveFn<JobDetailResponseModel | null> = (
   }
 
   return jobsService.getJobDetailById(jobId);
+};
+
+const applicantsDetailResolver: ResolveFn<UserModel | null> = (
+  activatedRoute,
+) => {
+  const applicantsService = inject(ApplicantsService);
+  const applicantId = activatedRoute.paramMap.get('applicantId');
+
+  if (!applicantId) {
+    return of(null);
+  }
+
+  return applicantsService.getApplicantDetailById(applicantId);
 };
 
 export const userRoutes: Routes = [
@@ -71,6 +87,9 @@ export const userRoutes: Routes = [
   {
     path: 'applicants/:jobId/:applicantId',
     component: ApplicantDetailComponent,
+    resolve: {
+      user: applicantsDetailResolver,
+    },
   },
   {
     path: 'contact',

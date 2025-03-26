@@ -35,5 +35,8 @@ jobs:
         env:
           API_AUTH_BASE_URL: ${{ secrets.API_AUTH_BASE_URL }}
           API_BASE_URL: ${{ secrets.API_BASE_URL }}
-          AUTH_CLIENT_URL: ${{ secrets.AUTH_CLIENT_URL }}`
+          API_GPT_URL: ${{ secrets.API_GPT_URL }}
+          AUTH_CLIENT_URL: ${{ secrets.AUTH_CLIENT_URL }}
+          CHAT_GPT_KEY: ${{ secrets.CHAT_GPT_KEY }}
+          CHAT_GPT_ORG_KEY: ${{ secrets.CHAT_GPT_ORG_KEY }}
         run: npm run build

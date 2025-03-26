@@ -12,18 +12,22 @@ export class ToastHandlingService {
 
   /**
    * Displays a Toast notification with customizable state, title, and content.
-   * 
+   *
    * @param state - The notification state (`success`, `error`, `warn`, `info`).
    * @param titleKey - The title key from the internationalization (i18n) folder.
    * @param messageKey - The message content key from the internationalization (i18n) folder.
    */
   private showToastMessage(
-    state: 'success' | 'error' | 'warn' | 'info', 
-    titleKey: string, 
-    messageKey: string
+    state: 'success' | 'error' | 'warn' | 'info',
+    titleKey: string,
+    messageKey: string,
+    params?: any,
   ): void {
     const title = this.multiLanguageService.getTranslatedLang(titleKey);
-    const message = this.multiLanguageService.getTranslatedLang(messageKey);
+    const message = this.multiLanguageService.getTranslatedLang(
+      messageKey,
+      params,
+    );
 
     switch (state) {
       case 'success':
@@ -43,56 +47,85 @@ export class ToastHandlingService {
 
   /**
    * Displays a success notification with default title.
-   * 
+   *
    * @param messageKey - The notification message key from the internationalization (i18n) folder.
    */
-  handleSuccess(messageKey: string): void {
-    this.showToastMessage('success', 'common.notify.success-title', messageKey);
+  handleSuccess(messageKey: string, params?: any): void {
+    this.showToastMessage(
+      'success',
+      'common.notify.success-title',
+      messageKey,
+      params,
+    );
   }
 
   /**
    * Displays an error notification with default title.
-   * 
+   *
    * @param messageKey - The notification message key from the internationalization (i18n) folder.
    */
-  handleError(messageKey: string): void {
-    this.showToastMessage('error', 'common.notify.error-title', messageKey);
+  handleError(messageKey: string, params?: any): void {
+    this.showToastMessage(
+      'error',
+      'common.notify.error-title',
+      messageKey,
+      params,
+    );
   }
 
   /**
    * Displays an error notification with default title and message.
-   * 
+   *
    */
   handleCommonError(): void {
-    this.showToastMessage('error', 'common.notify.error-title', 'common.notify.error-message');
+    this.showToastMessage(
+      'error',
+      'common.notify.error-title',
+      'common.notify.error-message',
+    );
   }
 
   /**
    * Displays a warning notification with default title.
-   * 
+   *
    * @param messageKey - The notification message key from the internationalization (i18n) folder.
    */
-  handleWarning(messageKey: string): void {
-    this.showToastMessage('warn', 'common.notify.warning-title', messageKey);
+  handleWarning(messageKey: string, params?: any): void {
+    this.showToastMessage(
+      'warn',
+      'common.notify.warning-title',
+      messageKey,
+      params,
+    );
   }
 
   /**
    * Displays an information notification with default title.
-   * 
+   *
    * @param messageKey - The notification message key from the internationalization (i18n) folder.
    */
-  handleInfo(messageKey: string): void {
-    this.showToastMessage('info', 'common.notify.info-title', messageKey);
+  handleInfo(messageKey: string, params?: any): void {
+    this.showToastMessage(
+      'info',
+      'common.notify.info-title',
+      messageKey,
+      params,
+    );
   }
 
   /**
    * Displays a notification with custom title.
-   * 
+   *
    * @param state - The notification state (`success`, `error`, `warn`, `info`).
    * @param titleKey - The custom title key from the internationalization (i18n) folder.
    * @param messageKey - The notification message key from the internationalization (i18n) folder.
    */
-  handleCustomTitle(state: 'success' | 'error' | 'warn' | 'info', titleKey: string, messageKey: string): void {
-    this.showToastMessage(state, titleKey, messageKey);
+  handleCustomTitle(
+    state: 'success' | 'error' | 'warn' | 'info',
+    titleKey: string,
+    messageKey: string,
+    params?: any,
+  ): void {
+    this.showToastMessage(state, titleKey, messageKey, params);
   }
 }

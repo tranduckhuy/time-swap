@@ -37,6 +37,7 @@
     },
     "nice-select": {
       "filter-by": "Lọc theo",
+      "choose": "Chọn",
       "filter": {
         "industry": "ngành",
         "category": "danh mục",
@@ -89,7 +90,9 @@
       "not-confirm": "Email chưa được xác nhận. Vui lòng kiểm tra hộp thư.",
       "user-not-exist": "Địa chỉ email này không tồn tại trong hệ thống. Vui lòng kiểm tra lại email hoặc đăng ký tài khoản mới.",
       "invalid-credentials": "Email hoặc mật khẩu bạn nhập không đúng. Vui lòng kiểm tra và thử lại.",
-      "token-expired": "Liên kết đã hết hạn. Một liên kết mới đã được gửi đến email của bạn."
+      "token-expired": "Liên kết đã hết hạn. Một liên kết mới đã được gửi đến email của bạn.",
+      "user-already-confirmed": "Người dùng này đã được xác nhận. Vui lòng đăng nhập vào tài khoản của bạn.",
+      "still-have-session": "Bạn đang có phiên đăng nhập. Vui lòng đăng xuất để truy cập tài khoản mới."
     },
     "register": {
       "header": "Đăng ký",
@@ -149,8 +152,6 @@
       "category": "Danh mục:",
       "province": "Tỉnh/Thành phố:",
       "full-location": "Địa chỉ đầy đủ:",
-      "no-category": "Chọn ngành để xem toàn bộ danh mục",
-      "no-ward": "Chọn tỉnh/thành để xem địa chỉ đầy đủ",
       "error-messages": {
         "title": "Tiêu đề",
         "fee": "Phí",
@@ -166,18 +167,28 @@
     "notify": {
       "fetch-jobs-failed": "Rất tiếc! Chúng tôi gặp sự cố khi lấy thông tin công việc. Vui lòng liên hệ với quản trị viên để được hỗ trợ thêm.",
       "fetch-wards-failed": "Rất tiếc! Chúng tôi gặp sự cố khi lấy thông tin huyện/xã. Vui lòng liên hệ với quản trị viên để được hỗ trợ thêm.",
+      "not-update-profile": "Bạn cần cập nhật thông tin cá nhân trước khi đăng việc hoặc ứng tuyển một công việc.",
       "create-job": {
         "success": "Tạo công việc thành công!",
         "failed": "Tạo công việc thất bại. Vui lòng thử lại hoặc liên hệ quản trị viên.",
-        "user-not-enough-balance": "Tài khoản của bạn không đủ {{fee}} để đăng công việc này. Vui lòng nạp thêm tiền vào tài khoản.",
+        "user-not-enough-balance": "Tài khoản của bạn không đủ {{ fee }} để đăng công việc này. Vui lòng nạp thêm tiền vào tài khoản.",
         "due-date-start-failed": "Ngày bắt đầu không được muộn hơn hoặc bằng ngày hết hạn.",
         "due-date-current-failed": "Ngày hiện tại không được muộn hơn hoặc bằng ngày hết hạn.",
         "fee-greater-than-fifty-thousand": "Phí luôn phải lớn hơn 50,000."
+      },
+      "assign-job": {
+        "success": "Ứng viên đã được chọn cho công việc thành công.",
+        "not-applied": "Ứng viên này chưa ứng tuyển vào công việc.",
+        "already-assigned": "Công việc này đã được ứng viên khác tiếp nhận.",
+        "assign-to-owner": "Bạn không thể chọn chính mình cho công việc này.",
+        "owner-mismatch": "Bạn không có quyền chọn ứng viên cho công việc này.",
+        "failed": "Chọn ứng viên cho công việc thất bại. Vui lòng thử lại."
       }
     }
   },
   "job-detail": {
     "apply": "Ứng tuyển",
+    "applied": "Đã ứng tuyển",
     "save": "Lưu",
     "share": "Chia sẻ",
     "report": "Báo cáo",
@@ -186,6 +197,7 @@
     "no-responsibilities": "Công việc này không yêu cầu trách nhiệm cụ thể.",
     "related": "Công việc liên quan",
     "view-applicants": "Xem danh sách ứng viên",
+    "job-applied": "Công việc đã được nhận",
     "location": "Vị trí",
     "job-information": {
       "title": "Thông tin công việc",
@@ -223,6 +235,7 @@
         "phone": "Số điện thoại:",
         "dob": "Ngày sinh:",
         "industry": "Ngành nghề chính:",
+        "category": "Danh mục",
         "desc": "Giới thiệu:",
         "address": "Địa chỉ:",
         "salary": "Lương:",
@@ -250,8 +263,13 @@
       "update-fail": "Cập nhật thông tin thất bại, vui lòng thử lại sau!"
     }
   },
+  "applicant-list": {
+    "filter": {
+      "name": "Tên người ứng tuyển"
+    }
+  },
   "applicant": {
-    "assign-now": "Giao Ngay",
+    "assign-now": "Giao Việc Ngay",
     "my-profile": "Hồ sơ của tôi",
     "work-exp": "Kinh nghiệm",
     "skill": "Kĩ năng",
@@ -268,7 +286,14 @@
     "age": "Tuổi:",
     "languages": "Ngôn ngữ:",
     "qualification": "Bằng cấp:",
-    "gender": "Giới tính:"
+    "gender": "Giới tính",
+    "education": "Giáo dục",
+    "category": "Danh mục",
+    "industry": "Ngành",
+    "location": "Địa chỉ",
+    "evaluation": "Đánh giá",
+    "user-overview": "Tổng quan người dùng",
+    "no-info": "Hồ sơ chưa được cập nhật"
   },
   "contact": {
     "heading": "Liên hệ với chúng tôi",
@@ -403,6 +428,29 @@
       "cancel-transaction": "Giao dịch này đã được hủy thành công.",
       "not-enough-balance": "Rất tiếc, bạn không đủ số dư trong tài khoản để thực hiện giao dịch này.",
       "not-login": "Bạn cần đăng nhập để thực hiện thanh toán."
+    }
+  },
+  "chat-widget": {
+    "empty-message": "Vui lòng nhập nội dung tin nhắn trước khi gửi.",
+    "do-not-understand": "Xin lỗi, tôi không hiểu câu hỏi của bạn."
+  },
+  "footer": {
+    "privacy": "Chính sách bảo mật",
+    "header": {
+      "our-services": "Dịch vụ của chúng tôi",
+      "useful-links": "Đường dẫn hữu ích",
+      "contact": {
+        "title": "Liên hệ",
+        "sub-title": "Nhận thông tin cập nhật và ưu đãi đặc biệt trực tiếp trong hộp thư đến của bạn.",
+        "placeholder": "Địa chỉ email của bạn*"
+      }
+    },
+    "information": {
+      "address": "Địa chỉ: ",
+      "message": "Kết nối: ",
+      "phone": "Số điện thoại: ",
+      "open": "Giờ mở cửa: ",
+      "mon-fri": "Thứ hai - Thứ sáu"
     }
   }
 }

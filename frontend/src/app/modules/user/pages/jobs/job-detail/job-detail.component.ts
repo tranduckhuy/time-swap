@@ -27,8 +27,9 @@ import {
   VIETNAMESE,
 } from '../../../../../shared/constants/multi-lang-constants';
 
-import { MultiLanguageService } from '../../../../../shared/services/multi-language.service';
 import { ApplicantsService } from '../../applicant/applicants.service';
+import { ProfileService } from '../../profile/profile.service';
+import { MultiLanguageService } from '../../../../../shared/services/multi-language.service';
 
 import type { JobDetailResponseModel } from '../../../../../shared/models/api/response/jobs-response.model';
 
@@ -56,13 +57,15 @@ export class JobDetailComponent implements OnInit {
   job = input.required<JobDetailResponseModel>();
 
   // ? Dependency Injection
-  private multiLanguageService = inject(MultiLanguageService);
-  private applicantService = inject(ApplicantsService);
-  private router = inject(Router);
-  private destroyRef = inject(DestroyRef);
+  private readonly applicantService = inject(ApplicantsService);
+  private readonly profileService = inject(ProfileService);
+  private readonly multiLanguageService = inject(MultiLanguageService);
+  private readonly router = inject(Router);
+  private readonly destroyRef = inject(DestroyRef);
 
   // ? State management
   isLoading = signal<boolean>(true);
+  isOwner = signal<boolean>(false);
   lang = computed(() =>
     this.multiLanguageService.language() === VIETNAMESE ? VIETNAMESE : ENGLISH,
   );
@@ -72,8 +75,14 @@ export class JobDetailComponent implements OnInit {
       this.router.navigateByUrl('/not-found');
     }
 
-    const timeOutId = setTimeout(() => this.isLoading.set(false), 800);
+    this.profileService.getUserProfile().subscribe(() => {
+      const loggedInUser = this.profileService.user();
+      if (loggedInUser && loggedInUser.id === this.job().userId) {
+        this.isOwner.set(true);
+      }
+    });
 
+    const timeOutId = setTimeout(() => this.isLoading.set(false), 800);
     this.destroyRef.onDestroy(() => clearTimeout(timeOutId));
   }
 

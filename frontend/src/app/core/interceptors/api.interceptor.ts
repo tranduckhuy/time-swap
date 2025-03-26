@@ -2,7 +2,7 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpInterceptorFn } from '@angular/common/http';
 
-import { catchError, retry, switchMap, throwError } from 'rxjs';
+import { catchError, filter, retry, switchMap, take, throwError } from 'rxjs';
 
 import {
   addAuthHeader,
@@ -51,26 +51,32 @@ export const apiInterceptor: HttpInterceptorFn = (req, next) => {
   }
 
   // Refresh token logic
+  if (authService.isRefreshingState()) {
+    // Wait for the new token to be available
+    return authService.currentToken$.pipe(
+      filter((token) => token !== null),
+      take(1),
+      switchMap((token) => next(addAuthHeader(req, token))),
+    );
+  }
+
+  // Start the refresh token process
   return authService
     .refreshTokenApi({
       accessToken: authService.accessToken!,
       refreshToken: authService.refreshToken!,
     })
     .pipe(
-      retry({ count: MAX_RETRY_ATTEMPTS, delay: retryStrategy }), // Retry token refresh up to 3 times
+      retry({ count: MAX_RETRY_ATTEMPTS, delay: retryStrategy }),
       switchMap((response: BaseResponseModel<LoginResponseModel>) => {
-        if (!response.data) {
-          return throwError(
-            () => new Error('No data returned from refresh token API'),
-          );
-        }
-
-        const { accessToken } = response.data;
-        const clonedRequest = addAuthHeader(req, accessToken);
+        const clonedRequest = addAuthHeader(req, response.data!.accessToken);
         return next(clonedRequest);
       }),
       catchError((error) => {
-        router.navigate(['/auth/login']);
+        if (error.status === 401) {
+          authService.deleteToken();
+          router.navigate(['/auth/login']);
+        }
         return throwError(() => error);
       }),
     );

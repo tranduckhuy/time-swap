@@ -20,13 +20,19 @@ export const NOT_CONFIRM_CODE = 2005;
 export const INVALID_CREDENTIAL_CODE = 2006;
 export const INVALID_TOKEN = 2007;
 export const TOKEN_EXPIRED_CODE = 2008;
+export const USER_ALREADY_CONFIRMED = 2009;
 
 // ? Jobs Code
 export const USER_NOT_ENOUGH_BALANCE = 2023;
 export const DUE_DATE_START_FAILED = 2024;
 export const DUE_DATE_CURRENT_FAILED = 2025;
 export const FEE_GREATER_THAN_FIFTY = 2026;
+export const USER_NOT_APPLIED_TO_JOB_POST = 2027;
+export const JOB_POST_ALREADY_ASSIGNED = 2028;
+export const ASSIGN_TO_OWNER = 2029;
+export const OWNER_JOB_POST_MISMATCH = 2030;
 export const USER_APPLIED_TO_OWN_JOB_POST = 2031;
+export const NOT_UPDATE_PROFILE_YET = 2055;
 
 // ? Payment Code
 export const PAYMENT_TIMEOUT = 2042;

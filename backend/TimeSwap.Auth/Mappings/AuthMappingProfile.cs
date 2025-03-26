@@ -28,6 +28,8 @@ namespace TimeSwap.Auth.Mappings
             CreateMap<UpdateUserProfileRequest, UpdateUserProfileRequestDto>().ReverseMap();
             CreateMap<UpdateSubscriptionRequest, UpdateSubscriptionRequestDto>().ReverseMap();
             CreateMap<ChangePasswordRequest, ChangePasswordRequestDto>().ReverseMap();
+
+            CreateMap<LockUnlockAccountRequest, LockUnlockAccountRequestDto>().ReverseMap();
         }
     }
 }

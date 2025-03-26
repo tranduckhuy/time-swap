@@ -170,15 +170,17 @@
               </select>
               <app-nice-select
                 [listData]="industriesName()"
+                [title]="'common.nice-select.filter.industry' | translate"
+                [isChoose]="true"
                 [isInvalid]="isControlInvalid('industryId')"
                 [errorMsg]="
                   getMessage(
-                    'dueDate',
+                    'industryId',
                     'jobs.post-job-form.error-messages.industry'
                   )
                 "
                 (valueChange)="
-                  handleSelectChange('industryId', $event, industries())
+                  onSelectChange('industryId', $event, industries())
                 "
               />
             </div>
@@ -195,15 +197,17 @@
               </select>
               <app-nice-select
                 [listData]="categoriesName()"
+                [title]="'common.nice-select.filter.category' | translate"
+                [isChoose]="true"
                 [isInvalid]="isControlInvalid('categoryId')"
                 [errorMsg]="
                   getMessage(
-                    'dueDate',
+                    'categoryId',
                     'jobs.post-job-form.error-messages.category'
                   )
                 "
                 (valueChange)="
-                  handleSelectChange('categoryId', $event, categories())
+                  onSelectChange('categoryId', $event, categories())
                 "
               />
             </div>
@@ -220,14 +224,13 @@
               </select>
               <app-nice-select
                 [listData]="citiesName()"
+                [title]="'common.nice-select.filter.city' | translate"
+                [isChoose]="true"
                 [isInvalid]="isControlInvalid('cityId')"
                 [errorMsg]="
-                  getMessage(
-                    'dueDate',
-                    'jobs.post-job-form.error-messages.city'
-                  )
+                  getMessage('cityId', 'jobs.post-job-form.error-messages.city')
                 "
-                (valueChange)="handleSelectChange('cityId', $event, cities())"
+                (valueChange)="onSelectChange('cityId', $event, cities())"
               />
             </div>
           </div>
@@ -243,14 +246,13 @@
               </select>
               <app-nice-select
                 [listData]="wardsName()"
+                [title]="'common.nice-select.filter.ward' | translate"
+                [isChoose]="true"
                 [isInvalid]="isControlInvalid('wardId')"
                 [errorMsg]="
-                  getMessage(
-                    'dueDate',
-                    'jobs.post-job-form.error-messages.ward'
-                  )
+                  getMessage('wardId', 'jobs.post-job-form.error-messages.ward')
                 "
-                (valueChange)="handleSelectChange('wardId', $event, wards())"
+                (valueChange)="onSelectChange('wardId', $event, wards())"
               />
             </div>
           </div>

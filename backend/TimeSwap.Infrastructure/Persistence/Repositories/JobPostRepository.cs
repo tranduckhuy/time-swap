@@ -73,7 +73,7 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
                    param.IsActive;
         }
 
-        public async Task<JobPost?> GetJobPostByIdAsync(Guid id)
+        public async Task<JobPost?> GetJobPostByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             return await _context.JobPosts
                 .Include(x => x.Ward)
@@ -81,7 +81,7 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
                 .Include(x => x.Industry)
                 .Where(x => x.Id == id)
                 .Select(JobPostProjections.SelectJobPostProjection())
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(cancellationToken);
         }
 
         public async Task<JobPost> CreateJobPostAsync(JobPost jobPost)
@@ -95,6 +95,7 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
 
         public async Task UpdateJobPostAsync(JobPost jobPost)
         {
+            jobPost.ModifiedAt = DateTime.UtcNow;
             await UpdateAsync(jobPost);
 
             await InvalidateCacheAsync();
@@ -111,7 +112,7 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
             return _context.JobPosts.CountAsync(x => x.UserId == userId && x.CreatedAt.Date == today);
         }
 
-        public async Task<IEnumerable<JobPost>> GetRelatedJobPostsAsync(Guid jobPostId, int categoryId, int industryId, int limit)
+        public async Task<IEnumerable<JobPost>> GetRelatedJobPostsAsync(Guid jobPostId, int categoryId, int industryId, int limit, CancellationToken cancellationToken)
         {
             return await _context.JobPosts
                 .Include(x => x.Category)
@@ -121,7 +122,7 @@ namespace TimeSwap.Infrastructure.Persistence.Repositories
                 .Select(JobPostProjections.SelectJobPostProjection())
                 .Take(limit)
                 .AsNoTracking()
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
         }
 
         public async Task<IEnumerable<JobPost>> GetJobPostsByUserIdAsync(Expression<Func<JobPost, bool>> expression)

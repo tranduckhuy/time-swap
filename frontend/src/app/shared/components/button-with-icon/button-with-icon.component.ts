@@ -10,6 +10,7 @@ import { Component, input, output } from '@angular/core';
 export class ButtonWithIconComponent {
   title = input.required<string>();
   icon = input.required<string>();
+  disabled = input<boolean>();
 
   clickBtn = output();
 

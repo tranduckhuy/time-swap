@@ -30,23 +30,28 @@
       <div class="right" ngProjectAs="right-content">
         <app-button-icon
           icon="bx bx-plus"
-          [title]="'job-detail.apply' | translate"
+          [title]="
+            job().isCurrentUserApplied
+              ? ('job-detail.applied' | translate)
+              : ('job-detail.apply' | translate)
+          "
+          [disabled]="job().isCurrentUserApplied || isOwner()"
           (clickBtn)="applyJob(job().id)"
         />
         <ul>
-          <li>
+          <li style="user-select: none">
             <a href="#">
               <i class="bx bx-heart"></i>
               {{ 'job-detail.save' | translate }}
             </a>
           </li>
-          <li>
+          <li style="user-select: none">
             <a href="#">
               <i class="bx bx-share-alt"></i>
               {{ 'job-detail.share' | translate }}
             </a>
           </li>
-          <li>
+          <li style="user-select: none">
             <a href="#">
               <i class="bx bxs-report"></i>
               {{ 'job-detail.report' | translate }}
@@ -66,16 +71,20 @@
       <div class="details-item">
         <!-- ? Job Description -->
         <div class="details-inner">
-          <h3>{{ 'job-detail.job-description' | translate }}</h3>
+          <h3 class="heading">
+            {{ 'job-detail.job-description' | translate }}
+          </h3>
           <p>{{ job().description }}</p>
         </div>
         <!-- ? Job Responsibilities -->
         <div class="details-inner">
-          <h3>{{ 'job-detail.job-responsibilities' | translate }}</h3>
+          <h3 class="heading">
+            {{ 'job-detail.job-responsibilities' | translate }}
+          </h3>
           <ul>
             @for (responsibility of job().responsibilitiesList; track $index) {
               <li>
-                <i class="bx bx-message-square-check"></i>
+                <i class="bx bx-message-square-check icon-red"></i>
                 {{ responsibility }}
               </li>
             }
@@ -83,7 +92,7 @@
         </div>
         <!-- ? Related Job -->
         <div class="details-inner">
-          <h3>{{ 'job-detail.related' | translate }}</h3>
+          <h3 class="heading">{{ 'job-detail.related' | translate }}</h3>
           <ul>
             @for (job of job().relatedJobPosts; track job.id) {
               <li>
@@ -96,13 +105,22 @@
     </div>
     <div ngProjectAs="rightContainer">
       <!-- ? Applicants -->
-      <div class="widget-area" style="margin-bottom: 20px">
-        <div class="download widget-item">
-          <a [routerLink]="['/applicants', job().id]">{{
-            'job-detail.view-applicants' | translate
-          }}</a>
+      @if (isOwner()) {
+        <div class="widget-area" style="margin-bottom: 20px">
+          <div class="download widget-item">
+            <a
+              [class.disabled]="job().assignedTo"
+              [routerLink]="['/applicants', job().id]"
+            >
+              @if (job().assignedTo) {
+                {{ 'job-detail.job-applied' | translate }}
+              } @else {
+                {{ 'job-detail.view-applicants' | translate }}
+              }
+            </a>
+          </div>
         </div>
-      </div>
+      }
       <!-- ? Job Information -->
       <div class="widget-area" style="margin-bottom: 20px">
         <div class="information widget-item">
