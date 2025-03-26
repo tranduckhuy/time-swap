@@ -73,8 +73,10 @@ export const apiInterceptor: HttpInterceptorFn = (req, next) => {
         return next(clonedRequest);
       }),
       catchError((error) => {
-        authService.deleteToken();
-        router.navigate(['/auth/login']);
+        if (error.status === 401) {
+          authService.deleteToken();
+          router.navigate(['/auth/login']);
+        }
         return throwError(() => error);
       }),
     );
