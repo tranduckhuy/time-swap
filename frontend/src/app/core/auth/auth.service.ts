@@ -4,12 +4,14 @@ import {
   signal,
   computed,
   DestroyRef,
+  OnDestroy,
 } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import {
   Observable,
+  Subject,
   catchError,
   filter,
   finalize,
@@ -17,6 +19,7 @@ import {
   of,
   switchMap,
   take,
+  takeUntil,
   tap,
   throwError,
 } from 'rxjs';
@@ -64,7 +67,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class AuthService implements OnDestroy {
   private httpClient = inject(HttpClient);
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
@@ -88,6 +91,7 @@ export class AuthService {
   // ? Refresh statement
   private isRefreshing = signal(false);
   private currentRefreshToken = signal<string | null>(null);
+  private destroy$ = new Subject<void>();
 
   // ? Computed property
   readonly isRefreshingState = computed(() => this.isRefreshing());
@@ -95,6 +99,28 @@ export class AuthService {
 
   // ? Constant for redirect after confirm mail
   private AUTH_CLIENT_URL = environment.authClientUrl;
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  get accessToken(): string | null {
+    return localStorage.getItem(TOKEN_KEY);
+  }
+
+  get refreshToken(): string | null {
+    return localStorage.getItem(REFRESH_TOKEN_KEY);
+  }
+
+  get isTokenExpired(): boolean {
+    const currentTime = Math.floor(Date.now() / 1000);
+    const expirationTime = localStorage.getItem(EXPIRES_IN_KEY);
+
+    return expirationTime
+      ? parseInt(expirationTime, 10) < currentTime + 2
+      : true;
+  }
 
   get currentToken$(): Observable<string | null> {
     return toObservable(this.currentRefreshToken);
@@ -183,8 +209,7 @@ export class AuthService {
       );
     }
 
-    this.isRefreshing.set(true);
-    this.currentRefreshToken.set(null);
+    this.setRefreshingState(true, null);
 
     return this.sendPostRequest<
       RefreshRequestModel,
@@ -192,7 +217,14 @@ export class AuthService {
     >(this.REFRESH_API_URL, refreshReq).pipe(
       tap((response) => this.handleRefreshSuccess(response)),
       catchError((error) => this.handleRefreshError(error)),
-      finalize(() => this.isRefreshing.set(false)),
+      finalize(() => {
+        queueMicrotask(() => {
+          if (!this.destroy$.closed) {
+            this.isRefreshing.set(false);
+          }
+        });
+      }),
+      takeUntil(this.destroy$),
     );
   }
 
@@ -328,21 +360,6 @@ export class AuthService {
     localStorage.removeItem(EXPIRES_IN_KEY);
   }
 
-  get accessToken(): string | null {
-    return localStorage.getItem(TOKEN_KEY);
-  }
-
-  get refreshToken(): string | null {
-    return localStorage.getItem(REFRESH_TOKEN_KEY);
-  }
-
-  get isTokenExpired(): boolean {
-    const currentTime = Math.floor(Date.now() / 1000);
-    const expirationTime = localStorage.getItem(EXPIRES_IN_KEY);
-
-    return expirationTime ? parseInt(expirationTime, 10) < currentTime : true;
-  }
-
   private checkLoginState(): boolean {
     const token = this.accessToken;
     const refreshToken = this.refreshToken;
@@ -389,7 +406,18 @@ export class AuthService {
   }
 
   private handleRefreshError(error: any): Observable<never> {
+    if (error.status === 401) {
+      this.deleteToken();
+      this.router.navigate(['/auth/login']);
+    }
     this.currentRefreshToken.set(null);
     return throwError(() => error);
+  }
+
+  private setRefreshingState(isRefreshing: boolean, token: string | null) {
+    Promise.resolve().then(() => {
+      this.isRefreshing.set(isRefreshing);
+      this.currentRefreshToken.set(token);
+    });
   }
 }
