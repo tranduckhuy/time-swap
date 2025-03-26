@@ -109,16 +109,29 @@ export class AuthService {
         }
       }),
       catchError((error: HttpErrorResponse) => {
-        if (error.error.statusCode === NOT_CONFIRM_CODE) {
-          this.toastHandlingService.handleWarning('auth.login.not-confirm');
-        } else if (error.error.statusCode === USER_NOT_EXIST_CODE) {
-          this.toastHandlingService.handleWarning('auth.login.user-not-exist');
-        } else if (error.error.statusCode === INVALID_CREDENTIAL_CODE) {
-          this.toastHandlingService.handleInfo(
-            'auth.login.invalid-credentials',
-          );
-        } else {
-          this.toastHandlingService.handleCommonError();
+        switch (error.error.statusCode) {
+          case NOT_CONFIRM_CODE: {
+            const resendReq: ReConfirmRequestModel = {
+              email: loginReq.email,
+              clientUrl: `${this.AUTH_CLIENT_URL!}/login`,
+            };
+            this.toastHandlingService.handleWarning('auth.login.not-confirm');
+            const subscription = this.resendConfirmEmail(resendReq).subscribe();
+            this.destroyRef.onDestroy(() => subscription.unsubscribe());
+            break;
+          }
+          case USER_NOT_EXIST_CODE:
+            this.toastHandlingService.handleWarning(
+              'auth.login.user-not-exist',
+            );
+            break;
+          case INVALID_CREDENTIAL_CODE:
+            this.toastHandlingService.handleInfo(
+              'auth.login.invalid-credentials',
+            );
+            break;
+          default:
+            this.toastHandlingService.handleCommonError();
         }
         return of(undefined);
       }),
